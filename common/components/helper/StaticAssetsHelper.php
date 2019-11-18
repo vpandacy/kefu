@@ -31,4 +31,9 @@ class StaticAssetsHelper
         self::includeAppStatic("css", $path, $depend);
     }
 
+    public static function getReleaseVersion(){
+        $release_version = defined("RELEASE_VERSION") ? RELEASE_VERSION : "20190910223200";
+        return $release_version;
+    }
+
 } 
