@@ -1,0 +1,194 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#online {
+    margin: auto;
+    width: 800px;
+    height: 600px;
+    position: relative;
+    top: 50%;
+    margin-top: -300px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+}
+
+#online .online-header {
+    padding-left: 10px;
+    height: 10%;
+    background: rgb(31, 140, 235);
+    color: white;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+}
+
+#online .online-header .logo {
+    width: 5.5%;
+}
+
+#online .online-header .info {
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    padding-left: 10px;
+    height: 75%;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    justify-content: space-between;
+}
+
+#online .online-header .info .title {
+    font-size: 15px;
+}
+
+#online .online-header .info .tip {
+    font-size: 12px;
+}
+
+#online .online-info {
+    display: flex;
+    display: -webkit-flex;
+    flex-grow: 1;
+}
+
+#online .online-info .info-message {
+    border-right: 1px solid #E9EEF2;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#online .online-info .info-message .message {
+    flex-grow: 1;
+}
+
+#online .online-info .info-message .message .tip-div {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+}
+
+#online .online-info .info-message .message .message-tip {
+    background: rgb(230, 233, 239);
+    padding: 2px 10px;
+    line-height: 36px;
+    color: rgb(112, 130, 166);
+    font-size: 14px;
+}
+
+
+#online .online-info .content-message {
+    padding-left: 10px;
+    margin-top: 15px;
+    display: flex;
+}
+
+#online .online-info .content-message .message-img {
+    width: 45px;
+    margin-right: 10px;
+}
+
+#online .online-info .content-message .logo {
+    width: 45px;
+    border-radius: 50%;
+}
+
+#online .online-info .content-message .message-info {
+    width: 70%;
+}
+
+#online .online-info .content-message .message-info .message-name-date {
+    color: rgb(112, 130, 166);
+    font-size: 15px;
+}
+
+#online .online-info .content-message .message-info .message-name-date .date {
+    padding-left: 15px;
+
+}
+
+#online .online-info .content-message .message-info .message-message {
+    background: rgb(230, 233, 239);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+
+#online .online-info .info-message .submit {
+    height: 30%;
+    border-top: 1px solid #E9EEF2;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+}
+
+#online .online-info .info-message .submit .top {
+    background: rgb(248, 250, 252);
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+#online .online-info .info-message .submit .top i {
+    font-size: 23px;
+    color: rgb(46, 76, 112);
+    margin-left: 10px;
+}
+
+#online .online-info .info-message .submit .print {
+    flex-grow: 1;
+    outline: none;
+    padding: 10px;
+}
+#online .online-info .info-message .submit .bottom{
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+}
+
+#online .online-info .info-message .submit .bottom .submit-button{
+    color: white;
+    background: rgb(30, 137, 230);
+    width: 70px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+    margin: 0 10px 10px 0;
+}
+
+#online .online-info .online-right {
+    width: 45%;
+}
+#online .online-info .online-right .right-tab {
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    text-align: center;
+    font-size: 14px;
+}
+#online .online-info .online-right .right-tab .tab-one{
+    flex-grow: 1;
+    height: 40px;
+}
+#online .online-info .online-right .right-tab .tab-two{
+    flex-grow: 1;
+    height: 40px;
+    border-left: 1px solid #E9EEF2;
+    border-bottom: 1px solid #E9EEF2;
+}
