@@ -24,6 +24,15 @@ body {
     -moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
     -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
 }
+#online button {
+    cursor: pointer;
+}
+#online a {
+    cursor: pointer;
+}
+#online .iconfont {
+    cursor: pointer;
+}
 
 #online .online-header {
     padding-left: 10px;

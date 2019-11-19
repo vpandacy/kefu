@@ -11,7 +11,13 @@
     <title>pc右下角聊天</title>
     <link href="/css/fonts/iconfont.css" rel="stylesheet">
     <link href="/css/www/code/chat_mini.css" rel="stylesheet">
-    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="/js/www/code/jquery.min.js"></script>
+    <link href="/css/www/code/tools.css" rel="stylesheet" />
+    <link href="/css/www/code/emojibg.css" rel="stylesheet" />
+    <script language="javascript" src="/js/www/code/jquery.md5.js"></script>
+    <script language="javascript" src="/js/www/code/jquery.json-2.3.min.js?v=20150926"></script>
+    <script language="javascript" src="/js/www/code/niuniucapture.js?v=20171108"></script>
+    <script language="javascript" src="/js/www/code/capturewrapper.js?v=20171108"></script>
 </head>
 
 <body>
@@ -37,8 +43,9 @@
             </div>
             <div class="online-content">
                 <div class="tip-div">
-                <span class="content-tip">
-                    <span>显示上次聊天记录</span>
+                    <span class="content-tip">
+                    <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
+                    <span class="line">显示上次聊天记录</span>
                     <span>欢迎您的咨询，期待为您服务！</span>
                 </span>
                 </div>
@@ -53,12 +60,13 @@
                 </div>
             </div>
             <div class="online-submit">
-                <div class="submit-top"></div>
+                <div class="submit-top" id="content" contenteditable="true"></div>
                 <div class="submit-bottom">
                     <div class="bottom-left">
-                        <i class="iconfont icon-biaoqing"></i>
-                        <i class="iconfont icon-jianqie"></i>
-                        <i class="iconfont icon-wenjian"></i>
+                        <i class="iconfont icon-biaoqing" id="openFace"></i>
+                        <i class="iconfont icon-jianqie" onclick="StartCapture()"></i>
+                        <i class="iconfont icon-wenjian" ></i>
+                        <input type="file" id="inputFile" onchange="inputFlie.changeFile()" style="display: none">
                         <i class="iconfont icon-yiwenshuoming"></i>
                         <i class="iconfont icon-xiazai"></i>
                         <i class="iconfont icon-xingbiao"></i>
@@ -67,10 +75,64 @@
                         <div class="submit-button">发送</div>
                     </div>
                 </div>
+                <div class="online-author">
+                    <a>服务状态:已连接</a>
+                    <a>好商汇提供软件支持</a></div>
+            </div>
+            <div class="faceDivBox" style="display:none;">
+                <div class="faceDiv">
+                    <section class="emoji-box"></section>
+                </div>
+                <a class="closeFaceBox" href="javascript:void(0)">×</a>
             </div>
         </div>
     </div>
 </div>
 <script src="/js/www/code/chat_mini.js"></script>
+<script type="text/javascript" src="/js/www/code/emojisort.js"></script>
+<script type="text/javascript" src="/js/www/code/emoji.js"></script>
+<script>
+    $(document).ready(function(){
+        /**
+         * 表情
+         * */
+        sdEditorEmoj.Init(emojiconfig);
+        sdEditorEmoj.setEmoji({type:'div',id:"content"});
+
+        /**
+         * 截图初始化
+         */
+        $().ready(function(){
+            $('#moreparams').hide();
+
+            $('#captureselectSize').click( function(){
+                var autoFlag = $("#captureselectSize").attr("checked")=="checked" ? 1 : 0;
+                if(autoFlag == 1){
+                    $('#moreparams').show();
+                }
+                else{
+                    $('#moreparams').hide();
+                }
+            });
+            $('#getimagefromclipboard').click( function(){
+                $('#posdetail').hide();
+            });
+            $('#showprewindow').click( function(){
+                $('#posdetail').hide();
+            });
+            $('#fullscreen').click( function(){
+                $('#posdetail').hide();
+            });
+            $('#specificarea').click( function(){
+                $('#posdetail').show();
+            });
+
+            $('#showprewindow').click();
+            $('#autoupload').click();
+            $('#btnUpload').hide();
+            Init();
+        })
+    })
+</script>
 </body>
 </html>

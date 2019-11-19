@@ -6,8 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>pc页聊天</title>
+    <script src="/js/www/code/jquery.min.js"></script>
     <link href="/css/fonts/iconfont.css" rel="stylesheet">
     <link href="/css/www/code/online.css" rel="stylesheet">
+    <link href="/css/www/code/tools.css" rel="stylesheet" />
+    <link href="/css/www/code/emojibg.css" rel="stylesheet" />
+    <script language="javascript" src="/js/www/code/jquery.md5.js"></script>
+    <script language="javascript" src="/js/www/code/jquery.json-2.3.min.js?v=20150926"></script>
+    <script language="javascript" src="/js/www/code/niuniucapture.js?v=20171108"></script>
+    <script language="javascript" src="/js/www/code/capturewrapper.js?v=20171108"></script>
 </head>
 
 <body>
@@ -37,16 +44,23 @@
                 </div>
                 <div class="submit">
                     <div class="top">
-                        <i class="iconfont icon-biaoqing"></i>
-                        <i class="iconfont icon-jianqie"></i>
-                        <i class="iconfont icon-wenjian"></i>
+                        <i class="iconfont icon-biaoqing" id="openFace"></i>
+                        <i class="iconfont icon-jianqie" onclick="StartCapture()"></i>
+                        <i class="iconfont icon-wenjian" ></i>
+                        <input type="file" id="inputFile" onchange="inputFlie.changeFile()" style="display: none">
                         <i class="iconfont icon-yiwenshuoming"></i>
                         <i class="iconfont icon-xingbiao"></i>
                     </div>
-                    <div class="print" contenteditable="true" ></div>
+                    <div class="print" id="content" contenteditable="true" ></div>
                     <div class="bottom">
                     <div class="submit-button">发送</div>
                 </div>
+                </div>
+                <div class="faceDivBox" style="display:none;width: 500px;height: 150px;bottom: 155px;">
+                    <div class="faceDiv">
+                        <section class="emoji-box"></section>
+                    </div>
+                    <a class="closeFaceBox" href="javascript:void(0)">×</a>
                 </div>
             </div>
             <div class="online-right">
@@ -57,6 +71,50 @@
             </div>
         </div>
     </div>
-</body>
+    <script src="/js/www/code/chat_mini.js"></script>
+    <script type="text/javascript" src="/js/www/code/emojisort.js"></script>
+    <script type="text/javascript" src="/js/www/code/emoji.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /**
+             * 表情
+             * */
+            sdEditorEmoj.Init(emojiconfig);
+            sdEditorEmoj.setEmoji({type: 'div', id: "content"});
+            /**
+             * 截图初始化
+             */
+            $().ready(function(){
+                $('#moreparams').hide();
 
+                $('#captureselectSize').click( function(){
+                    var autoFlag = $("#captureselectSize").attr("checked")=="checked" ? 1 : 0;
+                    if(autoFlag == 1){
+                        $('#moreparams').show();
+                    }
+                    else{
+                        $('#moreparams').hide();
+                    }
+                });
+                $('#getimagefromclipboard').click( function(){
+                    $('#posdetail').hide();
+                });
+                $('#showprewindow').click( function(){
+                    $('#posdetail').hide();
+                });
+                $('#fullscreen').click( function(){
+                    $('#posdetail').hide();
+                });
+                $('#specificarea').click( function(){
+                    $('#posdetail').show();
+                });
+
+                $('#showprewindow').click();
+                $('#autoupload').click();
+                $('#btnUpload').hide();
+                Init();
+            })
+        })
+    </script>
+</body>
 </html>
