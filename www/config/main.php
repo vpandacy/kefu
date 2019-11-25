@@ -30,4 +30,12 @@ return [
         "urlManager" => require(__DIR__ . '/router.php')
     ],
     'params' => $params,
+    'modules' => [
+        'cs' => [
+            'class' => 'www\modules\cs\CSModule',
+        ],
+        'merchant' => [
+            'class' => 'www\modules\merchant\MerchantModule',
+        ]
+    ],
 ];

@@ -5,6 +5,7 @@ return [
     'enableStrictParsing' => false,
     'rules' => [
         '/<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-        '/' => '/default/index'
+        '/' => '/default/index',
+        '/<module:(cs|merchant)>/<controller:\w+>/<action:\w+>/<id:\d+>' =>'<module>/<controller>/<action>',
     ],
 ];

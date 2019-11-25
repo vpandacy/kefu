@@ -1,0 +1,451 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+#chatExe {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    /* border: 1px solid red; */
+}
+/*菜单样式*/
+#chatExe #menu{
+    /* width: 100px; */
+    /* z-index: 100; */
+    /* position: absolute; */
+    /* right: 410px; */
+    /* top: 53px; */
+    display: none;
+    width: 120px;
+    background: #FEFEFE;
+    /* border: solid 1px #444444; */
+    cursor: pointer;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 1px 1px 5px #000, -1px -1px 5px #fff;
+    -webkit-box-shadow: 1px 1px 5px #000, -1px -1px 5px #fff;
+    -moz-box-shadow: 1px 1px 5px #000,-1px -1px 5px #fff;
+    -o-box-shadow: 1px 1px 5px #000,-1px -1px 5px #fff;
+    font-size: 16px;
+    position: absolute;
+}
+#chatExe #menu a{
+    color: black;
+    display: inline-block;
+    background-color: #fff;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    border: 1px black;
+}
+#chatExe #menu a:hover{  background-color: #87939a;  }
+
+#chatExe .tab .tab-switch {
+    display: flex;
+    display:-webkit-flex;
+    height: 45px;
+    font-size: 14px;
+    border-bottom: 1px solid rgb(225, 229, 236);
+}
+#chatExe .tab .tab-content {
+    flex: 1;
+}
+
+#chatExe .tab .switch-action {
+    border-bottom: 2px solid rgb(87, 173, 104) !important;
+}
+
+#chatExe .tab .tab-one {
+    padding: 5px 0;
+    flex: 1;
+    /* display */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -o-box;
+    display: box;
+    /* box-align */
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -o-box-align: center;
+    box-align: center;
+    /* box-pack */
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -o-box-pack: center;
+    box-pack: center;
+}
+
+#chatExe .tab .tab-two {
+    flex: 1;
+    /* display */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -o-box;
+    display: box;
+    /* box-align */
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    -o-box-align: center;
+    box-align: center;
+    /* box-pack */
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -o-box-pack: center;
+    box-pack: center;
+}
+
+#chatExe .dflex {
+    display: flex;
+    display:-webkit-flex;
+}
+
+#chatExe .flex1 {
+    width: 100%;
+    display: flex;
+    display:-webkit-flex;
+    flex-direction: column;
+}
+
+#chatExe .exe-menu {
+    width: 5%;
+    padding: 15px 0px;
+    border: 1px solid;
+    text-align: center;
+    background: rgb(31, 37, 50);
+    display: flex;
+    display:-webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#chatExe .exe-menu .menu-head {
+    width: 80%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+#chatExe .exe-menu .menu-icon-top {
+    margin: 15px 0px;
+}
+
+#chatExe .exe-menu .menu-icon-bottom {
+    position: relative;
+    bottom: 0;
+}
+
+#chatExe .exe-menu .icon {
+    color: rgb(132, 140, 156);
+    margin: 15px 0px;
+}
+
+#chatExe .exe-menu .fsize32 {
+    font-size: 32px;
+}
+
+#chatExe .exe-menu .fsize22 {
+    font-size: 22px;
+}
+
+#chatExe .exe-menu .icon-action {
+    color: rgb(225, 225, 225) !important;
+}
+
+#chatExe .exe-menu .menu-online {
+    width: 12%;
+    height: 4%;
+    border-radius: 50%;
+    background: rgb(86, 216, 59);
+    margin: 0 auto;
+}
+
+#chatExe .exe-keep {
+    width: 22%;
+    background: rgb(255, 255, 255);
+    border-right: 1px solid rgb(216, 221, 230);
+    display: flex;
+    display:-webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#chatExe .exe-keep .fg1 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatExe .exe-keep .keep-census {
+    background: rgb(247, 248, 250);
+    height: 45px;
+    display: inline-flex;
+    display:-webkit-inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 12px;
+}
+
+#chatExe .exe-keep .fsize25 {
+    font-size: 25px;
+}
+
+#chatExe .exe-keep .tab .tab-content-list {
+    display: flex;
+    display:-webkit-flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+#chatExe .exe-keep .tab .tab-content-list div{
+    pointer-events:none;
+}
+#chatExe .exe-keep .tab .tab-content-list:hover {
+    background: #87939a;
+    color: white;
+    cursor: pointer;
+}
+
+#chatExe .exe-keep .tab .tab-content-list .content-list-time {
+    color: rgb(190, 190, 192);
+}
+
+#chatExe .exe-header {
+    width: 100%;
+    min-height: 40px;
+    border-bottom: 1px solid rgb(225, 229, 236);
+    background: rgb(247, 248, 250);
+    display: flex;
+    display:-webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+#chatExe .exe-header .exe-header-info-left {
+    margin-left: 10px;
+}
+
+#chatExe .exe-header .exe-header-info-left span:nth-child(1) {
+    font-weight: 600;
+    color: rgb(55, 85, 124);
+}
+
+#chatExe .exe-header .exe-header-info-left span:nth-child(2) {
+    color: rgb(157, 165, 180);
+}
+
+#chatExe .exe-header .exe-header-info-right {
+    margin-right: 10px;
+    color: rgb(98, 119, 140);
+}
+
+#chatExe .exe-header .exe-header-info-right i {
+    margin: 0 10px 0 0;
+}
+
+#chatExe .exe-content-info {
+    flex-grow: 1;
+}
+
+#chatExe .exe-content {
+    display: flex;
+    display:-webkit-flex;
+    flex-direction: column;
+    flex: 3;
+    background: rgb(247, 248, 250);
+}
+
+#chatExe .exe-content .exe-content-top {
+    height: 50px;
+    border-bottom: 1px solid rgb(225, 229, 236);
+    display: flex;
+    display:-webkit-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    padding: 0 10px;
+}
+
+#chatExe .exe-content .exe-content-top .content-top-info {
+    flex: 1;
+    color: rgb(125, 128, 136);
+}
+
+#chatExe .exe-content .exe-content-top .content-top-info .info {
+    height: 26px;
+    line-height: 26px;
+}
+
+#chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
+    color: rgb(0, 0, 0);
+    width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#chatExe .exe-content .exe-content-history {
+    flex-grow: 1;
+}
+
+#chatExe .exe-content .exe-content-history .history-close {
+    background: rgb(230, 233, 239);
+    color: rgb(112, 130, 166);
+    /* width: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content; */
+    display: table;
+    padding: 0 5px;
+    font-size: 14px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 5px;
+    border-radius: 4px;
+    margin: 10px auto;
+}
+
+#chatExe .exe-content .exe-content-sumbit {
+    display: flex;
+    display:-webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30%;
+    border-top: 1px solid rgb(225, 229, 236);
+}
+
+#chatExe .exe-content .exe-content-sumbit div span i {
+    margin: 0 5px;
+}
+
+#chatExe .exe-content .exe-content-sumbit div span label {
+    margin: 0 10px 0 0;
+}
+
+#chatExe .exe-content .exe-content-sumbit div:nth-child(1) {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    display:-webkit-flex;
+    font-size: 13px;
+    height: 28px;
+    color: rgb(98, 119, 140);
+}
+
+#chatExe .exe-content .exe-content-sumbit .sumbit-input {
+    flex: 1;
+    border: none;
+    outline: 0;
+    padding: 10px;
+}
+#chatExe .exe-content .exe-content-sumbit .sumbit-bottom {
+    display: flex;
+    display:-webkit-flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+#chatExe .exe-content .exe-content-sumbit .sumbit-bottom input {
+    margin: 0;
+    /* margin-top: 2px; */
+}
+
+#chatExe .exe-content .exe-content-sumbit .sumbit-bottom .sumbit {
+    background: rgb(225, 91, 77);
+    border-radius: 2px;
+    color: white;
+    min-width: 50px;
+    height: 25px;
+    text-align: center;
+    display: inline-flex;
+    display:-webkit-inline-flex;
+    line-height: 25px;
+    padding: 0 5px 0 10px;
+}
+
+#chatExe .exe-content .exe-content-sumbit .sumbit-bottom .icon-jiantou {
+    font-size: 12px;
+}
+
+#chatExe .exe-info {
+    flex: 1;
+    background: rgb(247, 248, 250);
+    border-left: 1px solid rgb(225, 229, 236);
+    display: flex;
+    display:-webkit-flex;
+    flex-direction: column;
+}
+#chatExe .exe-info .height50 {
+    height: 50px !important;
+}
+
+#chatExe .exe-info .two {
+    border-top: 1px solid rgb(225, 229, 236);
+}
+
+#chatExe .exe-info .two .tab-content {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#chatExe .exe-info .two .content-select {
+    font-size: 14px;
+}
+
+#chatExe .exe-info .two .content-select .icon-wenjian {
+    background: rgb(245, 203, 105);
+}
+
+#chatExe .exe-info .two .tab-content input {
+    width: 100%;
+    height: 25px;
+    border-radius: 20px;
+    border: 1px solid rgb(157, 165, 180);
+    margin: 10px 0;
+    padding: 0 0 0 10px;
+}
+
+#chatExe .exe-info .two .tab-content input::placeholder {
+    padding: 10px;
+    line-height: 30px;
+}
+
+#chatExe .exe-info .one .tab-content {
+    display: flex;
+    display:-webkit-flex;
+    flex: 1;
+    flex-direction: column;
+    /*height: 90%;*/
+    justify-content: space-around;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+#chatExe .exe-info .one .tab-content div {
+    color: rgb(125, 128, 136);
+    margin: 5% 0;
+}
+
+#chatExe .exe-info .one .tab-content div:nth-child(1) {
+    color: rgb(48, 146, 251) !important
+}
+
+#chatExe .fGrow1 {
+    flex: 1;
+}
+
+#chatExe .height10 {
+    height: 10% !important;
+}

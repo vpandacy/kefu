@@ -12,7 +12,7 @@ class CodeController extends BaseController
 
     public function actionIndex(){
         header('Content-type: text/javascript');
-        return $this->render("index");
+        return $this->render("index.js");
     }
 
     public function actionChat(){
