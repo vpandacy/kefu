@@ -2,12 +2,12 @@
 
 namespace www\modules\merchant\controllers;
 
-use yii\web\Controller;
+use www\modules\merchant\controllers\common\BaseController;
 
 /**
  * Default controller for the `merchant` module
  */
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     /**
      * Renders the index view for the module

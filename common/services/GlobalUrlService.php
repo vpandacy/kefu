@@ -1,6 +1,7 @@
 <?php
 namespace common\services;
 
+use common\components\helper\StaticAssetsHelper;
 use yii\helpers\Url;
 
 class GlobalUrlService {
@@ -25,13 +26,34 @@ class GlobalUrlService {
 		return $domain.$path;
 	}
 
+    /**
+     * Author: Vincent
+     * 加载www应用的js 和 css
+     * @param $uri
+     * @param array $params
+     *
+     */
 	public static function buildWwwStaticUrl(  $uri, $params = [] ){
-        $release_version = defined("RELEASE_VERSION") ? RELEASE_VERSION : time();
+        $release_version = StaticAssetsHelper::getReleaseVersion();
 		$params = $params + [ "ver" => $release_version ];
 		$path = Url::toRoute(array_merge([ $uri ], $params));
 		$domain = \Yii::$app->params['domains']['www'];
-		return $domain."/static".$path;
+		return $domain.$path;
 	}
+
+    /**
+     * Author: apanly
+     * 获取static cdn目录的静态资源，css 和  js
+     * @param $path
+     * @param array $params
+     */
+
+    public static function buildStaticUrl($path, $params = [])
+    {
+        $domain = \Yii::$app->params['domains']['static'];
+        $path = Url::toRoute(array_merge([$path], $params));
+        return $domain . $path;
+    }
 
     public static function buildPicStaticUrl($bucket ,$img_key,$params = []){
         $bucket = $bucket?$bucket:"pic3";

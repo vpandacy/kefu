@@ -8,10 +8,10 @@ use \common\services\GlobalUrlService;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>pc右下角聊天</title>
-    <link href="<?=GlobalUrlService::buildWWWUrl("/css/fonts/iconfont.css");?>" rel="stylesheet">
-    <link href="<?=GlobalUrlService::buildWWWUrl("/css/www/code/chat_mini.css");?> rel="stylesheet">
-    <link href="<?=GlobalUrlService::buildWWWUrl("/css/www/code/tools.css");?>" rel="stylesheet" />
-    <link href="<?=GlobalUrlService::buildWWWUrl("/css/www/code/emojibg.css");?>" rel="stylesheet" />
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/fonts/iconfont.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/www/code/chat_mini.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/www/code/tools.css");?>" rel="stylesheet" />
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/www/code/emojibg.css");?>" rel="stylesheet" />
 
 </head>
 
@@ -83,15 +83,15 @@ use \common\services\GlobalUrlService;
         </div>
     </div>
 </div>
-<script src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/jquery.min.js");?>"></script>
-<script language="javascript" src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/jquery.md5.js");?>"></script>
-<script language="javascript" src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/jquery.json-2.3.min.js?v=20150926");?>"></script>
-<script language="javascript" src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/niuniucapture.js?v=20171108");?>"></script>
-<script language="javascript" src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/capturewrapper.js?v=20171108");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/jquery.min.js");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/jquery.md5.js");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/jquery.json-2.3.min.js?v=20150926");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/niuniucapture.js?v=20171108");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/capturewrapper.js?v=20171108");?>"></script>
 
-<script type="text/javascript" src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/emojisort.js");?>"></script>
-<script type="text/javascript" src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/emoji.js");?>"></script>
-<script src="<?=GlobalUrlService::buildWWWUrl("/js/www/code/chat_mini.js");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/emojisort.js");?>"></script>
+<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/emoji.js");?>"></script>
+<script src="<?=GlobalUrlService::buildWwwStaticUrl("/js/www/code/chat_mini.js");?>"></script>
 
 <script>
     $(document).ready(function(){

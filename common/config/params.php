@@ -1,6 +1,7 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'support@example.com',
-    'user.passwordResetTokenExpire' => 3600,
+    'company' => [
+        "copyright" => '版权所有 xxxx',
+        "title" => "汇通云客服",
+    ],
 ];

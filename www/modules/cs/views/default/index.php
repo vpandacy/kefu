@@ -8,8 +8,8 @@ use \common\services\GlobalUrlService;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>exe端聊天</title>
-    <link href="<?=GlobalUrlService::buildWWWUrl("/css/cs/iconfont/iconfont.css");?>" rel="stylesheet">
-    <link href="<?=GlobalUrlService::buildWWWUrl("/css/cs/exe.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/cs/iconfont/iconfont.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/cs/exe.css");?>" rel="stylesheet">
 </head>
 
 <body onclick="tab.listHide(true)">
@@ -194,6 +194,6 @@ use \common\services\GlobalUrlService;
         </div>
     </div>
 </div>
-<script src="<?=GlobalUrlService::buildWWWUrl("/js/cs/exe.js");?>"></script>
+<script src="<?=GlobalUrlService::buildWwwStaticUrl("/js/cs/exe.js");?>"></script>
 </body>
 </html>
