@@ -38,6 +38,7 @@ body {
     font-size: 16px;
     position: absolute;
 }
+#chatExe .iconfont,#chatExe a,#chatExe .button, #chatExe button {cursor: pointer !important;}
 #chatExe #menu a{
     color: black;
     display: inline-block;

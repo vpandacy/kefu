@@ -8,7 +8,7 @@ use \common\services\GlobalUrlService;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>exe端聊天</title>
-    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/cs/iconfont/iconfont.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/fonts/iconfont.css");?>" rel="stylesheet">
     <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/cs/exe.css");?>" rel="stylesheet">
 </head>
 
@@ -53,16 +53,17 @@ use \common\services\GlobalUrlService;
     </div>
     <!-- 右侧聊天记录、聊天对象-->
     <div class="exe-keep">
-        <div class="tab fg1">
-            <div class="tab-switch">
+        <div class="tab fg1" >
+            <div class="tab-switch"  >
                 <div class="tab-one switch-action">
                     <i class="iconfont icon-xiaoxi fsize25"></i>
                 </div>
-                <div class="tab-two">
+                <div class="tab-one">
                     <i class="iconfont icon-dingshi fsize25"></i>
                 </div>
             </div>
             <div class="tab-content">
+                <div class="content-one">
                 <div oncontextmenu="tab.list(event)" class="tab-content-list">
                     <div>
                         <i class="iconfont icon-shouji"></i>
@@ -90,12 +91,24 @@ use \common\services\GlobalUrlService;
                         <span class="content-list-time">09:45</span>
                     </div>
                 </div>
+                </div>
+                <div class="content-one" style="display: none;">
+                    <div oncontextmenu="tab.list(event)" class="tab-content-list">
+                        <div>
+                            <i class="iconfont icon-shouji"></i>
+                            <span>莆田4</span>
+                        </div>
+                        <div>
+                            <span class="content-list-time">09:45</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="keep-census">
-            <span>对话:2</span>
-            <span>等待:0</span>
-            <span>访客:1329</span>
+            <a>对话:2</a>
+            <a>等待:0</a>
+            <a>访客:1329</a>
         </div>
     </div>
     <!-- 聊天栏 -->
@@ -154,7 +167,7 @@ use \common\services\GlobalUrlService;
                             <input type="checkbox" />
                             消息预览
                         </div>
-                        <div>
+                        <div class="button">
                             <div class="sumbit">发送<i class="iconfont icon-anjianfengexian"></i><i
                                         class="iconfont icon-jiantou"></i></div>
                         </div>
@@ -163,11 +176,12 @@ use \common\services\GlobalUrlService;
             </div>
             <div class="exe-info">
                 <div class="tab fGrow1 one">
-                    <div class="tab-switch height10 height50">
+                    <div class="tab-switch height10 height50" >
                         <div class="tab-one switch-action">访客信息</div>
-                        <div class="tab-two">查看轨迹</div>
+                        <div class="tab-one">查看轨迹</div>
                     </div>
                     <div class="tab-content">
+                        <div class="content-one">
                         <div>+添加标签</div>
                         <div>姓名：</div>
                         <div>电话：</div>
@@ -175,18 +189,29 @@ use \common\services\GlobalUrlService;
                         <div>QQ：</div>
                         <div>微信：</div>
                         <div>备注：</div>
+                        </div>
+                        <div class="content-one" style="display: none;">
+                            <div>+添加标签</div>
+                            <div>姓名：</div>
+                            <div>电话：</div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab fGrow1 two">
-                    <div class="tab-switch height10 height50">
-                        <div class="tab-one switch-action">常用语</div>
-                        <div class="tab-two">常用文件</div>
+                    <div class="tab-switch height10 height50" >
+                        <div class="tab-one switch-action" ><a>常用语</a></div>
+                        <div class="tab-one"><a>常用文件</a></div>
                     </div>
                     <div class="tab-content">
+                        <div class="content-one">
                         <input type="text" placeholder="关键词搜索">
                         <div class="content-select">
                             <i class="iconfont icon-wenjian"></i>
                             <span>默认私有词语</span>
+                        </div>
+                        </div>
+                        <div class="content-one" style="display: none;">
+                            123
                         </div>
                     </div>
                 </div>
@@ -194,6 +219,7 @@ use \common\services\GlobalUrlService;
         </div>
     </div>
 </div>
+<script src="<?=GlobalUrlService::buildWwwStaticUrl("/js/jquery.js");?>"></script>
 <script src="<?=GlobalUrlService::buildWwwStaticUrl("/js/cs/exe.js");?>"></script>
 </body>
 </html>

@@ -3,116 +3,52 @@ use www\assets\MerchantAsset;
 use \common\services\GlobalUrlService;
 MerchantAsset::register($this);
 ?>
-<?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html class="no-js">
+<html>
 <head>
     <meta charset="utf-8">
     <link rel="icon" href="<?=GlobalUrlService::buildWwwStaticUrl("/images/favicon.ico");?>" type="image/x-icon"/>
     <title><?=Yii::$app->params["company"]["title"];?> -- 商户后台</title>
-    <?php $this->head() ?>
-    <?php $this->beginBody() ?>
+    <link href="//at.alicdn.com/t/font_1531636_sc0djrq72ao.css"  rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/merchant/merchant.css");?>" rel="stylesheet">
 </head>
 <body>
-<div class="page_wrap">
-    <div class="box_wrap">
-        <div class="box_left_nav">
-            <h1 class="logo-default">
-                <a target="_blank" href="<?= GlobalUrlService::buildWwwUrl("/"); ?>">
-                    <img src="<?= GlobalUrlService::buildWwwStaticUrl("/images/logo_tiny.png"); ?>" alt="<?= Yii::$app->params['company']['title']; ?>" class="tiny"/>
-                    <img src="<?= GlobalUrlService::buildWwwStaticUrl("/images/logo.png"); ?>" alt="<?= Yii::$app->params['company']['title']; ?>" class="normal"/>
+    <div id="merchant">
+        <div class="chant_all">
+        <!-- 左侧菜单栏 -->
+        <div class="left_menu"> 
+            <div class="menu-logo">
+                <a>
+                <img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/logo1.png");?>">
                 </a>
-            </h1>
-
-            <h2 class="version">云客服</h2>
-            <ul class="menu_list">
-                <li class="dashboard">
-                    <a href="<?= GlobalUrlService::buildMerchantUrl("/"); ?>">
-                        <i class="icon_club">&#xe6c0;</i><span>仪表盘</span>
-                    </a>
-                </li>
-                <li class="chat">
-                    <a href="<?= GlobalUrlService::buildMerchantUrl("/chat/log"); ?>">
-                        <i class="icon_club">&#xe61e;</i><span>日志</span>
-                    </a>
-                </li>
-                <li class="stat">
-                    <a href="<?= GlobalUrlService::buildMerchantUrl("/stat/trace"); ?>">
-                        <i class="fa fa-pie-chart fa-lg"></i><span>统计</span>
-                    </a>
-                </li>
-                <li class="staff">
-                    <a href="<?= GlobalUrlService::buildMerchantUrl("/staff/index"); ?>">
-                        <i class="icon_club">&#xe60b;</i><span>客服</span>
-                    </a>
-                </li>
-                <li class="help">
-                    <a href="<?= GlobalUrlService::buildMerchantUrl("/help/index"); ?>">
-                        <i class="icon_club">&#xe624;</i><span>接入帮助</span>
-                    </a>
-                </li>
-                <li>
-                    <a target="_blank" href="<?= GlobalUrlService::buildMerchantUrl("/help/cs"); ?>">
-                        <i class="icon_club">&#xe60c;</i><span>客服工作台</span>
-                    </a>
-                </li>
-                <li class="setting">
-                    <a href="<?= GlobalUrlService::buildMerchantUrl("/setting/config-info"); ?>">
-                        <i class="icon_club">&#xe605;</i><span>设置</span>
-                    </a>
-                </li>
-            </ul>
-            <span class="menu_switch"><i class="icon_club">&#xe602;</i><i class="icon_club arrow_left">&#xe60e;</i></span>
-        </div>
-        <div class="box_main">
-            <div class="box_top">
-                <div class="row">
-                    <div class="row-in">
-                        <div class="columns-24">
-                            <div class="top_right hastips">
-                                <a href="<?= GlobalUrlService::buildMerchantUrl("/notice/index") ?>" class="icon_club hide" data-tip="消息">
-                                    <span class="icon_club icon1">&#xe60a;</span>
-                                </a>
-
-                                <a href="javascript:void(0);" class="icon_club user has-panel" data-panel="user_menu">
-                                    <img src="<?= GlobalUrlService::buildWwwStaticUrl("/images/no-avatar.png"); ?>" alt="80*80"/>
-                                </a>
-                                <ul class="user_menu hide">
-                                    <li class="user_profile border">
-                                        <p class="icon_club user">
-                                            <img src="<?= GlobalUrlService::buildWwwStaticUrl("/images/no-avatar.png"); ?>" alt="80*80"/>
-                                        </p>
-                                        <p class="t1">
-                                            <label class="t2"><?= $this->params['current_user']["login_name"]??""; ?></label>
-                                        </p>
-                                        <p class="t3"><?= $this->params['current_user']["login_name"]??""; ?></p>
-                                        <a href="<?= GlobalUrlService::buildMerchantUrl("/user/set"); ?>" class="user_edit hide" style="display: none;">编辑</a>
-                                    </li>
-                                    <li class="each border" style="display: none;">
-                                        <a href="<?= GlobalUrlService::buildMerchantUrl("/user/pwd"); ?>"><i
-                                                class="icon_club">&#xe610;</i>修改密码</a>
-                                    </li>
-                                    <li class="each">
-                                        <a href="<?= GlobalUrlService::buildMerchantUrl("/user/logout"); ?>"><i class="icon_club">&#xe618;</i>退出</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="content_wrap">
-                <?php echo $content ?>
+            <div class="menu-version">俱乐部版</div>
+            <div class="menu-title">
+                <a><i class="iconfont icon-yonghuguanli"></i></a>
+                <a><i class="iconfont icon-liaotianguanli"></i></a>
+                <a><i class="iconfont icon-quanjushezhi"></i></a>
+                <a><i class="iconfont icon-heimingdan"></i></a>
+                <a><i class="iconfont icon-fengge"></i></a>
+            </div>
+            <div class="menu-show-hide">
+                <a><i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1"></i></a>
             </div>
         </div>
-    </div>
-    <div class="footer_wrap">
-        <div class="inner">
-            <?= Yii::$app->params['company']['copyright']; ?>
+        <!-- 右侧菜单栏 -->
+        <div class="right_merchant">
+        <!-- 头部个人信息 -->
+        <div class="right_top">
+            <a><i class="iconfont icon-quanjushezhi"></i></a>
+            <a><i class="iconfont icon-xinxi-copy"></i></a>
+            <a><i class="iconfont icon-tongzhi"></i></a>
+            <a><img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/test.png");?>"></a>
+        </div>
+        <!-- 内容区域 -->
+        <div class="right_content">
+            <?php echo $content ?>
+        </div>
+        </div>
         </div>
     </div>
-</div>
-<?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage() ?>
