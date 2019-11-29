@@ -6,6 +6,52 @@
 ::-webkit-scrollbar-thumb {background-color:#606d71;background-clip:padding-box;min-height:28px;-webkit-border-radius: 2em;-moz-border-radius: 2em;border-radius:2em;}
 /*滚动条移上去的背景*/
 ::-webkit-scrollbar-thumb:hover {background-color:#606d71;}
+/**  主题颜色参考 https://whvse.gitee.io/easywebpage/docs/generater_theme.html*/
+/** 按钮 */
+.layui-btn:not(.layui-btn-primary):not(.layui-btn-normal):not(.layui-btn-warm):not(.layui-btn-danger):not(.layui-btn-disabled) {
+    background-color: rgba(1, 170, 237, 1);
+}
+.layui-btn.layui-btn-primary:hover {
+    border-color: rgba(1, 170, 237, 1);
+}
+/** 开关 */
+.layui-form-onswitch {
+    border-color: rgba(1, 170, 237, 1);
+    background-color: rgba(1, 170, 237, 1);
+}
+/** 分页插件 */
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: rgba(1, 170, 237, 1);
+}
+.layui-table-page .layui-laypage input:focus {
+    border-color: rgba(1, 170, 237, 1) !important;
+}
+.layui-table-view select:focus {
+    border-color: rgba(1, 170, 237, 1) !important;
+}
+.layui-table-page .layui-laypage a:hover {
+    color: rgba(1, 170, 237, 1);
+}
+/** 单选按钮 */
+.layui-form-radio > i:hover, .layui-form-radioed > i {
+    color: rgba(1, 170, 237, 1);
+}
+/** 下拉条目选中 */
+.layui-form-select dl dd.layui-this {
+    background-color: rgba(1, 170, 237, 1);
+}
+/** 选项卡 */
+.layui-tab-brief > .layui-tab-title .layui-this {
+    color: rgba(1, 170, 237, 1);
+}
+.layui-tab-brief > .layui-tab-more li.layui-this:after, .layui-tab-brief > .layui-tab-title .layui-this:after {
+    border-color: rgba(1, 170, 237, 1) !important;
+}
+/** 面包屑导航 */
+.layui-breadcrumb a:hover {
+    color: rgba(1, 170, 237, 1) !important;
+}
+
 html  a, .iconfont,button,img {cursor: pointer;text-decoration:none;font-size: 14px;}
 html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     margin: 0;
@@ -24,6 +70,29 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     display: -o-flex;
     display: -webkit-flex;
 }
+#merchant .fa {    font-size: 20px;cursor: pointer}
+#merchant .layui-form-pane .layui-form-item[pane] {
+    line-height: 38px;
+}
+#merchant .layui-form-pane .layui-form-item[pane] .layui-input-block{
+    padding-left:10px ;
+}
+/** 筛选条件弹出层 **/
+#merchant .filter_panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 500px;
+    width: 300px;
+    /*border: 1px solid red;*/
+    overflow: auto;
+    padding: 15px;
+    z-index: 999;
+    /*transition:height 1s;*/
+    /*-moz-transition:height 1s; !* Firefox 4 *!*/
+    /*-webkit-transition:height 1s; !* Safari and Chrome *!*/
+    /*-o-transition:height 1s; !* Opera *!*/
+}
 /**  左侧菜单 **/
 #merchant .dis_block {
     display: block !important;
@@ -40,10 +109,10 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     position: fixed;
     /*overflow: hidden;*/
 
-    transition:width 2s;
-    -moz-transition:width 2s; /* Firefox 4 */
-    -webkit-transition:width 2s; /* Safari and Chrome */
-    -o-transition:width 2s; /* Opera */
+    transition:width 1s;
+    -moz-transition:width 1s; /* Firefox 4 */
+    -webkit-transition:width 1s; /* Safari and Chrome */
+    -o-transition:width 1s; /* Opera */
 }
 /*#merchant .chant_all .left_menu:hover {*/
 /*    width: 190px;*/

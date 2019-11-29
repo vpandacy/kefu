@@ -28,6 +28,7 @@ class MerchantAsset extends AssetBundle
         ];
         $this->js = [
             GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+            GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),
             GlobalUrlService::buildWwwStaticUrl("/js/merchant/merchant.js"),
             GlobalUrlService::buildWwwStaticUrl("/js/merchant/domResize.js"),
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
