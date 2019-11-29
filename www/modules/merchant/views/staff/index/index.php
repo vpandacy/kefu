@@ -30,7 +30,7 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
             <button class="layui-btn layui-btn-sm" lay-event="isAll">恢复</button>
         </div>
         <div>
-            <i class="fa fa-glass" aria-hidden="true"></i>
+            <i class="fa fa-glass" aria-hidden="true" title="筛选"></i>
         </div>
     </div>
 </script>
