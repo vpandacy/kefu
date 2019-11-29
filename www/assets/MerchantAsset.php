@@ -20,13 +20,18 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildWwwStaticUrl("/css/merchant/common_default.css"),
             GlobalUrlService::buildWwwStaticUrl("/css/merchant/scrollbar.min.css"),
             GlobalUrlService::buildStaticUrl("/font-awesome/v4.7/css/font-awesome.min.css"),
+            "//at.alicdn.com/t/font_1531636_4eofpbf48k.css",
+            GlobalUrlService::buildStaticUrl("/layui/v2.5/css/layui.css"),
+            GlobalUrlService::buildWwwStaticUrl("/css/merchant/merchant.css"),
+            GlobalUrlService::buildWwwStaticUrl("/css/merchant/merchantfrom.css"),
+            GlobalUrlService::buildWwwStaticUrl("/css/merchant/animate.css")
         ];
         $this->js = [
             GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
-            GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery.mCustomScrollbar.min.js'),
-            GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery.mousewheel.min.js'),
-            GlobalUrlService::buildWwwStaticUrl('/js/merchant/core.min.js'),
-            GlobalUrlService::buildWwwStaticUrl('/js/merchant/common.js')
+            GlobalUrlService::buildWwwStaticUrl("/js/merchant/merchant.js"),
+            GlobalUrlService::buildWwwStaticUrl("/js/merchant/domResize.js"),
+            GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
+            GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
         ];
         parent::registerAssetFiles($view);
     }

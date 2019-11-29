@@ -1,23 +1,37 @@
 <?php
 use \common\services\GlobalUrlService;
 use \common\components\helper\StaticAssetsHelper;
-//StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
+StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
 ?>
-<!--  表格用的layui 具体配置参考：https://www.layui.com/demo/table/auto.html -->
 <div id="staff_index_index">
     <div class="staff_tab">
-        <div class="tab_list tab_active" ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">子账号管理</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/department/index');?>">部门管理</a></div>
-        <div class="tab_list"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/role/index');?>">角色管理</a></div>
+        <div class="tab_list" ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/index/index');?>">常用语管理</a></div>
+        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/clueauto/index');?>">线索自动采集</a></div>
+        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/breakauto/index');?>">自动断开</a></div>
+        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/company/index');?>">企业设置</a></div>
+        <div class="tab_list tab_active"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/offline/index');?>">离线表单设置</a></div>
+
     </div>
     <div class="tab_staff_content">
-    <div class="demoTable" style="    text-align: left;margin:10px 18px;">
-        <button class="layui-btn" data-type="reload">搜索</button>
-        <div class="layui-inline">
-            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="日期时间">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="接待客服">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="来源">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="渠道">
+            </div>
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="是否有渠道">
+            </div>
+            <button class="layui-btn" data-type="reload">搜索</button>
         </div>
-    </div>
-    <table class="layui-hide" id="test"></table>
+        <table class="layui-hide" id="test"></table>
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">
@@ -50,7 +64,7 @@ use \common\components\helper\StaticAssetsHelper;
                 ,{field:'experience', title: '身份'}
                 ,{field:'score', title: '入职时间', sort: true}
                 ,{field:'classify', title: '状态'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', fixed: 'right'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
             ]]
             ,id: 'testReload'
             ,page: true
@@ -65,7 +79,7 @@ use \common\components\helper\StaticAssetsHelper;
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
-                            id: demoReload.val()
+                        id: demoReload.val()
                     }
                 }, 'data');
             }

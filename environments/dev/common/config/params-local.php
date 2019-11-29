@@ -5,6 +5,7 @@ return [
         "admin" => "http://admin.kefu.dev.hsh568.cn",
         "merchant" => "http://www.kefu.dev.hsh568.cnt/merchant",
         "cs" => "http://www.kefu.dev.hsh568.cn/cs",
+        "static" => "http://static.dev.hsh568.cn"
     ],
     "websocket" => "ws://www.kefu.dev.hsh568.cn/ws/"
 ];

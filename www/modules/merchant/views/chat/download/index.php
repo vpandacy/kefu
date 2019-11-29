@@ -6,18 +6,17 @@ use \common\components\helper\StaticAssetsHelper;
 <!--  表格用的layui 具体配置参考：https://www.layui.com/demo/table/auto.html -->
 <div id="staff_index_index">
     <div class="staff_tab">
-        <div class="tab_list tab_active" ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">子账号管理</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/department/index');?>">部门管理</a></div>
-        <div class="tab_list"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/role/index');?>">角色管理</a></div>
+        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/chat/index/index');?>">聊天管理</a></div>
+        <div class="tab_list tab_active"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/chat/download/index');?>">下载记录</a></div>
     </div>
     <div class="tab_staff_content">
-    <div class="demoTable" style="    text-align: left;margin:10px 18px;">
-        <button class="layui-btn" data-type="reload">搜索</button>
-        <div class="layui-inline">
-            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
+            <button class="layui-btn" data-type="reload">搜索</button>
+            <div class="layui-inline">
+                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
         </div>
-    </div>
-    <table class="layui-hide" id="test"></table>
+        <table class="layui-hide" id="test"></table>
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">
@@ -50,7 +49,7 @@ use \common\components\helper\StaticAssetsHelper;
                 ,{field:'experience', title: '身份'}
                 ,{field:'score', title: '入职时间', sort: true}
                 ,{field:'classify', title: '状态'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', fixed: 'right'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
             ]]
             ,id: 'testReload'
             ,page: true
@@ -65,7 +64,7 @@ use \common\components\helper\StaticAssetsHelper;
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: {
-                            id: demoReload.val()
+                        id: demoReload.val()
                     }
                 }, 'data');
             }
