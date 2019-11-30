@@ -73,9 +73,51 @@ use \common\components\helper\StaticAssetsHelper;
             <a><i class="iconfont icon-quanjushezhi"></i></a>
             <a><i class="iconfont icon-xinxi-copy"></i></a>
             <a><i class="iconfont icon-tongzhi"></i></a>
-            <a><img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/test.png");?>"></a>
+            <a class="menu_info_link"><img class="menu_info_img" src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/test.png");?>"></a>
+            <div class="menu_info_edit dis_none">
+                <div class="info_edit_one">
+                    <div >
+                        <img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/test.png");?>">
+                    </div>
+                    <div>
+                    <div class="info_ms_two">
+                        <label>超级管理员</label>
+                    </div>
+                    <div class="info_ms_three">
+                        <label>17673642435</label>
+                    </div>
+                    </div>
+                    <div>
+                        <a >编辑</a>
+                    </div>
+                </div>
+                <div class="info_edit_two backFFF">
+                    <div >
+                       <i class="iconfont icon-tuichu"></i>
+                    </div>
+                    <div>
+                        退出
+                    </div>
+                </div>
+                <div class="info_edit_two backFFF">
+                    <div >
+                        <i class="iconfont icon-tuichu"></i>
+                    </div>
+                    <div>
+                        退出
+                    </div>
+                </div>
+                <div class="info_edit_two backFFF">
+                    <div >
+                        <i class="iconfont icon-tuichu"></i>
+                    </div>
+                    <div>
+                        退出
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- 内容区域 -->
+            <!-- 内容区域 -->
         <div class="right_content">
             <?= $content; ?>
         </div>

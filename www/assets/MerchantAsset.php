@@ -20,7 +20,7 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildWwwStaticUrl("/css/merchant/common_default.css"),
             GlobalUrlService::buildWwwStaticUrl("/css/merchant/scrollbar.min.css"),
             GlobalUrlService::buildStaticUrl("/font-awesome/v4.7/css/font-awesome.min.css"),
-            "//at.alicdn.com/t/font_1531636_4eofpbf48k.css",
+            GlobalUrlService::buildWwwStaticUrl("/css/merchant/iconfont/iconfont.css"),
             GlobalUrlService::buildStaticUrl("/layui/v2.5/css/layui.css"),
             GlobalUrlService::buildWwwStaticUrl("/css/merchant/merchant.css"),
             GlobalUrlService::buildWwwStaticUrl("/css/merchant/merchantfrom.css"),

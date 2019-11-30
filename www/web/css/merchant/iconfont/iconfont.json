@@ -1,0 +1,79 @@
+{
+  "id": "1531636",
+  "name": "商户端-kefu",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "970776",
+      "name": "信息",
+      "font_class": "xinxi-copy",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "1320054",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "6230081",
+      "name": "全局设置",
+      "font_class": "quanjushezhi",
+      "unicode": "e73e",
+      "unicode_decimal": 59198
+    },
+    {
+      "icon_id": "7956069",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "8361898",
+      "name": "聊天3",
+      "font_class": "liaotian",
+      "unicode": "e6db",
+      "unicode_decimal": 59099
+    },
+    {
+      "icon_id": "8402923",
+      "name": "黑名单",
+      "font_class": "heimingdan",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "10099698",
+      "name": "通知",
+      "font_class": "tongzhi",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "10219466",
+      "name": "风格",
+      "font_class": "fengge",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "10809884",
+      "name": "向左 箭头",
+      "font_class": "changyongtubiao-xianxingdaochu-zhuanqu-",
+      "unicode": "e74a",
+      "unicode_decimal": 59210
+    },
+    {
+      "icon_id": "10809885",
+      "name": "向右 箭头",
+      "font_class": "changyongtubiao-xianxingdaochu-zhuanqu-1",
+      "unicode": "e74b",
+      "unicode_decimal": 59211
+    }
+  ]
+}

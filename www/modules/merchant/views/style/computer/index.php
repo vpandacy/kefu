@@ -1,7 +1,7 @@
 <?php
 use \common\services\GlobalUrlService;
 use \common\components\helper\StaticAssetsHelper;
-//StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"), www\assets\MerchantAsset::className())
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js/merchant/computer/index/index.js"),www\assets\MerchantAsset::className() )
 ?>
 <!--表单使用 以及 layUI参考 https://www.layui.com/doc/modules/upload.html-->
 <div id="staff_index_index">
@@ -116,54 +116,6 @@ use \common\components\helper\StaticAssetsHelper;
                         </div>
                     </div>
                 </form>
-                <script src="<?=GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js");?>"></script>
-                <script>
-                    //Demo
-                    layui.use('form', function(){
-                        var form = layui.form;
-
-                        //监听提交
-                        form.on('submit(formDemo)', function(data){
-                            layer.msg(JSON.stringify(data.field));
-                            return false;
-                        });
-                    });
-                    layui.use('colorpicker', function(){
-                        var colorpicker = layui.colorpicker;
-                        //渲染
-                        colorpicker.render({
-                            elem: '#test2'  //绑定元素
-                        });
-                    });
-                    layui.use('tree', function(){
-                        var tree = layui.tree;
-
-                        //渲染
-                        var inst1 = tree.render({
-                            elem: '#test3'  //绑定元素
-                            ,showCheckbox:true
-                            ,data: [{
-                                title: '江西' //一级菜单
-                                ,children: [{
-                                    title: '南昌' //二级菜单
-                                    ,children: [{
-                                        title: '高新区' //三级菜单
-                                        //…… //以此类推，可无限层级
-                                    }]
-                                }]
-                            },{
-                                title: '陕西' //一级菜单
-                                ,children: [{
-                                    title: '西安' //二级菜单
-                                }]
-                            }]
-                        });
-                    });
-                    layui.use('layedit', function(){
-                        var layedit = layui.layedit;
-                        layedit.build('demo4'); //建立编辑器
-                    });
-                </script>
             </ul>
             <li>
                 <span>主动发起</span>

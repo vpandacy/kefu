@@ -238,12 +238,102 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 }
 #merchant .chant_all .right_merchant .right_top {
     min-height: 70px;
+    padding-right: 8px;
     background: rgb(246,246,246);
     align-items: center;
     -webkit-align-items: center;
     justify-content: flex-end;
     -webkit-justify-content: flex-end;
 }
+ #merchant .chant_all .right_merchant .right_top .menu_info_edit{
+     position: absolute;
+     width: 300px;
+     background: #fff;
+     z-index: 9;
+     right: 5px;
+     top: 65px;
+     border: 1px solid #e6e6e6;
+     border-radius: 3px;
+
+     padding-top: 0px;
+     margin-top: 0px;
+     padding-bottom: 0px;
+     margin-bottom: 0px;
+     min-height: 10px;
+     z-index: 999;
+
+     transition:height 2s;
+     -moz-transition:height 2s; /* Firefox 4 */
+     -webkit-transition:height 2s; /* Safari and Chrome */
+     -o-transition:height 2s; /* Opera */
+ }
+#merchant .chant_all .right_merchant .right_top .menu_info_edit::before{
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid #e6e6e6;
+    border-top: 1px solid #e6e6e6;
+    position: absolute;
+    top: -6px;
+    right: 24px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background: white;
+
+    transition:height 2s;
+    -moz-transition:height 2s; /* Firefox 4 */
+    -webkit-transition:height 2s; /* Safari and Chrome */
+    -o-transition:height 2s; /* Opera */
+}
+#merchant .chant_all .right_merchant .right_top .menu_info_edit .info_edit_one {
+    background: #fafafa;
+    /*padding: 15px 30px 15px 70px;*/
+    min-height: 38px;
+    display: flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    font-size: 14px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #e6e6e6;
+}
+#merchant .chant_all .right_merchant .right_top .menu_info_edit .info_edit_two {
+    display: flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: -webkit-flex;
+    min-height: 38px;
+    align-items: center;
+    font-size: 15px;
+    border-bottom: 1px solid #e6e6e6;
+
+
+}
+#merchant .chant_all .right_merchant .right_top .menu_info_edit .info_edit_two div:nth-child(1) {
+    padding: 0 20px 0 33px;
+}
+#merchant .chant_all .right_merchant .right_top .menu_info_edit .backFFF {
+    background: white !important;
+}
+#merchant .chant_all .right_merchant .right_top .menu_info_edit .info_edit_one img{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-size: 12px;
+    vertical-align: top;
+}
+#merchant .chant_all .right_merchant .right_top .menu_info_edit .info_ms_two,.info_ms_two {
+    line-height: 23px;
+}
+
 #merchant .chant_all .right_merchant .right_content {
     transition:margin-left 2s;
     -moz-transition:margin-left 2s; /* Firefox 4 */
@@ -256,13 +346,13 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     display: block;
     margin: 0 10px;
 }
-#merchant .chant_all .right_merchant .right_top a:last-child{
+#merchant .chant_all .right_merchant .right_top .menu_info_link{
     display: block;
     width: 40px;
     height: 40px;
     border-radius: 50%;
 }
-#merchant .chant_all .right_merchant .right_top a:last-child img{
+#merchant .chant_all .right_merchant .right_top a .menu_info_img{
     width: 100%;
     height: 100%;
     border-radius: 50%;
