@@ -18,11 +18,11 @@ var merchant_user_login_ops = {
 
         // 登录.
         $('.login').on('click',function () {
-            var mobile = $('.sign-in-container [name=mobile]').val(),
+            var email = $('.sign-in-container [name=email]').val(),
                 password = $('.sign-in-container [name=password]').val();
 
-            if(!/^1\d{10}$/.test(mobile)) {
-                return $.msg('请填写正确的手机号');
+            if(!email || email.indexOf('@') <= 1) {
+                return $.msg('请填写正确的邮箱地址');
             }
 
             if(!password || password.length > 255) {
@@ -35,7 +35,7 @@ var merchant_user_login_ops = {
                 type: 'POST',
                 url: common_ops.buildMerchantUrl('/user/sign-in'),
                 data: {
-                    mobile: mobile,
+                    email: email,
                     password: password
                 },
                 dataType: 'json',
@@ -57,12 +57,12 @@ var merchant_user_login_ops = {
 
         // 注册.
         $('.register').on('click',function () {
-            var mobile = $('.sign-up-container [name=mobile]').val(),
+            var email = $('.sign-up-container [name=email]').val(),
                 password = $('.sign-up-container [name=password]').val(),
                 merchant_name = $('.sign-up-container [name=name]').val();
 
-            if(!/^1\d{10}$/.test(mobile)) {
-                return $.msg('请填写正确的手机号');
+            if(!email || email.indexOf('@') <= 1) {
+                return $.msg('请填写正确的邮箱地址');
             }
 
             if(!password || password.length > 255) {
@@ -70,7 +70,7 @@ var merchant_user_login_ops = {
             }
 
             if(!merchant_name) {
-                return $.msg('请填写正确的商户号');
+                return $.msg('请填写正确的商户名称');
             }
 
             var index = $.loading(1,{shade: .5});
@@ -79,7 +79,7 @@ var merchant_user_login_ops = {
                 type: 'POST',
                 url: common_ops.buildMerchantUrl('/user/register'),
                 data: {
-                    mobile: mobile,
+                    email: email,
                     password: password,
                     merchant_name: merchant_name
                 },

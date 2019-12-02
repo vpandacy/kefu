@@ -12,7 +12,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl("/js/
             <div class="social-container">
             </div>
             <input type="text" name="name" placeholder="姓名或公司名">
-            <input type="text" name="mobile" placeholder="请输入手机号">
+            <input type="text" name="email" placeholder="请输入邮箱地址">
             <input type="password" name="password" placeholder="密码">
             <button type="button" class="register">注册</button>
         </form>
@@ -22,7 +22,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl("/js/
             <h1>登录</h1>
             <div class="social-container">
             </div>
-            <input type="text" name="mobile" placeholder="请输入手机号进行登录">
+            <input type="text" name="email" placeholder="请输入邮箱进行登录">
             <input type="password" name="password" placeholder="密码">
             <a href="#">忘记密码？</a>
             <button type="button" class="login">登录</button>
