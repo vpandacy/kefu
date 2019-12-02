@@ -40,7 +40,7 @@ class UserController extends BaseController
         }
 
         // 开始检查.
-        $staff = Staff::findOne(['email'=>$email,'status'=>0]);
+        $staff = Staff::findOne(['email'=>$email,'status'=>1]);
 
         if(!$staff) {
             return $this->renderJSON([],'暂无该员工信息.', ConstantService::$response_code_fail);
@@ -50,7 +50,7 @@ class UserController extends BaseController
             return $this->renderJSON([],'请输入正确的密码', ConstantService::$response_code_fail);
         }
 
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>0]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>1]);
 
         if(!$merchant) {
             return $this->renderJSON([],'该商户已经被禁止登录了.', ConstantService::$response_code_fail);

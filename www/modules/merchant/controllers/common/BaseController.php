@@ -68,7 +68,7 @@ class BaseController extends BaseWebController {
             return false;
         }
 
-        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>0]);
+        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>1]);
 
         if(!$staff || !$this->checkToken($verify_token, $staff)) {
             return false;
@@ -77,7 +77,7 @@ class BaseController extends BaseWebController {
         // 保存信息.
         $this->staff = $staff->toArray();
 
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>0]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>1]);
         if(!$merchant) {
             return false;
         }

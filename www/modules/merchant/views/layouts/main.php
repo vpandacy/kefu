@@ -26,7 +26,7 @@ MerchantAsset::register($this);
                 <div class="menu-logo">
                     <a><img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/logo1.png");?>"></a>
                 </div>
-                <div class="menu-version"><?=$this->params['merchant']['merchant_name']?></div>
+                <div class="menu-version"><?=$this->params['merchant']['name']?></div>
                 <div class="menu-title">
                     <a data-url="/merchant/staff/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">
                         <div class="menu-tooltip">用户管理</div>
@@ -85,10 +85,10 @@ MerchantAsset::register($this);
                             </div>
                             <div>
                             <div class="info_ms_two">
-                                <label><?=$this->params['employee']['name']?></label>
+                                <label><?=$this->params['staff']['name']?></label>
                             </div>
                             <div class="info_ms_three">
-                                <label><?=$this->params['employee']['mobile']?></label>
+                                <label><?=$this->params['staff']['mobile']?></label>
                             </div>
                             </div>
                             <div>
