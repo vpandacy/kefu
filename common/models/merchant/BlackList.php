@@ -1,27 +1,29 @@
 <?php
 
-namespace common\models;
+namespace common\models\merchant;
 
 use Yii;
 
 /**
- * This is the model class for table "common_words".
+ * This is the model class for table "black_list".
  *
  * @property int $id 主键
+ * @property string $ip ip地址
+ * @property int $visitor_id 访客ID
  * @property int $merchant_id 商户ID
- * @property string $words 常用语
- * @property int $is_deleted 0,未删除,1删除
+ * @property int $staff_id 接待员工ID
+ * @property int $status 已删除,1正常
  * @property string $created_time 创建时间
  * @property string $updated_time 更新时间
  */
-class CommonWords extends \yii\db\ActiveRecord
+class BlackList extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'common_words';
+        return 'black_list';
     }
 
     /**
@@ -30,9 +32,9 @@ class CommonWords extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['merchant_id', 'is_deleted'], 'integer'],
+            [['visitor_id', 'merchant_id', 'staff_id', 'status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['words'], 'string', 'max' => 255],
+            [['ip'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,9 +45,11 @@ class CommonWords extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'ip' => 'Ip',
+            'visitor_id' => 'Visitor ID',
             'merchant_id' => 'Merchant ID',
-            'words' => 'Words',
-            'is_deleted' => 'Is Deleted',
+            'staff_id' => 'Staff ID',
+            'status' => 'Status',
             'created_time' => 'Created Time',
             'updated_time' => 'Updated Time',
         ];

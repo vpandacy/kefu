@@ -1,27 +1,27 @@
 <?php
 
-namespace common\models;
+namespace common\models\merchant;
 
 use Yii;
 
 /**
- * This is the model class for table "departments".
+ * This is the model class for table "role".
  *
  * @property int $id 主键
- * @property string $name 部门名
- * @property int $merchant_id 所属商户
- * @property int $is_deleted 是否删除,0未删除,1删除
+ * @property string $name 角色名
+ * @property int $merchant_id 商户ID
+ * @property int $status 状态,0禁用,1启用
  * @property string $created_time 创建时间
- * @property string $updated_time 更新时间
+ * @property string $udated_time 更新时间
  */
-class Departments extends \yii\db\ActiveRecord
+class Role extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'departments';
+        return 'role';
     }
 
     /**
@@ -30,9 +30,8 @@ class Departments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id', 'merchant_id', 'is_deleted'], 'integer'],
-            [['created_time', 'updated_time'], 'safe'],
+            [['merchant_id', 'status'], 'integer'],
+            [['created_time', 'udated_time'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -46,9 +45,9 @@ class Departments extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'merchant_id' => 'Merchant ID',
-            'is_deleted' => 'Is Deleted',
+            'status' => 'Status',
             'created_time' => 'Created Time',
-            'updated_time' => 'Updated Time',
+            'udated_time' => 'Udated Time',
         ];
     }
 }

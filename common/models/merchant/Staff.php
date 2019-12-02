@@ -1,13 +1,14 @@
 <?php
 
-namespace common\models;
+namespace common\models\merchant;
 
 use Yii;
 
 /**
- * This is the model class for table "employees".
+ * This is the model class for table "staff".
  *
  * @property int $id 主键
+ * @property string $sn 员工sn
  * @property int $merchant_id 商户ID
  * @property string $email 邮箱帐号
  * @property string $name 姓名
@@ -17,19 +18,19 @@ use Yii;
  * @property string $password 密码
  * @property string $salt 盐值
  * @property string $listen_nums 接听数
- * @property int $status 0,启用,1禁用
- * @property int $is_root 是否是超级管理员
+ * @property int $status 0,禁用,1启用
+ * @property int $is_root 是否是超级管理员,0不是,1是
  * @property string $created_time 创建时间
  * @property string $updated_time 更新时间
  */
-class Employees extends \yii\db\ActiveRecord
+class Staff extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'employees';
+        return 'staff';
     }
 
     /**
@@ -40,7 +41,7 @@ class Employees extends \yii\db\ActiveRecord
         return [
             [['merchant_id', 'department_id', 'status', 'is_root'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['email', 'name', 'avatar', 'mobile', 'password', 'salt', 'listen_nums'], 'string', 'max' => 255],
+            [['sn', 'email', 'name', 'avatar', 'mobile', 'password', 'salt', 'listen_nums'], 'string', 'max' => 255],
         ];
     }
 
@@ -51,6 +52,7 @@ class Employees extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'sn' => 'Sn',
             'merchant_id' => 'Merchant ID',
             'email' => 'Email',
             'name' => 'Name',
