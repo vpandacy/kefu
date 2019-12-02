@@ -51,6 +51,7 @@ class BaseController extends BaseWebController {
      */
     protected function checkLoginStatus()
     {
+//        return true;
         $auth_cookie = $this->getCookie($this->merchant_cookie_name,'');
         // 这里稍微注意下.
         @list($merchant_id, $verify_token) = explode('#', $auth_cookie);
