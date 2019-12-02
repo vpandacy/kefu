@@ -33,7 +33,7 @@ var merchant_staff_index_ops = {
                             '-2' : '待审核',
                             '-1' : '审核失败',
                             '0'  : '禁用',
-                            '1'  : '启用',
+                            '1'  : '启用'
                         };
 
                         return map[row.status];

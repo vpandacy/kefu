@@ -5,6 +5,7 @@ namespace www\modules\merchant\controllers\staff;
 use common\components\DataHelper;
 use common\models\merchant\Department;
 use common\models\merchant\Staff;
+use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
 
 /**
@@ -56,14 +57,17 @@ class IndexController extends BaseController
 
     public function actionEdit()
     {
-        $employee_id = intval($this->get('employee_id',0));
+        $staff_id = intval($this->get('staff_id',0));
 
-        if($employee_id) {
+        $staff = $staff_id ? Staff::findOne(['id'=>$staff_id,'merchant_id'=>$this->getMerchantId()]) : new Staff();
 
+        if($staff_id && !$staff) {
+            // 返回回去.
+            return $this->redirect(GlobalUrlService::buildMerchantUrl('/staff/index'));
         }
 
         return $this->render('edit',[
-
+            'staff' =>  $staff
         ]);
     }
 }

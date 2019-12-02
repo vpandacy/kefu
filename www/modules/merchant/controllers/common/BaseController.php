@@ -12,7 +12,7 @@ use yii\web\Response;
 
 class BaseController extends BaseWebController {
 
-    public $merchant_info ;
+    public $merchant_info;
     public $staff;
 
     public $merchant_cookie_name = 'chat_merchant_cookie';
@@ -139,7 +139,7 @@ class BaseController extends BaseWebController {
      */
     public function getMerchantId()
     {
-        return !$this->merchant_info ? $this->merchant_info['id'] : 0;
+        return $this->merchant_info ? $this->merchant_info['id'] : 0;
     }
 
     /**
