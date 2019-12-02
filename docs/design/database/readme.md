@@ -54,7 +54,7 @@ CREATE TABLE `staff` (
 
 CREATE TABLE `role` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `role_name` varchar(255) NOT NULL DEFAULT '' COMMENT '角色名',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '角色名',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0禁用,1启用',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -73,8 +73,8 @@ CREATE TABLE `staff_role` (
 
 CREATE TABLE `action` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `action_name` varchar(255) NOT NULL DEFAULT '' COMMENT '操作名称',
-  `action_url` varchar(255) NOT NULL DEFAULT '0' COMMENT '操作链接',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '操作名称',
+  `url` varchar(255) NOT NULL DEFAULT '0' COMMENT '操作链接',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -89,7 +89,7 @@ CREATE TABLE `role_action` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='角色权限表';
 
-CREATE TABLE `group` (
+CREATE TABLE `group_chat` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `desc` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
@@ -99,12 +99,13 @@ CREATE TABLE `group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='风格表';
 
-CREATE TABLE `staff_group` (
-  `id` bigint(20) NOT NULL COMMENT 'ID',
+CREATE TABLE `group_chat_staff` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `staff_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工ID',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='员工风格关系表';
 
 CREATE TABLE `black_list` (
