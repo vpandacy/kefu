@@ -40,7 +40,7 @@ class UserController extends BaseController
         }
 
         // 开始检查.
-        $employee = Employees::findOne(['mobile'=>$mobile]);
+        $employee = Employees::findOne(['mobile'=>$mobile,'status'=>0]);
 
         if(!$employee) {
             return $this->renderJSON([],'暂无该员工信息.', ConstantService::$response_code_fail);
