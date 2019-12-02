@@ -74,26 +74,49 @@ class BaseController extends BaseWebController {
     }
 
     /**
+     * 创建登录的状态.
+     * @param $employee
+     */
+    public function createLoginStatus($employee)
+    {
+        $token = $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
+        // 指定区域.
+        $this->setCookie($this->merchant_cookie_name, $token,0,'','/merchant');
+    }
+
+    /**
      * 验证token.
      * @param $token
-     * @param $merchant
+     * @param $employee
      * @return bool
      */
-    protected function checkToken($token, $merchant)
+    protected function checkToken($token, $employee)
     {
-        return $token == $this->genToken($merchant['id'], $merchant['salt'], $merchant['password']);
+        return $token == $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
     }
 
     /**
      * 生成登录令牌.
      * @param $merchant_id
-     * @param $merchant_salt
+     * @param $employee_salt
      * @param $password
      * @return string
      */
-    protected function genToken($merchant_id, $merchant_salt, $password)
+    protected function genToken($merchant_id, $employee_salt, $password)
     {
-        return md5($merchant_salt . md5($merchant_id . $password));
+        return md5($employee_salt . md5($merchant_id . $password));
+    }
+
+    /**
+     * 生成密码.
+     * @param $merchant_id
+     * @param $password
+     * @param $salt
+     * @return string
+     */
+    protected function genPassword($merchant_id,$password,$salt)
+    {
+        return md5($merchant_id . '-' . $password  . '-' . $salt);
     }
 
     /**

@@ -1,19 +1,7 @@
 ;
 var common_ops = {
     init:function(){
-        this.eventBind();
-        this.setMenuIconHighLight();
-        this.getMsgCount();
-    },
-    eventBind:function(){
-        //文本框失去焦点时隐藏tip提示层
-        $('div').off('change','.input-1,.textarea-1,.textarea-1a').on('blur','.input-1,.textarea-1,.textarea-1a',function(){
-            $(this).hideTip();
-        });
-        $('div').off('change',".radio-1,.select-1,.checkbox-1").on('change',".radio-1,.select-1,.checkbox-1",function() {
-            $(this).hideTip();
-        });
-
+        // this.setMenuIconHighLight();
     },
     setMenuIconHighLight:function(){
         if( $(".box_left_nav .menu_list").size() < 1 ){
@@ -91,53 +79,22 @@ var common_ops = {
         url += "/interlace/1";
         return url;
     },
-
-    getMsgCount:function(){
-
-        return true;
-    },
-    popLayer:function(url,params){
-        var data = params.hasOwnProperty('data')?params['data']:{};
-        var target_handle = params.hasOwnProperty('target')?params['target']:$("#pop_layer_wrap");
-        var title = params.hasOwnProperty('title')?params['title']:'';
-        var request_method =  params.hasOwnProperty('method')?params['method']:'GET';
-        //是否阻止弹窗的默认关闭事件
-        var preventClose = params.hasOwnProperty('preventClose')?params['preventClose']:false;
-        $.ajax({
-            url:common_ops.buildClubUrl(url),
-            type:request_method,
-            data:data,
-            dataType:'json',
-            success:function(res){
-                if( res.code == 200 ){
-                    target_handle.html(  res.data.form_wrap );
-                    if(  target_handle.parents(".lay-body").size() > 0  ){
-                        $.lay.refresh();
-                        return;
-                    }
-                    if(  params.hasOwnProperty('lay-size') ){
-                        target_handle.attr("class", "hide " + params['lay-size']);
-                    }else{//默认是small
-                        //target_handle.addClass('lay-medium');
-                    }
-
-                    if(  params.hasOwnProperty('height') ){
-                        target_handle.addClass("height-"+params['height']);
-                    }else{//默认是small
-                        //target_handle.addClass('lay-medium');
-                    }
-                    $.lay.open({
-                        'content':target_handle,
-                        'title':title,
-                        'shadeClose':false,
-                        'preventClose':preventClose,
-                        'area': params.hasOwnProperty('area')?params['area']:[ 'auto','auto' ]
-                    });
-                }else{
-                    $.alert(res.msg);
-                }
+    'getRequest': function (key, default_value) {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
             }
-        })
+        }
+
+        if(key) {
+            return !theRequest[key] ? theRequest[key] : default_value;
+        }
+
+        return theRequest;
     }
 };
 

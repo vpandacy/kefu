@@ -33,6 +33,8 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildWwwStaticUrl("/js/merchant/domResize.js"),
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
+            GlobalUrlService::buildWwwStaticUrl('/js/merchant/common.js'),
+            GlobalUrlService::buildWwwStaticUrl('/js/merchant/core.js'),
         ];
         parent::registerAssetFiles($view);
     }

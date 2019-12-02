@@ -22,8 +22,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl("/js/
             <h1>登录</h1>
             <div class="social-container">
             </div>
-            <input type="email" placeholder="电子邮箱">
-            <input type="password" placeholder="密码">
+            <input type="email" name="email" placeholder="电子邮箱">
+            <input type="password" name="password" placeholder="密码">
             <a href="#">忘记密码？</a>
             <button type="button" class="login">登录</button>
         </form>
