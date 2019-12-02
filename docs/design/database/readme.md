@@ -52,7 +52,7 @@
     
     CREATE TABLE `staff_role` (
       `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-      `employees_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工ID',
+      `staff_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工ID',
       `role_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '角色ID',
       `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
       `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
