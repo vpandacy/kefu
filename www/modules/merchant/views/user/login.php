@@ -11,10 +11,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl("/js/
             <h1>注册</h1>
             <div class="social-container">
             </div>
-            <input type="text" placeholder="姓名">
+            <input type="text" name="name" placeholder="姓名或公司名">
             <input type="text" name="mobile" placeholder="请输入手机号">
-            <input type="password" placeholder="密码">
-            <button type="button">注册</button>
+            <input type="password" name="password" placeholder="密码">
+            <button type="button" class="register">注册</button>
         </form>
     </div>
     <div class="form-container sign-in-container">

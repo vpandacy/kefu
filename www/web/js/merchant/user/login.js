@@ -53,12 +53,51 @@ var merchant_user_login_ops = {
                     $.close(index);
                 }
             })
-
         });
 
         // 注册.
         $('.register').on('click',function () {
-            
+            var mobile = $('.sign-up-container [name=mobile]').val(),
+                password = $('.sign-up-container [name=password]').val(),
+                merchant_name = $('.sign-up-container [name=name]').val();
+
+            if(!/^1\d{10}$/.test(mobile)) {
+                return $.msg('请填写正确的手机号');
+            }
+
+            if(!password || password.length > 255) {
+                return $.msg('请填写登录密码');
+            }
+
+            if(!merchant_name) {
+                return $.msg('请填写正确的商户号');
+            }
+
+            var index = $.loading(1,{shade: .5});
+
+            $.ajax({
+                type: 'POST',
+                url: common_ops.buildMerchantUrl('/user/register'),
+                data: {
+                    mobile: mobile,
+                    password: password,
+                    merchant_name: merchant_name
+                },
+                dataType:'json',
+                success: function (response) {
+                    $.close(index);
+                    if(response.code != 200) {
+                        return $.msg(response.msg);
+                    }
+                    
+                    return $.alert(response.msg,function () {
+                        location.href = location.href;
+                    });
+                },
+                error: function () {
+                    $.close(index);
+                }
+            })
         });
     }
 };

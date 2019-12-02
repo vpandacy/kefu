@@ -3,6 +3,7 @@
 namespace www\modules\merchant\controllers\common;
 
 use common\components\BaseWebController;
+use common\models\Employees;
 use common\models\Merchants;
 use common\services\GlobalUrlService;
 use Yii;
@@ -10,11 +11,14 @@ use yii\base\Action;
 
 class BaseController extends BaseWebController {
     public $merchant_info ;
+    public $employee;
 
     public $merchant_cookie_name = 'chat_merchant_cookie';
 
     protected  $allowAllAction = [
-        "merchant/user/login"
+        'merchant/user/login',
+        'merchant/user/sign-in',
+        'merchant/user/register',
     ];
 
     public function __construct($id, $module, $config = []){
@@ -53,20 +57,27 @@ class BaseController extends BaseWebController {
     {
         $auth_cookie = $this->getCookie($this->merchant_cookie_name,'');
         // 这里稍微注意下.
-        @list($merchant_id, $verify_token) = explode('#', $auth_cookie);
+        @list($employee_id, $verify_token) = explode('#', $auth_cookie);
 
         // 一个都没有.那就验证失败.
-        if(!$merchant_id || !$verify_token) {
+        if(!$employee_id || !$verify_token) {
             return false;
         }
 
-        $merchant = Merchants::findOne(['id'=>$merchant_id, 'status'=>0]);
+        $employee = Employees::findOne(['id'=>$employee_id, 'status'=>0]);
 
-        if(!$merchant || !$this->checkToken($verify_token, $merchant)) {
+        if(!$employee || !$this->checkToken($verify_token, $employee)) {
             return false;
         }
 
         // 保存信息.
+        $this->employee = $employee->toArray();
+
+        $merchant = Merchants::findOne(['id'=>$employee['merchant_id'],'status'=>0]);
+        if(!$merchant) {
+            return false;
+        }
+
         $this->merchant_info = $merchant->toArray();
 
         return true;
@@ -78,7 +89,7 @@ class BaseController extends BaseWebController {
      */
     public function createLoginStatus($employee)
     {
-        $token = $employee['merchant_id'] . '#' . $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
+        $token = $employee['id'] . '#' . $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
         // 指定区域.
         $this->setCookie($this->merchant_cookie_name, $token,0,'','/merchant');
     }
