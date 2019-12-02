@@ -34,6 +34,13 @@
       "unicode_decimal": 58909
     },
     {
+      "icon_id": "8288999",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e86a",
+      "unicode_decimal": 59498
+    },
+    {
       "icon_id": "8361898",
       "name": "聊天3",
       "font_class": "liaotian",
@@ -74,6 +81,13 @@
       "font_class": "changyongtubiao-xianxingdaochu-zhuanqu-1",
       "unicode": "e74b",
       "unicode_decimal": 59211
+    },
+    {
+      "icon_id": "11641878",
+      "name": "加号",
+      "font_class": "jiahao1",
+      "unicode": "e621",
+      "unicode_decimal": 58913
     }
   ]
 }
