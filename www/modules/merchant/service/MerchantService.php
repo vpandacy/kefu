@@ -23,6 +23,7 @@ class MerchantService extends BaseService
 
         $merchant->setAttributes([
             'status'    =>  -2,
+            'sn'        =>  CommonService::genUniqueName(),
             'name'      =>  $merchant_name,
             'email'         =>  $email,
             'created_time'  =>  $now,
@@ -38,6 +39,7 @@ class MerchantService extends BaseService
         $password = md5($merchant['id'] . '-' . $password  . '-' . $salt);
         $employee->setAttributes([
             'merchant_id'   =>  $merchant->primaryKey,
+            'sn'            =>  CommonService::genUniqueName(),
             'name'          =>  $merchant_name,
             'email'         =>  $email,
             'password'      =>  $password,

@@ -1,11 +1,8 @@
 <?php
-
 namespace www\modules\merchant\controllers;
 
-use common\models\Employees;
 use common\models\merchant\Merchant;
 use common\models\merchant\Staff;
-use common\models\Merchants;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
