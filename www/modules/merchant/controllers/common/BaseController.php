@@ -38,7 +38,7 @@ class BaseController extends BaseWebController {
         if(!$this->checkLoginStatus()) {
             // 设置跳转.
             $this->redirect(GlobalUrlService::buildMerchantUrl('/user/login',[
-                'redirect_url'  =>  GlobalUrlService::buildWwwUrl($action->getUniqueId())
+                'redirect_uri'  =>  GlobalUrlService::buildWwwUrl($action->getUniqueId())
             ]));
             return false;
         }
@@ -52,8 +52,8 @@ class BaseController extends BaseWebController {
     protected function checkLoginStatus()
     {
         $auth_cookie = $this->getCookie($this->merchant_cookie_name,'');
-
-        list($merchant_id, $verify_token) = explode('#', $auth_cookie);
+        // 这里稍微注意下.
+        @list($merchant_id, $verify_token) = explode('#', $auth_cookie);
 
         // 一个都没有.那就验证失败.
         if(!$merchant_id || !$verify_token) {
@@ -62,12 +62,7 @@ class BaseController extends BaseWebController {
 
         $merchant = Merchants::findOne(['id'=>$merchant_id, 'status'=>0]);
 
-        if(!$merchant) {
-            return false;
-        }
-
-        // 开始处理登录.
-        if(!$this->checkToken($verify_token, $merchant)) {
+        if(!$merchant || !$this->checkToken($verify_token, $merchant)) {
             return false;
         }
 
