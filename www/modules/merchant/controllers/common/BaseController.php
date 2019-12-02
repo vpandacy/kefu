@@ -8,6 +8,7 @@ use common\models\Merchants;
 use common\services\GlobalUrlService;
 use Yii;
 use yii\base\Action;
+use yii\web\Response;
 
 class BaseController extends BaseWebController {
     public $merchant_info ;
@@ -138,5 +139,27 @@ class BaseController extends BaseWebController {
     public function getMerchantId()
     {
         return !$this->merchant_info ? $this->merchant_info['id'] : 0;
+    }
+
+    /**
+     * 渲染分页的界面.
+     * @param array $data
+     * @param string $msg
+     * @param int $count
+     * @return \yii\console\Response|Response
+     */
+    public function renderPageJSON($data = [], $msg = '', $count = 0)
+    {
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data   = [
+            'msg'    => $msg,
+            'code'   => 0,
+            'data'   => $data,
+            'count'  => $count,
+            'req_id' => $this->geneReqId()
+        ];
+
+        return $response;
     }
 }

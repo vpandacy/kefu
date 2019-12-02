@@ -1,8 +1,11 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
-StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js/merchant/staff/index/index.js"),www\assets\MerchantAsset::className() )
+use www\assets\MerchantAsset;
+
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js/merchant/staff/index/index.js"),MerchantAsset::className() )
 ?>
+
 <!--  表格用的layui 具体配置参考：https://www.layui.com/demo/table/auto.html
       所有页面的表格以此页面表格为标准.
 -->
@@ -13,14 +16,8 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
         <div class="tab_list"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/role/index');?>">角色管理</a></div>
     </div>
     <div class="tab_staff_content">
-    <div class="demoTable" style="    text-align: left;margin:10px 18px;">
-        <button class="layui-btn" data-type="reload">搜索</button>
-        <div class="layui-inline">
-            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-        </div>
-    </div>
-    <table class="layui-hide" id="test" style="position: relative">
-    </table>
+        <table class="layui-hide" id="test" style="position: relative">
+        </table>
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">

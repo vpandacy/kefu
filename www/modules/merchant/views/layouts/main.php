@@ -1,7 +1,6 @@
 <?php
 use www\assets\MerchantAsset;
-use \common\services\GlobalUrlService;
-use \common\components\helper\StaticAssetsHelper;
+use common\services\GlobalUrlService;
 
 /**
  * @var \yii\web\View $this
@@ -27,7 +26,7 @@ MerchantAsset::register($this);
                 <div class="menu-logo">
                     <a><img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/logo1.png");?>"></a>
                 </div>
-                <div class="menu-version">俱乐部版</div>
+                <div class="menu-version"><?=$this->params['merchant']['merchant_name']?></div>
                 <div class="menu-title">
                     <a data-url="/merchant/staff/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">
                         <div class="menu-tooltip">用户管理</div>
@@ -104,7 +103,7 @@ MerchantAsset::register($this);
                         </div>
                     </div>
                 </div>
-                    <!-- 内容区域 -->
+                <!-- 内容区域 -->
                 <div class="right_content">
                     <?= $content; ?>
                 </div>

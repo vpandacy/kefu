@@ -99,6 +99,10 @@ class UserController extends BaseController
         return $this->renderJSON([], '创建成功,请登录商户', ConstantService::$response_code_success);
     }
 
+    /**
+     * 退出登录操作.
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         $this->removeCookie($this->merchant_cookie_name,'','/merchant');
