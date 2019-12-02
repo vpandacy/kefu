@@ -5,6 +5,7 @@ namespace www\modules\merchant\controllers;
 use common\models\Employees;
 use common\models\Merchants;
 use common\services\ConstantService;
+use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
 use www\modules\merchant\service\MerchantService;
 
@@ -96,5 +97,11 @@ class UserController extends BaseController
         }
 
         return $this->renderJSON([], '创建成功,请登录商户', ConstantService::$response_code_success);
+    }
+
+    public function actionLogout()
+    {
+        $this->removeCookie($this->merchant_cookie_name,'','/merchant');
+        return $this->redirect(GlobalUrlService::buildMerchantUrl('/'));
     }
 }

@@ -86,14 +86,15 @@ class BaseWebController extends Controller
     }
 
 
-    protected function removeCookie($name, $domain = '')
+    protected function removeCookie($name, $domain = '', $path ='/')
     {
         $cookies = Yii::$app->response->cookies;
         $cookies->add(new \yii\web\Cookie([
             'name'   => $name,
             'value'  => "",
             'expire' => 1,
-            'domain' => $domain
+            'domain' => $domain,
+            'path'   => $path
         ]));
     }
 

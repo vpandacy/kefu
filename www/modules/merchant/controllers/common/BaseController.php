@@ -47,6 +47,8 @@ class BaseController extends BaseWebController {
             return false;
         }
 
+        Yii::$app->view->params['merchant'] = $this->merchant_info;
+        Yii::$app->view->params['employee'] = $this->employee;
         return true;
     }
 
