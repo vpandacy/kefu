@@ -17,12 +17,27 @@ var merchant_staff_index_ops = {
                     { type:'checkbox', fixed: 'left' }
                     ,{field:'id', width:80, title: '序号'}
                     ,{field:'email',title: '邮箱'}
-                    ,{field:'name', title: '姓名'}
-                    ,{field:'avatar', width:80, title: '头像'}
-                    ,{field:'mobile', title: '手机号', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                    ,{field:'name', title: '姓名', templet: function (row) {
+                        return row.name ? row.name : '暂无';
+                    }}
+                    ,{field:'avatar', width:80, title: '头像', templet: function (row) {
+                        return row.avatar ? row.avatar : '暂无';
+                    }}
+                    ,{field:'mobile', title: '手机号', minWidth: 100, templet: function (row) {
+                        return row.mobile ? row.mobile : '暂无';
+                    }} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
                     ,{field:'department', title: '身份'}
                     ,{field:'listen_nums', width: 80, title: '接听数'}
-                    ,{field:'status', width: 60, title: '状态'}
+                    ,{field:'status', width: 60, title: '状态', templet: function (row) {
+                        var map = {
+                            '-2' : '待审核',
+                            '-1' : '审核失败',
+                            '0'  : '禁用',
+                            '1'  : '启用',
+                        };
+
+                        return map[row.status];
+                    }}
                     ,{field:'created_time', title: '创建时间'}
                     ,{field: 'right', title:'操作', toolbar: '#barDemo', fixed: 'right'}
                 ]]

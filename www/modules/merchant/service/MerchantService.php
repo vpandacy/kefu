@@ -43,7 +43,7 @@ class MerchantService extends BaseService
             'name'          =>  $merchant_name,
             'email'         =>  $email,
             'password'      =>  $password,
-            'listen_nums'   =>  10,
+            'listen_nums'   =>  0,
             'status'        =>  1,
             'is_root'       =>  1,
             'created_time'  =>  $now,

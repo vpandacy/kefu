@@ -3,8 +3,8 @@
 namespace www\modules\merchant\controllers\staff;
 
 use common\components\DataHelper;
-use common\models\Departments;
-use common\models\Employees;
+use common\models\merchant\Department;
+use common\models\merchant\Staff;
 use www\modules\merchant\controllers\common\BaseController;
 
 /**
@@ -29,7 +29,7 @@ class IndexController extends BaseController
     {
         $page = intval($this->get('page',1));
 
-        $query = Employees::find();
+        $query = Staff::find();
 
         $count = $query->count();
 
@@ -40,7 +40,7 @@ class IndexController extends BaseController
             ->all();
 
         if($employees) {
-            $departments = DataHelper::getDicByRelateID($employees, Departments::className(), 'department_id', 'id');
+            $departments = DataHelper::getDicByRelateID($employees, Department::className(), 'department_id', 'id');
 
             foreach($employees as $key=>$employee) {
                 $employee['department'] = isset($departments[$employee['department_id']])
@@ -59,7 +59,7 @@ class IndexController extends BaseController
         $employee_id = intval($this->get('employee_id',0));
 
         if($employee_id) {
-            
+
         }
 
         return $this->render('edit',[
