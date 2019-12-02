@@ -51,7 +51,6 @@ class BaseController extends BaseWebController {
      */
     protected function checkLoginStatus()
     {
-//        return true;
         $auth_cookie = $this->getCookie($this->merchant_cookie_name,'');
         // 这里稍微注意下.
         @list($merchant_id, $verify_token) = explode('#', $auth_cookie);
@@ -79,7 +78,7 @@ class BaseController extends BaseWebController {
      */
     public function createLoginStatus($employee)
     {
-        $token = $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
+        $token = $employee['merchant_id'] . '#' . $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
         // 指定区域.
         $this->setCookie($this->merchant_cookie_name, $token,0,'','/merchant');
     }
