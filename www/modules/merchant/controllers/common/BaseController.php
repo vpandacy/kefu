@@ -3,16 +3,17 @@
 namespace www\modules\merchant\controllers\common;
 
 use common\components\BaseWebController;
-use common\models\Employees;
-use common\models\Merchants;
+use common\models\merchant\Merchant;
+use common\models\merchant\Staff;
 use common\services\GlobalUrlService;
 use Yii;
 use yii\base\Action;
 use yii\web\Response;
 
 class BaseController extends BaseWebController {
+
     public $merchant_info ;
-    public $employee;
+    public $staff;
 
     public $merchant_cookie_name = 'chat_merchant_cookie';
 
@@ -49,7 +50,7 @@ class BaseController extends BaseWebController {
         }
 
         Yii::$app->view->params['merchant'] = $this->merchant_info;
-        Yii::$app->view->params['employee'] = $this->employee;
+        Yii::$app->view->params['staff'] = $this->staff;
         return true;
     }
 
@@ -60,23 +61,23 @@ class BaseController extends BaseWebController {
     {
         $auth_cookie = $this->getCookie($this->merchant_cookie_name,'');
         // 这里稍微注意下.
-        @list($employee_id, $verify_token) = explode('#', $auth_cookie);
+        @list($staff_id, $verify_token) = explode('#', $auth_cookie);
 
         // 一个都没有.那就验证失败.
-        if(!$employee_id || !$verify_token) {
+        if(!$staff_id || !$verify_token) {
             return false;
         }
 
-        $employee = Employees::findOne(['id'=>$employee_id, 'status'=>0]);
+        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>0]);
 
-        if(!$employee || !$this->checkToken($verify_token, $employee)) {
+        if(!$staff || !$this->checkToken($verify_token, $staff)) {
             return false;
         }
 
         // 保存信息.
-        $this->employee = $employee->toArray();
+        $this->staff = $staff->toArray();
 
-        $merchant = Merchants::findOne(['id'=>$employee['merchant_id'],'status'=>0]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>0]);
         if(!$merchant) {
             return false;
         }
@@ -88,11 +89,11 @@ class BaseController extends BaseWebController {
 
     /**
      * 创建登录的状态.
-     * @param $employee
+     * @param $staff
      */
-    public function createLoginStatus($employee)
+    public function createLoginStatus($staff)
     {
-        $token = $employee['id'] . '#' . $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
+        $token = $staff['id'] . '#' . $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
         // 指定区域.
         $this->setCookie($this->merchant_cookie_name, $token,0,'','/merchant');
     }
@@ -100,24 +101,24 @@ class BaseController extends BaseWebController {
     /**
      * 验证token.
      * @param $token
-     * @param $employee
+     * @param $staff
      * @return bool
      */
-    protected function checkToken($token, $employee)
+    protected function checkToken($token, $staff)
     {
-        return $token == $this->genToken($employee['merchant_id'], $employee['salt'], $employee['password']);
+        return $token == $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
     }
 
     /**
      * 生成登录令牌.
      * @param $merchant_id
-     * @param $employee_salt
+     * @param $staff_salt
      * @param $password
      * @return string
      */
-    protected function genToken($merchant_id, $employee_salt, $password)
+    protected function genToken($merchant_id, $staff_salt, $password)
     {
-        return md5($employee_salt . md5($merchant_id . $password));
+        return md5($staff_salt . md5($merchant_id . $password));
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace www\modules\merchant\controllers;
 
 use common\models\Employees;
+use common\models\merchant\Merchant;
+use common\models\merchant\Staff;
 use common\models\Merchants;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
@@ -29,10 +31,10 @@ class UserController extends BaseController
      */
     public function actionSignIn()
     {
-        $mobile = $this->post('mobile','');
+        $email = $this->post('email','');
         $password = $this->post('password','');
 
-        if(!preg_match('/^1\d{10}$/',$mobile)) {
+        if(strpos($email,'@') < 1) {
             return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
         }
 
@@ -41,24 +43,24 @@ class UserController extends BaseController
         }
 
         // 开始检查.
-        $employee = Employees::findOne(['mobile'=>$mobile,'status'=>0]);
+        $staff = Staff::findOne(['email'=>$email,'status'=>0]);
 
-        if(!$employee) {
+        if(!$staff) {
             return $this->renderJSON([],'暂无该员工信息.', ConstantService::$response_code_fail);
         }
 
-        if($employee['password'] != $this->genPassword($employee['merchant_id'], $password, $employee['salt'])) {
+        if($staff['password'] != $this->genPassword($staff['merchant_id'], $password, $staff['salt'])) {
             return $this->renderJSON([],'请输入正确的密码', ConstantService::$response_code_fail);
         }
 
-        $merchant =Merchants::findOne(['id'=>$employee['merchant_id'],'status'=>0]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>0]);
 
         if(!$merchant) {
             return $this->renderJSON([],'该商户已经被禁止登录了.', ConstantService::$response_code_fail);
         }
 
         // 开始创建登录的信息.
-        $this->createLoginStatus($employee);
+        $this->createLoginStatus($staff);
 
         return $this->renderJSON([],'登录成功', ConstantService::$response_code_success);
     }
@@ -69,13 +71,13 @@ class UserController extends BaseController
      */
     public function actionRegister()
     {
-        $mobile = $this->post('mobile','');
+        $email = $this->post('email','');
 
         $merchant_name = $this->post('merchant_name','');
 
         $password = $this->post('password','');
 
-        if(!preg_match('/^1\d{10}$/',$mobile)) {
+        if(strpos($email,'@') < 1) {
             return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
         }
 
@@ -87,12 +89,12 @@ class UserController extends BaseController
             return $this->renderJSON([],'请输入正确的商户名', ConstantService::$response_code_fail);
         }
 
-        $merchant = Merchants::findOne(['merchant_name' => $merchant_name]);
+        $merchant = Merchant::findOne(['name' => $merchant_name]);
         if($merchant) {
             return $this->renderJSON([],'该商户名或姓名已经被使用了', ConstantService::$response_code_fail);
         }
 
-        if(!MerchantService::createMerchant($merchant_name, $mobile, $password)){
+        if(!MerchantService::createMerchant($merchant_name, $email, $password)){
             return $this->renderJSON([],MerchantService::getLastErrorMsg(), ConstantService::$response_code_fail);
         }
 
