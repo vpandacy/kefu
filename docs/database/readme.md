@@ -96,5 +96,5 @@
 	) COMMENT='常用语' COLLATE 'utf8mb4_general_ci';
 	
 	ALTER TABLE `employees`
-    ADD `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱帐号' AFTER `merchant_id`;
+	ADD `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱帐号' AFTER `merchant_id`;
 ### 20191103
