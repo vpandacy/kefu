@@ -18,15 +18,15 @@ var merchant_user_login_ops = {
 
         // 登录.
         $('.login').on('click',function () {
-            var email = $('.sign-in-container [name=email]').val(),
-                password = $('.sign-in-container [name=email]').val();
+            var mobile = $('.sign-in-container [name=mobile]').val(),
+                password = $('.sign-in-container [name=password]').val();
 
-            if(!email || email.indexOf('@') < 1) {
-                return layer.msg('请填写正确的邮箱');
+            if(!/^1\d{10}$/.test(mobile)) {
+                return $.msg('请填写正确的手机号');
             }
 
             if(!password || password.length > 255) {
-                return layer.msg('请填写登录密码');
+                return $.msg('请填写登录密码');
             }
 
             var index = $.loading(1,{shade: .5});
@@ -35,18 +35,22 @@ var merchant_user_login_ops = {
                 type: 'POST',
                 url: common_ops.buildMerchantUrl('/user/sign-in'),
                 data: {
-                    email: email,
+                    mobile: mobile,
                     password: password
                 },
                 dataType: 'json',
                 success: function (response) {
+                    $.close(index);
                     if(response.code != 200) {
                         return $.msg(response.msg);
                     }
 
-                    return layer.alert(response.msg, function () {
+                    return $.alert(response.msg, function () {
                         location.href = common_ops.getRequest('redirect_uri', common_ops.buildMerchantUrl('/'))
                     });
+                },
+                error:function () {
+                    $.close(index);
                 }
             })
 

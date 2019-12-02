@@ -91,7 +91,7 @@ var common_ops = {
         }
 
         if(key) {
-            return !theRequest[key] ? theRequest[key] : default_value;
+            return theRequest[key] ? theRequest[key] : default_value;
         }
 
         return theRequest;

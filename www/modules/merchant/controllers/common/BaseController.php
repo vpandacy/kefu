@@ -38,7 +38,7 @@ class BaseController extends BaseWebController {
         if(!$this->checkLoginStatus()) {
             // 设置跳转.
             $this->redirect(GlobalUrlService::buildMerchantUrl('/user/login',[
-                'redirect_uri'  =>  GlobalUrlService::buildWwwUrl($action->getUniqueId())
+                'redirect_uri'  =>  GlobalUrlService::buildWwwUrl('/' . $action->getUniqueId())
             ]));
             return false;
         }

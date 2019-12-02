@@ -26,11 +26,11 @@ class UserController extends BaseController
      */
     public function actionSignIn()
     {
-        $email = $this->post('email','');
+        $mobile = $this->post('mobile','');
         $password = $this->post('password','');
 
-        if(strpos($email,'@') <= 1) {
-            return $this->renderJSON([],'请输入正确的邮箱地址', ConstantService::$response_code_fail);
+        if(!preg_match('/^1\d{10}$/',$mobile)) {
+            return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
         }
 
         if(!$password) {
@@ -38,7 +38,7 @@ class UserController extends BaseController
         }
 
         // 开始检查.
-        $employee = Employees::findOne(['email'=>$email]);
+        $employee = Employees::findOne(['mobile'=>$mobile]);
 
         if(!$employee) {
             return $this->renderJSON([],'暂无该员工信息.', ConstantService::$response_code_fail);
@@ -49,6 +49,7 @@ class UserController extends BaseController
         }
 
         // 开始创建登录的信息.
+        $this->createLoginStatus($employee);
 
         return $this->renderJSON([],'登录成功', ConstantService::$response_code_success);
     }
