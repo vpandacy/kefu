@@ -186,9 +186,9 @@ class IndexController extends BaseController
             return $this->renderJSON([],'两次输入的密码不一致,请重新输入', ConstantService::$response_code_fail);
         }
 
-        $role_ids = StaffRole::find()
-            ->where(['status'=>1,'staff_id'=>$this->getStaffId()])
-            ->select(['role_id'])
+        $role_ids = Role::find()
+            ->where(['status'=>1,'merchant_id'=>$this->getMerchantId()])
+            ->select(['id'])
             ->column();
 
         if($data['role_ids'] && array_diff($data['role_ids'], $role_ids)) {

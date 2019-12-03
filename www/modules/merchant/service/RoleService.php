@@ -9,6 +9,13 @@ use common\services\BaseService;
 
 class RoleService extends BaseService
 {
+    /**
+     * 给员工添加新的角色.批量.
+     * @param $staff_id
+     * @param $role_ids
+     * @return bool
+     * @throws \yii\db\Exception
+     */
     public static function createRoleMapping($staff_id, $role_ids)
     {
         if(StaffRole::updateAll(['status'=>0],['staff_id'=>$staff_id]) === false) {
@@ -25,7 +32,7 @@ class RoleService extends BaseService
 
 
         $ret = StaffRole::getDb()->createCommand()
-            ->batchInsert(StaffRole::getTableSchema(), ['staff_id','role_id','status'], $insert_data)
+            ->batchInsert(StaffRole::tableName(), ['staff_id','role_id','status'], $insert_data)
             ->execute();
 
         if($ret === false) {
