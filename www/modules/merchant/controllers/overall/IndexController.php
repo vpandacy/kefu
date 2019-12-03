@@ -6,9 +6,7 @@ use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
 
-/**
- * Default controller for the `merchant` module
- */
+
 class IndexController extends BaseController
 {
     /**
