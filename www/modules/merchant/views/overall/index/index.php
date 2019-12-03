@@ -17,18 +17,18 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
         <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/offline/index');?>">离线表单设置</a></div>
     </div>
     <div class="tab_staff_content">
-        <table class="layui-hide" id="test"></table>
+        <table class="layui-hide" lay-filter="commonWordTable" id="commonWordTable"></table>
     </div>
 </div>
 
 <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
-<!--        <button class="layui-btn layui-btn-sm" lay-event="isAll">恢复</button>-->
+    <div class="layui-btn-container" style="display: block">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="recover">恢复</button>
     </div>
 </script>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">禁用</a>
 </script>
