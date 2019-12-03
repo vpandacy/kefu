@@ -1,43 +1,96 @@
-layui.use('table', function(){
-    var table = layui.table;
+;
+var staff_action_index_ops = {
+    init: function () {
+        this.eventBind();
+    },
+    eventBind:function () {
+        layui.use(['form'],function () {
+            var form = layui.form;
 
-    // table.render({
-    //     elem: '#test'
-    //     ,url:'/css/merchant/staff/index/dome.json'
-    //     // ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-    //     ,defaultToolbar: []
-    //     ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-    //     ,cols: [[
-    //         {type:'checkbox', fixed: 'left'},
-    //         {field:'id', width:80, title: '账号'}
-    //         ,{field:'username', width:80, title: '工号'}
-    //         ,{field:'sex', width:80, title: '姓名'}
-    //         ,{field:'city', width:80, title: '部门'}
-    //         ,{field:'sign', title: '岗位', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-    //         ,{field:'experience', title: '身份'}
-    //         ,{field:'score', title: '入职时间', sort: true}
-    //         ,{field:'classify', title: '状态'}
-    //         ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
-    //     ]]
-    //     ,id: 'testReload'
-    //     ,page: true
-    // });
-    // var $ = layui.$, active = {
-    //     reload: function(){
-    //         var demoReload = $('#demoReload');
-    //         //执行重载
-    //         table.reload('testReload', {
-    //             page: {
-    //                 curr: 1 //重新从第 1 页开始
-    //             }
-    //             ,where: {
-    //                 id: demoReload.val()
-    //             }
-    //         }, 'data');
-    //     }
-    // };
-    $('.demoTable .layui-btn').on('click', function(){
-        var type = $(this).data('type');
-        active[type] ? active[type].call(this) : '';
-    });
+            form.on('radio(choice)', function () {
+                var role_id = this.value,
+                    index = $.loading(1,{shade: .5});
+
+                $.ajax({
+                    type: 'POST',
+                    url : common_ops.buildMerchantUrl('/staff/action/list'),
+                    data: {
+                        role_id: role_id
+                    },
+                    dataType:'json',
+                    success:function (response) {
+                        $.close(index);
+                        if(response.code != 200) {
+                            return $.msg(response.msg);
+                        }
+
+                        var action_ids = response.data;
+
+                        $('.action').each(function () {
+                            console.dir(action_ids.indexOf(this.value) >= 0);
+                            if(action_ids.indexOf(this.value) >= 0) {
+                                $(this).attr('checked','checked');
+                            }else{
+                                $(this).removeAttr('checked');
+                            }
+                        });
+
+                        form.render('checkbox');
+                    },
+                    error: function () {
+                        $.close(index);
+                    }
+                })
+                // 开始增加判断了.
+            });
+
+            form.on('submit(*)', function (data) {
+                data = data.field;
+
+                var permission_ids = [];
+
+                $('input[type=checkbox]:checked').each(function() {
+                    permission_ids.push($(this).val());
+                });
+
+                if(!data.hasOwnProperty('role_id')) {
+                    return $.msg('请选择角色来保存');
+                }
+
+                if(permission_ids.length <= 0) {
+                    return $.msg('请选择对应的权限');
+                }
+
+
+                var index = $.loading(1, {shade: 0.5});
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        role_id: data.role_id,
+                        permissions: permission_ids
+                    },
+                    dataType: 'json',
+                    url: common_ops.buildMerchantUrl('/staff/action/save'),
+                    success:function (response) {
+                        $.close(index);
+                        if(response.code != 200) {
+                            return $.msg(response.msg);
+                        }
+
+                        index = $.alert(response.msg, function () {
+                            $.close(index);
+                        });
+                    },
+                    error:function () {
+                        $.close(index);
+                    }
+                })
+            });
+
+        });
+    }
+};
+
+$(document).ready(function () {
+    staff_action_index_ops.init();
 });

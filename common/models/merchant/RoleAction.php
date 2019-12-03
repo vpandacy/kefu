@@ -29,7 +29,7 @@ class RoleAction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role_id', 'action_id'], 'integer'],
+            [['role_id', 'action_id','status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
         ];
     }
@@ -43,6 +43,7 @@ class RoleAction extends \yii\db\ActiveRecord
             'id' => 'ID',
             'role_id' => 'Role ID',
             'action_id' => 'Action ID',
+            'status'    =>  'Status',
             'created_time' => 'Created Time',
             'updated_time' => 'Updated Time',
         ];
