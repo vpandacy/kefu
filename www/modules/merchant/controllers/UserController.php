@@ -51,7 +51,7 @@ class UserController extends BaseController
             return $this->renderJSON([],'请输入正确的密码', ConstantService::$response_code_fail);
         }
 
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>1]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>ConstantService::$default_status_true]);
 
         if(!$merchant) {
             return $this->renderJSON([],'该商户已经被禁止登录了.', ConstantService::$response_code_fail);

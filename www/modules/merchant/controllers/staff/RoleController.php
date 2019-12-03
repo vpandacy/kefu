@@ -54,7 +54,7 @@ class RoleController extends BaseController
         }
 
         $role->setAttributes([
-            'status'    =>  $id > 0 ? $role['status'] : 1,
+            'status'    =>  $id > 0 ? $role['status'] : ConstantService::$default_status_true,
             'merchant_id'   =>  $this->getMerchantId(),
             'name'      =>  $name,
         ],0);
@@ -78,7 +78,7 @@ class RoleController extends BaseController
 
         $role = Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
 
-        if($role['status'] != 1) {
+        if($role['status'] != ConstantService::$default_status_true) {
             return $this->renderJSON([],'该角色已经被禁用了,不需要禁用', ConstantService::$response_code_fail);
         }
 
@@ -101,7 +101,7 @@ class RoleController extends BaseController
             return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
         }
 
-        if(!Role::updateAll(['status'=>1],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
+        if(!Role::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
 

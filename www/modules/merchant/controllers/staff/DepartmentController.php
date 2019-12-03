@@ -57,7 +57,7 @@ class DepartmentController extends BaseController
         }
 
         $department->setAttributes([
-            'status'    =>  $id > 0 ? $department['status'] : 1,
+            'status'    =>  $id > 0 ? $department['status'] : ConstantService::$default_status_true,
             'merchant_id'   =>  $this->getMerchantId(),
             'name'      =>  $name,
         ],0);
@@ -104,7 +104,7 @@ class DepartmentController extends BaseController
             return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
         }
 
-        if(!Department::updateAll(['status'=>1],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
+        if(!Department::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
 

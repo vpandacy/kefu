@@ -12,4 +12,10 @@ class ConstantService extends BaseService
      * @var int
      */
     public static $response_code_success = 200;
+
+    // 帐号正常.
+    public static $default_status_true = 1;
+
+    // 帐号异常.
+    public static $default_status_false = 0;
 }

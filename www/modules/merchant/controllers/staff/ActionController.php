@@ -12,14 +12,14 @@ class ActionController extends BaseController
     public function actionIndex()
     {
         $roles = Role::find()
-            ->where(['status'=>1,'merchant_id'=>$this->getMerchantId()])
+            ->where(['status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()])
             ->asArray()
             ->all();
 
         // 获取所有的权限列表.有权限就过滤掉.没有就不算.
         $actions = Action::find()
             ->where([
-                'status'    =>  1
+                'status'    =>  ConstantService::$default_status_true
             ])
             ->orderBy([
                 'level1_weight' =>  SORT_ASC,
@@ -82,7 +82,7 @@ class ActionController extends BaseController
             return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
         }
 
-        $role = Role::findOne(['id'=>$role_id,'status'=>1,'merchant_id'=>$this->getMerchantId()]);
+        $role = Role::findOne(['id'=>$role_id,'status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()]);
 
         if(!$role) {
             return $this->renderJSON([],'没有找到对应的角色', ConstantService::$response_code_fail);
@@ -90,7 +90,7 @@ class ActionController extends BaseController
 
         $action_ids = RoleAction::find()
             ->where([
-                'status'    =>  1,
+                'status'    =>  ConstantService::$default_status_true,
                 'role_id'   =>  $role_id
             ])
             ->select(['action_id'])
@@ -112,7 +112,7 @@ class ActionController extends BaseController
             return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
         }
 
-        $role = Role::findOne(['id'=>$role_id,'status'=>1,'merchant_id'=>$this->getMerchantId()]);
+        $role = Role::findOne(['id'=>$role_id,'status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()]);
 
         if(!$role) {
             return $this->renderJSON([],'没有找到对应的角色', ConstantService::$response_code_fail);
@@ -126,7 +126,7 @@ class ActionController extends BaseController
 
         $actions = Action::find()
             ->where([
-                'status'    =>  1
+                'status'    =>  ConstantService::$default_status_true
             ])
             ->select(['id'])
             ->column();
@@ -142,7 +142,7 @@ class ActionController extends BaseController
 
         $insert_data = array_map(function($permission_id) use($role_id){
             return [
-                'status'    =>  1,
+                'status'    =>  ConstantService::$default_status_true,
                 'role_id'   =>  $role_id,
                 'action_id' =>  $permission_id
             ];

@@ -5,6 +5,7 @@ namespace www\modules\merchant\controllers\common;
 use common\components\BaseWebController;
 use common\models\merchant\Merchant;
 use common\models\merchant\Staff;
+use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use Yii;
 use yii\base\Action;
@@ -68,7 +69,7 @@ class BaseController extends BaseWebController {
             return false;
         }
 
-        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>1]);
+        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>ConstantService::$default_status_true]);
 
         if(!$staff || !$this->checkToken($verify_token, $staff)) {
             return false;
@@ -77,7 +78,7 @@ class BaseController extends BaseWebController {
         // 保存信息.
         $this->staff = $staff->toArray();
 
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>1]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>ConstantService::$default_status_true]);
         if(!$merchant) {
             return false;
         }

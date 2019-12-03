@@ -26,7 +26,7 @@ class IndexController extends BaseController
     {
         $departments = Department::find()
             ->where([
-                'status'    =>  1,
+                'status'    =>  ConstantService::$default_status_true,
                 'merchant_id'   =>  $this->getMerchantId(),
             ])
             ->select(['id','name'])
@@ -101,7 +101,9 @@ class IndexController extends BaseController
     {
         $staff_id = intval($this->get('staff_id',0));
 
-        $staff = $staff_id ? Staff::findOne(['id'=>$staff_id,'merchant_id'=>$this->getMerchantId(),'status'=>1]) : new Staff();
+        $staff = $staff_id
+            ? Staff::findOne(['id'=>$staff_id,'merchant_id'=>$this->getMerchantId(),'status'=>ConstantService::$default_status_true])
+            : new Staff();
 
         if($staff_id && !$staff) {
             // 返回回去.
@@ -110,7 +112,7 @@ class IndexController extends BaseController
 
         $departments = Department::find()
             ->where([
-                'status'    =>  1,
+                'status'    =>  ConstantService::$default_status_true,
                 'merchant_id'   =>  $this->getMerchantId(),
             ])
             ->select(['id','name'])
@@ -120,7 +122,7 @@ class IndexController extends BaseController
         // 所有角色.
         $roles = Role::find()
             ->where([
-                'status'    =>  1,
+                'status'    =>  ConstantService::$default_status_true,
                 'merchant_id'   =>  $this->getMerchantId()
             ])
             ->select(['id','name'])
@@ -128,7 +130,7 @@ class IndexController extends BaseController
             ->all();
 
         $role_ids = StaffRole::find()
-            ->where(['status'=>1,'staff_id'=>$staff['id']])
+            ->where(['status' => ConstantService::$default_status_true,'staff_id' => $staff['id']])
             ->select(['role_id'])
             ->column();
 
@@ -172,7 +174,7 @@ class IndexController extends BaseController
 
         $departments = Department::find()
             ->where([
-                'status'    =>  1,
+                'status'    =>  ConstantService::$default_status_true,
                 'merchant_id'   =>  $this->getMerchantId(),
             ])
             ->select(['id'])
@@ -187,7 +189,7 @@ class IndexController extends BaseController
         }
 
         $role_ids = Role::find()
-            ->where(['status'=>1,'merchant_id'=>$this->getMerchantId()])
+            ->where(['status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()])
             ->select(['id'])
             ->column();
 
@@ -204,7 +206,9 @@ class IndexController extends BaseController
             return $this->renderJSON([],'新增帐号时请输入密码', ConstantService::$response_code_fail);
         }
 
-        $staff = $data['id'] > 0 ? Staff::findOne(['id'=>$data['id'],'merchant_id'=>$this->getMerchantId(),'status'=>1]) : new Staff();
+        $staff = $data['id'] > 0
+            ? Staff::findOne(['id'=>$data['id'],'merchant_id'=>$this->getMerchantId(),'status'=>ConstantService::$default_status_true])
+            : new Staff();
 
         if($data['id'] > 0 && !$staff['id']) {
             return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
@@ -218,7 +222,7 @@ class IndexController extends BaseController
             $data['sn'] = CommonService::genUniqueName();
             $data['salt'] = CommonService::genUniqueName();
             $data['merchant_id'] = $this->getMerchantId();
-            $data['status'] = 1;
+            $data['status'] = ConstantService::$default_status_true;
         }
 
         if($data['password']) {
@@ -251,7 +255,7 @@ class IndexController extends BaseController
             return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
         }
 
-        if(!Staff::updateAll(['status'=>1],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
+        if(!Staff::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
 
@@ -274,7 +278,7 @@ class IndexController extends BaseController
 
         $staff = Staff::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
 
-        if($staff['status'] != 1) {
+        if($staff['status'] != ConstantService::$default_status_true) {
             return $this->renderJSON([],'该帐号不需要删除', ConstantService::$response_code_fail);
         }
 

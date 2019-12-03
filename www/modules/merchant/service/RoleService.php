@@ -6,6 +6,7 @@ use common\models\merchant\Role;
 use common\models\merchant\RoleAction;
 use common\models\merchant\StaffRole;
 use common\services\BaseService;
+use common\services\ConstantService;
 
 class RoleService extends BaseService
 {
@@ -18,7 +19,7 @@ class RoleService extends BaseService
      */
     public static function createRoleMapping($staff_id, $role_ids)
     {
-        if(StaffRole::updateAll(['status'=>0],['staff_id'=>$staff_id]) === false) {
+        if(StaffRole::updateAll(['status' => ConstantService::$default_status_false],['staff_id'=>$staff_id]) === false) {
             return self::_err('保存数据失败,请联系管理员');
         }
 
@@ -26,7 +27,7 @@ class RoleService extends BaseService
             return [
                 'staff_id'  =>  $staff_id,
                 'role_id'   =>  $role_id,
-                'status'    =>  1
+                'status'    =>  ConstantService::$default_status_true
             ];
         }, $role_ids);
 
@@ -45,40 +46,48 @@ class RoleService extends BaseService
     /**
      * 根据员工ID,来获取对应的角色下的所有urls.
      * @param $staff_id
+     * @param bool $is_root
      * @return array
      */
-    public static function getRoleUrlsByStaffId($staff_id)
+    public static function getRoleUrlsByStaffId($staff_id, $is_root = false)
     {
-        $role_ids = Role::find()
-            ->where([
-                'staff_id'  =>  $staff_id,
-                'status'    =>  1
-            ])
-            ->select(['role_id'])
-            ->column();
+        if($is_root) {
+            $action_urls = Action::find()
+                ->where(['status' => ConstantService::$default_status_true])
+                ->select(['urls'])
+                ->column();
+        }else{
+            $role_ids = Role::find()
+                ->where([
+                    'staff_id'  =>  $staff_id,
+                    'status'    =>  ConstantService::$default_status_true
+                ])
+                ->select(['role_id'])
+                ->column();
 
-        if(!$role_ids) {
-            return [];
+            if(!$role_ids) {
+                return [];
+            }
+
+            $action_ids = RoleAction::find()
+                ->where(['role_id'=>$role_ids,'status' => ConstantService::$default_status_true])
+                ->select(['action_id'])
+                ->column();
+
+            if(!$action_ids) {
+                return [];
+            }
+
+            $action_urls = Action::find()
+                ->where(['id'=>$action_ids,'status'=>ConstantService::$default_status_true])
+                ->select(['urls'])
+                ->column();
         }
-
-        $action_ids = RoleAction::find()
-            ->where(['role_id'=>$role_ids,'status' => 1])
-            ->select(['action_id'])
-            ->column();
-
-        if(!$action_ids) {
-            return [];
-        }
-
-        $action_urls = Action::find()
-            ->where(['id'=>$action_ids,'status'=>1])
-            ->select(['urls'])
-            ->column();
 
         // 开始更新所有的信息.
         $urls = [];
         foreach($action_urls as $action_url) {
-            $urls = array_merge($urls, implode(',', $action_urls));
+            $urls = array_merge($urls, implode(',', $action_url));
         }
 
         return $urls;

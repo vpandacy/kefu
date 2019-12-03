@@ -5,6 +5,7 @@ use common\models\merchant\Merchant;
 use common\models\merchant\Staff;
 use common\services\BaseService;
 use common\services\CommonService;
+use common\services\ConstantService;
 
 class MerchantService extends BaseService
 {
@@ -44,7 +45,7 @@ class MerchantService extends BaseService
             'email'         =>  $email,
             'password'      =>  $password,
             'listen_nums'   =>  0,
-            'status'        =>  1,
+            'status'        =>  ConstantService::$default_status_true,
             'is_root'       =>  1,
             'created_time'  =>  $now,
             'updated_time'  =>  $now,
