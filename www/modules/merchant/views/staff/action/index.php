@@ -5,6 +5,18 @@ use www\assets\MerchantAsset;
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/merchant/staff/action/index.js'), MerchantAsset::className());
 ?>
+<style>
+    .layui-table tbody tr:hover,.layui-table-hover {
+        background-color: white;
+    }
+    tbody tr:first-child td:first-child{
+        border-top: none;
+    }
+
+    tbody tr:first-child td:last-child{
+        border-top: none;
+    }
+</style>
 <div id="staff_index_index">
     <div class="staff_tab">
         <div class="tab_list">
@@ -20,15 +32,49 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
             <a href="<?=GlobalUrlService::buildMerchantUrl('/staff/action/index')?>">权限管理</a>
         </div>
     </div>
+
     <div class="tab_staff_content">
-        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
-            <button class="layui-btn" data-type="reload">搜索</button>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-            </div>
+        <div class="layui-table-header">
+            <form class="layui-form" action="">
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>一级模块</th>
+                        <th>二级模块</th>
+                        <th>权限</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($permissions as $level_name => $permission):?>
+                        <tr>
+                            <td><?=$level_name?></td>
+                            <td colspan="2" style="padding: 0">
+                            <table style="margin: 0;width: 100%;">
+                                <?php foreach ($permission['child'] as $second_levels):?>
+                                    <?php foreach ($second_levels['acts'] as $level_3 => $action): ?>
+                                        <tr>
+                                            <?php if( $level_3 == 0 ):?>
+                                                <td style="width: 50%;border-left: none;" rowspan="<?=$second_levels["counter"];?>">
+                                                    <?=$second_levels["name"]; ?>
+                                                </td>
+                                            <?php endif;?>
+                                            <td>
+                                                <input type="checkbox" name="permissions[]" title="<?= $action['name']; ?>">
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endforeach;?>
+                            </table>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                </tbody>
+            </table>
+            </form>
         </div>
-        <table class="layui-hide" id="test"></table>
     </div>
+
+
 </div>
 
 <script type="text/html" id="toolbarDemo">

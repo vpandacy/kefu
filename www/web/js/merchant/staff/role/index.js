@@ -1,6 +1,4 @@
-console.dir('123123123');
-;
-var staff_role_index_osp = {
+;var staff_role_index_osp = {
     init: function () {
         this.eventBind();
     },
@@ -28,7 +26,6 @@ var staff_role_index_osp = {
                 ,id: 'roleTable'
                 ,page: true
             });
-
 
             table.on('toolbar(roleTable)',function (action) {
                 if(action.event == 'add') {
