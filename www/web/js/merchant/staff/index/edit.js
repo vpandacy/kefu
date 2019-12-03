@@ -68,11 +68,21 @@ var merchant_staff_edit_ops = {
 
             form.on('submit(staffFrom)', function (data) {
                 var index = $.loading(1,{shade: .5});
+
+                data = data.field;
+
+                var role_ids = [];
+                $('[name=role_ids]:checked').each(function () {
+                    role_ids.push(this.value);
+                });
+                // 添加权限.
+                data.role_ids = role_ids;
+
                 $.ajax({
                     type: 'post',
                     url: common_ops.buildMerchantUrl('/staff/index/save'),
                     dataType: 'json',
-                    data: data.field,
+                    data: data,
                     success:function (response) {
                         $.close(index);
                         if(response.code != 200) {

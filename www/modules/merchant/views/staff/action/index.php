@@ -57,16 +57,16 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                         <table class="layui-table">
                             <thead>
                                 <tr>
-                                    <th>一级模块</th>
-                                    <th>二级模块</th>
-                                    <th>权限</th>
+                                    <th width="20%">一级模块</th>
+                                    <th width="40%">二级模块</th>
+                                    <th width="40%">权限</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php if($permissions):?>
                                 <?php foreach($permissions as $level_name => $permission):?>
                                     <tr>
-                                        <td><?=$level_name?></td>
+                                        <td width="20%"><?=$level_name?></td>
                                         <td colspan="2" style="padding: 0">
                                             <table style="margin: 0;width: 100%;">
                                                 <?php foreach ($permission['child'] as $second_levels):?>
@@ -102,7 +102,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
         </div>
 
 
-        <div class="layui-form-item" style="text-align: center">
+        <div class="layui-form-item" style="text-align: center; padding: 0 15px;">
             <button type="button" lay-submit lay-filter="*" class="layui-btn layui-btn-fluid">保  存</button>
         </div>
     </form>

@@ -4,11 +4,14 @@ namespace www\modules\merchant\controllers\staff;
 
 use common\components\DataHelper;
 use common\models\merchant\Department;
+use common\models\merchant\Role;
 use common\models\merchant\Staff;
+use common\models\merchant\StaffRole;
 use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
+use www\modules\merchant\service\RoleService;
 
 /**
  * Default controller for the `merchant` module
@@ -114,9 +117,26 @@ class IndexController extends BaseController
             ->asArray()
             ->all();
 
+        // 所有角色.
+        $roles = Role::find()
+            ->where([
+                'status'    =>  1,
+                'merchant_id'   =>  $this->getMerchantId()
+            ])
+            ->select(['id','name'])
+            ->asArray()
+            ->all();
+
+        $role_ids = StaffRole::find()
+            ->where(['status'=>1,'staff_id'=>$this->getStaffId()])
+            ->select(['role_id'])
+            ->column();
+
         return $this->render('edit',[
             'staff' =>  $staff,
-            'departments'    => $departments
+            'departments'    => $departments,
+            'roles' =>  $roles,
+            'role_ids'  =>  $role_ids,
         ]);
     }
 
@@ -127,7 +147,7 @@ class IndexController extends BaseController
     {
         $data = $this->post(null);
 
-        $request_r = ['mobile','email','name','listen_nums','department_id','avatar','password','confirm_password','id'];
+        $request_r = ['mobile','email','name','listen_nums','department_id','avatar','password','confirm_password','id', 'role_ids'];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
             return $this->renderJSON([],'参数丢失', ConstantService::$response_code_fail);
@@ -166,6 +186,15 @@ class IndexController extends BaseController
             return $this->renderJSON([],'两次输入的密码不一致,请重新输入', ConstantService::$response_code_fail);
         }
 
+        $role_ids = StaffRole::find()
+            ->where(['status'=>1,'staff_id'=>$this->getStaffId()])
+            ->select(['role_id'])
+            ->column();
+
+        if($data['role_ids'] && array_diff($data['role_ids'], $role_ids)) {
+            return $this->renderJSON([],'请选择正确的角色', ConstantService::$response_code_fail);
+        }
+
         // 检查密码强度.
         if($data['password'] && !CommonService::checkPassLevel($data['password'])) {
             return $this->renderJSON([], CommonService::getLastErrorMsg(), ConstantService::$response_code_fail);
@@ -196,6 +225,10 @@ class IndexController extends BaseController
 
         if(!$staff->save(0)) {
             return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+        }
+
+        if(!RoleService::createRoleMapping($staff['id'], $data['role_ids'])) {
+            return $this->renderJSON([],RoleService::getLastErrorMsg(), ConstantService::$response_code_fail);
         }
 
         return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);

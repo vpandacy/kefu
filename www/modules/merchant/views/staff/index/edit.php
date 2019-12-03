@@ -65,6 +65,16 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwUrl('/js/mercha
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">请选择角色</label>
+            <div class="layui-input-block">
+                <?php foreach($roles as $role):?>
+                    <input type="checkbox" name="role_ids" <?=in_array($role['id'], $role_ids) ? 'checked' : ''?> value="<?=$role['id']?>" title="<?=$role['name']?>">
+                <?php endforeach;?>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
             <label class="layui-form-label">请上传头像</label>
             <div class="layui-input-block" id="upload_container">
                 <button class="layui-btn" id="upload" type="button">

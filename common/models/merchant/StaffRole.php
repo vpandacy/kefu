@@ -29,7 +29,7 @@ class StaffRole extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['staff_id', 'role_id'], 'integer'],
+            [['id', 'staff_id', 'role_id','status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
         ];
     }
@@ -43,6 +43,7 @@ class StaffRole extends \yii\db\ActiveRecord
             'id' => 'ID',
             'staff_id' => 'Staff ID',
             'role_id' => 'Role ID',
+            'status'    =>  'Status',
             'created_time' => 'Created Time',
             'updated_time' => 'Updated Time',
         ];
