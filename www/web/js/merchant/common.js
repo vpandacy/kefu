@@ -53,12 +53,18 @@ var common_ops = {
 
     },
     buildPicStaticUrl:function(bucket,img_key,params){
-        bucket = bucket.replace(/zhyd_/g, "");
-        bucket = bucket?bucket:"pic3";
-        var url = "http://"+bucket+".s.360zhishu.cn/"+img_key;
+        bucket = bucket ? bucket: "pic3";
+        var config = {
+            'hsh': {
+                'http': 'http://cdn.static.test.jiatest.cn',
+                'https': 'https://cdn.static.test.jiatest.cn'
+            }
+        };
 
-        var width = params.hasOwnProperty("w")?params['w']:0;
-        var height = params.hasOwnProperty("h")?params['h']:0;
+        var url = config[bucket].http + '/' + img_key;
+
+        var width = params && params.hasOwnProperty("w") ? params['w']:0;
+        var height = params && params.hasOwnProperty("h") ? params['h']:0;
         if( !width && !height ){
             return url;
         }

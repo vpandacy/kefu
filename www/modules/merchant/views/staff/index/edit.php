@@ -57,21 +57,27 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwUrl('/js/mercha
             <div class="layui-input-block">
                 <select name="department_id" lay-verify="required">
                     <option value="0">请选择部门</option>
-                    <option value="0">北京</option>
-                    <option value="1">上海</option>
-                    <option value="2">广州</option>
-                    <option value="3">深圳</option>
-                    <option value="4">杭州</option>
-                </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="" class="layui-select-tips">请选择</dd><dd lay-value="0" class="">北京</dd><dd lay-value="1" class="">上海</dd><dd lay-value="2" class="">广州</dd><dd lay-value="3" class="">深圳</dd><dd lay-value="4" class="">杭州</dd></dl></div>
+                    <?php foreach($departments as $department):?>
+                        <option value="<?=$department['id']?>" <?=$department['id'] == $staff['department_id'] ? 'selected' : ''?> ><?=$department['name']?></option>
+                    <?php endforeach;?>
+                </select>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">请上传头像</label>
-            <div class="layui-input-block">
-                <button class="layui-btn" id="upload_container">
+            <div class="layui-input-block" id="upload_container">
+                <button class="layui-btn" id="upload" type="button">
                     <i class="layui-icon"></i>上传头像
                 </button>
+                <input type="hidden" name="avatar" value="<?=$staff['avatar']?>">
+            </div>
+            <div class="img-wrapper" style="margin-top: 10px;">
+                <?php if($staff['avatar']) :?>
+                    <div class="layui-input-block">
+                        <img width="100" height="100" src="<?=GlobalUrlService::buildPicStaticUrl('hsh', $staff['avatar'])?>" alt="">
+                    </div>
+                <?php endif;?>
             </div>
         </div>
 
@@ -93,6 +99,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwUrl('/js/mercha
 
         <div class="layui-form-item">
             <div class="layui-input-block">
+                <input type="hidden" name="id" value="<?=$staff['id']?>">
                 <button class="layui-btn" lay-submit="" lay-filter="staffFrom">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>

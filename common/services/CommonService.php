@@ -42,4 +42,50 @@ class CommonService extends BaseService
 
         return implode('',$output);
     }
+
+
+    /**
+     * 检查密码强度和是否函数特殊字符.
+     * @param string $pass
+     * @param int $len
+     * @return bool
+     */
+    public static function checkPassLevel($pass, $len = 6)
+    {
+        $source = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&-+={}[]<>?/';
+
+        $strs = str_split($source);
+
+        $pass = str_split($pass);
+
+        // 包含其他字符
+        if(array_diff($pass,$strs)){
+            return self::_err('您输入的密码包含了非法字符,特殊字符包含:!@#$%&-+={}[]<>?/');
+        }
+
+        if(count($pass) < $len) {
+            return self::_err('您的密码长度不够,最小长度为:' . $len);
+        }
+
+        $data = [
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            '0123456789',
+            '!@#$%&-+={}[]<>?/'
+        ];
+
+        $count = 0;
+
+        while($str = array_shift($data)){
+            $str = str_split($str);
+            if(array_intersect($str,$pass)){
+                $count++;
+            }
+        }
+
+        if($count <  3){
+            return self::_err('您输入的密码强度不够,请至少包含字母,数字及特殊字符.');
+        }
+
+        return true;
+    }
 }

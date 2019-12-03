@@ -3,6 +3,7 @@ namespace www\modules\merchant\controllers;
 
 use common\models\merchant\Merchant;
 use common\models\merchant\Staff;
+use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
@@ -80,6 +81,11 @@ class UserController extends BaseController
 
         if(!$password) {
             return $this->renderJSON([],'请输入密码', ConstantService::$response_code_fail);
+        }
+
+        // 检查密码强度.
+        if($password && !CommonService::checkPassLevel($password)) {
+            return $this->renderJSON([], CommonService::getLastErrorMsg(), ConstantService::$response_code_fail);
         }
 
         if(!$merchant_name) {
