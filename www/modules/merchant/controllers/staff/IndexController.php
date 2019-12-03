@@ -216,7 +216,7 @@ class IndexController extends BaseController
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_fail);
+        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
     }
 
     /**
