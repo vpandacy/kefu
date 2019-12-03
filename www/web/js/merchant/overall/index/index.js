@@ -6,7 +6,7 @@ var merchant_overall_index_ops = {
 
             table.render({
                 elem: '#commonWordTable'
-                ,url:'/merchant/overall/index/list'
+                ,url:common_ops.buildMerchantUrl('/overall/index/list')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[

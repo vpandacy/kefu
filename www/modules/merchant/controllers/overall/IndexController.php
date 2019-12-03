@@ -36,6 +36,7 @@ class IndexController extends BaseController
         $data = $query->where(['merchant_id'=>$this->getMerchantId()])
             ->limit($this->page_size)
             ->offset($page_size * ($page - 1))
+            ->orderBy(['id'=>SORT_DESC])
             ->asArray()
             ->all();
 
