@@ -15,6 +15,7 @@ var merchant_department_index_ops = {
                 ,toolbar: '#departToolbar' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
                 ,cellMinWidth: 80
+                // ,height: 600
                 ,cols: [[
                     {type:'checkbox', fixed: 'left'}
                     ,{field:'id', title: '序号'}
