@@ -128,7 +128,7 @@ class IndexController extends BaseController
             ->all();
 
         $role_ids = StaffRole::find()
-            ->where(['status'=>1,'staff_id'=>$this->getStaffId()])
+            ->where(['status'=>1,'staff_id'=>$staff['id']])
             ->select(['role_id'])
             ->column();
 
@@ -147,7 +147,7 @@ class IndexController extends BaseController
     {
         $data = $this->post(null);
 
-        $request_r = ['mobile','email','name','listen_nums','department_id','avatar','password','confirm_password','id', 'role_ids'];
+        $request_r = ['mobile','email','name','listen_nums','department_id','avatar','password','confirm_password','id'];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
             return $this->renderJSON([],'参数丢失', ConstantService::$response_code_fail);
@@ -191,7 +191,7 @@ class IndexController extends BaseController
             ->select(['id'])
             ->column();
 
-        if($data['role_ids'] && array_diff($data['role_ids'], $role_ids)) {
+        if(array_key_exists('role_ids', $data) && array_diff($data['role_ids'], $role_ids)) {
             return $this->renderJSON([],'请选择正确的角色', ConstantService::$response_code_fail);
         }
 
@@ -210,9 +210,15 @@ class IndexController extends BaseController
             return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
         }
 
+        if(!$staff && Staff::findOne(['email'=>$data['email']])) {
+            return $this->renderJSON([],'该邮箱已经被使用了,请稍后重新添加', ConstantService::$response_code_fail);
+        }
+
         if(!$data['id']) {
             $data['sn'] = CommonService::genUniqueName();
             $data['salt'] = CommonService::genUniqueName();
+            $data['merchant_id'] = $this->getMerchantId();
+            $data['status'] = 1;
         }
 
         if($data['password']) {
@@ -227,7 +233,7 @@ class IndexController extends BaseController
             return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
         }
 
-        if(!RoleService::createRoleMapping($staff['id'], $data['role_ids'])) {
+        if(array_key_exists('role_ids', $data) && !RoleService::createRoleMapping($staff['id'], $data['role_ids'])) {
             return $this->renderJSON([],RoleService::getLastErrorMsg(), ConstantService::$response_code_fail);
         }
 
