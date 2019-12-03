@@ -68,12 +68,11 @@ var merchant_staff_edit_ops = {
 
             form.on('submit(staffFrom)', function (data) {
                 var index = $.loading(1,{shade: .5});
-
                 $.ajax({
                     type: 'post',
                     url: common_ops.buildMerchantUrl('/staff/index/save'),
                     dataType: 'json',
-                    data: data,
+                    data: data.field,
                     success:function (response) {
                         $.close(index);
                         if(response.code != 200) {

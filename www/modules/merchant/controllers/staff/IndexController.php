@@ -3,7 +3,6 @@
 namespace www\modules\merchant\controllers\staff;
 
 use common\components\DataHelper;
-use common\components\helper\StaticAssetsHelper;
 use common\models\merchant\Department;
 use common\models\merchant\Staff;
 use common\services\CommonService;
@@ -22,7 +21,24 @@ class IndexController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $departments = Department::find()
+            ->where([
+                'status'    =>  1,
+                'merchant_id'   =>  $this->getMerchantId(),
+            ])
+            ->select(['id','name'])
+            ->asArray()
+            ->all();
+
+
+        return $this->render('index',[
+            'departments'   =>  $departments,
+            'search_conditions' =>  [
+                'mobile'    =>  trim($this->get('mobile','')),
+                'email'     =>  trim($this->get('email','')),
+                'department_id' =>  trim($this->get('department_id',0)),
+            ]
+        ]);
     }
 
     /**
@@ -34,6 +50,22 @@ class IndexController extends BaseController
         $page = intval($this->get('page',1));
 
         $query = Staff::find();
+        // 构建条件
+        $mobile = trim($this->get('mobile',''));
+        $email  = trim($this->get('email',''));
+        $department_id = $this->get('department_id',0);
+
+        if($mobile) {
+            $query->andWhere(['mobile'=>$mobile]);
+        }
+
+        if($email) {
+            $query->andWhere(['email'=>$email]);
+        }
+
+        if($department_id) {
+            $query->andWhere(['department_id'=>$department_id]);
+        }
 
         $count = $query->count();
 
@@ -66,7 +98,7 @@ class IndexController extends BaseController
     {
         $staff_id = intval($this->get('staff_id',0));
 
-        $staff = $staff_id ? Staff::findOne(['id'=>$staff_id,'merchant_id'=>$this->getMerchantId()]) : new Staff();
+        $staff = $staff_id ? Staff::findOne(['id'=>$staff_id,'merchant_id'=>$this->getMerchantId(),'status'=>1]) : new Staff();
 
         if($staff_id && !$staff) {
             // 返回回去.
@@ -143,7 +175,7 @@ class IndexController extends BaseController
             return $this->renderJSON([],'新增帐号时请输入密码', ConstantService::$response_code_fail);
         }
 
-        $staff = $data['id'] > 0 ? Staff::findOne(['id'=>$data['id'],'merchant_id'=>$this->getMerchantId()]) : new Staff();
+        $staff = $data['id'] > 0 ? Staff::findOne(['id'=>$data['id'],'merchant_id'=>$this->getMerchantId(),'status'=>1]) : new Staff();
 
         if($data['id'] > 0 && !$staff['id']) {
             return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
@@ -156,12 +188,60 @@ class IndexController extends BaseController
 
         if($data['password']) {
             $data['password'] = $this->genPassword($this->getMerchantId(), $data['password'], $data['salt']);
+        }else{
+            unset($data['password']);
         }
 
         $staff->setAttributes($data,0);
 
         if(!$staff->save(0)) {
             return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+        }
+
+        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+    }
+
+    /**
+     * 恢复.
+     */
+    public function actionRecover()
+    {
+        $ids = $this->post('ids');
+
+        if(!count($ids)) {
+            return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
+        }
+
+        if(!Staff::updateAll(['status'=>1],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
+            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+        }
+
+        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_fail);
+    }
+
+    /**
+     * 禁用.
+     */
+    public function actionDisable()
+    {
+        $id = $this->post('id',0);
+        if(!$id || !is_numeric($id)) {
+            return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
+        }
+
+        if($id == $this->getStaffId()) {
+            return $this->renderJSON([],'您暂不能禁用自己', ConstantService::$response_code_fail);
+        }
+
+        $staff = Staff::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
+
+        if($staff['status'] != 1) {
+            return $this->renderJSON([],'该帐号不需要删除', ConstantService::$response_code_fail);
+        }
+
+        $staff['status'] = 0;
+        if(!$staff->save(0)) {
+            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
         }
 
         return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);

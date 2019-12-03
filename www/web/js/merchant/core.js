@@ -13,8 +13,14 @@
                 return layer.msg(content);
             },
             // 确认框
-            confirm: function (content,callback,btn) {
+            confirm: function (content,params,callback,cancel_callback) {
+                if(typeof params == 'function') {
+                    cancel_callback = callback;
+                    callback = params;
+                    params = {};
+                }
 
+                return layer.confirm(content,params,callback,cancel_callback);
             },
             // 加载.
             loading: function (type,params) {

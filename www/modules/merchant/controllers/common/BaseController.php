@@ -143,6 +143,15 @@ class BaseController extends BaseWebController {
     }
 
     /**
+     * 获取员工ID.
+     * @return int
+     */
+    public function getStaffId()
+    {
+        return $this->staff ? $this->staff['id'] : 0;
+    }
+
+    /**
      * 渲染分页的界面.
      * @param array $data
      * @param string $msg
