@@ -57,7 +57,12 @@ class GlobalUrlService {
 
     public static function buildPicStaticUrl($bucket ,$img_key,$params = []){
         $bucket = $bucket?$bucket:"pic3";
-        $url = "//{$bucket}.s.360zhishu.cn/".$img_key;
+
+        $config = \Yii::$app->params['cdn'];
+
+        $domain = isset($config[$bucket]) ? $config[$bucket]['http'] : 'http://cdn.static.test.jiatest.cn';
+
+        $url = $domain . '/' . $img_key;
 
         $width = isset($params['w'])?$params['w']:0;
         $height = isset($params['h'])?$params['h']:0;

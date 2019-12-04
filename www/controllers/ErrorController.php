@@ -19,4 +19,9 @@ class ErrorController extends Controller
         $err_msg = $msg . " [file: {$file}][line: {$line}][err code:$code.][url:{$url}][referer:{$referer}][post:".http_build_query($_POST)."]";
         return $err_msg;
     }
+
+    public function actionError()
+    {
+        return $this->render('error');
+    }
 }

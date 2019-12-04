@@ -1,40 +1,77 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
-StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js/merchant/staff/index/index.js"),www\assets\MerchantAsset::className() )
+use www\assets\MerchantAsset;
+
+/**
+ * @var \yii\web\View $this
+ */
+
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js/merchant/staff/index/index.js"),MerchantAsset::className() )
 ?>
-<!--  表格用的layui 具体配置参考：https://www.layui.com/demo/table/auto.html
-      所有页面的表格以此页面表格为标准.
--->
 <div id="staff_index_index">
-    <div class="staff_tab">
-        <div class="tab_list tab_active" ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">子账号管理</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/department/index');?>">部门管理</a></div>
-        <div class="tab_list"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/role/index');?>">角色管理</a></div>
-    </div>
+    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+        'bar_menu'  =>  'user',
+        'current_menu'  =>  'sub_user'
+    ])?>
     <div class="tab_staff_content">
-    <div class="demoTable" style="    text-align: left;margin:10px 18px;">
-        <button class="layui-btn" data-type="reload">搜索</button>
-        <div class="layui-inline">
-            <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-        </div>
-    </div>
-    <table class="layui-hide" id="test" style="position: relative">
-    </table>
+        <table class="layui-hide" lay-filter="staff" id="staff" style="position: relative">
+        </table>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
+<script type="text/html" id="staffBar">
     <div class="layui-btn-container">
         <div>
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
-            <button class="layui-btn layui-btn-sm" lay-event="isAll">恢复</button>
+            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+            <button class="layui-btn layui-btn-sm" lay-event="recover">恢复</button>
         </div>
         <div>
             <i class="fa fa-glass" aria-hidden="true" title="筛选"></i>
         </div>
     </div>
 </script>
+
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
 </script>
+
+
+<div class="search-wrapper" style="display: none">
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号</label>
+        <div class="layui-input-block">
+            <input type="text" name="mobile" value="<?=$search_conditions['mobile']?>" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属行业</label>
+            <div class="layui-input-block">
+                <select name="department_id">
+                    <option value="0">请选择行业</option>
+                    <?php foreach($departments as $department):?>
+                        <option value="<?=$department['id']?>" <?=$department['id'] == $search_conditions['department_id'] ? 'selected' : ''?>>
+                            <?=$department['name']?>
+                        </option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-inline">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</div>

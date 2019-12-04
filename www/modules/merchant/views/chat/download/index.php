@@ -5,10 +5,10 @@ use \common\components\helper\StaticAssetsHelper;
 ?>
 <!--  表格用的layui 具体配置参考：https://www.layui.com/demo/table/auto.html -->
 <div id="staff_index_index">
-    <div class="staff_tab">
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/chat/index/index');?>">聊天管理</a></div>
-        <div class="tab_list tab_active"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/chat/download/index');?>">下载记录</a></div>
-    </div>
+    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+        'bar_menu'  =>  'chat',
+        'current_menu'  =>  'download'
+    ])?>
     <div class="tab_staff_content">
         <div class="demoTable" style="    text-align: left;margin:10px 18px;">
             <button class="layui-btn" data-type="reload">搜索</button>

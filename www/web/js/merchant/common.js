@@ -1,56 +1,59 @@
 ;
 var common_ops = {
     init:function(){
-        this.eventBind();
         this.setMenuIconHighLight();
-        this.getMsgCount();
-    },
-    eventBind:function(){
-        //文本框失去焦点时隐藏tip提示层
-        $('div').off('change','.input-1,.textarea-1,.textarea-1a').on('blur','.input-1,.textarea-1,.textarea-1a',function(){
-            $(this).hideTip();
-        });
-        $('div').off('change',".radio-1,.select-1,.checkbox-1").on('change',".radio-1,.select-1,.checkbox-1",function() {
-            $(this).hideTip();
-        });
-
     },
     setMenuIconHighLight:function(){
-        if( $(".box_left_nav .menu_list").size() < 1 ){
+        if( $(".menu-title .iconfont").length < 1 ){
             return;
         }
-        var pathname = window.location.pathname;
-        var nav_name = null;
 
-        if(  pathname.indexOf("/merchant/default") > -1 || pathname == "/merchant" || pathname == "/merchant/" ){
-            nav_name = "dashboard";
-        }
+        var pathname = window.location.pathname,
+            nav_name = null,
+            uris = {
+            'yonghuguanli'  : [
+                '/merchant/staff/index',
+                '/merchant/staff/department',
+                '/merchant/staff/role',
+                '/merchant/staff/action'
+            ],
+            'liaotian'      : [
+                '/merchant/chat/index',
+                '/merchant/chat/download'
+            ],
+            'quanjushezhi'  : [
+                '/merchant/overall/index',
+                '/merchant/overall/clueauto',
+                '/merchant/overall/breakauto',
+                '/merchant/overall/company',
+                '/merchant/overall/offline'
+            ],
+            'heimingdan'    : [
+                '/merchant/black/index'
+            ],
+            'fengge'        : [
+                '/merchant/style/index',
+                '/merchant/style/computer',
+                '/merchant/style/mobile',
+                '/merchant/style/newsauto',
+                '/merchant/style/reception',
+                '/merchant/style/video'
+            ]
+        };
 
-        if(  pathname.indexOf("/merchant/staff") > -1  ){
-            nav_name = "staff";
-        }
-
-        if(  pathname.indexOf("/merchant/help") > -1  ){
-            nav_name = "help";
-        }
-
-        if(  pathname.indexOf("/stat") > -1  ){
-            nav_name = "stat";
-        }
-
-        if(  pathname.indexOf("/chat") > -1  ){
-            nav_name = "chat";
-        }
-
-        if(  pathname.indexOf("/setting") > -1  ){
-            nav_name = "setting";
+        for(var index in uris) {
+            for(var i = 0; i < uris[index].length; i++) {
+                if(pathname.indexOf(uris[index][i]) > -1) {
+                    nav_name = index;
+                }
+            }
         }
 
         if( nav_name == null ){
             return;
         }
 
-        $(".box_left_nav .menu_list li."+nav_name).addClass("current");
+        $(".menu-title .icon-"+nav_name).addClass("li_active");
     },
     buildMerchantUrl:function( path ,params){
         var url =  "/merchant" + path;
@@ -65,12 +68,18 @@ var common_ops = {
 
     },
     buildPicStaticUrl:function(bucket,img_key,params){
-        bucket = bucket.replace(/zhyd_/g, "");
-        bucket = bucket?bucket:"pic3";
-        var url = "http://"+bucket+".s.360zhishu.cn/"+img_key;
+        bucket = bucket ? bucket: "pic3";
+        var config = {
+            'hsh': {
+                'http': 'http://cdn.static.test.jiatest.cn',
+                'https': 'https://cdn.static.test.jiatest.cn'
+            }
+        };
 
-        var width = params.hasOwnProperty("w")?params['w']:0;
-        var height = params.hasOwnProperty("h")?params['h']:0;
+        var url = config[bucket].http + '/' + img_key;
+
+        var width = params && params.hasOwnProperty("w") ? params['w']:0;
+        var height = params && params.hasOwnProperty("h") ? params['h']:0;
         if( !width && !height ){
             return url;
         }
@@ -91,53 +100,22 @@ var common_ops = {
         url += "/interlace/1";
         return url;
     },
-
-    getMsgCount:function(){
-
-        return true;
-    },
-    popLayer:function(url,params){
-        var data = params.hasOwnProperty('data')?params['data']:{};
-        var target_handle = params.hasOwnProperty('target')?params['target']:$("#pop_layer_wrap");
-        var title = params.hasOwnProperty('title')?params['title']:'';
-        var request_method =  params.hasOwnProperty('method')?params['method']:'GET';
-        //是否阻止弹窗的默认关闭事件
-        var preventClose = params.hasOwnProperty('preventClose')?params['preventClose']:false;
-        $.ajax({
-            url:common_ops.buildClubUrl(url),
-            type:request_method,
-            data:data,
-            dataType:'json',
-            success:function(res){
-                if( res.code == 200 ){
-                    target_handle.html(  res.data.form_wrap );
-                    if(  target_handle.parents(".lay-body").size() > 0  ){
-                        $.lay.refresh();
-                        return;
-                    }
-                    if(  params.hasOwnProperty('lay-size') ){
-                        target_handle.attr("class", "hide " + params['lay-size']);
-                    }else{//默认是small
-                        //target_handle.addClass('lay-medium');
-                    }
-
-                    if(  params.hasOwnProperty('height') ){
-                        target_handle.addClass("height-"+params['height']);
-                    }else{//默认是small
-                        //target_handle.addClass('lay-medium');
-                    }
-                    $.lay.open({
-                        'content':target_handle,
-                        'title':title,
-                        'shadeClose':false,
-                        'preventClose':preventClose,
-                        'area': params.hasOwnProperty('area')?params['area']:[ 'auto','auto' ]
-                    });
-                }else{
-                    $.alert(res.msg);
-                }
+    'getRequest': function (key, default_value) {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
             }
-        })
+        }
+
+        if(key) {
+            return theRequest[key] ? theRequest[key] : default_value;
+        }
+
+        return theRequest;
     }
 };
 

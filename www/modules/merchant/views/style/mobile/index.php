@@ -4,14 +4,10 @@ use \common\components\helper\StaticAssetsHelper;
 //StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"), www\assets\MerchantAsset::className())
 ?>
 <div id="staff_index_index">
-    <div class="staff_tab">
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/index/index');?>">风格列表</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/computer/index');?>">PC端设置</a></div>
-        <div class="tab_list tab_active"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/mobile/index');?>">移动端设计</a></div>
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/newsauto/index');?>">自动消息</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/reception/index');?>">接待规则</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/video/index');?>">视频</a></div>
-    </div>
+    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+        'bar_menu'  =>  'style',
+        'current_menu'  =>  'mobile'
+    ])?>
     <div class="tab_staff_content">
         <div class="demoTable" style="    text-align: left;margin:10px 18px;">
             <button class="layui-btn" data-type="reload">搜索</button>
