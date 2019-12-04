@@ -158,7 +158,7 @@ class MenuService extends BaseService
                     'title' =>  '移动端设计',
                     'url'   =>  'merchant/style/mobile/index'
                 ],
-                'news'      =>  [
+                'newsauto'  =>  [
                     'title' =>  '自动消息',
                     'url'   =>  'merchant/style/newsauto/index',
                 ],
