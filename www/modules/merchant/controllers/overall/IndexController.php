@@ -54,7 +54,7 @@ class IndexController extends BaseController
 
         if($word_id && !$words) {
             // 返回回去.
-            return $this->redirect(GlobalUrlService::buildMerchantUrl('/overall/index/index'));
+            return $this->responseFail('您暂无权限操作此界面');
         }
 
         return $this->render('edit',[

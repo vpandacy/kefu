@@ -75,6 +75,18 @@ class BaseController extends BaseWebController {
     }
 
     /**
+     * 设置错误的响应.
+     * @param string $msg
+     * @return Response
+     */
+    public function responseFail($msg = '非法请求')
+    {
+        return $this->redirect(GlobalUrlService::buildWwwUrl('/error/error',[
+            'msg'   =>  $msg
+        ]));
+    }
+
+    /**
      * 开始商户登录权限.
      */
     protected function checkLoginStatus()

@@ -107,7 +107,7 @@ class IndexController extends BaseController
 
         if($staff_id && !$staff) {
             // 返回回去.
-            return $this->redirect(GlobalUrlService::buildMerchantUrl('/staff/index'));
+            return $this->responseFail('您暂无权限操作');
         }
 
         $departments = Department::find()
@@ -220,13 +220,13 @@ class IndexController extends BaseController
 
         if(!$data['id']) {
             $data['sn'] = CommonService::genUniqueName();
-            $data['salt'] = CommonService::genUniqueName();
             $data['merchant_id'] = $this->getMerchantId();
             $data['status'] = ConstantService::$default_status_true;
+            $staff['salt'] = CommonService::genUniqueName();
         }
 
         if($data['password']) {
-            $data['password'] = $this->genPassword($this->getMerchantId(), $data['password'], $data['salt']);
+            $data['password'] = $this->genPassword($this->getMerchantId(), $data['password'], $staff['salt']);
         }else{
             unset($data['password']);
         }
