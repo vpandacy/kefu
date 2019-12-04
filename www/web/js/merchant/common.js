@@ -40,7 +40,7 @@ var common_ops = {
                 '/merchant/style/video'
             ]
         };
-        console.dir('123123');
+
         for(var index in uris) {
             for(var i = 0; i < uris[index].length; i++) {
                 if(pathname.indexOf(uris[index][i]) > -1) {

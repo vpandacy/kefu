@@ -16,6 +16,14 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     tbody tr:first-child td:last-child{
         border-top: none;
     }
+
+    table table tr:nth-last-child(2) td{
+        border-bottom: none;
+    }
+
+    table table tr:last-child td{
+        border-bottom: none;
+    }
 </style>
 
 <div id="staff_index_index">
