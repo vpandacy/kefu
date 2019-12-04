@@ -4,9 +4,10 @@ use \common\components\helper\StaticAssetsHelper;
 StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
 ?>
 <div id="staff_index_index">
-    <div class="staff_tab">
-        <div class="tab_list tab_active" ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/black/index/index');?>">黑名单管理</a></div>
-    </div>
+    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+        'bar_menu'  =>  'blacklist',
+        'current_menu'  =>  'blacklist'
+    ])?>
     <div class="tab_staff_content">
         <div class="demoTable" style="    text-align: left;margin:10px 18px;">
             <div class="layui-inline">

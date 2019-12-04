@@ -5,14 +5,10 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
 ?>
 <!--表单使用 以及 layUI参考 https://www.layui.com/doc/modules/upload.html-->
 <div id="staff_index_index">
-    <div class="staff_tab">
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/index/index');?>">风格列表</a></div>
-        <div class="tab_list tab_active"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/computer/index');?>">PC端设置</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/mobile/index');?>">移动端设计</a></div>
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/newsauto/index');?>">自动消息</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/reception/index');?>">接待规则</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/video/index');?>">视频</a></div>
-    </div>
+    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+        'bar_menu'  =>  'style',
+        'current_menu'  =>  'computer'
+    ])?>
     <div class="tab_staff_content">
         <ul class="mainmenu">
             <li>

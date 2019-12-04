@@ -19,20 +19,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
 </style>
 
 <div id="staff_index_index">
-    <div class="staff_tab">
-        <div class="tab_list">
-            <a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">子账号管理</a>
-        </div>
-        <div class="tab_list ">
-            <a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/department/index');?>">部门管理</a>
-        </div>
-        <div class="tab_list">
-            <a href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/role/index');?>">角色管理</a>
-        </div>
-        <div class="tab_list tab_active">
-            <a href="<?=GlobalUrlService::buildMerchantUrl('/staff/action/index')?>">权限管理</a>
-        </div>
-    </div>
+    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+        'bar_menu'  =>  'user',
+        'current_menu'  =>  'action'
+    ])?>
 
     <form class="layui-form" action="">
         <div class="layui-card">
