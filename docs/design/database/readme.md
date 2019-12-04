@@ -122,6 +122,7 @@ CREATE TABLE `black_list` (
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `staff_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '接待员工ID',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '已删除,1正常',
+  `expired_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '失效时间',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

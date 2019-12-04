@@ -33,7 +33,7 @@ class BlackList extends \yii\db\ActiveRecord
     {
         return [
             [['visitor_id', 'merchant_id', 'staff_id', 'status'], 'integer'],
-            [['created_time', 'updated_time'], 'safe'],
+            [['created_time', 'updated_time', 'expired_time'], 'safe'],
             [['ip'], 'string', 'max' => 255],
         ];
     }
@@ -50,6 +50,7 @@ class BlackList extends \yii\db\ActiveRecord
             'merchant_id' => 'Merchant ID',
             'staff_id' => 'Staff ID',
             'status' => 'Status',
+            'expired_time' => 'Expired Time',
             'created_time' => 'Created Time',
             'updated_time' => 'Updated Time',
         ];
