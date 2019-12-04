@@ -7,8 +7,8 @@ var staff_action_index_ops = {
         layui.use(['form'],function () {
             var form = layui.form;
 
-            form.on('radio(choice)', function () {
-                var role_id = this.value,
+            form.on('select(choice)', function (data) {
+                var role_id = data.value,
                     index = $.loading(1,{shade: .5});
 
                 $.ajax({
