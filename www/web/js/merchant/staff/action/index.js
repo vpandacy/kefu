@@ -8,9 +8,16 @@ var staff_action_index_ops = {
             var form = layui.form;
 
             form.on('select(choice)', function (data) {
-                var role_id = data.value,
-                    index = $.loading(1,{shade: .5});
+                var role_id = data.value;
+                if(!role_id || role_id <= 0) {
+                    $('.action').each(function () {
+                        $(this).removeAttr('checked');
+                    });
 
+                    form.render('checkbox');
+                    return false;
+                }
+                var index = $.loading(1,{shade: .5});
                 $.ajax({
                     type: 'POST',
                     url : common_ops.buildMerchantUrl('/staff/action/list'),
@@ -27,7 +34,7 @@ var staff_action_index_ops = {
                         var action_ids = response.data;
 
                         $('.action').each(function () {
-                            console.dir(action_ids.indexOf(this.value) >= 0);
+                            console.dir(action_ids.indexOf(this.value));
                             if(action_ids.indexOf(this.value) >= 0) {
                                 $(this).attr('checked','checked');
                             }else{
@@ -41,11 +48,12 @@ var staff_action_index_ops = {
                         $.close(index);
                     }
                 })
-                // 开始增加判断了.
             });
 
             form.on('submit(*)', function (data) {
                 data = data.field;
+
+                data.role_id = $('[name=role_id]').val();
 
                 var permission_ids = [];
 

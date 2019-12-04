@@ -40,7 +40,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
         'current_menu'  =>  'action'
     ])?>
 
-    <form class="layui-form" action="">
+    <form class="layui-form">
         <fieldset>
             <legend>
                 <a name="use">权限列表</a>
@@ -51,9 +51,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                 <div class="layui-inline">
                     <div class="layui-input-inline">
                         <select name="role_id" lay-filter="choice" lay-verify="required" lay-search="">
-                            <option value="">选择角色</option>
+                            <option value="0">选择角色</option>
                             <?php foreach($roles as $role):?>
-                            <option value="<?=$role['id']?>"><?=$role['name']?></option>
+                                <option value="<?=$role['id']?>"><?=$role['name']?></option>
                             <?php endforeach;?>
                         </select>
                     </div>
