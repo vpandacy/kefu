@@ -62,12 +62,13 @@ var merchant_staff_edit_ops = {
         this.eventBind();
     },
     eventBind: function () {
+        var that = this;
         layui.use(['form'], function () {
             var form = layui.form;
             upload_qiniu_ops.init('upload_container','hsh');
 
             form.on('submit(staffFrom)', function (data) {
-                var index = $.loading(1,{shade: .5});
+
 
                 data = data.field;
 
@@ -78,29 +79,41 @@ var merchant_staff_edit_ops = {
                 // 添加权限.
                 data.role_ids = role_ids;
 
-                $.ajax({
-                    type: 'post',
-                    url: common_ops.buildMerchantUrl('/staff/index/save'),
-                    dataType: 'json',
-                    data: data,
-                    success:function (response) {
+                if(data.id > 0 && data.password) {
+                    var index = $.confirm('您确认要修改密码吗,修改过后会导致该用户退出登录',function () {
                         $.close(index);
-                        if(response.code != 200) {
-                            return $.msg(response.msg);
-                        }
-
-                        return $.alert(response.msg, function () {
-                            history.go(-1);
-                        });
-                    },
-                    error: function () {
-                        $.close(index);
-                    }
-                })
-
+                        // 保存数据.
+                        that.save(data);
+                    });
+                    return false;
+                }
+                // 保存数据
+                that.save(data);
                 return false;
             });
         });
+    },
+    save:function (data) {
+        var index = $.loading(1,{shade: .5});
+        $.ajax({
+            type: 'post',
+            url: common_ops.buildMerchantUrl('/staff/index/save'),
+            dataType: 'json',
+            data: data,
+            success:function (response) {
+                $.close(index);
+                if(response.code != 200) {
+                    return $.msg(response.msg);
+                }
+
+                return $.alert(response.msg, function () {
+                    history.go(-1);
+                });
+            },
+            error: function () {
+                $.close(index);
+            }
+        })
     }
 };
 

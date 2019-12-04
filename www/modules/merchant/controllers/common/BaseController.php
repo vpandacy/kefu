@@ -45,6 +45,11 @@ class BaseController extends BaseWebController {
         }
 
         if(!$this->checkLoginStatus()) {
+            if(Yii::$app->request->isAjax) {
+                $this->renderJSON([],'您还没有登录,请登录', -401);
+                return false;
+            }
+
             // 设置跳转.
             $this->redirect(GlobalUrlService::buildMerchantUrl('/user/login',[
                 'redirect_uri'  =>  GlobalUrlService::buildWwwUrl('/' . $action->getUniqueId())
@@ -55,16 +60,30 @@ class BaseController extends BaseWebController {
         $urls = RoleService::getRoleUrlsByStaffId($this->staff['id'], $this->staff['is_root']);
 
         if(!$this->staff['is_root'] && !in_array($action->getUniqueId(), $urls)) {
-            exit('这里没有权限.');
             return false;
         }
 
         $menus = MenuService::getAllMenu($urls, $this->staff['is_root']);
 
+        // 商户信息.
         Yii::$app->view->params['merchant'] = $this->merchant_info;
+        // 员工信息.
         Yii::$app->view->params['staff']    = $this->staff;
+        // 菜单信息.
         Yii::$app->view->params['menus']    = $menus;
         return true;
+    }
+
+    /**
+     * 设置错误的响应.
+     * @param string $msg
+     * @return Response
+     */
+    public function responseFail($msg = '非法请求')
+    {
+        return $this->redirect(GlobalUrlService::buildWwwUrl('/error/error',[
+            'msg'   =>  $msg
+        ]));
     }
 
     /**

@@ -24,6 +24,14 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     table table tr:last-child td{
         border-bottom: none;
     }
+
+    table table td{
+        border-right: none !important;
+    }
+
+    .layui-table>tbody>tr:last-child td{
+        border-bottom: none;
+    }
 </style>
 
 <div id="staff_index_index">
@@ -52,7 +60,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                 <!-- 这里是表格... -->
                 <div class="tab_staff_content">
                     <div class="layui-table-header">
-                        <table class="layui-table">
+                        <table class="layui-table" style="margin: 0;">
                             <thead>
                                 <tr>
                                     <th width="20%">一级模块</th>
