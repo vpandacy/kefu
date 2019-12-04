@@ -69,11 +69,46 @@ var overall_company_ops = {
 
             // 这里可以弄两个接口吧.
             form.on('submit(info)',function (data) {
+                if(!data.field.logo) {
+                    return $.msg('请上传企业logo图片');
+                }
+                var index = $.loading(1, {shade: .5});
+                $.ajax({
+                    type: 'POST',
+                    url: common_ops.buildMerchantUrl('/overall/company/save-info'),
+                    data: data.field,
+                    dataType:'json',
+                    success:function (response) {
+                        $.close(index);
+                        // 暂时不做任何处理.
+                        return $.msg(response.msg);
+                    },
+                    error: function () {
+                        $.close(index);
+                    }
+                });
+
                 return false;
             });
 
             // 这里弄两个接口.
             form.on('submit(settings)', function (data) {
+                var index = $.loading(1, {shade: .5});
+                $.ajax({
+                    type: 'POST',
+                    url: common_ops.buildMerchantUrl('/overall/company/save-setting'),
+                    data: data.field,
+                    dataType:'json',
+                    success:function (response) {
+                        $.close(index);
+                        // 暂时不做任何处理.
+                        return $.msg(response.msg);
+                    },
+                    error: function () {
+                        $.close(index);
+                    }
+                });
+
                 return false;
             });
         })
