@@ -87,7 +87,7 @@ class RoleService extends BaseService
         // 开始更新所有的信息.
         $urls = [];
         foreach($action_urls as $action_url) {
-            $urls = array_merge($urls, implode(',', $action_url));
+            $urls = array_merge($urls, explode(',', $action_url));
         }
 
         return $urls;

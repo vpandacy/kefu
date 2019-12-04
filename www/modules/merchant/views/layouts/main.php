@@ -21,55 +21,9 @@ MerchantAsset::register($this);
 <?php $this->beginBody() ?>
     <div id="merchant">
         <div class="chant_all">
-            <!-- 左侧菜单栏 -->
-            <div class="left_menu" id="left_menu">
-                <div class="menu-logo">
-                    <a><img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/logo1.png");?>"></a>
-                </div>
-                <div class="menu-version"><?=$this->params['merchant']['name']?></div>
-                <div class="menu-title">
-                    <a data-url="/merchant/staff/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/staff/index/index');?>">
-                        <div class="menu-tooltip">用户管理</div>
-                        <i class="iconfont icon-yonghuguanli li_active"></i>
-                        <div class="menu-show dis_none">用户管理</div>
-                    </a>
-                    <a data-url="/merchant/chat/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/chat/index/index');?>">
-                        <div class="menu-tooltip">聊天管理</div>
-                        <i class="iconfont icon-liaotian"></i>
-                        <div class="menu-show dis_none">聊天管理</div>
-                    </a>
-                    <a data-url="/merchant/overall/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/overall/index/index');?>">
-                        <div class="menu-tooltip">全局设置</div>
 
-                        <i class="iconfont icon-quanjushezhi"></i>
-                        <div class="menu-show dis_none">全局设置</div>
-                    </a>
-                    <a data-url="/merchant/black/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/black/index/index');?>">
-                        <div class="menu-tooltip">黑名单管理</div>
+            <?=$this->renderFile('@www/modules/merchant/views/common/left_menu.php')?>
 
-                        <i class="iconfont icon-heimingdan"></i>
-                        <div class="menu-show dis_none">黑名单管理</div>
-                    </a>
-                    <a data-url="/merchant/style/" href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/index/index');?>">
-                        <div class="menu-tooltip">风格管理</div>
-
-                        <i class="iconfont icon-fengge"></i>
-                        <div class="menu-show dis_none">风格管理</div>
-                    </a>
-                </div>
-                <div class="menu_bottom">
-                    <div class="menu-show-hide" onclick="menuLock()">
-                        <a>
-                            <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
-                        </a>
-                    </div>
-                    <div class="menu-show-hide dis_none" onclick="menuClose()">
-                        <a>
-                            <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu- " ></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
             <!-- 右侧菜单栏 -->
             <div class="right_merchant">
                 <!-- 头部个人信息 -->

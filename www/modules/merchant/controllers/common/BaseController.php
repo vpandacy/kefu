@@ -7,6 +7,8 @@ use common\models\merchant\Merchant;
 use common\models\merchant\Staff;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
+use www\modules\merchant\service\MenuService;
+use www\modules\merchant\service\RoleService;
 use Yii;
 use yii\base\Action;
 use yii\web\Response;
@@ -50,8 +52,18 @@ class BaseController extends BaseWebController {
             return false;
         }
 
+        $urls = RoleService::getRoleUrlsByStaffId($this->staff['id'], $this->staff['is_root']);
+
+        if(!$this->staff['is_root'] && !in_array($action->getUniqueId(), $urls)) {
+            exit('这里没有权限.');
+            return false;
+        }
+
+        $menus = MenuService::getAllMenu($urls, $this->staff['is_root']);
+
         Yii::$app->view->params['merchant'] = $this->merchant_info;
-        Yii::$app->view->params['staff'] = $this->staff;
+        Yii::$app->view->params['staff']    = $this->staff;
+        Yii::$app->view->params['menus']    = $menus;
         return true;
     }
 
