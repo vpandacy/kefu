@@ -59,7 +59,7 @@ var staff_action_index_ops = {
                     permission_ids.push($(this).val());
                 });
 
-                if(!data.hasOwnProperty('role_id')) {
+                if(!data.hasOwnProperty('role_id') || data.role_id <= 0) {
                     return $.msg('请选择角色来保存');
                 }
 
