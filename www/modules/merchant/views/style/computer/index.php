@@ -15,6 +15,7 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
                 <span>通用设置</span>
             </li>
             <ul class="submenu">
+                <div class="site-text">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
                         <label class="layui-form-label">输入框</label>
@@ -112,6 +113,7 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
                         </div>
                     </div>
                 </form>
+                </div>
             </ul>
             <li>
                 <span>主动发起</span>
