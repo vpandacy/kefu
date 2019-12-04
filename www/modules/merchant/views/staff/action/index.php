@@ -42,21 +42,21 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
 
     <form class="layui-form" action="">
         <div class="layui-card">
-            <div class="layui-card-header">选择角色</div>
-            <div class="layui-card-body">
-                <div class="layui-form-item">
-                    <div class="layui-input-inline" style="width: 100%">
-                        <?php foreach($roles as $role):?>
-                            <input type="radio" lay-filter="choice" name="role_id" value="<?=$role['id']?>" title="<?=$role['name']?>">
-                        <?php endforeach;?>
+            <div class="layui-card-header">权限列表</div>
+            <div style="    background: #F2F2F2;
+    padding: 10px 0 10px 10px;">
+                <div class="layui-inline">
+<!--                    <label class="layui-form-label">搜索选择框</label>-->
+                    <div class="layui-input-inline">
+                        <select name="modules" lay-filter="choice" lay-verify="required" lay-search="">
+                            <option value="">选择角色</option>
+                            <?php foreach($roles as $role):?>
+                            <option value="<?=$role['id']?>"><?=$role['name']?></option>
+                            <?php endforeach;?>
+                        </select>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="layui-card">
-            <div class="layui-card-header">权限列表</div>
-            <div class="layui-card-body">
                 <!-- 这里是表格... -->
                 <div class="tab_staff_content">
                     <div class="layui-table-header">
