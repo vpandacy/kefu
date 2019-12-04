@@ -22,6 +22,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwUrl('/js/mercha
 </div>
 
 <ul class="submenu">
+    <div class="site-text">
     <form class="layui-form" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">姓名/商户名</label>
@@ -113,5 +114,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwUrl('/js/mercha
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
+    </div>
     </form>
 </ul>

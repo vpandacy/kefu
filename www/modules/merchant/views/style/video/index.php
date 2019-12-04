@@ -9,7 +9,7 @@ use \common\components\helper\StaticAssetsHelper;
         'current_menu'  =>  'video'
     ])?>
     <div class="tab_staff_content">
-        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
+        <div class="demoTable" style="    text-align: left;margin:10px 0px;">
             <button class="layui-btn" data-type="reload">搜索</button>
             <div class="layui-inline">
                 <input class="layui-input" name="id" id="demoReload" autocomplete="off">

@@ -9,7 +9,7 @@ StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/c
         'current_menu'  =>  'blacklist'
     ])?>
     <div class="tab_staff_content">
-        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
+        <div class="demoTable" style="    text-align: left;margin:10px 0px;">
             <div class="layui-inline">
                 <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="日期时间">
             </div>

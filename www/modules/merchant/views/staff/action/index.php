@@ -41,12 +41,14 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     ])?>
 
     <form class="layui-form" action="">
+        <fieldset>
+            <legend>
+                <a name="use">权限列表</a>
+            </legend>
+        </fieldset>
         <div class="layui-card">
-            <div class="layui-card-header">权限列表</div>
-            <div style="    background: #F2F2F2;
-    padding: 10px 0 10px 10px;">
+            <div style="background: #F2F2F2; padding: 10px 0 10px 10px;">
                 <div class="layui-inline">
-<!--                    <label class="layui-form-label">搜索选择框</label>-->
                     <div class="layui-input-inline">
                         <select name="modules" lay-filter="choice" lay-verify="required" lay-search="">
                             <option value="">选择角色</option>

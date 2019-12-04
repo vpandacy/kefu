@@ -37,41 +37,41 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
 </script>
 
 
-<div class="search-wrapper" style="display: none">
-    <div class="layui-form-item">
-        <label class="layui-form-label">手机号</label>
-        <div class="layui-input-block">
-            <input type="text" name="mobile" value="<?=$search_conditions['mobile']?>" placeholder="请输入手机号" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
-        <div class="layui-input-block">
-            <input type="text" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
+    <div class="search-wrapper" style="display: none">
         <div class="layui-form-item">
-            <label class="layui-form-label">所属行业</label>
+            <label class="layui-form-label">手机号</label>
             <div class="layui-input-block">
-                <select name="department_id">
-                    <option value="0">请选择行业</option>
-                    <?php foreach($departments as $department):?>
-                        <option value="<?=$department['id']?>" <?=$department['id'] == $search_conditions['department_id'] ? 'selected' : ''?>>
-                            <?=$department['name']?>
-                        </option>
-                    <?php endforeach;?>
-                </select>
+                <input type="text" name="mobile" value="<?=$search_conditions['mobile']?>" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属行业</label>
+                <div class="layui-input-block">
+                    <select name="department_id">
+                        <option value="0">请选择行业</option>
+                        <?php foreach($departments as $department):?>
+                            <option value="<?=$department['id']?>" <?=$department['id'] == $search_conditions['department_id'] ? 'selected' : ''?>>
+                                <?=$department['name']?>
+                            </option>
+                        <?php endforeach;?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
     </div>
-
-    <div class="layui-form-item">
-        <div class="layui-input-inline">
-            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-        </div>
-    </div>
-</div>

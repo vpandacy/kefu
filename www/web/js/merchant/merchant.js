@@ -79,3 +79,5 @@ $mainmenu.on('click', 'li', function() {
 $mainmenu.children('li:last-child').on('click', function() {
    $mainmenu.fadeOut().delay(500).fadeIn();
 });
+
+$('.staff_tab').next().css('padding','20px')

@@ -63,6 +63,44 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     word-wrap: break-word;
     word-break: break-all;
 }
+#merchant .site-text {
+    border: 1px solid #eee;
+    padding: 20px;
+}
+#merchant fieldset {
+    border: none;
+    padding: 0;
+    border-top: 1px solid #eee;
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+}
+#merchant legend {
+    margin-left: 20px;
+    padding: 0 10px;
+    font-size: 22px;
+    font-weight: 300;
+    display: block;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+
+    margin-left: 20px;
+    padding: 0 10px;
+}
+#merchant legend>a {
+    font-size: 18px;
+    font-weight: 300;
+}
+
 #merchant .chant_all,#merchant .chant_all .right_merchant,#merchant .chant_all .left_menu .menu-title ,#merchant .chant_all .right_merchant .right_top{
     display: flex;
     display: -moz-flex;
