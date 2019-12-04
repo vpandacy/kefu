@@ -1,44 +1,59 @@
 ;
 var common_ops = {
     init:function(){
-        // this.setMenuIconHighLight();
+        this.setMenuIconHighLight();
     },
     setMenuIconHighLight:function(){
-        if( $(".box_left_nav .menu_list").size() < 1 ){
+        if( $(".menu-title .iconfont").length < 1 ){
             return;
         }
-        var pathname = window.location.pathname;
-        var nav_name = null;
 
-        if(  pathname.indexOf("/merchant/default") > -1 || pathname == "/merchant" || pathname == "/merchant/" ){
-            nav_name = "dashboard";
-        }
-
-        if(  pathname.indexOf("/merchant/staff") > -1  ){
-            nav_name = "staff";
-        }
-
-        if(  pathname.indexOf("/merchant/help") > -1  ){
-            nav_name = "help";
-        }
-
-        if(  pathname.indexOf("/stat") > -1  ){
-            nav_name = "stat";
-        }
-
-        if(  pathname.indexOf("/chat") > -1  ){
-            nav_name = "chat";
-        }
-
-        if(  pathname.indexOf("/setting") > -1  ){
-            nav_name = "setting";
+        var pathname = window.location.pathname,
+            nav_name = null,
+            uris = {
+            'yonghuguanli'  : [
+                '/merchant/staff/index',
+                '/merchant/staff/department',
+                '/merchant/staff/role',
+                '/merchant/staff/action'
+            ],
+            'liaotian'      : [
+                '/merchant/chat/index',
+                '/merchant/chat/download'
+            ],
+            'quanjushezhi'  : [
+                '/merchant/overall/index',
+                '/merchant/overall/clueauto',
+                '/merchant/overall/breakauto',
+                '/merchant/overall/company',
+                '/merchant/overall/offline'
+            ],
+            'heimingdan'    : [
+                '/merchant/black/index'
+            ],
+            'fengge'        : [
+                '/merchant/style/index',
+                '/merchant/style/computer',
+                '/merchant/style/mobile',
+                '/merchant/style/newsauto',
+                '/merchant/style/reception',
+                '/merchant/style/video'
+            ]
+        };
+        console.dir('123123');
+        for(var index in uris) {
+            for(var i = 0; i < uris[index].length; i++) {
+                if(pathname.indexOf(uris[index][i]) > -1) {
+                    nav_name = index;
+                }
+            }
         }
 
         if( nav_name == null ){
             return;
         }
 
-        $(".box_left_nav .menu_list li."+nav_name).addClass("current");
+        $(".menu-title .icon-"+nav_name).addClass("li_active");
     },
     buildMerchantUrl:function( path ,params){
         var url =  "/merchant" + path;
