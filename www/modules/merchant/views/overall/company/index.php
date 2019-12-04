@@ -1,7 +1,14 @@
 <?php
-use \common\services\GlobalUrlService;
-use \common\components\helper\StaticAssetsHelper;
-StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
+use common\services\GlobalUrlService;
+use common\components\helper\StaticAssetsHelper;
+use www\assets\MerchantAsset;
+
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/moxie.min.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/plupload.full.min.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/zh_CN.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/qiniu.min.js'), MerchantAsset::className());
+
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl('/js/merchant/overall/company/index.js'), MerchantAsset::className() )
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
@@ -9,80 +16,80 @@ StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/c
         'current_menu'  =>  'company'
     ])?>
     <div class="tab_staff_content">
-        <div class="demoTable" style="    text-align: left;margin:10px 0px;">
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="日期时间">
-            </div>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="接待客服">
-            </div>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="来源">
-            </div>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="渠道">
-            </div>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="是否有渠道">
-            </div>
-            <button class="layui-btn" data-type="reload">搜索</button>
-        </div>
-        <table class="layui-hide" id="test"></table>
+        <ul class="mainmenu">
+            <li><span>基本信息</span></li>
+            <ul class="submenu">
+                <form action="" class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">公司名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" value="<?=$merchant['name']?>"  required="" lay-verify="required" placeholder="请输入公司名/商户名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系方式</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="contact" value="<?=$merchant['contact']?>" required="" lay-verify="required" placeholder="请输入联系方式" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">公司LOGO</label>
+                        <div class="layui-input-block" id="upload_container">
+                            <button type="button" class="layui-btn" id="logo">
+                                <i class="layui-icon"></i>上传图片
+                            </button>
+                            <input type="hidden" value="<?=$merchant['logo']?>" name="logo">
+                        </div>
+                        <div class="img-wrapper" style="margin-top: 10px;">
+                            <?php if($merchant['logo']) :?>
+                                <div class="layui-input-block">
+                                    <img width="100" height="100" src="<?=GlobalUrlService::buildPicStaticUrl('hsh', $merchant['logo'])?>" alt="">
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">公司简介</label>
+                        <div class="layui-input-block">
+                            <textarea name="desc" placeholder="请输入公司简介" class="layui-textarea"><?=$merchant['desc']?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="info">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </ul>
+
+            <li><span>聊天配置</span></li>
+            <ul class="submenu">
+                <form action="" class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">自动断开</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="auto_disconnect" value="<?=$setting['auto_disconnect']?>" required="" lay-verify="required" placeholder="请输入自动断开时间(秒)" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">问候语</label>
+                        <div class="layui-input-block">
+                            <textarea name="greetings" required="" lay-verify="required" placeholder="请输入首次的问候语" class="layui-textarea"><?=$setting['greetings']?></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="settings">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </ul>
+        </ul>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">恢复</button>
-    </div>
-</script>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
-<script src="<?=GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js");?>"></script>
-<script type="text/javascript">
-    layui.use('table', function(){
-        var table = layui.table;
-
-        table.render({
-            elem: '#test'
-            ,url:'<?=GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/dome.json");?>'
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,cols: [[
-                {type:'checkbox', fixed: 'left'},
-                {field:'id', width:80, title: '账号'}
-                ,{field:'username', width:80, title: '工号'}
-                ,{field:'sex', width:80, title: '姓名'}
-                ,{field:'city', width:80, title: '部门'}
-                ,{field:'sign', title: '岗位', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'experience', title: '身份'}
-                ,{field:'score', title: '入职时间', sort: true}
-                ,{field:'classify', title: '状态'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
-            ]]
-            ,id: 'testReload'
-            ,page: true
-
-        });
-        var $ = layui.$, active = {
-            reload: function(){
-                var demoReload = $('#demoReload');
-                //执行重载
-                table.reload('testReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        id: demoReload.val()
-                    }
-                }, 'data');
-            }
-        };
-        $('.demoTable .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-    });
-</script>

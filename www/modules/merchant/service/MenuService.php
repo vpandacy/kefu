@@ -126,10 +126,6 @@ class MenuService extends BaseService
                     'title' =>  '线索自动采集',
                     'url'   =>  'merchant/overall/clueauto/index',
                 ],
-                'breakauto' =>  [
-                    'title' =>  '自动断开',
-                    'url'   =>  'merchant/overall/breakauto/index'
-                ],
                 'company'   =>  [
                     'title' =>  '企业设置',
                     'url'   =>  'merchant/overall/company/index'
