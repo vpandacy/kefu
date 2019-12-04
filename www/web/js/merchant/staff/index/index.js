@@ -11,9 +11,9 @@ var merchant_staff_index_ops = {
                 elem: '#staff'
                 ,url: common_ops.buildMerchantUrl('/staff/index/list')
                 ,where: {
-                    mobile: $('.layui-form [name=mobile]').val(),
-                    email: $('.layui-form [name=email]').val(),
-                    department_id: $('.layui-form [name=department_id]').val()
+                    mobile: $('.search-wrapper [name=mobile]').val(),
+                    email: $('.search-wrapper [name=email]').val(),
+                    department_id: $('.search-wrapper [name=department_id]').val()
                 }
                 ,toolbar: '#staffBar' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
@@ -125,7 +125,6 @@ var merchant_staff_index_ops = {
                         }
                     })
                 });
-
             });
 
             $('.layui-table-box').append('<div class="filter_panel dis_none" >' +

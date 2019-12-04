@@ -24,6 +24,7 @@ class BaseController extends BaseWebController {
         'merchant/user/login',
         'merchant/user/sign-in',
         'merchant/user/register',
+        'merchant/user/logout',
     ];
 
     public function __construct($id, $module, $config = []){
@@ -58,8 +59,8 @@ class BaseController extends BaseWebController {
         }
 
         $urls = RoleService::getRoleUrlsByStaffId($this->staff['id'], $this->staff['is_root']);
-
         if(!$this->staff['is_root'] && !in_array($action->getUniqueId(), $urls)) {
+            $this->responseFail('暂无权限操作');
             return false;
         }
 

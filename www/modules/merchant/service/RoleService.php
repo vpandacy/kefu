@@ -57,7 +57,7 @@ class RoleService extends BaseService
                 ->select(['urls'])
                 ->column();
         }else{
-            $role_ids = Role::find()
+            $role_ids = StaffRole::find()
                 ->where([
                     'staff_id'  =>  $staff_id,
                     'status'    =>  ConstantService::$default_status_true
