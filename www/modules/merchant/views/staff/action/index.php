@@ -107,7 +107,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                     </div>
                 </div>
             </div>
-        </div>
 
 
         <div class="layui-form-item" style="text-align: center; padding: 0 15px;">

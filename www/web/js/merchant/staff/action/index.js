@@ -52,7 +52,7 @@ var staff_action_index_ops = {
 
             form.on('submit(*)', function (data) {
                 data = data.field;
-                
+
                 var permission_ids = [];
 
                 $('input[type=checkbox]:checked').each(function() {
