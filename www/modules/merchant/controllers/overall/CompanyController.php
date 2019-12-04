@@ -1,20 +1,32 @@
 <?php
-
 namespace www\modules\merchant\controllers\overall;
 
+use common\models\merchant\MerchantSetting;
 use www\modules\merchant\controllers\common\BaseController;
 
-/**
- * Default controller for the `merchant` module
- */
 class CompanyController extends BaseController
 {
     /**
-     * Renders the index view for the module
+     * 公司信息和配置.
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $merchant = $this->merchant_info;
+
+        $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
+
+        return $this->render('index',[
+            'merchant'  =>  $merchant,
+            'setting'   =>  $setting
+        ]);
+    }
+
+    /**
+     *
+     */
+    public function actionSave()
+    {
+
     }
 }
