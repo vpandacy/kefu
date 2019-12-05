@@ -6,20 +6,41 @@ use yii\helpers\Url;
 
 class GlobalUrlService {
 
-	public static function buildWwwUrl(  $uri, $params = [] ){
+    /**
+     * 生成www端用户
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+	public static function buildWwwUrl(  $uri, $params = [] )
+    {
 		$path = Url::toRoute(array_merge([ $uri ], $params));
 		$domain = \Yii::$app->params['domains']['www'];
 		return $domain.$path;
 	}
 
-    public static function buildMerchantUrl(  $uri, $params = [] ){
+    /**
+     * 商户url.
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+    public static function buildMerchantUrl(  $uri, $params = [] )
+    {
         $path = Url::toRoute(array_merge([ $uri ], $params));
         $domain = \Yii::$app->params['domains']['merchant'];
         return $domain.$path;
     }
 
-
-	public static function buildCsUrl( $merchant_sn, $uri, $params = []){
+    /**
+     * 生成商户sn.
+     * @param $merchant_sn
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+	public static function buildCsUrl( $merchant_sn, $uri, $params = [])
+    {
 	    $uri = "/{$merchant_sn}".$uri;
 		$path = Url::toRoute(array_merge([ $uri ], $params));
 		$domain = \Yii::$app->params['domains']['cs'];
@@ -31,9 +52,10 @@ class GlobalUrlService {
      * 加载www应用的js 和 css
      * @param $uri
      * @param array $params
-     *
+     * @return string
      */
-	public static function buildWwwStaticUrl(  $uri, $params = [] ){
+	public static function buildWwwStaticUrl(  $uri, $params = [] )
+    {
         $release_version = StaticAssetsHelper::getReleaseVersion();
 		$params = $params + [ "ver" => $release_version ];
 		$path = Url::toRoute(array_merge([ $uri ], $params));
@@ -46,8 +68,8 @@ class GlobalUrlService {
      * 获取static cdn目录的静态资源，css 和  js
      * @param $path
      * @param array $params
+     * @return string
      */
-
     public static function buildStaticUrl($path, $params = [])
     {
         $domain = \Yii::$app->params['domains']['static'];
@@ -55,8 +77,16 @@ class GlobalUrlService {
         return $domain . $path;
     }
 
-    public static function buildPicStaticUrl($bucket ,$img_key,$params = []){
-        $bucket = $bucket?$bucket:"pic3";
+    /**
+     * 生成七牛云的链接
+     * @param $bucket
+     * @param $img_key
+     * @param array $params
+     * @return string
+     */
+    public static function buildPicStaticUrl($bucket ,$img_key,$params = [])
+    {
+        $bucket = $bucket ? $bucket : "pic3";
 
         $config = \Yii::$app->params['cdn'];
 
@@ -88,8 +118,4 @@ class GlobalUrlService {
         $url .= "/interlace/1";
         return $url;
     }
-
-    public static function buildNullUrl(){
-    	return "javascript:void(0);";
-	}
 } 
