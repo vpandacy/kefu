@@ -28,6 +28,7 @@ class DepartmentController extends BaseController
         $departments = Department::find()
             ->where([
                 'merchant_id'   =>  $this->getMerchantId(),
+                'app_id'        =>  $this->getAppId(),
             ])
             ->asArray()
             ->all();
@@ -83,7 +84,7 @@ class DepartmentController extends BaseController
 
         $department = Department::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
-        if($department['status'] != ConstantService::$default_status_false) {
+        if($department['status'] != ConstantService::$default_status_true) {
             return $this->renderJSON([],'该部门已经被禁用了,不需要禁用', ConstantService::$response_code_fail);
         }
 
