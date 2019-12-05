@@ -1,25 +1,12 @@
 <?php
-namespace www\modules\merchant\controllers\common;
+
+namespace uc\controllers\common;
 
 use common\components\StaffBaseController;
-use www\modules\merchant\service\MenuService;
 use yii\web\Response;
 use Yii;
 
-class BaseController extends StaffBaseController
-{
-    public function beforeAction($action)
-    {
-        if(!parent::beforeAction($action)) {
-            return false;
-        }
-
-        // 这里要获取商户系统的菜单.
-        Yii::$app->view->params['menus'] =  MenuService::getAllMenu($this->privilege_urls, $this->staff['is_root']);
-        $this->layout = 'main';
-        return true;
-    }
-
+class BaseController extends StaffBaseController {
     /**
      * 渲染分页的界面.
      * @param array $data

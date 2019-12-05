@@ -88,4 +88,25 @@ class CommonService extends BaseService
 
         return true;
     }
+
+    /**
+     * 检测链接是否是SSL连接
+     * @return bool
+     */
+    public static function is_SSL()
+    {
+        if (!isset($_SERVER['HTTPS'])) {
+            return false;
+        }
+        if ($_SERVER['HTTPS'] === 1) {  //Apache
+            return true;
+        } else {
+            if ($_SERVER['HTTPS'] === 'on') { //IIS
+                return true;
+            } elseif ($_SERVER['SERVER_PORT'] == 443) { //其他
+                return true;
+            }
+        }
+        return false;
+    }
 }

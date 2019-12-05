@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\merchant;
+namespace common\models\uc;
 
 use Yii;
 
@@ -17,7 +17,7 @@ use Yii;
  * @property string $created_time 创建时间
  * @property string $updated_time 更新时间
  */
-class Merchant extends \yii\db\ActiveRecord
+class Merchant extends BaseModel
 {
     /**
      * {@inheritdoc}

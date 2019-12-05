@@ -64,6 +64,22 @@ class GlobalUrlService {
 	}
 
     /**
+     * Author: Vincent
+     * 加载www应用的js 和 css
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+    public static function buildUcStaticUrl(  $uri, $params = [] )
+    {
+        $release_version = StaticAssetsHelper::getReleaseVersion();
+        $params = $params + [ "ver" => $release_version ];
+        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $domain = \Yii::$app->params['domains']['uc'];
+        return $domain.$path;
+    }
+
+    /**
      * Author: apanly
      * 获取static cdn目录的静态资源，css 和  js
      * @param $path

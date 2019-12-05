@@ -1,8 +1,7 @@
 <?php
-namespace www\modules\merchant\service;
+namespace common\services\uc;
 
 use common\models\merchant\Action;
-use common\models\merchant\Role;
 use common\models\merchant\RoleAction;
 use common\models\merchant\StaffRole;
 use common\services\BaseService;
@@ -45,11 +44,12 @@ class RoleService extends BaseService
 
     /**
      * 根据员工ID,来获取对应的角色下的所有urls.
-     * @param $staff_id
-     * @param bool $is_root
+     * @param int $app_id 应用ID.
+     * @param int $staff_id 员工ID.
+     * @param bool $is_root 是否是超级管理员.
      * @return array
      */
-    public static function getRoleUrlsByStaffId($staff_id, $is_root = false)
+    public static function getRoleUrlsByStaffId($app_id,$staff_id, $is_root = false)
     {
         if($is_root) {
             $action_urls = Action::find()
