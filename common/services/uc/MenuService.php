@@ -79,12 +79,6 @@ class MenuService extends BaseService
     private static function getLeftMenu()
     {
         return [
-            // 用户管理.
-            'user'  =>  [
-                'url'   =>  'staff/index',
-                'title' =>  '用户管理',
-                'icon'  =>  'icon-yonghuguanli'
-            ],
             // 聊天管理
             'chat'  =>  [
                 'url'   =>  'merchant/chat/index/index',
@@ -109,6 +103,12 @@ class MenuService extends BaseService
                 'title' =>  '风格管理',
                 'icon'  =>  'icon-fengge'
             ],
+            // 用户管理.
+            'user'  =>  [
+                'url'   =>  'staff/index',
+                'title' =>  '用户管理',
+                'icon'  =>  'icon-yonghuguanli'
+            ],
         ];
     }
 
@@ -119,24 +119,6 @@ class MenuService extends BaseService
     private static function getBarMenu()
     {
         return [
-            'user'  =>  [
-                'sub_user'  =>  [
-                    'title' =>  '子帐号管理',
-                    'url'   =>  'staff/index'
-                ],
-                'department'=>  [
-                    'title' =>  '部门管理',
-                    'url'   =>  'department/index'
-                ],
-                'role'      =>  [
-                    'title' =>  '角色管理',
-                    'url'   =>  'role/index'
-                ],
-                'action'    =>  [
-                    'title' =>  '权限管理',
-                    'url'   =>  'action/index',
-                ],
-            ],
             'chat'  =>  [
                 'chat'  =>  [
                     'title' =>  '聊天管理',
@@ -195,6 +177,24 @@ class MenuService extends BaseService
                 'video'     =>  [
                     'title' =>  '视频',
                     'url'   =>  'merchant/style/video/index'
+                ],
+            ],
+            'user'  =>  [
+                'sub_user'  =>  [
+                    'title' =>  '子帐号管理',
+                    'url'   =>  'staff/index'
+                ],
+                'department'=>  [
+                    'title' =>  '部门管理',
+                    'url'   =>  'department/index'
+                ],
+                'role'      =>  [
+                    'title' =>  '角色管理',
+                    'url'   =>  'role/index'
+                ],
+                'action'    =>  [
+                    'title' =>  '权限管理',
+                    'url'   =>  'action/index',
                 ],
             ],
         ];

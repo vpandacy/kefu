@@ -13,9 +13,9 @@ var common_ops = {
             uris = {
             'yonghuguanli'  : [
                 '/staff/',
-                '/staff/',
-                '/staff/',
-                '/staff/'
+                '/action/',
+                '/role/',
+                '/department/'
             ],
             'liaotian'      : [
                 '/merchant/chat/index',
