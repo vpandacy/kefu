@@ -17,8 +17,8 @@ class UcAsset extends AssetBundle
     public function registerAssetFiles($view){
         $this->css = [
             GlobalUrlService::buildStaticUrl('/font-awesome/v4.7/css/font-awesome.min.css'),
-            GlobalUrlService::buildStaticUrl('/layui/v2.5/css/layui.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
+            GlobalUrlService::buildStaticUrl('/layui/v2.5/css/layui.css'),
             GlobalUrlService::buildUcStaticUrl('/css/scrollbar.min.css'),
             GlobalUrlService::buildUcStaticUrl('/css/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/merchant.css'),
