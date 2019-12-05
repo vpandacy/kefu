@@ -25,7 +25,7 @@ var common_ops = {
                 '/merchant/overall/index',
                 '/merchant/overall/clueauto',
                 '/merchant/overall/breakauto',
-                '/merchant/overall/company',
+                '/company',
                 '/merchant/overall/offline'
             ],
             'heimingdan'    : [
