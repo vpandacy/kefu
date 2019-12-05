@@ -2,11 +2,10 @@
 return [
     'domains' => [
         'www'       => 'http://www.kefu.dev.hsh568.cn/',
-        'admin'     => 'http://admin.kefu.dev.hsh568.cn',
         'merchant'  => 'http://www.kefu.dev.hsh568.cn/merchant',
         'cs'        => 'http://www.kefu.dev.hsh568.cn/cs',
         'static'    => 'http://static.dev.hsh568.cn',
-        'uc'        =>  'http://uc.kefu.dev.hsh568.cn',
+        'uc'        => 'http://uc.kefu.dev.hsh568.cn',
     ],
     'websocket' => 'ws://www.kefu.dev.hsh568.cn/ws/',
     'cdn' => [

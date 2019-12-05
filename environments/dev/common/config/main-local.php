@@ -3,9 +3,16 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
+            'dsn' => 'mysql:host=localhost;dbname=chat',
             'username' => 'root',
             'password' => '',
+            'charset' => 'utf8',
+        ],
+        'db_uc' =>  [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=chat_uc_db',
+            'username' => 'root',
+            'password' => 'root',
             'charset' => 'utf8',
         ],
         'mailer' => [
