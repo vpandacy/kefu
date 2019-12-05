@@ -80,6 +80,6 @@ class Staff extends BaseModel
     {
         $app_ids = explode(',', $this->app_ids);
 
-        return in_array($app_ids, $app_ids);
+        return in_array($app_id, $app_ids);
     }
 }

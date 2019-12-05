@@ -2,7 +2,8 @@
 namespace www\modules\merchant\controllers\common;
 
 use common\components\StaffBaseController;
-use www\modules\merchant\service\MenuService;
+use common\services\ConstantService;
+use common\services\uc\MenuService;
 use yii\web\Response;
 use Yii;
 
@@ -10,12 +11,15 @@ class BaseController extends StaffBaseController
 {
     public function beforeAction($action)
     {
+        // 定义自己的应用ID.
+        $this->setAppId(ConstantService::$merchant_app_id);
+
         if(!parent::beforeAction($action)) {
             return false;
         }
 
         // 这里要获取商户系统的菜单.
-        Yii::$app->view->params['menus'] =  MenuService::getAllMenu($this->privilege_urls, $this->staff['is_root']);
+        Yii::$app->view->params['menus'] =  MenuService::getMerchantUrl($this->privilege_urls);
         $this->layout = 'main';
         return true;
     }

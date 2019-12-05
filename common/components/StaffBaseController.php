@@ -57,9 +57,10 @@ class StaffBaseController extends BaseWebController
     {
         $app_name = $this->get('app_name','');
 
-        $this->app_id = AppService::getAppId($app_name);
-
-        Yii::$app->view->params['app_name'] = $app_name;
+        if($app_name) {
+            $this->app_id = AppService::getAppId($app_name);
+            Yii::$app->view->params['app_name'] = $app_name;
+        }
 
         if(in_array($action->getUniqueId(), $this->allowAllAction)) {
             return true;
@@ -121,16 +122,21 @@ class StaffBaseController extends BaseWebController
             return false;
         }
 
-        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>ConstantService::$default_status_true]);
+        $staff = Staff::findOne(['id'=>$staff_id,'status'=>ConstantService::$default_status_true]);
 
         if(!$staff || !$this->checkToken($verify_token, $staff)) {
+            return false;
+        }
+
+        // 没有权限属于这个应用就强行退出.
+        if(!$staff->checkAppIdOwnerStaff($this->getAppId())) {
             return false;
         }
 
         // 保存信息.
         $this->staff = $staff;
 
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>ConstantService::$default_status_true]);
+        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'app_id'=>$this->getAppId(),'status'=>ConstantService::$default_status_true]);
         if(!$merchant) {
             return false;
         }
@@ -208,5 +214,14 @@ class StaffBaseController extends BaseWebController
     public function getAppId()
     {
         return $this->app_id;
+    }
+
+    /**
+     * 设置应用ID.
+     * @param int $app_id
+     */
+    public function setAppId($app_id)
+    {
+        $this->app_id = $app_id;
     }
 }

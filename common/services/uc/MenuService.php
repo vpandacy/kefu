@@ -1,39 +1,69 @@
 <?php
-namespace www\modules\merchant\service;
+namespace common\services\uc;
 
 use common\services\BaseService;
 
 class MenuService extends BaseService
 {
     /**
-     * 获取所有的菜单.
-     * @param array $urls
-     * @param bool $is_root
+     * 获取所有系统的管理操作.根据APP_ID来.
+     * @param $app_id
+     * @param $uris
      * @return array
      */
-    public static function getAllMenu($urls, $is_root = false)
+    public static function getAllMenu($app_id, $uris)
+    {
+        // 后续增加.
+        switch ($app_id) {
+            case 1:
+                $menus = self::getMerchantUrl($uris);
+                break;
+            default:
+                $menus = [];
+        }
+
+        return $menus;
+    }
+
+    /**
+     * 获取所有的菜单.
+     * @param array $urls
+     * @return array
+     */
+    public static function getMerchantUrl($urls)
     {
         $all_menu = [
             'left_menu' =>  self::getLeftMenu(),
             'bar_menu'  =>  self::getBarMenu()
         ];
 
-        if($is_root) {
-            return $all_menu;
-        }
+        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action'];
 
         // 开始过滤菜单.
         foreach($all_menu['left_menu'] as $key=>$action) {
             if(!in_array($action['url'], $urls)) {
                 unset($all_menu['left_menu'][$key]);
+                continue;
             }
+
+            if(in_array($key, $uc_actions)) {
+                $action['url'] = 'uc/' . $action['url'];
+            }
+
+            $all_menu['left_menu'][$key] = $action;
         }
 
         foreach($all_menu['bar_menu'] as $key=>$sub_menus) {
             foreach($sub_menus as $k => $bar_menu) {
                 if(!in_array($bar_menu['url'], $urls)) {
                     unset($sub_menus[$k]);
+                    continue;
                 }
+
+                if(in_array($k, $uc_actions)) {
+                    $bar_menu['url'] = 'uc/' . $bar_menu['url'];
+                }
+                $sub_menus[$k] = $bar_menu;
             }
 
             $all_menu['bar_menu'][$key] = $sub_menus;
@@ -51,7 +81,7 @@ class MenuService extends BaseService
         return [
             // 用户管理.
             'user'  =>  [
-                'url'   =>  'merchant/staff/index/index',
+                'url'   =>  'staff/index',
                 'title' =>  '用户管理',
                 'icon'  =>  'icon-yonghuguanli'
             ],
