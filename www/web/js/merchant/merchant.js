@@ -1,9 +1,9 @@
 /**
  * 菜单栏JS
  */
-$('.menu-title a').click(function () {
-   $(this).children('.iconfont').addClass('li_active');
-});
+// $('.menu-title a').click(function () {
+//    $(this).children('.iconfont').addClass('li_active');
+// });
 $('.menu-title a').each(function () {
    var icon = $(this).children('.iconfont');
    var dataUrl = $(this).attr('data-url');
