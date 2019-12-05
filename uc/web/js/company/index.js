@@ -75,7 +75,7 @@ var overall_company_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildMerchantUrl('/overall/company/save-info'),
+                    url: common_ops.buildUcUrl('/company/save-info'),
                     data: data.field,
                     dataType:'json',
                     success:function (response) {
@@ -96,7 +96,7 @@ var overall_company_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildMerchantUrl('/overall/company/save-setting'),
+                    url: common_ops.buildUcUrl('/company/save-setting'),
                     data: data.field,
                     dataType:'json',
                     success:function (response) {

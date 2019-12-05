@@ -37,7 +37,7 @@ class MenuService extends BaseService
             'bar_menu'  =>  self::getBarMenu()
         ];
 
-        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action'];
+        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company'];
 
         // 开始过滤菜单.
         foreach($all_menu['left_menu'] as $key=>$action) {
@@ -140,7 +140,7 @@ class MenuService extends BaseService
                 ],
                 'company'   =>  [
                     'title' =>  '企业设置',
-                    'url'   =>  'merchant/overall/company/index'
+                    'url'   =>  'company/index'
                 ],
                 'offline'   =>  [
                     'title' =>  '离线表单管理',

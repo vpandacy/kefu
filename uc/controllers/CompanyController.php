@@ -1,10 +1,10 @@
 <?php
-namespace www\modules\merchant\controllers\overall;
+namespace uc\controllers;
 
-use common\models\merchant\Merchant;
-use common\models\merchant\MerchantSetting;
+use common\models\uc\Merchant;
+use common\models\uc\MerchantSetting;
 use common\services\ConstantService;
-use www\modules\merchant\controllers\common\BaseController;
+use uc\controllers\common\BaseController;
 
 class CompanyController extends BaseController
 {
@@ -50,7 +50,7 @@ class CompanyController extends BaseController
             return $this->renderJSON([], '请填写对应的企业描述', ConstantService::$response_code_fail);
         }
 
-        $merchant = Merchant::findOne(['id'=>$this->getMerchantId()]);
+        $merchant = Merchant::findOne(['id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
         $merchant->setAttributes([
             'logo'  =>  $logo,

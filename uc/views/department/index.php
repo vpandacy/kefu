@@ -7,7 +7,7 @@ use www\assets\MerchantAsset;
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/department/index.js'), MerchantAsset::className());
 ?>
 <div id="staff_index_index">
-    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+    <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',
         'current_menu'  =>  'department'
     ])?>
