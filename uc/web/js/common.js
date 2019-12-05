@@ -12,10 +12,10 @@ var common_ops = {
             nav_name = null,
             uris = {
             'yonghuguanli'  : [
-                '/merchant/staff/index',
-                '/merchant/staff/department',
-                '/merchant/staff/role',
-                '/merchant/staff/action'
+                '/staff/',
+                '/staff/',
+                '/staff/',
+                '/staff/'
             ],
             'liaotian'      : [
                 '/merchant/chat/index',
