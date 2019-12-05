@@ -1,8 +1,8 @@
 <?php
 namespace www\modules\merchant\service;
 
-use common\models\merchant\Merchant;
-use common\models\merchant\Staff;
+use common\models\uc\Merchant;
+use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\CommonService;
 use common\services\ConstantService;
@@ -11,12 +11,13 @@ class MerchantService extends BaseService
 {
     /**
      * 创建一个商户.
+     * @param int $app_id
      * @param $merchant_name
      * @param $email
      * @param $password
      * @return bool
      */
-    public static function createMerchant($merchant_name,$email,$password)
+    public static function createMerchant($app_id, $merchant_name,$email,$password)
     {
         $merchant = new Merchant();
 
@@ -27,9 +28,10 @@ class MerchantService extends BaseService
             'sn'        =>  CommonService::genUniqueName(),
             'name'      =>  $merchant_name,
             'email'         =>  $email,
+            'app_id'    =>  $app_id,
             'created_time'  =>  $now,
             'updated_time'  =>  $now
-        ]);
+        ],0);
 
         if(!$merchant->save(0)) {
             return self::_err('数据库保存失败,请联系管理员');
@@ -41,6 +43,7 @@ class MerchantService extends BaseService
         $employee->setAttributes([
             'merchant_id'   =>  $merchant->primaryKey,
             'sn'            =>  CommonService::genUniqueName(),
+            'app_ids'       =>  implode('',[',', $app_id, ',']),
             'name'          =>  $merchant_name,
             'email'         =>  $email,
             'password'      =>  $password,

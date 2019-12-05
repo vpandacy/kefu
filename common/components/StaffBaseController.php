@@ -74,7 +74,7 @@ class StaffBaseController extends BaseWebController
 
             // 设置跳转.
             $this->redirect(UcUrlService::buildUcUrl('/user/login', $this->getAppId(),[
-                'redirect_uri'  =>  UcUrlService::buildUcUrl('/' . $action->getUniqueId(), $this->getAppId())
+                'redirect_uri'  =>  '/'  . $action->getUniqueId()
             ]));
 
             return false;

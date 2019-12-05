@@ -98,7 +98,7 @@ class UserController extends BaseController
             return $this->renderJSON([],'该商户名或姓名已经被使用了', ConstantService::$response_code_fail);
         }
 
-        if(!MerchantService::createMerchant($merchant_name, $email, $password)){
+        if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $email, $password)){
             return $this->renderJSON([],MerchantService::getLastErrorMsg(), ConstantService::$response_code_fail);
         }
 

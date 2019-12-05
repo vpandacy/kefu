@@ -33,7 +33,7 @@ class Merchant extends BaseModel
     public function rules()
     {
         return [
-            [['status'], 'integer'],
+            [['status','app_id'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['name', 'sn', 'logo', 'desc', 'contact'], 'string', 'max' => 255],
         ];
@@ -48,6 +48,7 @@ class Merchant extends BaseModel
             'id' => 'ID',
             'name' => 'Name',
             'sn' => 'Sn',
+            'app_id'    =>  'App Id',
             'logo' => 'Logo',
             'desc' => 'Desc',
             'contact' => 'Contact',
