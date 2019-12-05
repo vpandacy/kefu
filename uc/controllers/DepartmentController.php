@@ -1,6 +1,5 @@
 <?php
-
-namespace www\modules\merchant\controllers\staff;
+namespace uc\controllers;
 
 use common\models\uc\Department;
 use common\services\ConstantService;

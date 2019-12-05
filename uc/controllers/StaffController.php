@@ -1,6 +1,6 @@
 <?php
 
-namespace www\modules\merchant\controllers\staff;
+namespace uc\controllers;
 
 use common\components\DataHelper;
 use common\models\uc\Role;

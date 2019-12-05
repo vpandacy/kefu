@@ -3,10 +3,22 @@
 namespace uc\controllers\common;
 
 use common\components\StaffBaseController;
+use common\services\uc\MenuService;
 use yii\web\Response;
 use Yii;
 
 class BaseController extends StaffBaseController {
+
+    public function beforeAction($action)
+    {
+        if(!parent::beforeAction($action)){
+            return false;
+        }
+
+        Yii::$app->view->params['menus'] = MenuService::getAllMenu($this->getAppId(), $this->privilege_urls);
+        return true;
+    }
+
     /**
      * 渲染分页的界面.
      * @param array $data

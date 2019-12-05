@@ -122,19 +122,19 @@ class MenuService extends BaseService
             'user'  =>  [
                 'sub_user'  =>  [
                     'title' =>  '子帐号管理',
-                    'url'   =>  'merchant/staff/index/index'
+                    'url'   =>  'staff/index'
                 ],
                 'department'=>  [
                     'title' =>  '部门管理',
-                    'url'   =>  'merchant/staff/department/index'
+                    'url'   =>  'department/index'
                 ],
                 'role'      =>  [
                     'title' =>  '角色管理',
-                    'url'   =>  'merchant/staff/role/index'
+                    'url'   =>  'role/index'
                 ],
                 'action'    =>  [
                     'title' =>  '权限管理',
-                    'url'   =>  'merchant/staff/action/index',
+                    'url'   =>  'action/index',
                 ],
             ],
             'chat'  =>  [

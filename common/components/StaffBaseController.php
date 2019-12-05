@@ -59,9 +59,8 @@ class StaffBaseController extends BaseWebController
 
         if($app_name) {
             $this->app_id = AppService::getAppId($app_name);
-            Yii::$app->view->params['app_name'] = $app_name;
         }
-
+        Yii::$app->view->params['app_name'] = $app_name;
         if(in_array($action->getUniqueId(), $this->allowAllAction)) {
             return true;
         }
