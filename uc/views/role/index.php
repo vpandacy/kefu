@@ -4,7 +4,7 @@ use common\components\helper\StaticAssetsHelper;
 use www\assets\MerchantAsset;
 
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/merchant/staff/role/index.js'), MerchantAsset::className())
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/role/index.js'), MerchantAsset::className())
 
 ?>
 <div id="staff_index_index">
