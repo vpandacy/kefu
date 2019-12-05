@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\merchant;
+namespace common\models\uc;
 
 use Yii;
 
@@ -10,11 +10,12 @@ use Yii;
  * @property int $id 主键
  * @property string $name 角色名
  * @property int $merchant_id 商户ID
+ * @property int $app_id 应用ID,详细请查看uc下的常量
  * @property int $status 状态,0禁用,1启用
  * @property string $created_time 创建时间
  * @property string $udated_time 更新时间
  */
-class Role extends \yii\db\ActiveRecord
+class Role extends \common\models\uc\BaseModel
 {
     /**
      * {@inheritdoc}
@@ -25,12 +26,20 @@ class Role extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('db_uc');
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['merchant_id', 'status'], 'integer'],
+            [['merchant_id', 'app_id', 'status'], 'integer'],
             [['created_time', 'udated_time'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -45,6 +54,7 @@ class Role extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'merchant_id' => 'Merchant ID',
+            'app_id' => 'App ID',
             'status' => 'Status',
             'created_time' => 'Created Time',
             'udated_time' => 'Udated Time',
