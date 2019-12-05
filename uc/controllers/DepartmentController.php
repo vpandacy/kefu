@@ -2,9 +2,9 @@
 
 namespace www\modules\merchant\controllers\staff;
 
-use common\models\merchant\Department;
+use common\models\uc\Department;
 use common\services\ConstantService;
-use www\modules\merchant\controllers\common\BaseController;
+use uc\controllers\common\BaseController;
 
 /**
  * Default controller for the `merchant` module
@@ -50,7 +50,9 @@ class DepartmentController extends BaseController
             return $this->renderJSON([],'请输入正确的部门名称', ConstantService::$response_code_fail);
         }
 
-        $department = $id > 0 ? Department::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]) : new Department();
+        $department = $id > 0
+            ? Department::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()])
+            : new Department();
 
         if($id > 0 && !$department) {
             return $this->renderJSON([],'不存在该部门记录', ConstantService::$response_code_fail);
@@ -59,6 +61,7 @@ class DepartmentController extends BaseController
         $department->setAttributes([
             'status'    =>  $id > 0 ? $department['status'] : ConstantService::$default_status_true,
             'merchant_id'   =>  $this->getMerchantId(),
+            'app_id'    =>  $this->getAppId(),
             'name'      =>  $name,
         ],0);
 
@@ -79,9 +82,9 @@ class DepartmentController extends BaseController
             return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
         }
 
-        $department = Department::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
+        $department = Department::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
-        if($department['status'] != 1) {
+        if($department['status'] != ConstantService::$default_status_false) {
             return $this->renderJSON([],'该部门已经被禁用了,不需要禁用', ConstantService::$response_code_fail);
         }
 
@@ -104,7 +107,11 @@ class DepartmentController extends BaseController
             return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
         }
 
-        if(!Department::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
+        if(!Department::updateAll(['status'=>ConstantService::$default_status_true],[
+            'id'=>$ids,
+            'merchant_id'=>$this->getMerchantId(),
+            'app_id'=>$this->getAppId()
+        ])) {
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
 

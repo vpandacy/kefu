@@ -1,25 +1,30 @@
 <?php
 namespace www\modules\merchant\controllers\staff;
 
-use common\models\merchant\Action;
-use common\models\merchant\Role;
-use common\models\merchant\RoleAction;
+use common\models\uc\Action;
+use common\models\uc\Role;
+use common\models\uc\RoleAction;
 use common\services\ConstantService;
-use www\modules\merchant\controllers\common\BaseController;
+use uc\controllers\common\BaseController;
 
 class ActionController extends BaseController
 {
     public function actionIndex()
     {
         $roles = Role::find()
-            ->where(['status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()])
+            ->where([
+                'status'        =>  ConstantService::$default_status_true,
+                'merchant_id'   =>  $this->getMerchantId(),
+                'app_id'        =>  $this->getAppId()
+            ])
             ->asArray()
             ->all();
 
         // 获取所有的权限列表.有权限就过滤掉.没有就不算.
         $actions = Action::find()
             ->where([
-                'status'    =>  ConstantService::$default_status_true
+                'status'    =>  ConstantService::$default_status_true,
+                'app_id'        =>  $this->getAppId()
             ])
             ->orderBy([
                 'level1_weight' =>  SORT_ASC,
@@ -91,7 +96,8 @@ class ActionController extends BaseController
         $action_ids = RoleAction::find()
             ->where([
                 'status'    =>  ConstantService::$default_status_true,
-                'role_id'   =>  $role_id
+                'role_id'   =>  $role_id,
+                'app_id'        =>  $this->getAppId()
             ])
             ->select(['action_id'])
             ->column();
@@ -112,7 +118,12 @@ class ActionController extends BaseController
             return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
         }
 
-        $role = Role::findOne(['id'=>$role_id,'status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()]);
+        $role = Role::findOne([
+            'id'            =>  $role_id,
+            'status'        =>  ConstantService::$default_status_true,
+            'merchant_id'   =>  $this->getMerchantId(),
+            'app_id'        =>  $this->getAppId()
+        ]);
 
         if(!$role) {
             return $this->renderJSON([],'没有找到对应的角色', ConstantService::$response_code_fail);
@@ -126,7 +137,8 @@ class ActionController extends BaseController
 
         $actions = Action::find()
             ->where([
-                'status'    =>  ConstantService::$default_status_true
+                'status'    =>  ConstantService::$default_status_true,
+                'app_id'        =>  $this->getAppId()
             ])
             ->select(['id'])
             ->column();
@@ -135,21 +147,25 @@ class ActionController extends BaseController
            return $this->renderJSON([],'您选择了不存在权限',ConstantService::$response_code_fail);
         }
 
+        $app_id = $this->getAppId();
+
         // 更新之前的所有信息.在插入即可.
-        if(RoleAction::updateAll(['status'=>0],['role_id'=>$role_id]) === false ) {
+        if(RoleAction::updateAll(['status'=>0],['role_id'=>$role_id,'app_id'=>$app_id]) === false ) {
             return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
         }
 
-        $insert_data = array_map(function($permission_id) use($role_id){
+
+        $insert_data = array_map(function($permission_id) use($role_id,$app_id){
             return [
                 'status'    =>  ConstantService::$default_status_true,
                 'role_id'   =>  $role_id,
-                'action_id' =>  $permission_id
+                'action_id' =>  $permission_id,
+                'app_id'    =>  $app_id
             ];
         }, $permission_ids);
 
         $ret = RoleAction::getDb()->createCommand()
-            ->batchInsert(RoleAction::tableName(),['status','role_id','action_id'],$insert_data)
+            ->batchInsert(RoleAction::tableName(),['status','role_id','action_id', 'app_id'],$insert_data)
             ->execute();
 
         if(!$ret) {

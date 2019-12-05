@@ -79,7 +79,7 @@ class StaffBaseController extends BaseWebController
             return false;
         }
 
-        $urls = RoleService::getRoleUrlsByStaffId($this->staff['id'], $this->staff['is_root']);
+        $urls = RoleService::getRoleUrlsByStaffId($this->getAppId(),$this->staff['id'], $this->staff['is_root']);
         if(!$this->staff['is_root'] && !in_array($action->getUniqueId(), $urls)) {
             $this->responseFail('暂无权限操作');
             return false;

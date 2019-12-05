@@ -1,9 +1,9 @@
 <?php
 namespace common\services\uc;
 
-use common\models\merchant\Action;
-use common\models\merchant\RoleAction;
-use common\models\merchant\StaffRole;
+use common\models\uc\Action;
+use common\models\uc\RoleAction;
+use common\models\uc\StaffRole;
 use common\services\BaseService;
 use common\services\ConstantService;
 
@@ -14,25 +14,33 @@ class RoleService extends BaseService
      * @param $staff_id
      * @param $role_ids
      * @return bool
-     * @throws \yii\db\Exception
+     * @throws \Exception
      */
-    public static function createRoleMapping($staff_id, $role_ids)
+    public static function createRoleMapping($staff_id, $app_id, $role_ids)
     {
-        if(StaffRole::updateAll(['status' => ConstantService::$default_status_false],['staff_id'=>$staff_id]) === false) {
+        $condition = [
+            'staff_id'=>$staff_id,
+            'app_id'=>$app_id
+        ];
+
+        $ret = StaffRole::updateAll(['status' => ConstantService::$default_status_false],$condition);
+
+        if($ret === false) {
             return self::_err('保存数据失败,请联系管理员');
         }
 
-        $insert_data = array_map(function ($role_id) use($staff_id) {
+        $insert_data = array_map(function ($role_id) use($staff_id, $app_id) {
             return [
                 'staff_id'  =>  $staff_id,
                 'role_id'   =>  $role_id,
+                'app_id'    =>  $app_id,
                 'status'    =>  ConstantService::$default_status_true
             ];
         }, $role_ids);
 
 
         $ret = StaffRole::getDb()->createCommand()
-            ->batchInsert(StaffRole::tableName(), ['staff_id','role_id','status'], $insert_data)
+            ->batchInsert(StaffRole::tableName(), ['staff_id','role_id', 'app_id', 'status'], $insert_data)
             ->execute();
 
         if($ret === false) {
@@ -53,13 +61,14 @@ class RoleService extends BaseService
     {
         if($is_root) {
             $action_urls = Action::find()
-                ->where(['status' => ConstantService::$default_status_true])
+                ->where(['status' => ConstantService::$default_status_true, 'app_id' => $app_id])
                 ->select(['urls'])
                 ->column();
         }else{
             $role_ids = StaffRole::find()
                 ->where([
                     'staff_id'  =>  $staff_id,
+                    'app_id'    =>  $app_id,
                     'status'    =>  ConstantService::$default_status_true
                 ])
                 ->select(['role_id'])
@@ -70,7 +79,11 @@ class RoleService extends BaseService
             }
 
             $action_ids = RoleAction::find()
-                ->where(['role_id'=>$role_ids,'status' => ConstantService::$default_status_true])
+                ->where([
+                    'role_id'   => $role_ids,
+                    'status'    => ConstantService::$default_status_true,
+                    'app_id'    =>  $app_id,
+                ])
                 ->select(['action_id'])
                 ->column();
 
@@ -79,7 +92,11 @@ class RoleService extends BaseService
             }
 
             $action_urls = Action::find()
-                ->where(['id'=>$action_ids,'status'=>ConstantService::$default_status_true])
+                ->where([
+                    'id'    =>  $action_ids,
+                    'status'=>  ConstantService::$default_status_true,
+                    'app_id'    =>  $app_id,
+                ])
                 ->select(['urls'])
                 ->column();
         }

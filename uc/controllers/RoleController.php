@@ -2,9 +2,9 @@
 
 namespace www\modules\merchant\controllers\staff;
 
-use common\models\merchant\Role;
+use common\models\uc\Role;
 use common\services\ConstantService;
-use www\modules\merchant\controllers\common\BaseController;
+use uc\controllers\common\BaseController;
 
 class RoleController extends BaseController
 {
@@ -25,7 +25,8 @@ class RoleController extends BaseController
     {
         $roles = Role::find()
             ->where([
-                'merchant_id'=>$this->getMerchantId()
+                'merchant_id'   =>  $this->getMerchantId(),
+                'app_id'        =>  $this->getAppId()
             ])
             ->asArray()
             ->all();
@@ -47,16 +48,17 @@ class RoleController extends BaseController
             return $this->renderJSON([],'请输入正确的部门名称', ConstantService::$response_code_fail);
         }
 
-        $role = $id > 0 ? Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]) : new Role();
+        $role = $id > 0 ? Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]) : new Role();
 
         if($id > 0 && !$role) {
             return $this->renderJSON([],'不存在该角色记录', ConstantService::$response_code_fail);
         }
 
         $role->setAttributes([
-            'status'    =>  $id > 0 ? $role['status'] : ConstantService::$default_status_true,
+            'status'        =>  $id > 0 ? $role['status'] : ConstantService::$default_status_true,
             'merchant_id'   =>  $this->getMerchantId(),
-            'name'      =>  $name,
+            'app_id'        =>  $this->getAppId(),
+            'name'          =>  $name,
         ],0);
 
         if(!$role->save(0)) {
@@ -76,7 +78,7 @@ class RoleController extends BaseController
             return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
         }
 
-        $role = Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
+        $role = Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
         if($role['status'] != ConstantService::$default_status_true) {
             return $this->renderJSON([],'该角色已经被禁用了,不需要禁用', ConstantService::$response_code_fail);
@@ -101,7 +103,11 @@ class RoleController extends BaseController
             return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
         }
 
-        if(!Role::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
+        if(!Role::updateAll(['status'=>ConstantService::$default_status_true],[
+            'id'=>$ids,
+            'merchant_id'=>$this->getMerchantId(),
+            'app_id'=>$this->getAppId()
+        ])) {
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
 
