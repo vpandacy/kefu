@@ -57,7 +57,7 @@ var upload_qiniu_ops = {
     }
 };
 
-var merchant_staff_edit_ops = {
+var uc_staff_edit_ops = {
     init: function () {
         this.eventBind();
     },
@@ -97,7 +97,7 @@ var merchant_staff_edit_ops = {
         var index = $.loading(1,{shade: .5});
         $.ajax({
             type: 'post',
-            url: common_ops.buildMerchantUrl('/staff/index/save'),
+            url: common_ops.buildUcUrl('/staff/save'),
             dataType: 'json',
             data: data,
             success:function (response) {
@@ -119,5 +119,5 @@ var merchant_staff_edit_ops = {
 
 
 $(document).ready(function () {
-    merchant_staff_edit_ops.init();
+    uc_staff_edit_ops.init();
 });

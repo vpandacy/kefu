@@ -80,6 +80,17 @@ var common_ops = {
 
         return url + _paramUrl
     },
+    buildMerchantUrl:function(path, params) {
+        var url =  "/merchant" + path;
+        var _paramUrl = '';
+        if( params ){
+            _paramUrl = Object.keys(params).map(function(k) {
+                return [encodeURIComponent(k), encodeURIComponent(params[k])].join("=");
+            }).join('&');
+            _paramUrl = "?"+_paramUrl;
+        }
+        return url + _paramUrl
+    },
     buildPicStaticUrl:function(bucket,img_key,params){
         bucket = bucket ? bucket: "pic3";
         var config = {

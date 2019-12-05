@@ -1,12 +1,12 @@
 <?php
-use www\assets\MerchantAsset;
+use uc\assets\UcAsset;
 use common\services\GlobalUrlService;
 
 /**
  * @var \yii\web\View $this
  */
 
-MerchantAsset::register($this);
+UcAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -67,6 +67,12 @@ MerchantAsset::register($this);
     </div>
 </div>
 <?php $this->endBody() ?>
+<script>
+    var application_setting = {
+        'app_name': '<?=$this->params['app_name']?>',
+        'domains' : <?=json_encode(Yii::$app->params['domains'])?>
+    }
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

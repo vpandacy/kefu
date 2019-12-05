@@ -1,5 +1,5 @@
 ;
-var merchant_staff_index_ops = {
+var uc_staff_index_ops = {
     init: function () {
         this.eventBind();
     },
@@ -9,7 +9,7 @@ var merchant_staff_index_ops = {
             // 表格渲染.
             table.render({
                 elem: '#staff'
-                ,url: common_ops.buildMerchantUrl('/staff/index/list')
+                ,url: common_ops.buildUcUrl('/staff/list')
                 ,where: {
                     mobile: $('.search-wrapper [name=mobile]').val(),
                     email: $('.search-wrapper [name=email]').val(),
@@ -49,7 +49,7 @@ var merchant_staff_index_ops = {
             // 表头事件.
             table.on('toolbar(staff)',function (row) {
                 if(row.event == 'add') {
-                    location.href = common_ops.buildMerchantUrl('/staff/index/edit');
+                    location.href = common_ops.buildUcUrl('/staff/edit');
                     return false;
                 }
                 var select_row = table.checkStatus('staff');
@@ -67,7 +67,7 @@ var merchant_staff_index_ops = {
 
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildMerchantUrl('/staff/index/recover'),
+                        url: common_ops.buildUcUrl('/staff/recover'),
                         data: {
                             ids: ids,
                         },
@@ -93,7 +93,7 @@ var merchant_staff_index_ops = {
             // 行内事件.
             table.on('tool(staff)', function (row) {
                 if(row.event == 'edit') {
-                    location.href = common_ops.buildMerchantUrl('/staff/index/edit',{
+                    location.href = common_ops.buildUcUrl('/staff/edit',{
                         staff_id: row.data.id,
                     });
                     return false;
@@ -104,7 +104,7 @@ var merchant_staff_index_ops = {
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildMerchantUrl('/staff/index/disable'),
+                        url: common_ops.buildUcUrl('/staff/disable'),
                         dataType: 'json',
                         data: {
                             id: row.data.id
@@ -149,5 +149,5 @@ var merchant_staff_index_ops = {
 };
 
 $(document).ready(function () {
-    merchant_staff_index_ops.init();
+    uc_staff_index_ops.init();
 });

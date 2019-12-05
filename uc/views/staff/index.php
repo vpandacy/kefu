@@ -1,13 +1,12 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
-use www\assets\MerchantAsset;
-
+use uc\assets\UcAsset;
 /**
  * @var \yii\web\View $this
  */
 
-StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js/merchant/staff/index/index.js"),MerchantAsset::className() )
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/staff/index.js"),UcAsset::className() )
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[

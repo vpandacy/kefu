@@ -52,7 +52,7 @@ class StaffController extends BaseController
     {
         $page = intval($this->get('page',1));
 
-        $query = Staff::find()->andWhere(['app_id'=>$this->getAppId()]);
+        $query = Staff::find()->andWhere(['merchant_id'=>$this->getMerchantId()]);
         // 构建条件
         $mobile = trim($this->get('mobile',''));
         $email  = trim($this->get('email',''));
@@ -69,6 +69,8 @@ class StaffController extends BaseController
         if($department_id) {
             $query->andWhere(['department_id'=>$department_id]);
         }
+
+        $query->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]);
 
         $count = $query->count();
 
@@ -101,14 +103,17 @@ class StaffController extends BaseController
     {
         $staff_id = intval($this->get('staff_id',0));
 
-        $staff = $staff_id
-            ? Staff::findOne([
-                'id'=>$staff_id,
-                'app_id' => $this->getAppId(),
-                'merchant_id'=>$this->getMerchantId(),
-                'status'=>ConstantService::$default_status_true
-            ])
-            : new Staff();
+        if($staff_id > 0) {
+            $staff = Staff::find()
+                ->where([
+                    'id'=>$staff_id,
+                    'merchant_id'=>$this->getMerchantId(),
+                ])
+                ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
+                ->one();
+        }else{
+            $staff = new Staff();
+        }
 
         if($staff_id && !$staff) {
             // 返回回去.
@@ -222,14 +227,18 @@ class StaffController extends BaseController
             return $this->renderJSON([],'新增帐号时请输入密码', ConstantService::$response_code_fail);
         }
 
-        $staff = $data['id'] > 0
-            ? Staff::findOne([
-                'id'=>$data['id'],
-                'merchant_id'=>$this->getMerchantId(),
-                'status'=>ConstantService::$default_status_true,
-                'app_id'    =>  $this->getAppId(),
-            ])
-            : new Staff();
+        if($data['id'] > 0) {
+            $staff = Staff::find()
+                ->where([
+                    'id'=>$data['id'],
+                    'merchant_id'=>$this->getMerchantId(),
+                    'status'=>ConstantService::$default_status_true
+                ])
+                ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
+                ->one();
+        }else{
+            $staff = new Staff();
+        }
 
         if($data['id'] > 0 && !$staff['id']) {
             return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
@@ -244,6 +253,8 @@ class StaffController extends BaseController
             $data['merchant_id'] = $this->getMerchantId();
             $data['status'] = ConstantService::$default_status_true;
             $staff['salt'] = CommonService::genUniqueName();
+            // 设置应用ID.
+            $data['app_id'] = ',' . $this->getAppId() . ',';
         }
 
         if($data['password']) {
@@ -251,8 +262,7 @@ class StaffController extends BaseController
         }else{
             unset($data['password']);
         }
-        // 设置应用ID.
-        $data['app_id'] = $this->getAppId();
+
         $staff->setAttributes($data,0);
 
         if(!$staff->save(0)) {
@@ -277,10 +287,9 @@ class StaffController extends BaseController
             return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
         }
 
-        if(!Staff::updateAll(['status' => ConstantService::$default_status_true],[
-            'id'=>$ids,
-            'merchant_id'=>$this->getMerchantId(),
-            'app_id'    =>  $this->getAppId()
+        if(!Staff::updateAll(['status' => ConstantService::$default_status_true],[ 'and',
+            ['id'=>$ids,'merchant_id'=> $this->getMerchantId()],
+            ['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]
         ])) {
             return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
         }
@@ -302,7 +311,14 @@ class StaffController extends BaseController
             return $this->renderJSON([],'您暂不能禁用自己', ConstantService::$response_code_fail);
         }
 
-        $staff = Staff::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
+        $staff = Staff::find()
+            ->where([
+                'id'=>$id,
+                'merchant_id'=>$this->getMerchantId(),
+                'status'=>ConstantService::$default_status_true
+            ])
+            ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
+            ->one();;
 
         if($staff['status'] != ConstantService::$default_status_true) {
             return $this->renderJSON([],'该帐号不需要删除', ConstantService::$response_code_fail);
