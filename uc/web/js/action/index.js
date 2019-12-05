@@ -9,18 +9,16 @@ var staff_action_index_ops = {
 
             form.on('select(choice)', function (data) {
                 var role_id = data.value;
-                if(!role_id || role_id <= 0) {
-                    $('.action').each(function () {
-                        $(this).removeAttr('checked');
-                    });
 
+                $('.action').each(function () {
+                    $(this).prop('checked', false);
                     form.render('checkbox');
-                    return false;
-                }
+                });
+
                 var index = $.loading(1,{shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url : common_ops.buildMerchantUrl('/staff/action/list'),
+                    url : common_ops.buildUcUrl('/action/list'),
                     data: {
                         role_id: role_id
                     },
@@ -34,15 +32,14 @@ var staff_action_index_ops = {
                         var action_ids = response.data;
 
                         $('.action').each(function () {
-                            console.dir(action_ids.indexOf(this.value));
                             if(action_ids.indexOf(this.value) >= 0) {
-                                $(this).attr('checked','checked');
+                                $(this).prop('checked', true);
                             }else{
-                                $(this).removeAttr('checked');
+                                $(this).prop('checked', false);
                             }
-                        });
 
-                        form.render('checkbox');
+                            form.render('checkbox');
+                        });
                     },
                     error: function () {
                         $.close(index);
@@ -76,7 +73,7 @@ var staff_action_index_ops = {
                         permissions: permission_ids
                     },
                     dataType: 'json',
-                    url: common_ops.buildMerchantUrl('/staff/action/save'),
+                    url: common_ops.buildUcUrl('/action/save'),
                     success:function (response) {
                         $.close(index);
                         if(response.code != 200) {

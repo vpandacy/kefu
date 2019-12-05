@@ -3,7 +3,7 @@ use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
 use www\assets\MerchantAsset;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/merchant/staff/action/index.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/action/index.js'), MerchantAsset::className());
 ?>
 <style>
     .layui-table tbody tr:hover,.layui-table-hover {
