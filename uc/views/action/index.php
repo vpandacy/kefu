@@ -1,9 +1,9 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
-use www\assets\MerchantAsset;
+use uc\assets\UcAsset;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/action/index.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/action/index.js'), UcAsset::className());
 ?>
 <style>
     .layui-table tbody tr:hover,.layui-table-hover {
@@ -35,7 +35,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/a
 </style>
 
 <div id="staff_index_index">
-    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+    <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',
         'current_menu'  =>  'action'
     ])?>

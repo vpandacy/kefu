@@ -1,14 +1,13 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
-use www\assets\MerchantAsset;
+use uc\assets\UcAsset;
 
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/role/index.js'), MerchantAsset::className())
-
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/role/index.js'), UcAsset::className())
 ?>
 <div id="staff_index_index">
-    <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+    <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',
         'current_menu'  =>  'role'
     ])?>
