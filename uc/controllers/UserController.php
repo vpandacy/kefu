@@ -7,6 +7,7 @@ use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use uc\controllers\common\BaseController;
+use uc\service\UcUrlService;
 use www\modules\merchant\service\MerchantService;
 
 /**
@@ -110,7 +111,9 @@ class UserController extends BaseController
      */
     public function actionLogout()
     {
-        $this->removeCookie($this->merchant_cookie_name,'','/merchant');
-        return $this->redirect(GlobalUrlService::buildMerchantUrl('/'));
+        $cookie = \Yii::$app->params['cookies']['staff'];
+
+        $this->removeCookie($cookie['name'],$cookie['domain']);
+        return $this->redirect(UcUrlService::buildUcUrl('/user/login', $this->getAppId()));
     }
 }
