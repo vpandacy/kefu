@@ -16,8 +16,8 @@ class CsAsset extends AssetBundle
     public function registerAssetFiles($view)
     {
         $this->css = [
+            GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildWwwStaticUrl('/css/cs/exe.css'),
-            GlobalUrlService::buildWwwStaticUrl('/css/fonts/iconfont.css'),
         ];
 
         $this->js = [

@@ -26,7 +26,7 @@ class UcAsset extends AssetBundle
 
             GlobalUrlService::buildUcStaticUrl('/css/component/animate.css'),
             GlobalUrlService::buildUcStaticUrl('/css/component/scrollbar.min.css'),
-            GlobalUrlService::buildUcStaticUrl('/css/iconfont/iconfont.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
 
             GlobalUrlService::buildUcStaticUrl('/css/merchant/merchant.css'),

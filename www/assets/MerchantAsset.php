@@ -21,7 +21,7 @@ class MerchantAsset extends AssetBundle
             // 这里应该也是uc的css.有一部分.
             GlobalUrlService::buildUcStaticUrl('/css/component/animate.css'),
             GlobalUrlService::buildUcStaticUrl('/css/component/scrollbar.min.css'),
-            GlobalUrlService::buildUcStaticUrl('/css/iconfont/iconfont.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
             GlobalUrlService::buildUcStaticUrl('/css/merchant/merchant.css'),
             GlobalUrlService::buildUcStaticUrl('/css/merchant/merchantfrom.css'),
