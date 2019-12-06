@@ -1,6 +1,6 @@
 ;
 var uploader = {
-    init:function( btn_wrapper, btn, depend, bucket, config){
+    init:function( btn_wrapper, btn, depend, bucket, other_config){
         if(!depend.hasOwnProperty('uploadSuccess') || typeof depend.uploadSuccess != 'function') {
             throw "请正确配置uploadSuccess方法"
         }
@@ -9,15 +9,15 @@ var uploader = {
             throw '未正确配置uploadError方法.'
         }
 
-        var base_config = this.genConfig(btn_wrapper, btn, bucket);
+        var config = this.genConfig(btn_wrapper, btn, bucket);
 
-        if(config) {
+        if(other_config) {
             // 加入配置信息.
-            base_config = Object.assign({}, base_config, config);
+            config = Object.assign({}, config, other_config);
         }
 
         // 设置回调.
-        base_config.init = {
+        config.init = {
             'FileUploaded': function(up, file, info) {
                 // var domain = up.getOption('domain');
                 // var res = parseJSON(info);
@@ -33,7 +33,7 @@ var uploader = {
         };
 
         //引入Plupload 、qiniu.js后
-        Qiniu.uploader(base_config);
+        Qiniu.uploader(config);
     },
 
     // 生成基本配置信息.
