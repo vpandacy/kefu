@@ -14,7 +14,7 @@ var merchant_overall_index_edit_ops = {
 
                 $.ajax({
                     type: 'post',
-                    url: common_ops.buildMerchantUrl('/overall/index/save'),
+                    url: url_manager.buildMerchantUrl('/overall/index/save'),
                     dataType: 'json',
                     data: data,
                     success:function (response) {

@@ -15,7 +15,7 @@ var merchant_black_edit_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildMerchantUrl('/black/index/save'),
+                    url: url_manager.buildMerchantUrl('/black/index/save'),
                     dataType: 'json',
                     data: data,
                     success:function (response) {

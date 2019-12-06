@@ -3,7 +3,7 @@ namespace www\modules\merchant\controllers\black;
 
 use common\components\DataHelper;
 use common\models\merchant\BlackList;
-use common\models\merchant\Staff;
+use common\models\uc\Staff;
 use common\services\ConstantService;
 use www\modules\merchant\controllers\common\BaseController;
 
