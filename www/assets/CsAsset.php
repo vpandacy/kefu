@@ -21,7 +21,7 @@ class CsAsset extends AssetBundle
         ];
 
         $this->js = [
-            GlobalUrlService::buildWwwStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+            GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
             GlobalUrlService::buildWwwStaticUrl("/js/cs/exe.js"),
         ];
 
