@@ -131,13 +131,13 @@ class StaffBaseController extends BaseWebController
         }
 
         // 没有权限属于这个应用就强行退出.
-        if(!$staff->checkAppIdOwnerStaff($this->getAppId())) {
+        if($this->getAppId() && !$staff->checkAppIdOwnerStaff($this->getAppId())) {
             return false;
         }
 
         // 保存信息.
         $this->staff = $staff;
-
+        // 检查商户权限
         $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'app_id'=>$this->getAppId(),'status'=>ConstantService::$default_status_true]);
         if(!$merchant) {
             return false;
