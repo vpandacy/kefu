@@ -34,7 +34,7 @@ $busi_worker->processTimeoutHandler = function($trace_str, $exeption) {
 
 
 // 监听一个text端口,我觉得还是用http协议 相对来说比较重
-$inner_http_worker = new Worker( 'text://0.0.0.0:2222' );
+$inner_http_worker = new Worker( 'text://0.0.0.0:2223' );
 $inner_http_worker->name = "kefu_text";
 // 当http客户端发来数据时触发
 $inner_http_worker->onMessage = function( $connection, $data){
