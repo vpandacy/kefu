@@ -22,6 +22,15 @@ $busi_worker->onWorkerStart = function(){
 $busi_worker->onWorkerStop = function(){
 
 };
+
+// 这里是业务发过来需要处理的东西.
+$busi_worker->onMessage = function ($connect, $data) {
+    $message = $data;
+    var_dump($connect);
+    return $connect->send('success');
+};
+
+
 // 设置业务超时时间10秒
 $busi_worker->processTimeout = 3;
 // 业务超时回调，可以把超时日志保存到自己想要的地方

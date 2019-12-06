@@ -21,7 +21,9 @@ class BusiHandler{
      * 然后通过这里转发给对应的客服人员
      */
     public static function onWorkerStart(  $worker ){
+
     }
+
 	/**
 	 * 当客户端连接时触发
 	 * 如果业务不需此回调可以删除onConnect
@@ -35,8 +37,8 @@ class BusiHandler{
 	 * @param int $client_id 连接id
 	 * @param mixed $message 具体消息
 	 */
-	public static function onMessage($client_id, $message){
-		// 向所有人发送
+	public static function onMessage($client_id, $message) {
+		// 这里是向单个人发送. 及时回复.
         Gateway::sendToClient( $client_id, $message );
         return;
 		$message = json_decode($message, true);

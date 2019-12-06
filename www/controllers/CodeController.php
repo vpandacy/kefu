@@ -3,6 +3,11 @@ namespace www\controllers;
 
 use www\controllers\common\BaseController;
 
+/**
+ * 游客端
+ * Class CodeController
+ * @package www\controllers
+ */
 class CodeController extends BaseController
 {
     public function __construct($id, $module, $config = []){
@@ -10,15 +15,19 @@ class CodeController extends BaseController
         $this->layout = false;
     }
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
         header('Content-type: text/javascript');
         return $this->render("index.js");
     }
 
-    public function actionChat(){
+    public function actionChat()
+    {
         return $this->render("chat_mini");
     }
-    public function actionOnline(){
+
+    public function actionOnline()
+    {
         return $this->render("online");
     }
 }

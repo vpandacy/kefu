@@ -1,3 +1,10 @@
+<?php
+use common\components\helper\StaticAssetsHelper;
+use common\services\GlobalUrlService;
+use www\assets\CsAsset;
+
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/cs/client.js'), CsAsset::className());
+?>
 <div id='chatExe'>
     <!-- 右键菜单 -->
     <div id="menu" >
