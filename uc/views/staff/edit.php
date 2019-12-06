@@ -1,14 +1,13 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
-use www\assets\MerchantAsset;
+use common\components\helper\StaticPluginHelper;
+use uc\assets\UcAsset;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/moxie.min.js'), MerchantAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/plupload.full.min.js'), MerchantAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/zh_CN.js'), MerchantAsset::className());
+StaticPluginHelper::setDepend(UcAsset::className());
+StaticPluginHelper::qiniuPlugin();
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/qiniu.min.js'), MerchantAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/staff/edit.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/staff/edit.js'), UcAsset::className());
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[

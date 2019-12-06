@@ -1,8 +1,8 @@
 <?php
-namespace www\modules\merchant\controllers;
+namespace uc\controllers;
 
 use common\services\QiniuService;
-use www\modules\merchant\controllers\common\BaseController;
+use uc\controllers\common\BaseController;
 
 class UploadController extends BaseController
 {

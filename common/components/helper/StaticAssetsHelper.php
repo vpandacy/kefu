@@ -5,9 +5,15 @@ use Yii;
 
 class StaticAssetsHelper
 {
-
-    public static function includeAppStatic($type, $path, $depend){
-        $release_version = defined("RELEASE_VERSION") ? RELEASE_VERSION : "20190910223200";
+    /**
+     * 引入资源文件.
+     * @param $type
+     * @param $path
+     * @param $depend
+     */
+    public static function includeAppStatic($type, $path, $depend)
+    {
+        $release_version = self::getReleaseVersion();
         if (stripos($path, "?") !== false) {
             $path = $path . "&version={$release_version}";
         } else {
@@ -31,7 +37,8 @@ class StaticAssetsHelper
         self::includeAppStatic("css", $path, $depend);
     }
 
-    public static function getReleaseVersion(){
+    public static function getReleaseVersion()
+    {
         $release_version = defined("RELEASE_VERSION") ? RELEASE_VERSION : "20190910223200";
         return $release_version;
     }

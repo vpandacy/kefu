@@ -1,12 +1,12 @@
 <?php
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
+use common\components\helper\StaticPluginHelper;
 use uc\assets\UcAsset;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/moxie.min.js'), UcAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/plupload.full.min.js'), UcAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/zh_CN.js'), UcAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/qiniu.min.js'), UcAsset::className());
+
+StaticPluginHelper::setDepend(UcAsset::className());
+StaticPluginHelper::qiniuPlugin();
 
 StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl('/js/company/index.js'), UcAsset::className() )
 ?>
