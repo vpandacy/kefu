@@ -60,8 +60,11 @@ class StaffBaseController extends BaseWebController
         if($app_name) {
             $this->setAppId(AppService::getAppId($app_name));
         }
+
+        UcUrlService::setAppId($this->getAppId());
         Yii::$app->view->params['app_name'] = $app_name;
         Yii::$app->view->params['app_id'] = $this->getAppId();
+
         if(in_array($action->getUniqueId(), $this->allowAllAction)) {
             return true;
         }
@@ -73,7 +76,7 @@ class StaffBaseController extends BaseWebController
             }
 
             // 设置跳转.
-            $this->redirect(UcUrlService::buildUcUrl('/user/login', $this->getAppId(),[
+            $this->redirect(UcUrlService::buildUcUrl('/user/login',[
                 'redirect_uri'  =>  '/'  . $action->getUniqueId()
             ]));
 

@@ -11,7 +11,7 @@ var uc_department_index_ops = {
 
             table.render({
                 elem: '#departmentTable'
-                ,url: common_ops.buildUcUrl('/department/list')
+                ,url: url_manager.buildUcUrl('/department/list')
                 ,toolbar: '#departToolbar' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
                 ,cellMinWidth: 80
@@ -51,7 +51,7 @@ var uc_department_index_ops = {
 
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildUcUrl('/department/recover'),
+                        url: url_manager.buildUcUrl('/department/recover'),
                         data: {
                             ids: ids,
                         },
@@ -85,7 +85,7 @@ var uc_department_index_ops = {
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildUcUrl('/department/disable'),
+                        url: url_manager.buildUcUrl('/department/disable'),
                         dataType: 'json',
                         data: {
                             id: row.data.id
@@ -141,7 +141,7 @@ var uc_department_index_ops = {
                 var lay_index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildUcUrl('/department/save'),
+                    url: url_manager.buildUcUrl('/department/save'),
                     data: {
                         name: name,
                         id: id

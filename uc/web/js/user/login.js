@@ -33,7 +33,7 @@ var merchant_user_login_ops = {
 
             $.ajax({
                 type: 'POST',
-                url: common_ops.buildUcUrl('/user/sign-in'),
+                url: url_manager.buildUcUrl('/user/sign-in'),
                 data: {
                     email: email,
                     password: password
@@ -77,7 +77,7 @@ var merchant_user_login_ops = {
 
             $.ajax({
                 type: 'POST',
-                url: common_ops.buildUcUrl('/user/register'),
+                url: url_manager.buildUcUrl('/user/register'),
                 data: {
                     email: email,
                     password: password,

@@ -1,10 +1,10 @@
 <?php
-use common\services\GlobalUrlService;
+use uc\service\UcUrlService;
 use common\components\helper\StaticAssetsHelper;
 use uc\assets\UcAsset;
 
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/role/index.js'), UcAsset::className())
+StaticAssetsHelper::includeAppJsStatic(UcUrlService::buildUcStaticUrl('/js/role/index.js'), UcAsset::className())
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
@@ -28,4 +28,3 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/r
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
 </script>
-<script src="<?=GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js");?>"></script>

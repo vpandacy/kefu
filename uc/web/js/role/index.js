@@ -9,7 +9,7 @@
 
             table.render({
                 elem: '#roleTable'
-                ,url:common_ops.buildUcUrl('/role/list')
+                ,url:url_manager.buildUcUrl('/role/list')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -48,7 +48,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildUcUrl('/role/recover'),
+                        url: url_manager.buildUcUrl('/role/recover'),
                         data: {
                             ids: ids
                         },
@@ -82,7 +82,7 @@
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildUcUrl('/role/disable'),
+                        url: url_manager.buildUcUrl('/role/disable'),
                         dataType: 'json',
                         data: {
                             id: row.data.id
@@ -139,7 +139,7 @@
                 var lay_index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildUcUrl('/role/save'),
+                    url: url_manager.buildUcUrl('/role/save'),
                     data: {
                         name: name,
                         id: id

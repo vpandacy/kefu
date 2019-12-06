@@ -18,7 +18,7 @@ var overall_company_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildUcUrl('/company/save-info'),
+                    url: url_manager.buildUcUrl('/company/save-info'),
                     data: data.field,
                     dataType:'json',
                     success:function (response) {
@@ -39,7 +39,7 @@ var overall_company_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: common_ops.buildUcUrl('/company/save-setting'),
+                    url: url_manager.buildUcUrl('/company/save-setting'),
                     data: data.field,
                     dataType:'json',
                     success:function (response) {
@@ -61,7 +61,7 @@ var overall_company_ops = {
         $('#' + wrapper + ' [name=logo]').val(file_key);
         img_wrapper.html([
             '<div class="layui-input-block">',
-                '<img width="100" height="100" src="', common_ops.buildPicStaticUrl('hsh', file_key) ,'" alt="">',
+                '<img width="100" height="100" src="', url_manager.buildPicStaticUrl('hsh', file_key) ,'" alt="">',
             '</div>'
         ].join(''));
     },

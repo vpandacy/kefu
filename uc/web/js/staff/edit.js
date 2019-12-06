@@ -40,7 +40,7 @@ var uc_staff_edit_ops = {
         var index = $.loading(1,{shade: .5});
         $.ajax({
             type: 'post',
-            url: common_ops.buildUcUrl('/staff/save'),
+            url: url_manager.buildUcUrl('/staff/save'),
             dataType: 'json',
             data: data,
             success:function (response) {
@@ -64,7 +64,7 @@ var uc_staff_edit_ops = {
         $('#' + wrapper + ' [name=avatar]').val(file_key);
         img_wrapper.html([
             '<div class="layui-input-block">',
-                '<img width="100" height="100" src="', common_ops.buildPicStaticUrl('hsh', file_key) ,'" alt="">',
+                '<img width="100" height="100" src="', url_manager.buildPicStaticUrl('hsh', file_key) ,'" alt="">',
             '</div>'
         ].join(''));
     },

@@ -18,7 +18,7 @@ var staff_action_index_ops = {
                 var index = $.loading(1,{shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url : common_ops.buildUcUrl('/action/list'),
+                    url : url_manager.buildUcUrl('/action/list'),
                     data: {
                         role_id: role_id
                     },
@@ -73,7 +73,7 @@ var staff_action_index_ops = {
                         permissions: permission_ids
                     },
                     dataType: 'json',
-                    url: common_ops.buildUcUrl('/action/save'),
+                    url: url_manager.buildUcUrl('/action/save'),
                     success:function (response) {
                         $.close(index);
                         if(response.code != 200) {
