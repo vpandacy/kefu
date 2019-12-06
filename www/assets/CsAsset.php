@@ -1,0 +1,30 @@
+<?php
+namespace www\assets;
+
+use common\services\GlobalUrlService;
+use yii\web\AssetBundle;
+
+class CsAsset extends AssetBundle
+{
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
+
+    public $css = [];
+
+    public $js = [];
+
+    public function registerAssetFiles($view)
+    {
+        $this->css = [
+            GlobalUrlService::buildWwwStaticUrl('/css/cs/exe.css'),
+            GlobalUrlService::buildWwwStaticUrl('/css/fonts/iconfont.css'),
+        ];
+
+        $this->js = [
+            GlobalUrlService::buildWwwStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+            GlobalUrlService::buildWwwStaticUrl("/js/cs/exe.js"),
+        ];
+
+        parent::registerAssetFiles($view);
+    }
+}

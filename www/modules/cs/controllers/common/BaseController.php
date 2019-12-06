@@ -1,22 +1,22 @@
 <?php
-
 namespace www\modules\cs\controllers\common;
 
-use common\components\BaseWebController;
-use Yii;
+use common\components\StaffBaseController;
+use common\services\ConstantService;
 
-class BaseController extends BaseWebController {
-    public $current_user  ;
-    public $merchant_info ;
-    protected  $allowAllAction = [
-        "cs/user/login"
-    ];
+class BaseController extends StaffBaseController
+{
 
-    public function __construct($id, $module, $config = []){
-        parent::__construct($id, $module, $config = []);
-        $view = Yii::$app->view;
-        $view->params['id'] = $id;
-        $this->layout = false;
+    public function beforeAction($action)
+    {
+        // 定义自己的应用ID.
+        $this->setAppId(ConstantService::$merchant_app_id);
+
+        if(!parent::beforeAction($action)) {
+            return false;
+        }
+
+        $this->layout = 'main';
+        return true;
     }
-
 }

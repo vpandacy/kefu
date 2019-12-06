@@ -46,7 +46,7 @@ var merchant_user_login_ops = {
                     }
 
                     return $.alert(response.msg, function () {
-                        location.href = common_ops.getRequest('redirect_uri', '/')
+                        location.href = url_manager.getRequest('redirect_uri', '/')
                     });
                 },
                 error:function () {
