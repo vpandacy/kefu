@@ -53,20 +53,8 @@ var merchant_common_ops = {
 
 var global_url_ops = {
     buildUcUrl:function (path, params) {
-        if(!application_setting.app_name) {
-            application_setting.app_name = 'uc';
-        }
-
-        var url = !application_setting.domains[application_setting.app_name]
-            ? '/'
-            : application_setting.domains[application_setting.app_name];
-
-        if(application_setting.app_name != 'uc') {
-            url += '/uc';
-        }
-
-        url += path;
-
+        var url = '/uc' + path;
+        
         var _paramUrl = '';
         if( params ){
             _paramUrl = Object.keys(params).map(function(k) {

@@ -41,6 +41,7 @@ class UcAsset extends AssetBundle
 
             UcUrlService::buildUcStaticUrl('/js/component/domResize.js'),
             UcUrlService::buildUcStaticUrl('/js/component/url/manager.js'),
+            UcUrlService::buildUcStaticUrl('/js/component/user/center.js'),
             UcUrlService::buildUcStaticUrl('/js/common/core.js'),
             UcUrlService::buildUcStaticUrl('/js/common.js'),
         ];

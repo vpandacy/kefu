@@ -232,7 +232,7 @@ class StaffController extends BaseController
                 ->where([
                     'id'=>$data['id'],
                     'merchant_id'=>$this->getMerchantId(),
-                    'status'=>ConstantService::$default_status_true
+//                    'status'=>ConstantService::$default_status_true
                 ])
                 ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
                 ->one();

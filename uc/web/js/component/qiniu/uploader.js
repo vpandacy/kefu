@@ -44,7 +44,7 @@ var uploader = {
             multi_selection: false,
             runtimes: 'html5,flash,html4',    //上传模式,依次退化
             browse_button: btn,       //上传选择的点选按钮，**必需**
-            uptoken_url: common_ops.buildUcUrl("/upload/qiniu-token",{ 'bucket':bucket }),            //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
+            uptoken_url: url_manager.buildUcUrl("/upload/qiniu-token",{ 'bucket':bucket }),            //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
             unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
             // save_key: true,   // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
             // domain: common_ops.buildCdnPicSUrl( bucket ,'',[]),   //bucket 域名，下载资源时用到，**必需**

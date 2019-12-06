@@ -1,5 +1,6 @@
 <?php
 use uc\service\UcUrlService;
+use common\services\GlobalUrlService;
 
 /**
  * @var \yii\web\View $this

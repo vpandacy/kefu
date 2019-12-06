@@ -116,4 +116,17 @@ class UserController extends BaseController
         $this->removeCookie($cookie['name'],$cookie['domain']);
         return $this->redirect(UcUrlService::buildUcUrl('/user/login', $this->getAppId()));
     }
+
+    /**
+     * 获取用户中心数据.
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionCenter()
+    {
+        $content = $this->renderPartial('center');
+
+        return $this->renderJSON([
+            'html'  =>  $content,
+        ],'获取成功', ConstantService::$response_code_success);
+    }
 }

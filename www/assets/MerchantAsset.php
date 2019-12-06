@@ -30,11 +30,13 @@ class MerchantAsset extends AssetBundle
         $this->js = [
             GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
             GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),
+            GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
+            GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
+
+            GlobalUrlService::buildWwwStaticUrl('/uc/js/component/user/center.js'),
             GlobalUrlService::buildWwwStaticUrl("/uc/js/component/domResize.js"),
             GlobalUrlService::buildWwwStaticUrl('/uc/js/common/core.js'),
             GlobalUrlService::buildWwwStaticUrl('/uc/js/component/url/manager.js'),
-            GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
-            GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
             GlobalUrlService::buildWwwStaticUrl('/js/merchant/common.js'),
         ];
         parent::registerAssetFiles($view);
