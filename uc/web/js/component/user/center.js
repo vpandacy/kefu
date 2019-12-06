@@ -20,7 +20,7 @@ var user_center = {
         })
     },
     eventBind: function () {
-        // 这里是动画效果的转移.
+        // 这里是右上角用户头像的动画效果
         var timer=null;
         $('.menu_info_link').mouseenter(function () {
             $('.menu_info_edit').show();
