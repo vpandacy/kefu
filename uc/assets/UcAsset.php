@@ -3,7 +3,6 @@
 namespace uc\assets;
 
 use common\services\GlobalUrlService;
-use uc\service\UcUrlService;
 use yii\web\AssetBundle;
 use Yii;
 
@@ -24,12 +23,14 @@ class UcAsset extends AssetBundle
         $this->css = [
             GlobalUrlService::buildStaticUrl('/font-awesome/v4.7/css/font-awesome.min.css'),
             GlobalUrlService::buildStaticUrl('/layui/v2.5/css/layui.css'),
-            UcUrlService::buildUcStaticUrl('/css/common_default.css'),
-            UcUrlService::buildUcStaticUrl('/css/scrollbar.min.css'),
-            UcUrlService::buildUcStaticUrl('/css/iconfont/iconfont.css'),
-            UcUrlService::buildUcStaticUrl('/css/merchant.css'),
-            UcUrlService::buildUcStaticUrl('/css/merchantfrom.css'),
-            UcUrlService::buildUcStaticUrl('/css/animate.css')
+
+            GlobalUrlService::buildUcStaticUrl('/css/component/animate.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/component/scrollbar.min.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/iconfont/iconfont.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
+
+            GlobalUrlService::buildUcStaticUrl('/css/merchant/merchant.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/merchant/merchantfrom.css'),
         ];
 
 
@@ -39,11 +40,11 @@ class UcAsset extends AssetBundle
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
 
-            UcUrlService::buildUcStaticUrl('/js/component/domResize.js'),
-            UcUrlService::buildUcStaticUrl('/js/component/url/manager.js'),
-            UcUrlService::buildUcStaticUrl('/js/component/user/center.js'),
-            UcUrlService::buildUcStaticUrl('/js/common/core.js'),
-            UcUrlService::buildUcStaticUrl('/js/common.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/component/domResize.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/component/url/manager.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/component/user/center.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/common/core.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/common.js'),
         ];
         parent::registerAssetFiles($view);
     }

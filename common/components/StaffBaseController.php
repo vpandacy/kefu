@@ -6,8 +6,7 @@ use common\models\uc\Staff;
 use common\services\uc\RoleService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
-use uc\service\AppService;
-use uc\service\UcUrlService;
+use common\services\AppService;
 use yii\web\Response;
 use yii\base\Action;
 use Yii;
@@ -61,7 +60,7 @@ class StaffBaseController extends BaseWebController
             $this->setAppId(AppService::getAppId($app_name));
         }
 
-        UcUrlService::setAppId($this->getAppId());
+        GlobalUrlService::setAppId($this->getAppId());
         Yii::$app->view->params['app_name'] = $app_name;
         Yii::$app->view->params['app_id'] = $this->getAppId();
 
@@ -76,7 +75,7 @@ class StaffBaseController extends BaseWebController
             }
 
             // 设置跳转.
-            $this->redirect(UcUrlService::buildUcUrl('/user/login',[
+            $this->redirect(GlobalUrlService::buildUcUrl('/user/login',[
                 'redirect_uri'  =>  '/'  . $action->getUniqueId()
             ]));
 
@@ -105,7 +104,7 @@ class StaffBaseController extends BaseWebController
      */
     public function responseFail($msg = '非法请求')
     {
-        return $this->redirect(GlobalUrlService::buildWwwUrl('/error/error',[
+        return $this->redirect(GlobalUrlService::buildUcUrl('/error/error',[
             'msg'   =>  $msg
         ]));
     }

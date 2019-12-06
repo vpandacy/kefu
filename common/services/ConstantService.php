@@ -21,4 +21,13 @@ class ConstantService extends BaseService
 
     // 定义一些常量ID.
     public static $merchant_app_id = 1;
+
+
+    /**
+     * 应用关系对应.
+     * @var array
+     */
+    public static $app_mapping = [
+        1   =>  'www',
+    ];
 }

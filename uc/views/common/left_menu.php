@@ -12,7 +12,7 @@ use common\services\GlobalUrlService;
     <div class="menu-version"><?=$this->params['merchant']['name']?></div>
     <div class="menu-title">
         <?php foreach($this->params['menus']['left_menu'] as $key => $menu):?>
-            <a href="<?=GlobalUrlService::buildWWWUrl('/' . $menu['url']);?>">
+            <a href="<?=GlobalUrlService::buildOriginUrl('/' . $menu['url']);?>">
                 <div class="menu-tooltip"><?=$menu['title']?></div>
                 <i class="iconfont <?=$menu['icon']?>"></i>
                 <div class="menu-show dis_none"><?=$menu['title']?></div>

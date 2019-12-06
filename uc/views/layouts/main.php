@@ -1,7 +1,6 @@
 <?php
 use uc\assets\UcAsset;
 use common\services\GlobalUrlService;
-use uc\service\UcUrlService;
 
 /**
  * @var \yii\web\View $this
@@ -14,7 +13,7 @@ UcAsset::register($this);
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="<?=GlobalUrlService::buildWwwStaticUrl("/images/favicon.ico");?>" type="image/x-icon"/>
+    <link rel="icon" href="<?=GlobalUrlService::buildUcStaticUrl("/images/favicon.ico");?>" type="image/x-icon"/>
     <title><?=Yii::$app->params["company"]["title"];?> -- 商户后台</title>
     <?php $this->head() ?>
 </head>

@@ -1,6 +1,5 @@
 <?php
 use common\services\GlobalUrlService;
-use uc\service\UcUrlService;
 use common\components\helper\StaticAssetsHelper;
 use common\components\helper\StaticPluginHelper;
 use uc\assets\UcAsset;
@@ -8,7 +7,7 @@ use uc\assets\UcAsset;
 StaticPluginHelper::setDepend(UcAsset::className());
 StaticPluginHelper::qiniuPlugin();
 
-StaticAssetsHelper::includeAppJsStatic(UcUrlService::buildUcStaticUrl('/js/staff/edit.js'), UcAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/staff/edit.js'), UcAsset::className());
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[

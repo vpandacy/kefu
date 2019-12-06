@@ -1,9 +1,9 @@
 <?php
-use uc\service\UcUrlService;
 use common\components\helper\StaticAssetsHelper;
+use common\services\GlobalUrlService;
 use uc\assets\UcAsset;
 
-StaticAssetsHelper::includeAppJsStatic(UcUrlService::buildUcStaticUrl('/js/user/login.js'),UcAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/user/login.js'),UcAsset::className());
 ?>
 <div class="dowebok" id="dowebok">
     <div class="form-container sign-up-container">

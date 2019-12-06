@@ -1,9 +1,9 @@
 <?php
-use uc\service\UcUrlService;
 use common\components\helper\StaticAssetsHelper;
+use common\services\GlobalUrlService;
 use uc\assets\UcAsset;
 
-StaticAssetsHelper::includeAppJsStatic(UcUrlService::buildUcStaticUrl('/js/action/index.js'), UcAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/action/index.js'), UcAsset::className());
 ?>
 <style>
     .layui-table tbody tr:hover,.layui-table-hover {

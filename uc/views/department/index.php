@@ -1,9 +1,9 @@
 <?php
-use uc\service\UcUrlService;
 use common\components\helper\StaticAssetsHelper;
+use common\services\GlobalUrlService;
 use uc\assets\UcAsset;
 
-StaticAssetsHelper::includeAppJsStatic(UcUrlService::buildUcStaticUrl('/js/department/index.js'), UcAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/department/index.js'), UcAsset::className());
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[

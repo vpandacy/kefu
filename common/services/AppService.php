@@ -1,7 +1,5 @@
 <?php
-namespace uc\service;
-
-use common\services\BaseService;
+namespace common\services;
 
 class AppService extends BaseService
 {
