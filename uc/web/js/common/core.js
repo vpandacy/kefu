@@ -149,22 +149,6 @@ $('.menu-title a').mouseout(function () {
 //    });
 // });
 
-var timer=null;
-$('.menu_info_link').mouseenter(function () {
-    $('.menu_info_edit').show();
-}).mouseleave(function () {
-    timer=setTimeout(function () {
-        $('.menu_info_edit').hide();
-    },2000);
-})
-// menu_info_link menu_info_edit
-$('.menu_info_edit').mouseover(function () {
-    clearTimeout(timer)
-    $(this).show();
-}).mouseout(function () {
-    $(this).hide();
-})
-
 var $submenu = $('.submenu');
 var $mainmenu = $('.mainmenu');
 $submenu.hide();

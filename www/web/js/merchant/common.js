@@ -54,7 +54,7 @@ var merchant_common_ops = {
 var global_url_ops = {
     buildUcUrl:function (path, params) {
         var url = '/uc' + path;
-        
+
         var _paramUrl = '';
         if( params ){
             _paramUrl = Object.keys(params).map(function(k) {
