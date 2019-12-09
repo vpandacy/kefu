@@ -42,7 +42,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
         <pre style="color: red;">
     1. 请将代码添加到网站全部页面的&lt;/head&gt;标签前。
     2. 建议在header.htm类似的页头模板页面中安装，以达到一处安装，全站皆有的效果。
-    3. 如需在JS文件中调用统计分析代码，请直接去掉以下代码首尾的，&lt;script type=&quot;text/javascript&quot;&gt;与&lt;/script&gt;后，放入JS文件中即可。
+    3. 如需在JS文件中调用统计分析代码，请直接去掉以下代码首尾的，&lt;script&gt;与&lt;/script&gt;后，放入JS文件中即可。
         </pre>
     </div>
 </div>

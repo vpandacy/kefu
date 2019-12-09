@@ -19,7 +19,8 @@ var merchant_common_ops = {
                     '/merchant/overall/index',
                     '/merchant/overall/clueauto',
                     '/merchant/overall/breakauto',
-                    '/merchant/overall/offline'
+                    '/merchant/overall/offline',
+                    '/merchant/overall/code'
                 ],
                 'heimingdan'    : [
                     '/merchant/black/index'
@@ -46,7 +47,7 @@ var merchant_common_ops = {
             return;
         }
 
-        $(".menu-title .icon-"+nav_name).addClass("li_active");
+        $('.menu-title .icon-'+nav_name).addClass('li_active');
     }
 };
 
