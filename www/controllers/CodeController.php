@@ -53,12 +53,31 @@ class CodeController extends BaseController
 
         return $this->render('chat_mini',[
             'merchant'  =>  $merchant,
-            'setting'   =>  $setting
+            'setting'   =>  $setting,
+            'code'      =>  $this->get('code'),
         ]);
     }
 
     public function actionOnline()
     {
-        return $this->render("online");
+        $msn = $this->get('msn','');
+
+        if(!$msn) {
+            return '<script>alert("您引入的非法客服软件")</script>';
+        }
+
+        // 这里最好加入到缓存中去.不然到时候会比较麻烦.
+        $merchant = Merchant::findOne(['sn'=>$msn,'status'=>ConstantService::$default_status_true]);
+
+        if(!$merchant) {
+            return '<script>alert("您引入的非法客服软件")</script>';
+        }
+
+        $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
+
+        return $this->render('online',[
+            'merchant'  =>  $merchant,
+            'setting'   =>  $setting
+        ]);
     }
 }

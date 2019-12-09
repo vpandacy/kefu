@@ -18,7 +18,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/chat_mini.js'), AppAsset::className());
 
 ?>
-<div id="online_kf">
+<div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">
     <div class="show-hide-min" style="display: block">
         <div class="min-onclick">
             <div><i class="iconfont icon-xiaoxi"></i> </div>

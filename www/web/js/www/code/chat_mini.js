@@ -29,13 +29,19 @@ $(function () {
      * 打开新窗口聊天页面
      */
     $('.icon-fenxiang').click(function () {
-        window.open('http://www.kefu.dev.hsh568.cn//code/online', 'newindow', 'height=610,width=810,top=150,left=550,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
+        var code = $('#online_kf').attr('data-code'),
+            msn  = $('#online_kf').attr('data-sn');
+
+        // 这里要动态生成一下.
+        window.open('http://www.kefu.dev.hsh568.cn/'+ msn +'/code/online?code=' + code, 'newindow', 'height=610,width=810,top=150,left=550,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
     });
+
     $('.icon-wenjian').click(function () {
         inputFlie.flie();
     });
+
     /**
      * 定时加载图标显示隐藏
      */
