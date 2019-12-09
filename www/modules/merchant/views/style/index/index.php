@@ -24,5 +24,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="assign">分配客服</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
 </script>

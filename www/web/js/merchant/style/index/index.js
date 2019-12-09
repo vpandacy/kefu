@@ -21,7 +21,7 @@ var merchant_style_index_ops = {
                         return row.status == 1 ? '正常' : '禁用';
                     }}
                     ,{field:'created_time', title: '创建时间'}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
                 ]]
                 ,id: 'groupChat'
                 ,page: false
@@ -76,6 +76,14 @@ var merchant_style_index_ops = {
                     location.href = url_manager.buildMerchantUrl('/style/index/edit', {
                         group_id: event.data.id,
                     });
+                    return false;
+                }
+
+                if(event.event == 'assign') {
+                    location.href = url_manager.buildMerchantUrl('/style/index/assign', {
+                        group_id: event.data.id
+                    });
+
                     return false;
                 }
 
