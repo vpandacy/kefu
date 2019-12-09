@@ -25,7 +25,10 @@ class IndexController extends BaseController
     {
         $page = intval($this->get('page',1));
 
-        $query = BlackList::find()->where(['status'=>ConstantService::$default_status_true]);
+        $query = BlackList::find()->where([
+            'status'=>ConstantService::$default_status_true,
+            'merchant_id'=>$this->getMerchantId()
+        ]);
 
         $count = $query->count();
 

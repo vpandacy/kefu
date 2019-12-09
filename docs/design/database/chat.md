@@ -4,8 +4,10 @@
 CREATE TABLE `group_chat` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
+  `sn` varchar(255) NOT NULL DEFAULT '' COMMENT '风格编号',
   `desc` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0异常,1正常',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)

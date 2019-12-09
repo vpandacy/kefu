@@ -30,9 +30,9 @@ class GroupChat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['merchant_id'], 'integer'],
+            [['id','merchant_id','status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['desc', 'title'], 'string', 'max' => 255],
+            [['sn','desc', 'title'], 'string', 'max' => 255],
         ];
     }
 
@@ -44,8 +44,10 @@ class GroupChat extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'merchant_id' => 'Merchant ID',
+            'sn' => 'Sn',
             'desc' => 'Desc',
             'title' => 'Title',
+            'status'=> 'Status',
             'created_time' => 'Created Time',
             'updated_time' => 'Updated Time',
         ];
