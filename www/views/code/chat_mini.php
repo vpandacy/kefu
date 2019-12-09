@@ -8,7 +8,7 @@ use \common\services\GlobalUrlService;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="UTF-8">
     <title>pc右下角聊天</title>
-    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/fonts/iconfont.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildUcStaticUrl("/css/component/iconfont/iconfont.css");?>" rel="stylesheet">
     <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/www/code/chat_mini.css");?>" rel="stylesheet">
     <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/www/code/tools.css");?>" rel="stylesheet" />
     <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/www/code/emojibg.css");?>" rel="stylesheet" />
