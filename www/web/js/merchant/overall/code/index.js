@@ -20,12 +20,13 @@ var merchant_overall_code_index_ops = {
                     type: 'POST',
                     url: url_manager.buildMerchantUrl('/overall/code/obtain'),
                     data: {
-                        style_id: value
+                        group_id: value
                     },
                     dataType: 'json',
                     success:function (response) {
                         $.close(index);
                         if(response.code != 200) {
+                            $('#style-script pre').text('请选择风格');
                             return $.msg(response.msg);
                         }
 

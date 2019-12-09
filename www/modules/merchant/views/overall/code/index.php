@@ -23,10 +23,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                 <div class="layui-inline">
                     <div class="layui-input-inline">
                         <select name="role_id" lay-filter="choice" lay-verify="required" lay-search="">
-                            <option value="0">请选择风格</option>
-                            <option value="9999">普通风格</option>
-                            <option value="1">风格1</option>
-                            <option value="2">风格2</option>
+                            <option value="0">所有风格</option>
+                            <?php foreach($groups as $group):?>
+                                <option value="<?=$group['id']?>"><?=$group['title']?></option>
+                            <?php endforeach;?>
                         </select>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     </form>
 
     <div style="background: #F2F2F2; padding: 20px" id="style-script">
-        <pre>请选择风格</pre>
+        <pre><?=$code?></pre>
     </div>
     <div class="layui-card" style="margin-top: 10px;">
         <h4>代码安装说明</h4>
