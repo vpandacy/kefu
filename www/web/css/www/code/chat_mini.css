@@ -130,6 +130,10 @@
     margin-bottom: 10px;
     display: flex;
 }
+#pc-online .online-content .message-my {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+}
 
 #pc-online .online-content .content-message .message-img {
     width: 45px;
@@ -149,10 +153,16 @@
     color: rgb(112, 130, 166);
     font-size: 15px;
 }
+#pc-online .online-content .content-message .message-info .name-date-my {
+    text-align: right;
+}
 
 #pc-online .online-content .content-message .message-info .message-name-date .date {
-    padding-left: 15px;
+    padding: 0 15px;
 
+}
+#pc-online .online-content .content-message .message-info .message-name-date .message-name {
+    padding-right: 10px;
 }
 
 #pc-online .online-content .content-message .message-info .message-message {
@@ -161,6 +171,9 @@
     padding: 10px;
     font-size: 13px;
     margin-top: 8px;
+}
+#pc-online .online-content .content-message .message-info .message-message-my {
+    margin-right: 10px;
 }
 
 #pc-online .online-submit {

@@ -53,6 +53,13 @@ use \common\services\GlobalUrlService;
                         <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
                     </div>
                 </div>
+
+                <div class="content-message message-my">
+                    <div class="message-info">
+                        <div class="message-name-date name-date-my"><span class="date">10:57:56</span><span class="message-name">我</span></div>
+                        <div class="message-message message-message-my">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
+                    </div>
+                </div>
             </div>
             <div class="online-submit">
                 <div class="submit-top" id="content" contenteditable="true"></div>
