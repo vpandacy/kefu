@@ -13,7 +13,7 @@ $busi_worker->count = 4;
 $busi_worker->registerAddress = '127.0.0.1:1238';
 
 //设置处理业务的类为MyEvent
-$busi_worker->eventHandler = "BusiHandler";
+$busi_worker->eventHandler = "BusinessHandler";
 
 $busi_worker->onWorkerStart = function(){
 
@@ -23,12 +23,12 @@ $busi_worker->onWorkerStop = function(){
 
 };
 
-// 这里是业务发过来需要处理的东西.
-$busi_worker->onMessage = function ($connect, $data) {
-    $message = $data;
-    var_dump($connect);
-    return $connect->send('success');
-};
+// 这里是业务发过来需要处理的东西. 全部油businessHandler来处理掉.
+//$busi_worker->onMessage = function ($connect, $data) {
+//    $message = $data;
+//    var_dump($connect);
+//    return $connect->send('success');
+//};
 
 
 // 设置业务超时时间10秒

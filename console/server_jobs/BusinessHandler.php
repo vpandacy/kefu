@@ -14,7 +14,7 @@ use GatewayWorker\Lib\Gateway;
  */
 
 
-class BusiHandler{
+class BusinessHandler{
 
     /**
      * 这里应该要启动一个text监控，然后将微信客服系统的数据通过tcp传递过来
@@ -38,7 +38,7 @@ class BusiHandler{
 	 * @param mixed $message 具体消息
 	 */
 	public static function onMessage($client_id, $message) {
-		// 这里是向单个人发送. 及时回复.
+		// 这里是向单个人发送. 及时回复. 先别发送.
         Gateway::sendToClient( $client_id, $message );
         return;
 		$message = json_decode($message, true);
