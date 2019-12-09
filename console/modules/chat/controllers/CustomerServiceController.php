@@ -4,10 +4,10 @@ namespace console\modules\chat\controllers;
 use console\modules\chat\BaseController;
 use console\modules\chat\service\WorkerService;
 
-class CustomerController extends BaseController
+class CustomerServiceController extends BaseController
 {
     /**
-     * 客户端ws监听.
+     * 客服端ws处理.
      */
     public function actionRun()
     {
@@ -24,6 +24,6 @@ class CustomerController extends BaseController
             exit("Please install posix extension. See http://doc3.workerman.net/appendices/install-extension.html\n");
         }
 
-        WorkerService::runCustomer();
+        WorkerService::runCustomerService();
     }
 }
