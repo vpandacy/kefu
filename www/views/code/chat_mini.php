@@ -55,6 +55,15 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                         <div class="message-message"><?=!$setting ? '您好,欢迎使用好商汇客服系统' : $setting['greetings']?></div>
                     </div>
                 </div>
+                <div class="content-message">
+                    <div class="message-img">
+                        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
+                    </div>
+                    <div class="message-info">
+                        <div class="message-name-date"><span>客服</span><span class="date"><?=date('Y-m-d H:i:s')?></span></div>
+                        <div class="message-message"><?=!$setting ? '您好,欢迎使用好商汇客服系统' : $setting['greetings']?></div>
+                    </div>
+                </div>
             </div>
             <div class="online-submit">
                 <div class="submit-top" id="content" contenteditable="true"></div>
