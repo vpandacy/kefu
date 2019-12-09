@@ -80,7 +80,7 @@ class WorkerService extends BaseService
 
         // 标记是全局启动
         define('GLOBAL_START', 1);
-
+        // 获取全局的变量.
         global $argc;
         global $argv;
         // 需要自动缩减所在参数. 不然会影响workerman解析.
