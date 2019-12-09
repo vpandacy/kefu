@@ -15,6 +15,7 @@ class BaseController extends \yii\web\Controller {
     }
 
     public function beforeAction($action){
+
         return true;
     }
 

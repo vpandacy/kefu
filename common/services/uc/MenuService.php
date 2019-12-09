@@ -144,7 +144,11 @@ class MenuService extends BaseService
                 ],
                 'offline'   =>  [
                     'title' =>  '离线表单管理',
-                    'url'   =>  'merchant/overall/offline/index'
+                    'url'   =>  'merchant/overall/offline/index',
+                ],
+                'code'      =>  [
+                    'title' =>  '客服代码',
+                    'url'   =>  'merchant/overall/code/index',
                 ],
             ],
             'blacklist' =>  [

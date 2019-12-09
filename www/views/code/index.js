@@ -1,6 +1,6 @@
 <?php
 use \common\services\GlobalUrlService;
-$url = GlobalUrlService::buildWwwUrl("code/chat");
+$url = GlobalUrlService::buildWwwUrl('/code/chat');
 ?>
 
 
