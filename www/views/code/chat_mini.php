@@ -30,7 +30,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
         <div id='pc-online'>
             <div class="online-header">
                 <div class="header-left">
-                    <img class="logo" src="<?=GlobalUrlService::buildWwwStaticUrl('/images/www/code/test.png')?>">
+                    <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
                     <span>在线客服</span>
                 </div>
                 <div class="header-right">
@@ -48,11 +48,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                 </div>
                 <div class="content-message">
                     <div class="message-img">
-                        <img class="logo" src="<?=GlobalUrlService::buildWwwStaticUrl('/images/www/code/test.png')?>">
+                        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
                     </div>
                     <div class="message-info">
-                        <div class="message-name-date"><span>楠楠</span><span class="date">10:57:56</span></div>
-                        <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
+                        <div class="message-name-date"><span>客服</span><span class="date"><?=date('Y-m-d H:i:s')?></span></div>
+                        <div class="message-message"><?=!$setting ? '您好,欢迎使用好商汇客服系统' : $setting['greetings']?></div>
                     </div>
                 </div>
             </div>
