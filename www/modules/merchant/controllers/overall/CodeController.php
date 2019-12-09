@@ -2,6 +2,7 @@
 namespace www\modules\merchant\controllers\overall;
 
 use common\components\DataHelper;
+use common\models\merchant\GroupChat;
 use common\services\ConstantService;
 use www\modules\merchant\controllers\common\BaseController;
 
@@ -13,7 +14,20 @@ class CodeController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        // 获取所有的风格分组.
+        $group_chats = GroupChat::find()
+            ->where([
+                'status'    =>  ConstantService::$default_status_true,
+                'merchant_id'   =>  $this->getMerchantId(),
+            ])
+            ->select(['id','title'])
+            ->asArray()
+            ->all();
+
+        return $this->render('index',[
+            'groups'    =>  $group_chats,
+            'code'      =>  DataHelper::encode($this->renderPartial('obtain',['group_sn'=>''])),
+        ]);
     }
 
     /**
@@ -21,7 +35,17 @@ class CodeController extends BaseController
      */
     public function actionObtain()
     {
-        $code = $this->renderPartial('obtain');
+        $group_id = $this->post('group_id', 0);
+
+        $group = GroupChat::findOne(['id'=>$group_id,'status' => ConstantService::$default_status_true]);
+
+        if(!$group && $group_id) {
+            return $this->renderJSON([],'该风格不存在', ConstantService::$response_code_fail);
+        }
+
+        $code = $this->renderPartial('obtain',[
+            'group_sn'  =>  $group['sn'],
+        ]);
 
         return $this->renderJSON($code,'获取成功', ConstantService::$response_code_success);
     }

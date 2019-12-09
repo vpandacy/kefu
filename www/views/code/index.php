@@ -1,10 +1,3 @@
-<?php
-use \common\services\GlobalUrlService;
-$url = GlobalUrlService::buildWwwUrl('/code/chat');
-?>
-
-
-var iframe_url = "<?=$url;?>";
 window.onload = function () {
     var dynamicLoading = {
         online: function () {

@@ -29,13 +29,19 @@ $(function () {
      * 打开新窗口聊天页面
      */
     $('.icon-fenxiang').click(function () {
-        window.open('http://www.kefu.dev.hsh568.cn//code/online', 'newindow', 'height=610,width=810,top=150,left=550,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
+        var code = $('#online_kf').attr('data-code'),
+            msn  = $('#online_kf').attr('data-sn');
+
+        // 这里要动态生成一下.
+        window.open('http://www.kefu.dev.hsh568.cn/'+ msn +'/code/online?code=' + code, 'newindow', 'height=610,width=810,top=150,left=550,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
     });
+
     $('.icon-wenjian').click(function () {
         inputFlie.flie();
     });
+
     /**
      * 定时加载图标显示隐藏
      */
@@ -64,5 +70,49 @@ $(function () {
             document.getElementsByClassName('online-content')[0].scrollTop = 0;
         },3500);
         // document.documentElement.scrollTop= window.pageYOffset = document.body.scrollTop = 0;
+    });
+});
+
+
+
+$(document).ready(function(){
+    /**
+     * 表情
+     * */
+    sdEditorEmoj.Init(emojiconfig);
+    sdEditorEmoj.setEmoji({type:'div',id:"content"});
+
+    /**
+     * 截图初始化
+     */
+    $().ready(function(){
+        $('#moreparams').hide();
+
+        $('#captureselectSize').click( function(){
+            var autoFlag = $("#captureselectSize").attr("checked")=="checked" ? 1 : 0;
+            if(autoFlag == 1){
+                $('#moreparams').show();
+            }
+            else{
+                $('#moreparams').hide();
+            }
+        });
+        $('#getimagefromclipboard').click( function(){
+            $('#posdetail').hide();
+        });
+        $('#showprewindow').click( function(){
+            $('#posdetail').hide();
+        });
+        $('#fullscreen').click( function(){
+            $('#posdetail').hide();
+        });
+        $('#specificarea').click( function(){
+            $('#posdetail').show();
+        });
+
+        $('#showprewindow').click();
+        $('#autoupload').click();
+        $('#btnUpload').hide();
+        Init();
     });
 });
