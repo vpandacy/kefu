@@ -5,10 +5,10 @@ use common\services\BaseService;
 use GatewayWorker\Lib\Gateway;
 
 /**
- * 游客的处理.
+ * 客服端的处理.
  * @package console\modules\chat\service
  */
-class CustomerBusinessService extends BaseService
+class CustomerService extends BaseService
 {
     /**
      * 这里应该要启动一个text监控，然后将微信客服系统的数据通过tcp传递过来
@@ -20,7 +20,7 @@ class CustomerBusinessService extends BaseService
     }
 
     /**
-     * 当游客端浏览器连接时触发
+     * 当客服端浏览器连接时触发
      * 如果业务不需此回调可以删除onConnect
      * @param int $client_id 连接id
      */
@@ -28,7 +28,7 @@ class CustomerBusinessService extends BaseService
     }
 
     /**
-     * 当游客端浏览器发来消息时触发
+     * 当客服端浏览器发来消息时触发
      * @param int $client_id 连接id
      * @param mixed $message 具体消息
      */
@@ -44,7 +44,7 @@ class CustomerBusinessService extends BaseService
     }
 
     /**
-     * 当游客端用户断开连接时触发
+     * 当用户断开连接时触发
      * @param int $client_id 连接id
      */
     public static function onClose($client_id){

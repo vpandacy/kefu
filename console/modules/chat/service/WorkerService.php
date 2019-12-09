@@ -10,7 +10,7 @@ use Workerman\Worker;
 class WorkerService extends BaseService
 {
     /**
-     * 注册客户端服务.
+     * 注册游客端的服务. 服务可能要改一下.
      */
     public static function runCustomer()
     {
@@ -115,7 +115,7 @@ class WorkerService extends BaseService
     }
 
     /**
-     * 注意.其中的配置是需要处理的. 注册地址等.
+     * 这里是注册客服端的地址.
      */
     public static function runCustomerService()
     {
@@ -162,7 +162,7 @@ class WorkerService extends BaseService
         $business_worker->registerAddress = '127.0.0.1:1328';
 
         //设置处理业务的类为MyEvent
-        $business_worker->eventHandler = CustomerBusinessService::class;
+        $business_worker->eventHandler = CustomerService::class;
 
         // 设置业务超时时间10秒
         $business_worker->processTimeout = 3;
