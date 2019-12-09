@@ -15,7 +15,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/capturewrapper.js'), AppAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/emojisort.js'), AppAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/emoji.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/chat_mini.js'), AppAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/chat_mini.js'), AppAsset::className())
 
 ?>
 <div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">
