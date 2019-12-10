@@ -34,13 +34,15 @@ class IndexController extends BaseController
 
         $query = GroupChat::find()->where(['merchant_id'=>$this->getMerchantId()]);
 
+        $total = $query->count();
+
         $lists = $query->asArray()
             ->orderBy(['id'=>SORT_DESC])
             ->limit($this->page_size)
             ->offset(($page - 1) * $this->page_size )
             ->all();
 
-        return $this->renderPageJSON($lists, $query->count(), 0);
+        return $this->renderPageJSON($lists, $query->count(), $total);
     }
 
     /**
