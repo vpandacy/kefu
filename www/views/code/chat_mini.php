@@ -1,22 +1,28 @@
 <?php
 use common\services\GlobalUrlService;
 use www\assets\AppAsset;
-use common\components\helper\StaticAssetsHelper;
+use common\components\helper\StaticPluginHelper;
 
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'), AppAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl('/css/www/code/chat_mini.css'), AppAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl('/css/www/code/tools.css'), AppAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl('/css/www/code/emojibg.css'), AppAsset::className());
+StaticPluginHelper::setDepend(AppAsset::className());
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.min.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.md5.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.json-2.3.min.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/niuniucapture.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/capturewrapper.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/emojisort.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/emoji.js'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/www/code/chat_mini.js'), AppAsset::className())
+// 这种引入还是一般.
+StaticPluginHelper::includeCssPlugins([
+    GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
+    GlobalUrlService::buildWwwStaticUrl('/css/www/code/chat_mini.css'),
+    GlobalUrlService::buildWwwStaticUrl('/css/www/code/tools.css'),
+    GlobalUrlService::buildWwwStaticUrl('/css/www/code/emojibg.css'),
+]);
 
+StaticPluginHelper::includeJsPlugins([
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.min.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.md5.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/niuniucapture.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/capturewrapper.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/emojisort.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/emoji.js'),
+    GlobalUrlService::buildWwwStaticUrl('/js/www/code/chat_mini.js')
+]);
 ?>
 <div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">
     <div class="show-hide-min" style="display: block">

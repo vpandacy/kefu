@@ -42,7 +42,7 @@ class StaticPluginHelper
      * 批量引入js资源.
      * @param array $plugins
      */
-    private static function includeJsPlugins($plugins = [])
+    public static function includeJsPlugins($plugins = [])
     {
         // 批量引用.
         foreach($plugins as $key => $plugin) {
@@ -57,7 +57,7 @@ class StaticPluginHelper
      * 批量引入css资源. 预留口子.
      * @param array $plugins
      */
-    private static function includeCssPlugins($plugins = [])
+    public static function includeCssPlugins($plugins = [])
     {
         // 批量引用.
         foreach($plugins as $key => $plugin) {
