@@ -19,9 +19,6 @@ class ConstantService extends BaseService
     // 帐号异常.
     public static $default_status_false = 0;
 
-    // 定义一些常量ID.
-    public static $merchant_app_id = 1;
-
 
     /**
      * 应用关系对应.
@@ -30,4 +27,7 @@ class ConstantService extends BaseService
     public static $app_mapping = [
         1   =>  'www',
     ];
+
+    // 定义一些常量ID.
+    public static $merchant_app_id = 1;
 }

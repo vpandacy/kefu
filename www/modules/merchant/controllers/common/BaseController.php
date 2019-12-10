@@ -13,11 +13,9 @@ class BaseController extends StaffBaseController
     {
         // 定义自己的应用ID.
         $this->setAppId(ConstantService::$merchant_app_id);
-
         if(!parent::beforeAction($action)) {
             return false;
         }
-
         // 这里要获取商户系统的菜单.
         Yii::$app->view->params['menus'] =  MenuService::getMerchantUrl($this->privilege_urls);
         $this->layout = 'main';
