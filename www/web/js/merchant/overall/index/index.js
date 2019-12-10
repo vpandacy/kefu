@@ -20,7 +20,10 @@ var merchant_overall_index_ops = {
                     ,{ title:'操作', toolbar: '#barDemo', fixed: 'right'}
                 ]]
                 ,id: 'commonWordTable'
-                ,page: true
+                ,limit: 15
+                ,page: {
+                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+                }
             });
 
             table.on('toolbar(commonWordTable)', function (row) {
