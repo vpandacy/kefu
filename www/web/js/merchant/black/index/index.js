@@ -22,8 +22,10 @@ var merchant_black_index_ops = {
                     ,{title:'操作', toolbar: '#blackBar', width:150, fixed: 'right'}
                 ]]
                 ,id: 'blackListTable'
-                ,page: true
-
+                ,limit: 15
+                ,page: {
+                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+                }
             });
 
             table.on('toolbar(blackListTable)', function (event) {

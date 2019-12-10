@@ -30,10 +30,14 @@ class IndexController extends BaseController
      */
     public function actionList()
     {
-        $query = GroupChat::find();
+        $page = intval($this->get('page',1));
+
+        $query = GroupChat::find()->where(['merchant_id'=>$this->getMerchantId()]);
 
         $lists = $query->asArray()
             ->orderBy(['id'=>SORT_DESC])
+            ->limit($this->page_size)
+            ->offset(($page - 1) * $this->page_size )
             ->all();
 
         return $this->renderPageJSON($lists, $query->count(), 0);

@@ -24,7 +24,10 @@ var merchant_style_index_ops = {
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
                 ]]
                 ,id: 'groupChat'
-                ,page: false
+                ,limit: 15
+                ,page: {
+                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+                }
             });
 
             table.on('toolbar(groupChat)', function (event) {

@@ -6,8 +6,6 @@ use common\services\ConstantService;
 use common\services\ExcelService;
 use www\modules\merchant\controllers\common\BaseController;
 use Yii;
-use yii\web\UploadedFile;
-
 
 class IndexController extends BaseController
 {
