@@ -60,6 +60,9 @@ var chat = {
             var total_height = $('.online-content')[0].scrollHeight,
                 current_height = $('.online-content').height() + $('.online-content').scrollTop();
 
+            console.dir('total:' + total_height);
+            console.dir('current:' + current_height);
+            console.dir('div:' +  $(div).height());
 
             // 当前高度大于等于总的高度  就移动下来. 增加10像素的容错率
             if(current_height <= total_height - $(div).height() - 10) {
@@ -69,6 +72,10 @@ var chat = {
             // 每次发送完消息滚动到最底部.
             $('.online-content').scrollTop(total_height);
             return false;
+        });
+        
+        $('.submit-button').on('click', function () {
+            
         });
     }
 };
