@@ -5,23 +5,70 @@
     $.extend({
         lay: {
             // alert弹层
-            alert: function (content,callback,params) {
-                // 确认后的回调信息.
-                return layer.alert(content,params ? params : {}, callback);
+            alert: function (msg, cb) {
+                layer.alert(msg, {
+                    yes: function (index) {
+                        if (typeof cb == "function") {
+                            cb();
+                        }
+                        layer.close(index);
+                    }
+                });
             },
             // 提示框.
-            msg: function (content) {
-                return layer.msg(content);
+            msg:function( msg,flag,callback ){
+                callback = (callback != undefined && typeof callback == "function") ? callback : null;
+                var params = {
+                    "icon":6,
+                    "time": 1000,
+                    "shade" :[0.5 , '#000' , true]
+                };
+                if( !flag ){
+                    params['icon'] = 5;
+                    params['time'] = 1500;
+                }
+                layer.msg( msg ,params,callback );
             },
             // 确认框
-            confirm: function (content,params,callback,cancel_callback) {
-                if(typeof params == 'function') {
-                    cancel_callback = callback;
-                    callback = params;
-                    params = {};
-                }
-
-                return layer.confirm(content,params,callback,cancel_callback);
+            confirm: function (msg,callback,btn) {
+                callback = (callback != undefined) ? callback : {'ok': null, 'cancel': null};
+                btn =  (callback == undefined || btn == []) ? ['确定', '取消'] : btn;
+                layer.confirm(msg, {
+                    btn: btn //按钮
+                }, function (index) {
+                    //确定事件
+                    if (typeof callback.ok == "function") {
+                        callback.ok();
+                    }
+                    layer.close(index);
+                }, function (index) {
+                    //取消事件
+                    if (typeof callback.cancel == "function") {
+                        callback.cancel();
+                    }
+                    layer.close(index);
+                });
+            },
+            tip: function (msg, target) {
+                layer.tips(msg, target, {
+                    tips: [3, '#e5004f']
+                });
+            },
+            popLayer:function( url,data,modal_params){
+                $.ajax({
+                    url: url,
+                    data: data,
+                    type: "GET",
+                    dataType: 'json',
+                    success: function (res) {
+                        if(res.code != 200 ){
+                            common_ops.alert(res.msg);
+                            return;
+                        }
+                        $("#pop_layer").html( res.data.content );
+                        $('#pop_layer').modal( modal_params );
+                    }
+                });
             },
             // 加载.
             loading: function (type,params) {
@@ -48,6 +95,8 @@
     $.alert     = $.lay.alert;
     $.msg       = $.lay.msg;
     $.confirm   = $.lay.confirm;
+    $.tip   = $.lay.tip;
+    $.popLayer   = $.lay.popLayer;
     $.loading   = $.lay.loading;
     $.open      = $.lay.open;
     $.close     = $.lay.close;
@@ -71,33 +120,6 @@ window.onerror = function(message, url, lineNumber,columnNo,error) {
     });
     return true;
 };
-
-// 对Date的扩展，将 Date 转化为指定格式的String
-// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
-// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
-// 例子：
-// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
-Date.prototype.Format = function(fmt)
-{ //author: meizz
-    var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt))
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-    for(var k in o)
-        if(new RegExp("("+ k +")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-    return fmt;
-};
-
-
 
 
 /**
