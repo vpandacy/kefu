@@ -97,7 +97,7 @@ $(function () {
             msn  = $('#online_kf').attr('data-sn');
 
         // 这里要动态生成一下.
-        window.open('http://www.kefu.dev.hsh568.cn/'+ msn +'/code/online?code=' + code, 'newindow', 'height=610,width=810,top=150,left=550,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
+        window.open('http://www.kefu.dev.hsh568.cn/'+ msn +'/code/online?code=' + code, 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
     });
@@ -134,6 +134,14 @@ $(function () {
             document.getElementsByClassName('online-content')[0].scrollTop = 0;
         },3500);
         // document.documentElement.scrollTop= window.pageYOffset = document.body.scrollTop = 0;
+    });
+    $('.icon-jianqie').click(function () {
+        $('.online-cover').show();
+        $('.capture-dialog').show();
+    });
+    $('.icon-guanbi').click(function () {
+        $('.online-cover').hide();
+        $('.capture-dialog').hide();
     });
 });
 

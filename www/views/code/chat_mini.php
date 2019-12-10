@@ -28,6 +28,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     </div>
     <div id="show-hide" class="show-hide" style="display: none">
         <div id='pc-online'>
+            <div class="online-cover dis_none"></div>
             <div class="online-header">
                 <div class="header-left">
                     <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
@@ -61,7 +62,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                 <div class="submit-bottom">
                     <div class="bottom-left">
                         <i class="iconfont icon-biaoqing" id="openFace"></i>
-                        <i class="iconfont icon-jianqie" onclick="StartCapture()"></i>
+<!--                        onclick="StartCapture()"-->
+                        <i class="iconfont icon-jianqie" ></i>
                         <i class="iconfont icon-wenjian" ></i>
                         <input type="file" id="inputFile" onchange="inputFlie.changeFile()" style="display: none">
                         <i class="iconfont icon-yiwenshuoming"></i>
@@ -81,6 +83,42 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
                     <section class="emoji-box"></section>
                 </div>
                 <a class="closeFaceBox" href="javascript:void(0)">×</a>
+            </div>
+        </div>
+    </div>
+    <div class="capture-dialog dis_none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="iconfont icon-guanbi" aria-hidden="true" type="button" data-dismiss="modal"></span>
+                <h4 class="modal-title">截图说明</h4>
+            </div>
+            <input style="left: 0px; top: 0px; position: absolute; z-index: -1;" />
+            <div class="modal-body">
+                <div class="capture-outer" style="width: 320px;">
+                    <p class="captTips">提示：建议使用微信或QQ的截图功能进行截图，然后直接粘贴到对话框即可。</p>
+                    <p class="h5">您可按照以下步骤下载截图插件：</p>
+                    <ol>
+                        <li><h6>下载地址</h6>
+                            <div class="capture-text">
+                                Windows系统下载qq截图插件
+                                <a href="https://img.sobot.com/tools/%E6%88%AA%E5%9B%BE%E5%B7%A5%E5%85%B7-win.exe" target="_blank">点击此处</a>
+                            </div>
+                            <div class="capture-text">
+                                Mac系统下载qq截图插件
+                                <a href="https://img.sobot.com/tools/%E6%88%AA%E5%9B%BE%E5%B7%A5%E5%85%B7-mac.dmg" target="_blank">点击此处</a>
+                            </div></li>
+                        <li><h6>完成下载后，请找到程序所在文件夹，然后按照下面链接的方法设置截图快捷键</h6>
+                            <div class="capture-text">
+                                Windows系统下
+                                <a href="https://jingyan.baidu.com/article/2fb0ba408a1e1300f2ec5f03.html" target="_blank">安装设置方法</a>
+                            </div>
+                            <div class="capture-text">
+                                Mac系统下
+                                <a href="https://jingyan.baidu.com/article/3d69c5514e44a3f0ce02d751.html" target="_blank">安装设置方法</a>
+                            </div></li>
+                        <li><h6>完成上述步骤后，即可使用。</h6></li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
