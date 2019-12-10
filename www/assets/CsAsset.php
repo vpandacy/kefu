@@ -17,12 +17,12 @@ class CsAsset extends AssetBundle
     {
         $this->css = [
             GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
-            GlobalUrlService::buildWwwStaticUrl('/css/cs/exe.css'),
+            GlobalUrlService::buildDWStaticUrl('/css/cs/exe.css'),
         ];
 
         $this->js = [
             GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
-            GlobalUrlService::buildWwwStaticUrl("/js/cs/exe.js"),
+            GlobalUrlService::buildDWStaticUrl("/js/cs/exe.js"),
         ];
 
         parent::registerAssetFiles($view);

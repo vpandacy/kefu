@@ -48,12 +48,8 @@ var merchant_common_ops = {
         }
 
         $('.menu-title .icon-'+nav_name).addClass('li_active');
-    }
-};
-
-
-var global_url_ops = {
-    buildUcUrl:function (path, params) {
+    },
+    buildUCUrl:function (path, params) {
         var url = '/uc' + path;
 
         var _paramUrl = '';
@@ -65,6 +61,13 @@ var global_url_ops = {
         }
 
         return url + _paramUrl
+    }
+};
+
+
+var common_ops_url = {
+    buildUrl:function( path, params ){
+        return merchant_common_ops.buildUCUrl( path, params );
     }
 };
 

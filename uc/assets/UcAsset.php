@@ -41,8 +41,6 @@ class UcAsset extends AssetBundle
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
 
             GlobalUrlService::buildUcStaticUrl('/js/component/domResize.js'),
-            GlobalUrlService::buildUcStaticUrl('/js/component/url/manager.js'),
-            GlobalUrlService::buildUcStaticUrl('/js/component/user/center.js'),
             GlobalUrlService::buildUcStaticUrl('/js/common/core.js'),
             GlobalUrlService::buildUcStaticUrl('/js/common.js'),
         ];

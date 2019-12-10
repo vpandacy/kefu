@@ -1,28 +1,27 @@
 <?php
 use common\services\GlobalUrlService;
-
 ?>
 <a><i class="iconfont icon-quanjushezhi"></i></a>
 <a><i class="iconfont icon-xinxi-copy"></i></a>
 <a><i class="iconfont icon-tongzhi"></i></a>
-<a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['staff']['id']])?>" class="menu_info_link">
-    <img class="menu_info_img" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$this->params['staff']['avatar']);?>">
+<a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['current_user']['id']])?>" class="menu_info_link">
+    <img class="menu_info_img" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$this->params['current_user']['avatar']);?>">
 </a>
 <div class="menu_info_edit dis_none">
     <div class="info_edit_one">
         <div >
-            <img src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$this->params['staff']['avatar']);?>">
+            <img src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$this->params['current_user']['avatar']);?>">
         </div>
         <div>
             <div class="info_ms_two">
-                <label><?=$this->params['staff']['name']?></label>
+                <label><?=$this->params['current_user']['name']?></label>
             </div>
             <div class="info_ms_three">
-                <label><?=$this->params['staff']['mobile'] ? $this->params['staff']['mobile'] : '暂无手机号'?></label>
+                <label><?=$this->params['current_user']['mobile'] ? $this->params['current_user']['mobile'] : '暂无手机号'?></label>
             </div>
         </div>
         <div>
-            <a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['staff']['id']])?>">编辑</a>
+            <a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
         </div>
     </div>
     <div class="info_edit_two backFFF logout" style="cursor: pointer" onclick="location.href=url_manager.buildUcUrl('/user/logout');">

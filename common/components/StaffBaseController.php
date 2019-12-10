@@ -30,7 +30,7 @@ class StaffBaseController extends BaseWebController
      * 应用id.
      * @var int
      */
-    private $app_id = 0;
+    protected $app_id = 0;
 
     public $privilege_urls = [];
 

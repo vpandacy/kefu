@@ -37,6 +37,7 @@ MerchantAsset::register($this);
             </div>
         </div>
     </div>
+<?=$this->renderFile('@www/modules/merchant/views/common/footer.php')?>
 <?php $this->endBody() ?>
 </body>
 </html>

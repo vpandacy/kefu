@@ -8,6 +8,7 @@ use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use common\services\uc\MerchantService;
 use uc\controllers\common\BaseController;
+use uc\services\UCUrlService;
 
 /**
  * Default controller for the `merchant` module
@@ -20,15 +21,13 @@ class UserController extends BaseController
      */
     public function actionLogin()
     {
-        $this->layout = 'basic';
-        return $this->render('login');
-    }
-
-    /**
-     * 登录操作.
-     */
-    public function actionSignIn()
-    {
+        if (\Yii::$app->request->isGet) {
+            if ( $this->checkLoginStatus() ) {
+                return $this->redirect(UCUrlService::buildUCUrl("/default/application",$this->app_id));
+            }
+            $this->layout = 'basic';
+            return $this->render('login');
+        }
         $email = $this->post('email','');
         $password = $this->post('password','');
 
@@ -61,14 +60,12 @@ class UserController extends BaseController
         }
         // 开始创建登录的信息.
         $this->createLoginStatus( $staff_info );
-
-        return $this->renderJSON([],'登录成功~~~~' );
+        $data = [
+            "url" => $url ?? UCUrlService::buildUCUrl("/default/application",$this->app_id)
+        ];
+        return $this->renderJSON($data,'登录成功~~~~' );
     }
 
-    /**
-     * 创建一个商户.
-     * @return \yii\console\Response|\yii\web\Response
-     */
     public function actionRegister()
     {
         $email = $this->post('email','');

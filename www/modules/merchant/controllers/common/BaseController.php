@@ -27,6 +27,7 @@ class BaseController extends StaffBaseController
         $this->setAppId( $app_id );
         Yii::$app->view->params['app_name'] = "";
         Yii::$app->view->params['app_id'] = $this->getAppId();
+        GlobalUrlService::setAppId($this->getAppId());
         $is_login = $this->checkLoginStatus();
         if(in_array($action->getUniqueId(), $this->allow_actions )) {
             return true;
@@ -65,7 +66,10 @@ class BaseController extends StaffBaseController
         }
         // 这里要获取商户系统的菜单.
         Yii::$app->view->params['menus'] =  MenuService::getMerchantUrl($this->privilege_urls);
-
+// 商户信息.
+        Yii::$app->view->params['merchant'] = $this->merchant_info;
+        // 员工信息.
+        Yii::$app->view->params['current_user'] = $this->current_user;
         return true;
     }
 

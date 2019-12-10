@@ -33,21 +33,21 @@ var merchant_user_login_ops = {
 
             $.ajax({
                 type: 'POST',
-                url: url_manager.buildUcUrl('/user/sign-in'),
+                url: uc_common_ops.buildUcUrl('/user/login'),
                 data: {
                     email: email,
                     password: password
                 },
                 dataType: 'json',
-                success: function (response) {
+                success: function ( res ) {
                     $.close(index);
-                    if(response.code != 200) {
-                        return $.msg(response.msg);
+                    var callback = null;
+                    if (res.code == 200) {
+                        callback = function(){
+                            window.location.href = res.data.url;
+                        };
                     }
-
-                    return $.alert(response.msg, function () {
-                        location.href = url_manager.getRequest('redirect_uri', '/')
-                    });
+                    $.msg(res.msg,res.code == 200, callback);
                 },
                 error:function () {
                     $.close(index);
@@ -77,19 +77,20 @@ var merchant_user_login_ops = {
 
             $.ajax({
                 type: 'POST',
-                url: url_manager.buildUcUrl('/user/register'),
+                url: uc_common_ops.buildUcUrl('/user/register'),
                 data: {
                     email: email,
                     password: password,
                     merchant_name: merchant_name
                 },
                 dataType:'json',
-                success: function (response) {
+                success: function ( response ) {
+
                     $.close(index);
                     if(response.code != 200) {
                         return $.msg(response.msg);
                     }
-                    
+
                     return $.alert(response.msg,function () {
                         location.href = location.href;
                     });

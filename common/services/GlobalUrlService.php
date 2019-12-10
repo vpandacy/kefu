@@ -102,31 +102,51 @@ class GlobalUrlService extends BaseService {
     {
         return self::$app_id;
     }
-
+    /*客服系统相关URL start **/
     /**
      * 生成www端用户
      * @param $uri
      * @param array $params
      * @return string
      */
-	public static function buildWwwUrl(  $uri, $params = [] )
-    {
-		$path = Url::toRoute(array_merge([ $uri ], $params));
-		$domain = \Yii::$app->params['domains']['www'];
-		return $domain.$path;
-	}
+	public static function buildKFUrl($uri, $params = []){
+
+        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $domain = \Yii::$app->params['domains']['www'];
+        return $domain.$path;
+    }
+
+    public static function buildKFStaticUrl($uri, $params = []){
+        $release_version = StaticAssetsHelper::getReleaseVersion();
+        $params = $params + [ "ver" => $release_version ];
+        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $domain = \Yii::$app->params['domains']['www'];
+        return $domain.$path;
+    }
+
+    public static function buildKFMerchantUrl($uri, $params = []){
+        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $domain = \Yii::$app->params['domains']['merchant'];
+        return $domain.$path;
+    }
+
+    public static function buildKFCSUrl($merchant_sn,$uri, $params = []){
+        $uri = "/{$merchant_sn}".$uri;
+        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $domain = \Yii::$app->params['domains']['cs'];
+        return $domain.$path;
+    }
 
     /**
      * 商户url.
      * @param $uri
      * @param array $params
      * @return string
+     * @deprecated 此方法废除，调用 buildKFMerchantUrl
      */
     public static function buildMerchantUrl(  $uri, $params = [] )
     {
-        $path = Url::toRoute(array_merge([ $uri ], $params));
-        $domain = \Yii::$app->params['domains']['merchant'];
-        return $domain.$path;
+        return self::buildKFMerchantUrl( $uri, $params );
     }
 
     /**
@@ -135,13 +155,11 @@ class GlobalUrlService extends BaseService {
      * @param $uri
      * @param array $params
      * @return string
+     * @deprecated 此方法废除，调用 buildKFCSUrl
      */
 	public static function buildCsUrl( $merchant_sn, $uri, $params = [])
     {
-	    $uri = "/{$merchant_sn}".$uri;
-		$path = Url::toRoute(array_merge([ $uri ], $params));
-		$domain = \Yii::$app->params['domains']['cs'];
-		return $domain.$path;
+        return self::buildKFCSUrl( $merchant_sn,$uri, $params );
 	}
 
     /**
@@ -150,15 +168,14 @@ class GlobalUrlService extends BaseService {
      * @param $uri
      * @param array $params
      * @return string
+     * @deprecated 此方法废除，调用 buildKFStaticUrl
      */
 	public static function buildWwwStaticUrl(  $uri, $params = [] )
     {
-        $release_version = StaticAssetsHelper::getReleaseVersion();
-		$params = $params + [ "ver" => $release_version ];
-		$path = Url::toRoute(array_merge([ $uri ], $params));
-		$domain = \Yii::$app->params['domains']['www'];
-		return $domain.$path;
+        return self::buildKFStaticUrl($uri, $params ) ;
 	}
+    /*客服系统相关URL end **/
+
 
     /**
      * Author: apanly

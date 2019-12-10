@@ -102,6 +102,48 @@
     $.close     = $.lay.close;
     $.closeAll  = $.lay.closeAll;
 }(jQuery);
+//uc 统一JS
+var user_center = {
+    init: function () {
+        that = this;
+        $.ajax({
+            type: 'get',
+            url: common_ops_url.buildUrl('/user/center'),
+            dataType: 'json',
+            success: function (response) {
+                if(response.code != 200 || $('.right_merchant').length <= 0) {
+                    return false;
+                }
+                $('.right_merchant .right_top').html(response.data.html);
+                // 重新注册事件.
+                that.eventBind();
+            }
+        })
+    },
+    eventBind: function () {
+        // 这里是右上角用户头像的动画效果
+        var timer=null;
+        $('.menu_info_link').mouseenter(function () {
+            $('.menu_info_edit').show();
+        }).mouseleave(function () {
+            timer=setTimeout(function () {
+                $('.menu_info_edit').hide();
+            },2000);
+        });
+
+
+        $('.menu_info_edit').mouseover(function () {
+            clearTimeout(timer)
+            $(this).show();
+        }).mouseout(function () {
+            $(this).hide();
+        })
+    }
+};
+
+$(document).ready( function(){
+    user_center.init();
+} );
 
 // 管理注册界面.
 window.onerror = function(message, url, lineNumber,columnNo,error) {

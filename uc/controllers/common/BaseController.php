@@ -16,6 +16,7 @@ class BaseController extends StaffBaseController {
         'user/sign-in',
         'user/register',
         'user/logout',
+        '/default/application'
     ];
     //这些URL不需要检验权限
     public $ignore_url = [];
@@ -31,6 +32,7 @@ class BaseController extends StaffBaseController {
         if($app_name) {
             $this->setAppId( AppService::getAppId($app_name) );
         }
+        GlobalUrlService::setAppId($this->getAppId());
         Yii::$app->view->params['app_name'] = $app_name;
         Yii::$app->view->params['app_id'] = $this->getAppId();
         if(in_array($action->getUniqueId(), $this->allow_actions )) {
@@ -50,7 +52,7 @@ class BaseController extends StaffBaseController {
         //获取商户信息
         $this->merchant_info = MerchantService::checkValid( $this->current_user['merchant_id'] );
         if( !$this->merchant_info ){
-            $this->redirect(GlobalUrlService::buildWwwUrl("/default/forbidden", [ 'url' => MerchantService::getLastErrorMsg() ]));
+            $this->redirect(GlobalUrlService::buildUCUrl("/default/forbidden", [ 'url' => MerchantService::getLastErrorMsg() ]));
             return false;
         }
 
@@ -58,12 +60,16 @@ class BaseController extends StaffBaseController {
             if(\Yii::$app->request->isAjax){
                 $this->renderJSON([],"您无权访问此页面，请返回",-302);
             }else{
-                $this->redirect( GlobalUrlService::buildLZUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
+                $this->redirect( GlobalUrlService::buildUCUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
             }
             return false;
         }
 
         Yii::$app->view->params['menus'] = MenuService::getAllMenu($this->getAppId(), $this->privilege_urls);
+        // 商户信息.
+        Yii::$app->view->params['merchant'] = $this->merchant_info;
+        // 员工信息.
+        Yii::$app->view->params['current_user'] = $this->current_user;
         return true;
     }
 

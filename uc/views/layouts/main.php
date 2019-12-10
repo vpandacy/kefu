@@ -1,7 +1,7 @@
 <?php
 use uc\assets\UcAsset;
 use common\services\GlobalUrlService;
-
+use \uc\services\UCUrlService;
 /**
  * @var \yii\web\View $this
  */
@@ -37,13 +37,9 @@ UcAsset::register($this);
         </div>
     </div>
 </div>
+
+<?=$this->renderFile('@uc/views/common/footer.php')?>
 <?php $this->endBody() ?>
-<script>
-    var application_setting = {
-        'app_name': '<?=$this->params['app_name']?>',
-        'domains' : <?=json_encode(Yii::$app->params['domains'])?>
-    }
-</script>
 </body>
 </html>
 <?php $this->endPage() ?>

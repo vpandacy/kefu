@@ -39,37 +39,75 @@ var uc_common_ops = {
         }
 
         $(".menu-title .icon-"+nav_name).addClass("li_active");
-    }
-};
-// 每个模块要自己生成url.否则就无法处理.
-var global_url_ops = {
-    buildUcUrl:function (path, params) {
-        if(!application_setting.app_name) {
-            application_setting.app_name = 'uc';
-        }
-
-        var url = !application_setting.domains[application_setting.app_name]
-            ? '/'
-            : application_setting.domains[application_setting.app_name];
-
-        if(application_setting.app_name != 'uc') {
-            url += '/uc';
-        }
-
-        url += path;
-
+    },
+    buildUcUrl:function( path ,params) {
+        var url = $(".hidden_val_wrap input[name=domain_uc]").val() + path;
         var _paramUrl = '';
-        if( params ){
-            _paramUrl = Object.keys(params).map(function(k) {
+        if (params) {
+            _paramUrl = Object.keys(params).map(function (k) {
                 return [encodeURIComponent(k), encodeURIComponent(params[k])].join("=");
             }).join('&');
-            _paramUrl = "?"+_paramUrl;
+            _paramUrl = "?" + _paramUrl;
+        }
+        return url + _paramUrl;
+    },
+    buildPicStaticUrl:function(bucket,img_key,params){
+        bucket = bucket ? bucket: "pic3";
+        var config = {
+            'hsh': {
+                'http': 'http://cdn.static.test.jiatest.cn',
+                'https': 'https://cdn.static.test.jiatest.cn'
+            }
+        };
+
+        var url = config[bucket].http + '/' + img_key;
+
+        var width = params && params.hasOwnProperty("w") ? params['w']:0;
+        var height = params && params.hasOwnProperty("h") ? params['h']:0;
+        if( !width && !height ){
+            return url;
         }
 
-        return url + _paramUrl
+        if( params.hasOwnProperty('view_mode') ){
+            url += "?imageView2/"+params['view_mode'];
+        }else{
+            url += "?imageView2/1";
+        }
+
+        if( width ){
+            url += "/w/"+width;
+        }
+
+        if( height ){
+            url += "/h/"+height;
+        }
+        url += "/interlace/1";
+        return url;
+    },
+    getRequest: function (key, default_value) {
+        var url = location.search; //获取url中"?"符后的字串
+        var theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+
+        if(key) {
+            return theRequest[key] ? theRequest[key] : default_value;
+        }
+
+        return theRequest;
     }
 };
 
+var common_ops_url = {
+    buildUrl:function( path, params ){
+        return uc_common_ops.buildUCUrl( path, params );
+    }
+};
 
 $(document).ready(function(){
     uc_common_ops.init();

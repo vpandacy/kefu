@@ -26,6 +26,24 @@ use Yii;
  */
 class Staff extends BaseModel
 {
+    public function getAppIds() {
+        $app_ids = explode(",",$this->app_ids );
+        $app_ids = array_filter( $app_ids );
+        return $app_ids;
+    }
+
+    /**
+     * check所有的应用程序ID
+     * @param int $app_id
+     * @return array
+     */
+    public function checkAppIdOwnerStaff($app_id)
+    {
+        $app_ids = explode(',', $this->app_ids);
+
+        return in_array($app_id, $app_ids);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -69,17 +87,5 @@ class Staff extends BaseModel
             'created_time' => 'Created Time',
             'updated_time' => 'Updated Time',
         ];
-    }
-
-    /**
-     * 获取所有的应用程序ID
-     * @param int $app_id
-     * @return array
-     */
-    public function checkAppIdOwnerStaff($app_id)
-    {
-        $app_ids = explode(',', $this->app_ids);
-
-        return in_array($app_id, $app_ids);
     }
 }

@@ -19,7 +19,10 @@ class MenuService extends BaseService
                 $menus = self::getMerchantUrl($uris);
                 break;
             default:
-                $menus = [];
+                $menus = [
+                    'left_menu' =>  [],
+                    'bar_menu'  =>  []
+                ];
         }
 
         return $menus;
