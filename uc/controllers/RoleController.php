@@ -32,6 +32,7 @@ class RoleController extends BaseController
         $roles = $query->asArray()
             ->limit($this->page_size)
             ->offset(($page - 1) * $this->page_size)
+            ->orderBy(['id'=>SORT_DESC])
             ->all();
 
         return $this->renderPageJSON($roles,'获取成功', $total);

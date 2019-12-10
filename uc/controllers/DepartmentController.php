@@ -34,6 +34,7 @@ class DepartmentController extends BaseController
 
         $departments = $query->asArray()
             ->limit($this->page_size)
+            ->orderBy(['id'=>SORT_DESC])
             ->offset(($page - 1) * $this->page_size)
             ->all();
 
