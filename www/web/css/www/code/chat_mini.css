@@ -96,7 +96,7 @@
 #pc-online .online-content {
     overflow-y: auto;
     background: rgb(251, 250, 249);
-    flex-grow: 1;
+    flex: 1;
 }
 
 #pc-online .online-content .content-tip {
