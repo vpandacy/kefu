@@ -62,7 +62,7 @@ CREATE TABLE `role` (
   `app_id` tinyint(4) NOT NULL DEFAULT '0' COMMENT '应用ID,详细请查看uc下的常量',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0禁用,1启用',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `udated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='角色表';
 
@@ -83,6 +83,7 @@ CREATE TABLE `action` (
   `level2_name` varchar(50) NOT NULL DEFAULT '' COMMENT '二级菜单名称',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '操作名称',
   `urls` varchar(255) NOT NULL DEFAULT '0' COMMENT '操作链接',
+  `weight` tinyint(4) NOT NULL DEFAULT '0' COMMENT '权重',
   `level1_weight` tinyint(3) NOT NULL DEFAULT '0' COMMENT '一级菜单排序权重',
   `level2_weight` tinyint(3) NOT NULL DEFAULT '0' COMMENT '一级菜单排序权重',
   `app_id` tinyint(4) NOT NULL DEFAULT '0' COMMENT '应用ID,详细请查看uc下的常量',

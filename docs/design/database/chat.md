@@ -15,12 +15,14 @@ CREATE TABLE `group_chat` (
 
 CREATE TABLE `group_chat_staff` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `group_chat_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格ID',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `staff_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工ID',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0异常,1正常',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='员工风格关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='风格员工关系表';
 
 CREATE TABLE `black_list` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',

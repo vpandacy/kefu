@@ -40,7 +40,7 @@ class Role extends \common\models\uc\BaseModel
     {
         return [
             [['merchant_id', 'app_id', 'status'], 'integer'],
-            [['created_time', 'udated_time'], 'safe'],
+            [['created_time', 'updated_time'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -57,7 +57,7 @@ class Role extends \common\models\uc\BaseModel
             'app_id' => 'App ID',
             'status' => 'Status',
             'created_time' => 'Created Time',
-            'udated_time' => 'Udated Time',
+            'updated_time' => 'Updated Time',
         ];
     }
 }
