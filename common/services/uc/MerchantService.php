@@ -1,6 +1,7 @@
 <?php
-namespace www\modules\merchant\service;
+namespace common\services\uc;
 
+use common\components\helper\DateHelper;
 use common\models\uc\Merchant;
 use common\models\uc\Staff;
 use common\services\BaseService;
@@ -9,6 +10,28 @@ use common\services\ConstantService;
 
 class MerchantService extends BaseService
 {
+    public static function checkValid( $saas_merchant_id = 0 ){
+        $info = self::getInfoById( $saas_merchant_id );
+        if( !$info ){
+            return self::_err("商户信息未找到~~");
+        }
+
+//        $now = DateHelper::getFormatDateTime( "Y-m-d" );
+//        if( $now > $info['valid_to'] ){
+//            return self::_err("非常抱歉，系统使用期限已过,请联系管理员~~");
+//        }
+
+        return $info;
+    }
+
+    public static function getInfoById( $saas_merchant_id = 0 ){
+        $info = false;
+        if( $saas_merchant_id ){
+            $info =  Merchant::find()->where([ "id" => $saas_merchant_id ])->one();
+        }
+        return $info;
+    }
+
     /**
      * 创建一个商户.
      * @param int $app_id
@@ -20,8 +43,7 @@ class MerchantService extends BaseService
     public static function createMerchant($app_id, $merchant_name,$email,$password)
     {
         $merchant = new Merchant();
-
-        $now = date('Y-m-d H:i:s');
+        $now = DateHelper::getFormatDateTime();
 
         $merchant->setAttributes([
             'status'    =>  -2,
@@ -61,4 +83,5 @@ class MerchantService extends BaseService
 
         return true;
     }
+
 }

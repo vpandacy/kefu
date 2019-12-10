@@ -6,8 +6,8 @@ use common\models\uc\Staff;
 use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
+use common\services\uc\MerchantService;
 use uc\controllers\common\BaseController;
-use www\modules\merchant\service\MerchantService;
 
 /**
  * Default controller for the `merchant` module
@@ -33,34 +33,36 @@ class UserController extends BaseController
         $password = $this->post('password','');
 
         if(strpos($email,'@') < 1) {
-            return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('请输入正确的手机号~~' );
         }
 
         if(!$password) {
-            return $this->renderJSON([],'请输入密码', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('请输入密码');
         }
 
         // 开始检查.
-        $staff = Staff::findOne(['email'=>$email,'status'=>1]);
+        $staff_info = Staff::findOne([ 'email' => $email,'status' => ConstantService::$default_status_true ]);
 
-        if(!$staff) {
-            return $this->renderJSON([],'暂无该员工信息.', ConstantService::$response_code_fail);
+        if( !$staff_info ) {
+            return $this->renderErrJSON('登录失败，请检查用户名和密码~~');
         }
 
-        if($staff['password'] != $this->genPassword($staff['merchant_id'], $password, $staff['salt'])) {
-            return $this->renderJSON([],'请输入正确的密码', ConstantService::$response_code_fail);
+        if($staff_info['password'] != $this->genPassword($staff_info['merchant_id'], $password, $staff_info['salt'])) {
+            return $this->renderErrJSON('请输入正确的密码');
         }
 
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>ConstantService::$default_status_true]);
-
-        if(!$merchant) {
-            return $this->renderJSON([],'该商户已经被禁止登录了.', ConstantService::$response_code_fail);
+        $merchant_info = MerchantService::getInfoById( $staff_info['merchant_id'] );
+        if( !$merchant_info || !$merchant_info['status'] ) {
+            return $this->renderErrJSON('登录失败，商户信息状态异常~~');
         }
 
+        if( $merchant_info['status'] == -2 ){
+            return $this->renderErrJSON('商户信息审核中，请联系管理员加快审核~~');
+        }
         // 开始创建登录的信息.
-        $this->createLoginStatus($staff);
+        $this->createLoginStatus( $staff_info );
 
-        return $this->renderJSON([],'登录成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'登录成功~~~~' );
     }
 
     /**
@@ -70,17 +72,15 @@ class UserController extends BaseController
     public function actionRegister()
     {
         $email = $this->post('email','');
-
         $merchant_name = $this->post('merchant_name','');
-
         $password = $this->post('password','');
 
         if(strpos($email,'@') < 1) {
-            return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
+            return $this->renderJSON([],'请输入正确的手机号~~', ConstantService::$response_code_fail);
         }
 
         if(!$password) {
-            return $this->renderJSON([],'请输入密码', ConstantService::$response_code_fail);
+            return $this->renderJSON([],'请输入密码~~', ConstantService::$response_code_fail);
         }
 
         // 检查密码强度.
@@ -89,19 +89,19 @@ class UserController extends BaseController
         }
 
         if(!$merchant_name) {
-            return $this->renderJSON([],'请输入正确的商户名', ConstantService::$response_code_fail);
+            return $this->renderJSON([],'请输入正确的商户名~~', ConstantService::$response_code_fail);
         }
 
         $merchant = Merchant::findOne(['name' => $merchant_name]);
         if($merchant) {
-            return $this->renderJSON([],'该商户名或姓名已经被使用了', ConstantService::$response_code_fail);
+            return $this->renderJSON([],'该商户名已经被使用了~~', ConstantService::$response_code_fail);
         }
 
         if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $email, $password)){
             return $this->renderJSON([],MerchantService::getLastErrorMsg(), ConstantService::$response_code_fail);
         }
 
-        return $this->renderJSON([], '创建成功,请登录商户', ConstantService::$response_code_success);
+        return $this->renderJSON([], '创建成功,请登录商户~~', ConstantService::$response_code_success);
     }
 
     /**
@@ -126,6 +126,6 @@ class UserController extends BaseController
 
         return $this->renderJSON([
             'html'  =>  $content,
-        ],'获取成功', ConstantService::$response_code_success);
+        ],'获取成功');
     }
 }

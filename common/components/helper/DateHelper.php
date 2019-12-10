@@ -4,40 +4,6 @@ namespace common\components\helper;
 
 class DateHelper
 {
-    /**
-     * Author: Vincent
-     * @param string $time_format
-     * @deprecated
-     */
-    public static function getTime($time_format = "y-m-d h:i:s")
-    {
-        $time_format = strtolower($time_format);
-        switch ($time_format) {
-            case "y-m-d h:i:s":
-                $time = date("Y-m-d H:i:s");
-                break;
-            case "y/m/d":
-                $time = date("Y/m/d");
-                break;
-            case "h:i:s":
-                $time = date("H:i:s");
-                break;
-            case "y":
-                $time = date("Y");
-                break;
-            case "m":
-                $time = date("m");
-                break;
-            case "d":
-                $time = date("d");
-                break;
-            default :
-                $time = date("Y-m-d H:i:s");
-                break;
-        }
-        return $time;
-    }
-
     public static function getFormatDateTime($fmt = "Y-m-d H:i:s", $strtotime = "")
     {
         return $strtotime ? date($fmt, $strtotime) : date($fmt);

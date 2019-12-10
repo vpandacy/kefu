@@ -17,13 +17,14 @@ class StaffBaseController extends BaseWebController
      * 商户信息.
      * @var array
      */
-    public $merchant_info;
+    public $merchant_info = null;
 
     /**
      * 员工信息.
      * @var Staff
      */
-    public $staff;
+    public $staff = null;
+    public $current_user = null;
 
     /**
      * 应用id.
@@ -33,68 +34,11 @@ class StaffBaseController extends BaseWebController
 
     public $privilege_urls = [];
 
-    // 可以不用登录的地方.
-    protected  $allowAllAction = [
-        'user/login',
-        'user/sign-in',
-        'user/register',
-        'user/logout',
-    ];
 
     public function __construct($id, $module, $config = []){
         parent::__construct($id, $module, $config);
         $view = Yii::$app->view;
         $view->params['id'] = $id;
-    }
-
-    /**
-     * 检查权限.
-     * @param Action $action
-     * @return bool
-     */
-    public function beforeAction($action)
-    {
-        $app_name = $this->get('app_name','');
-
-        if($app_name) {
-            $this->setAppId(AppService::getAppId($app_name));
-        }
-
-        GlobalUrlService::setAppId($this->getAppId());
-        Yii::$app->view->params['app_name'] = $app_name;
-        Yii::$app->view->params['app_id'] = $this->getAppId();
-
-        if(in_array($action->getUniqueId(), $this->allowAllAction)) {
-            return true;
-        }
-
-        if(!$this->checkLoginStatus()) {
-            if(Yii::$app->request->isAjax) {
-                $this->renderJSON([],'您还没有登录,请登录', -401);
-                return false;
-            }
-
-            // 设置跳转.
-            $this->redirect(GlobalUrlService::buildUcUrl('/user/login',[
-                'redirect_uri'  =>  '/'  . $action->getUniqueId()
-            ]));
-
-            return false;
-        }
-
-        $urls = RoleService::getRoleUrlsByStaffId($this->getAppId(),$this->staff['id'], $this->staff['is_root']);
-        if(!$this->staff['is_root'] && !in_array($action->getUniqueId(), $urls)) {
-            $this->responseFail('暂无权限操作');
-            return false;
-        }
-
-        // 商户信息.
-        Yii::$app->view->params['merchant'] = $this->merchant_info;
-        // 员工信息.
-        Yii::$app->view->params['staff']    = $this->staff;
-
-        $this->privilege_urls = $urls;
-        return true;
     }
 
     /**
@@ -124,27 +68,14 @@ class StaffBaseController extends BaseWebController
             return false;
         }
 
-        $staff = Staff::findOne(['id'=>$staff_id,'status'=>ConstantService::$default_status_true]);
+        $staff = Staff::findOne([ 'id' => $staff_id,'status' => ConstantService::$default_status_true]);
 
         if(!$staff || !$this->checkToken($verify_token, $staff)) {
             return false;
         }
 
-        // 没有权限属于这个应用就强行退出.
-        if($this->getAppId() && !$staff->checkAppIdOwnerStaff($this->getAppId())) {
-            return false;
-        }
-
         // 保存信息.
-        $this->staff = $staff;
-        // 检查商户权限
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'app_id'=>$this->getAppId(),'status'=>ConstantService::$default_status_true]);
-        if(!$merchant) {
-            return false;
-        }
-
-        $this->merchant_info = $merchant->toArray();
-
+        $this->staff = $this->current_user = $staff;
         return true;
     }
 
@@ -225,5 +156,55 @@ class StaffBaseController extends BaseWebController
     public function setAppId($app_id)
     {
         $this->app_id = $app_id;
+    }
+
+    //这个方法未来可以在业务中判断数据权限
+    public function checkPrivilege($url, $ignore_admin = false)
+    {
+        //如果当前用户是管理员的话 就无须验证权限
+        if (!$ignore_admin && $this->isRoot() ) {
+            return true;
+        }
+
+        if ($this->ignore_url && preg_match("#" . implode("|", $this->ignore_url) . "#", $url)) {
+            return true;
+        }
+
+        if (substr($url, 0, 1) == "/") {
+            $url = substr($url, 1);
+        }
+
+        return in_array($url, $this->getRolePrivilege());
+    }
+
+    /**
+     * Author: Vincent
+     * @param bool $ignore_admin
+     * 判断当前人是否有当前url的个人my
+     * |下属sub|全部的权限all
+     * 当然type是其他的也可以的
+     */
+    public function checkDataPrivilege( $type = 'all',$ignore_admin = false){
+        $url = \Yii::$app->request->pathInfo;
+        $check_url = "{$url}_{$type}";
+        return $this->checkPrivilege( $check_url,$ignore_admin );
+    }
+
+    //获取指定员工的权限
+    public function getRolePrivilege($staff_id = 0)
+    {
+        if ( !$staff_id && $this->current_user) {
+            $staff_id = $this->current_user['id'];
+        }
+
+        if (empty($this->privilege_urls)) {
+            $urls = RoleService::getRoleUrlsByStaffId($this->getAppId(),$staff_id, $this->isRoot() );
+            $this->privilege_urls = array_unique($urls);
+        }
+        return $this->privilege_urls;
+    }
+
+    protected function isRoot(){
+        return $this->current_user['is_root'];
     }
 }

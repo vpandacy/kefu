@@ -17,7 +17,6 @@ class MerchantAsset extends AssetBundle
         $this->css = [
             GlobalUrlService::buildStaticUrl('/font-awesome/v4.7/css/font-awesome.min.css'),
             GlobalUrlService::buildStaticUrl('/layui/v2.5/css/layui.css'),
-
             // 这里应该也是uc的css.有一部分.
             GlobalUrlService::buildUcStaticUrl('/css/component/animate.css'),
             GlobalUrlService::buildUcStaticUrl('/css/component/scrollbar.min.css'),

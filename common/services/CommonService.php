@@ -52,6 +52,7 @@ class CommonService extends BaseService
      */
     public static function checkPassLevel($pass, $len = 6)
     {
+        return true;
         $source = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&-+={}[]<>?/';
 
         $strs = str_split($source);
