@@ -27,7 +27,10 @@ var uc_department_index_ops = {
                     ,{title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
                 ]]
                 ,id: 'departmentTable'
-                ,page: false
+                ,limit: 15
+                ,page: {
+                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+                }
             });
 
             table.on('toolbar(departmentTable)',function (action) {

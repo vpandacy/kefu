@@ -23,15 +23,18 @@ class RoleController extends BaseController
      */
     public function actionList()
     {
-        $roles = Role::find()
-            ->where([
-                'merchant_id'   =>  $this->getMerchantId(),
-                'app_id'        =>  $this->getAppId()
-            ])
-            ->asArray()
+        $page = intval($this->get('page',1));
+
+        $query = Role::find()->where(['merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
+
+        $total = $query->count();
+
+        $roles = $query->asArray()
+            ->limit($this->page_size)
+            ->offset(($page - 1) * $this->page_size)
             ->all();
 
-        return $this->renderPageJSON($roles,'获取成功', ConstantService::$response_code_page_success);
+        return $this->renderPageJSON($roles,'获取成功', $total);
     }
 
     /**

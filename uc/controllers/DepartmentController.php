@@ -25,15 +25,19 @@ class DepartmentController extends BaseController
      */
     public function actionList()
     {
-        $departments = Department::find()
-            ->where([
-                'merchant_id'   =>  $this->getMerchantId(),
-                'app_id'        =>  $this->getAppId(),
-            ])
-            ->asArray()
+
+        $page = intval($this->get('page',1));
+
+        $query = Department::find()->where(['merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
+
+        $total = $query->count();
+
+        $departments = $query->asArray()
+            ->limit($this->page_size)
+            ->offset(($page - 1) * $this->page_size)
             ->all();
 
-        return $this->renderPageJSON($departments, '获取成功', ConstantService::$response_code_page_success);
+        return $this->renderPageJSON($departments, '获取成功', $total);
     }
 
     /**

@@ -43,7 +43,10 @@ var uc_staff_index_ops = {
                     ,{field: 'right', title:'操作', toolbar: '#barDemo', fixed: 'right'}
                 ]]
                 ,id: 'staff'
-                ,page: true
+                ,limit: 15
+                ,page: {
+                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+                }
             });
 
             // 表头事件.
