@@ -12,6 +12,51 @@ var inputFlie = {
         // console.log('test')
     }
 };
+
+// 关于前台聊天的基本功能.
+var chat = {
+    init: function () {
+        this.eventBind();
+    },
+    eventBind: function () {
+        $('#content').on('keydown', function (event) {
+            // 不等于回车的时候.
+            if(event.keyCode != 13) {
+                return true;
+            }
+            // 修改掉其他事件
+            event.preventDefault();
+            var msg = $('#content').text();
+
+            if(msg.length <= 0) {
+                return false;
+            }
+
+            var date = new Date();
+            var time_str = [
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds()
+            ].map(function (value) {
+                return value < 10 ? '0' + value : value;
+            }).join(':');
+
+            $('.online-content').append([
+                '<div class="content-message message-my">',
+                '    <div class="message-info">',
+                '        <div class="message-name-date name-date-my"><span class="date">',time_str,'</span><span class="message-name">我</span></div>',
+                '        <div class="message-message message-message-my">',msg,'</div>',
+                '    </div>',
+                '</div>'
+            ].join(""));
+
+            $('#content').text('');
+
+            return false;
+        });
+    }
+};
+
 $(function () {
     /**
      * 控制右下角聊天切换状态
@@ -73,8 +118,6 @@ $(function () {
     });
 });
 
-
-
 $(document).ready(function(){
     /**
      * 表情
@@ -115,4 +158,6 @@ $(document).ready(function(){
         $('#btnUpload').hide();
         Init();
     });
+
+    chat.init();
 });
