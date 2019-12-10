@@ -152,6 +152,7 @@
 #pc-online .online-content .content-message .message-info .message-name-date {
     color: rgb(112, 130, 166);
     font-size: 15px;
+    margin-bottom: 10px;
 }
 #pc-online .online-content .content-message .message-info .name-date-my {
     text-align: right;
