@@ -1,14 +1,14 @@
 <?php
 return [
     'components' => [
-        'db' => [
+        'chat_db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=chat',
+            'dsn' => 'mysql:host=localhost;dbname=chat_db',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
         ],
-        'db_uc' =>  [
+        'chat_uc_db' =>  [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=chat_uc_db',
             'username' => 'root',

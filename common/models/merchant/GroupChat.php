@@ -23,7 +23,13 @@ class GroupChat extends \yii\db\ActiveRecord
     {
         return 'group_chat';
     }
-
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('chat_db');
+    }
     /**
      * {@inheritdoc}
      */
