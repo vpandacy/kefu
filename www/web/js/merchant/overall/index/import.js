@@ -36,7 +36,7 @@ var merchant_overall_index_import_ops = {
 
                 },
                 error: function () {
-                    
+                    $.close(index);
                 }
             });
         });
