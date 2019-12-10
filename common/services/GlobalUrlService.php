@@ -110,8 +110,10 @@ class GlobalUrlService extends BaseService {
      * @return string
      */
 	public static function buildKFUrl($uri, $params = []){
-
-        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $path = "";
+        if( $uri ){
+            $path   = Url::toRoute(array_merge([$uri], $params));
+        }
         $domain = \Yii::$app->params['domains']['www'];
         return $domain.$path;
     }
@@ -125,7 +127,10 @@ class GlobalUrlService extends BaseService {
     }
 
     public static function buildKFMerchantUrl($uri, $params = []){
-        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $path = "";
+        if( $uri ){
+            $path   = Url::toRoute(array_merge([$uri], $params));
+        }
         $domain = \Yii::$app->params['domains']['merchant'];
         return $domain.$path;
     }

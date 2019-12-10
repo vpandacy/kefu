@@ -9,7 +9,7 @@ use common\services\GlobalUrlService;
 <div class="staff_tab">
     <?php foreach($this->params['menus']['bar_menu'][$bar_menu] as $key=> $menu):?>
         <div class="tab_list <?=$key == $current_menu ? 'tab_active' : ''?> ">
-            <a href="<?=GlobalUrlService::buildWWWUrl('/' . $menu['url']);?>"><?=$menu['title']?></a>
+            <a href="<?=GlobalUrlService::buildKFUrl('/' . $menu['url']);?>"><?=$menu['title']?></a>
         </div>
     <?php endforeach;?>
 </div>

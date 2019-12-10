@@ -26,8 +26,8 @@ class CodeController extends BaseController
         $code = $this->get('code','');
         $this->layout = false;
         $url = $code
-            ? GlobalUrlService::buildWwwUrl('/'. $msn . '/code/chat',['code'=>$code])
-            : GlobalUrlService::buildWwwUrl('/' . $msn . '/code/chat');
+            ? GlobalUrlService::buildKFUrl('/'. $msn . '/code/chat',['code'=>$code])
+            : GlobalUrlService::buildKFUrl('/' . $msn . '/code/chat');
 
         return $this->render('index',[
             'url'   =>  $url

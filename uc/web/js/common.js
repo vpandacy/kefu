@@ -41,7 +41,7 @@ var uc_common_ops = {
         $(".menu-title .icon-"+nav_name).addClass("li_active");
     },
     buildUcUrl:function( path ,params) {
-        var url = $(".hidden_val_wrap input[name=domain_uc]").val() + path;
+        var url = $(".hidden_val_wrap input[name=domain_app]").val() + path;
         var _paramUrl = '';
         if (params) {
             _paramUrl = Object.keys(params).map(function (k) {
@@ -105,7 +105,7 @@ var uc_common_ops = {
 
 var common_ops_url = {
     buildUrl:function( path, params ){
-        return uc_common_ops.buildUCUrl( path, params );
+        return uc_common_ops.buildUcUrl( path, params );
     }
 };
 

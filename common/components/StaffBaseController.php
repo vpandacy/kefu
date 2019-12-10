@@ -163,6 +163,7 @@ class StaffBaseController extends BaseWebController
     {
         //如果当前用户是管理员的话 就无须验证权限
         if (!$ignore_admin && $this->isRoot() ) {
+            $this->getRolePrivilege();
             return true;
         }
 
@@ -206,5 +207,27 @@ class StaffBaseController extends BaseWebController
 
     protected function isRoot(){
         return $this->current_user['is_root'];
+    }
+
+    /**
+     * 渲染分页的界面.
+     * @param array $data
+     * @param string $msg
+     * @param int $count
+     * @return \yii\console\Response|Response
+     */
+    public function renderPageJSON($data = [], $msg = '', $count = 0)
+    {
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data   = [
+            'msg'    => $msg,
+            'code'   => 0,
+            'data'   => $data,
+            'count'  => $count,
+            'req_id' => $this->geneReqId()
+        ];
+
+        return $response;
     }
 }

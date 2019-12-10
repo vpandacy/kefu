@@ -25,11 +25,10 @@ class BaseController extends StaffBaseController
         // 定义自己的应用ID.
         $app_id = ConstantService::$merchant_app_id;
         $this->setAppId( $app_id );
-        Yii::$app->view->params['app_name'] = "";
         Yii::$app->view->params['app_id'] = $this->getAppId();
         GlobalUrlService::setAppId($this->getAppId());
         $is_login = $this->checkLoginStatus();
-        if(in_array($action->getUniqueId(), $this->allow_actions )) {
+        if( in_array($action->getUniqueId(), $this->allow_actions )) {
             return true;
         }
 
@@ -52,10 +51,9 @@ class BaseController extends StaffBaseController
         //获取商户信息
         $this->merchant_info = MerchantService::checkValid( $this->current_user['merchant_id'] );
         if( !$this->merchant_info ){
-            $this->redirect(GlobalUrlService::buildWwwUrl("/default/forbidden", [ 'url' => MerchantService::getLastErrorMsg() ]));
+            $this->redirect(GlobalUrlService::buildKFUrl("/default/forbidden", [ 'url' => MerchantService::getLastErrorMsg() ]));
             return false;
         }
-
         if( !$this->checkPrivilege( $action->getUniqueId() ) ) {
             if(\Yii::$app->request->isAjax){
                 $this->renderJSON([],"您无权访问此页面，请返回",-302);
@@ -65,33 +63,11 @@ class BaseController extends StaffBaseController
             return false;
         }
         // 这里要获取商户系统的菜单.
-        Yii::$app->view->params['menus'] =  MenuService::getMerchantUrl($this->privilege_urls);
-// 商户信息.
+        Yii::$app->view->params['menus'] = MenuService::getAllMenu( $this->getAppId(), $this->privilege_urls);
+        // 商户信息.
         Yii::$app->view->params['merchant'] = $this->merchant_info;
         // 员工信息.
         Yii::$app->view->params['current_user'] = $this->current_user;
         return true;
-    }
-
-    /**
-     * 渲染分页的界面.
-     * @param array $data
-     * @param string $msg
-     * @param int $count
-     * @return \yii\console\Response|Response
-     */
-    public function renderPageJSON($data = [], $msg = '', $count = 0)
-    {
-        $response = Yii::$app->response;
-        $response->format = Response::FORMAT_JSON;
-        $response->data   = [
-            'msg'    => $msg,
-            'code'   => 0,
-            'data'   => $data,
-            'count'  => $count,
-            'req_id' => $this->geneReqId()
-        ];
-
-        return $response;
     }
 }

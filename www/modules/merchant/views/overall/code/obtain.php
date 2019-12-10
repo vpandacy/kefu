@@ -5,8 +5,8 @@ use common\services\GlobalUrlService;
  */
 
 $url = $group_sn
-    ? GlobalUrlService::buildWwwUrl('/'.$this->params['merchant']['sn'] . '/code/index',['code'=>$group_sn])
-    : GlobalUrlService::buildWwwUrl('/'.$this->params['merchant']['sn'] . '/code/index');
+    ? GlobalUrlService::buildKFUrl('/'.$this->params['merchant']['sn'] . '/code/index',['code'=>$group_sn])
+    : GlobalUrlService::buildKFUrl('/'.$this->params['merchant']['sn'] . '/code/index');
 ?>
 <script>
     (function() {

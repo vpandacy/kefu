@@ -39,7 +39,6 @@ class MenuService extends BaseService
             'left_menu' =>  self::getLeftMenu(),
             'bar_menu'  =>  self::getBarMenu()
         ];
-
         $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company'];
 
         // 开始过滤菜单.

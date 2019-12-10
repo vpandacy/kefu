@@ -50,7 +50,7 @@ var merchant_common_ops = {
         $('.menu-title .icon-'+nav_name).addClass('li_active');
     },
     buildUCUrl:function (path, params) {
-        var url = '/uc' + path;
+        var url = $(".hidden_val_wrap input[name=domain_uc]").val() + path;
 
         var _paramUrl = '';
         if( params ){
@@ -61,6 +61,17 @@ var merchant_common_ops = {
         }
 
         return url + _paramUrl
+    },
+    buildMerchantUrl:function(){
+        var url = $(".hidden_val_wrap input[name=domain_app]").val() + path;
+        var _paramUrl = '';
+        if (params) {
+            _paramUrl = Object.keys(params).map(function (k) {
+                return [encodeURIComponent(k), encodeURIComponent(params[k])].join("=");
+            }).join('&');
+            _paramUrl = "?" + _paramUrl;
+        }
+        return url + _paramUrl;
     }
 };
 

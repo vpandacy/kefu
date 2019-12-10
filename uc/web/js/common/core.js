@@ -105,20 +105,12 @@
 //uc 统一JS
 var user_center = {
     init: function () {
-        that = this;
-        $.ajax({
-            type: 'get',
-            url: common_ops_url.buildUrl('/user/center'),
-            dataType: 'json',
-            success: function (response) {
-                if(response.code != 200 || $('.right_merchant').length <= 0) {
-                    return false;
-                }
-                $('.right_merchant .right_top').html(response.data.html);
-                // 重新注册事件.
-                that.eventBind();
-            }
-        })
+        var login_status = $(".hidden_val_wrap input[name=login_status]").val();
+        if ( login_status != 1 ) {
+            return;
+        }
+        this.center();
+
     },
     eventBind: function () {
         // 这里是右上角用户头像的动画效果
@@ -133,10 +125,26 @@ var user_center = {
 
 
         $('.menu_info_edit').mouseover(function () {
-            clearTimeout(timer)
+            clearTimeout(timer);
             $(this).show();
         }).mouseout(function () {
             $(this).hide();
+        })
+    },
+    center:function(){
+        that = this;
+        $.ajax({
+            type: 'get',
+            url: common_ops_url.buildUrl('/user/center'),
+            dataType: 'json',
+            success: function (response) {
+                if(response.code != 200 || $('.right_merchant').length <= 0) {
+                    return false;
+                }
+                $('.right_merchant .right_top').html(response.data.html);
+                // 重新注册事件.
+                that.eventBind();
+            }
         })
     }
 };

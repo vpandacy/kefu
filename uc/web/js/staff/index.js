@@ -9,7 +9,7 @@ var uc_staff_index_ops = {
             // 表格渲染.
             table.render({
                 elem: '#staff'
-                ,url: url_manager.buildUcUrl('/staff/list')
+                ,url: uc_common_ops.buildUcUrl('/staff/list')
                 ,where: {
                     mobile: $('.search-wrapper [name=mobile]').val(),
                     email: $('.search-wrapper [name=email]').val(),
@@ -52,7 +52,7 @@ var uc_staff_index_ops = {
             // 表头事件.
             table.on('toolbar(staff)',function (row) {
                 if(row.event == 'add') {
-                    location.href = url_manager.buildUcUrl('/staff/edit');
+                    location.href = uc_common_ops.buildUcUrl('/staff/edit');
                     return false;
                 }
                 var select_row = table.checkStatus('staff');
@@ -70,7 +70,7 @@ var uc_staff_index_ops = {
 
                     $.ajax({
                         type: 'POST',
-                        url: url_manager.buildUcUrl('/staff/recover'),
+                        url: uc_common_ops.buildUcUrl('/staff/recover'),
                         data: {
                             ids: ids,
                         },
@@ -96,7 +96,7 @@ var uc_staff_index_ops = {
             // 行内事件.
             table.on('tool(staff)', function (row) {
                 if(row.event == 'edit') {
-                    location.href = url_manager.buildUcUrl('/staff/edit',{
+                    location.href = uc_common_ops.buildUcUrl('/staff/edit',{
                         staff_id: row.data.id,
                     });
                     return false;
@@ -107,7 +107,7 @@ var uc_staff_index_ops = {
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: url_manager.buildUcUrl('/staff/disable'),
+                        url: uc_common_ops.buildUcUrl('/staff/disable'),
                         dataType: 'json',
                         data: {
                             id: row.data.id

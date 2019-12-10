@@ -24,10 +24,10 @@ use common\services\GlobalUrlService;
             <a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
         </div>
     </div>
-    <div class="info_edit_two backFFF logout" style="cursor: pointer" onclick="location.href=url_manager.buildUcUrl('/user/logout');">
+    <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildUcUrl("/user/logout");?>">
         <div>
             <i class="iconfont icon-tuichu"></i>
         </div>
         <div>退出</div>
-    </div>
+    </a>
 </div>
