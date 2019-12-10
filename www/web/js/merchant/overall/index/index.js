@@ -33,6 +33,11 @@ var merchant_overall_index_ops = {
                     return false;
                 }
 
+                if(row.event == 'import') {
+                    location.href = url_manager.buildMerchantUrl('/overall/index/import');
+                    return false;
+                }
+
                 var select_row = table.checkStatus('commonWordTable');
                 if(!select_row.data.length) {
                     return $.msg('请选中需要恢复的常用语');

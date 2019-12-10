@@ -22,6 +22,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     <div class="layui-btn-container" style="display: block">
         <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="recover">恢复</button>
+        <button class="layui-btn layui-btn-sm" lay-event="import">导入</button>
     </div>
 </script>
 

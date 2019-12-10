@@ -3,8 +3,10 @@ namespace www\modules\merchant\controllers\overall;
 
 use common\models\merchant\CommonWord;
 use common\services\ConstantService;
-use common\services\GlobalUrlService;
+use common\services\ExcelService;
 use www\modules\merchant\controllers\common\BaseController;
+use Yii;
+use yii\web\UploadedFile;
 
 
 class IndexController extends BaseController
@@ -144,5 +146,53 @@ class IndexController extends BaseController
         }
 
         return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+    }
+
+    /**
+     * 获取文件.
+     * @return string
+     */
+    public function actionImport()
+    {
+        if(Yii::$app->request->isGet) {
+            return $this->render('import');
+        }
+
+        $data = ExcelService::import('file');
+
+        if(!$data) {
+            return $this->renderJSON([],ExcelService::getLastErrorMsg(), ConstantService::$response_code_fail);
+        }
+
+        if(count($data) <= 1) {
+            return $this->renderJSON([],'请填写对应的Excel内容', ConstantService::$response_code_fail);
+        }
+
+        // 去除第一个.
+        array_shift($data);
+        $insert_data = [];
+
+        foreach($data as $row) {
+            if(!$row[0]) {
+                return $this->renderJSON([],'导入格式错误,请填写完整的常用语', ConstantService::$response_code_fail);
+            }
+
+            array_push($insert_data, [
+                'words' =>  $row[0],
+                'status'=>  $row[1],
+                'merchant_id'   =>  $this->getMerchantId(),
+            ]);
+        }
+
+        $ret = CommonWord::getDb()->createCommand()
+            ->batchInsert(CommonWord::tableName(),['words','status','merchant_id'], $insert_data)
+            ->execute();
+
+        if(!$ret) {
+            return $this->renderJSON([],'数据导入失败,请联系管理员', ConstantService::$response_code_fail);
+        }
+
+        return $this->renderJSON([],'数据导入成功', ConstantService::$response_code_success);
+
     }
 }
