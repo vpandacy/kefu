@@ -97,7 +97,7 @@ CREATE TABLE `role_action` (
   `role_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '角色ID',
   `action_id` int(11) NOT NULL DEFAULT '0' COMMENT '权限ID',
   `app_id` tinyint(4) NOT NULL DEFAULT '0' COMMENT '应用ID,详细请查看uc下的常量',
-  `status` tinyint NOT NULL DEFAULT '0' COMMENT '状态,0异常,1正常'
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '状态,0异常,1正常',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
