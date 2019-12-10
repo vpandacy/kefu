@@ -19,6 +19,7 @@ var chat = {
         this.eventBind();
     },
     eventBind: function () {
+        var that = this;
         // 发送消息.
         $('#content').on('keydown', function (event) {
             // 不等于回车的时候.
@@ -27,56 +28,51 @@ var chat = {
             }
             // 修改掉其他事件
             event.preventDefault();
-            var msg = $('#content').text();
-
-            if(msg.length <= 0) {
-                return false;
-            }
-
-            var date = new Date();
-            var time_str = [
-                date.getHours(),
-                date.getMinutes(),
-                date.getSeconds()
-            ].map(function (value) {
-                return value < 10 ? '0' + value : value;
-            }).join(':');
-
-            var div = document.createElement('div');
-
-            div.innerHTML = [
-                '<div class="content-message message-my">',
-                '    <div class="message-info">',
-                '        <div class="message-name-date name-date-my"><span class="date">',time_str,'</span><span class="message-name">我</span></div>',
-                '        <div class="message-message message-message-my">',msg,'</div>',
-                '    </div>',
-                '</div>'
-            ].join("")
-
-            $('.online-content').append(div);
-
-            $('#content').text('');
-
-            var total_height = $('.online-content')[0].scrollHeight,
-                current_height = $('.online-content').height() + $('.online-content').scrollTop();
-
-            console.dir('total:' + total_height);
-            console.dir('current:' + current_height);
-            console.dir('div:' +  $(div).height());
-
-            // 当前高度大于等于总的高度  就移动下来. 增加10像素的容错率
-            if(current_height <= total_height - $(div).height() - 10) {
-                return false;
-            }
-
-            // 每次发送完消息滚动到最底部.
-            $('.online-content').scrollTop(total_height);
+            that.send();
             return false;
         });
         
-        $('.submit-button').on('click', function () {
-            
+        $('.submit-button').on('click', function (e) {
+            event.preventDefault();
+
+            this.send();
         });
+    },
+    send: function () {
+        var msg = $('#content').text();
+
+        if(msg.length <= 0) {
+            return false;
+        }
+
+        var date = new Date();
+        var time_str = [
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        ].map(function (value) {
+            return value < 10 ? '0' + value : value;
+        }).join(':');
+
+        var div = document.createElement('div');
+
+        div.innerHTML = [
+            '<div class="content-message message-my">',
+            '    <div class="message-info">',
+            '        <div class="message-name-date name-date-my"><span class="date">',time_str,'</span><span class="message-name">我</span></div>',
+            '        <div class="message-message message-message-my">',msg,'</div>',
+            '    </div>',
+            '</div>'
+        ].join("")
+
+        $('.online-content').append(div);
+
+        $('#content').text('');
+
+        var total_height = $('.online-content')[0].scrollHeight;
+
+        // 每次发送完消息滚动到最底部.
+        $('.online-content').scrollTop(total_height);
     }
 };
 
