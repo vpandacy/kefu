@@ -35,7 +35,7 @@ var chat = {
         $('.submit-button').on('click', function (e) {
             event.preventDefault();
 
-            this.send();
+            that.send();
         });
     },
     send: function () {
