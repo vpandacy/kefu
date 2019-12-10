@@ -32,16 +32,16 @@
     float: right;
     margin: 10px;
 }
-.modal-header {
+#online_kf .capture-dialog .modal-header {
     height: 38px;
 }
-.modal-header {
+#online_kf .capture-dialog .modal-header {
     position: relative;
     /*height: 70px;*/
     background-color: #fff;
     padding-top: 20px;
 }
-.modal-header .bootbox-close-button {
+#online_kf .capture-dialog .modal-header .bootbox-close-button {
     display: block;
     width: 16px;
     height: 16px;
@@ -57,13 +57,13 @@
     background-image: url(../img/bgGroup.png);
     background-position: -775px 1px;
 }
-.modal-header .modal-title {
+#online_kf .capture-dialog .modal-header .modal-title {
     padding: 8px 0 0 20px !important;
     font-weight: 700 !important;
     text-align: left !important;;
     color: #3d4966 !important;;
 }
-.modal-header .modal-title {
+#online_kf .capture-dialog .modal-header .modal-title {
     line-height: 16px;
     font-size: 16px;
     margin: 0;
@@ -72,23 +72,23 @@
     text-align: center;
     font-family: "microsoft yahei";
 }
-.modal-content {
+#online_kf .capture-dialog .modal-content {
     position: relative;
     border-radius: 1px;
 }
-.modal-body .h5 {
+#online_kf .capture-dialog .modal-body .h5 {
     font-weight: 700 !important;
 }
-.modal-body {
+#online_kf .capture-dialog .modal-body {
     height: 240px;
     background: #f5f9fa;
     margin-bottom: 25px;
 }
-.modal-body {
+#online_kf .capture-dialog .modal-body {
     padding: 0;
     text-align: center;
 }
-.capture-outer {
+#online_kf .capture-dialog .capture-outer {
     width: 360px;
     height: 315px;
     background-color: #fff;
@@ -96,51 +96,51 @@
     box-sizing: border-box;
     text-align: left;
 }
-.modal-body .captTips {
+#online_kf .capture-dialog .modal-body .captTips {
     margin-bottom: 14px;
 }
-.capture-outer .captTips {
+#online_kf .capture-dialog .capture-outer .captTips {
     color: #bf862d;
     background: #FFF9E3;
     padding: 8px;
 }
-.capture-outer .h5 {
+#online_kf .capture-dialog .capture-outer .h5 {
     font-size: 14px;
     color: #3d4966;
     font-weight: 400;
     margin: 0;
     line-height: 20px;
 }
-.capture-outer ol {
+#online_kf .capture-dialog .capture-outer ol {
     padding: 0;
     margin: 14px 0 0 15px;
     list-style-position: outside;
 }
-.capture-outer ol, .capture-outer ol h6 {
+#online_kf .capture-dialog .capture-outer ol, .capture-outer ol h6 {
     color: #3d4966;
     line-height: 20px;
     font-size: 14px;
 }
-.capture-outer ol li:first-child {
+#online_kf .capture-dialog .capture-outer ol li:first-child {
     margin-top: 0px;
 }
-.capture-outer ol, .capture-outer ol h6 {
+#online_kf .capture-dialog .capture-outer ol, .capture-outer ol h6 {
     color: #3d4966;
     line-height: 20px;
     font-size: 14px;
 }
-.capture-outer ol h6 {
+#online_kf .capture-dialog .capture-outer ol h6 {
     margin: 0;
     font-weight: 400;
 }
-.capture-outer ol .capture-text {
+#online_kf .capture-dialog .capture-outer ol .capture-text {
     min-height: 20px;
     line-height: 20px;
     font-size: 14px;
     color: #8b98ad;
     margin-top: 7px;
 }
-.capture-outer ol .capture-text a {
+#online_kf .capture-dialog .capture-outer ol .capture-text a {
     color: #4d9dfe;
 }
 .min-onclick {
