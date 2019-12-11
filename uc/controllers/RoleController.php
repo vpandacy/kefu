@@ -14,16 +14,11 @@ class RoleController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        if($this->isGet()) {
+            return $this->render('index');
+        }
 
-    /**
-     * 获取所有的角色列表.
-     * @return \yii\console\Response|\yii\web\Response
-     */
-    public function actionList()
-    {
-        $page = intval($this->get('page',1));
+        $page = intval($this->post('page',1));
 
         $query = Role::find()->where(['merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 

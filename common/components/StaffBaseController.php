@@ -223,7 +223,7 @@ class StaffBaseController extends BaseWebController
         $response->format = Response::FORMAT_JSON;
         $response->data   = [
             'msg'    => $msg,
-            'code'   => 0,
+            'code'   => ConstantService::$response_code_success,
             'data'   => $data,
             'count'  => $count,
             'req_id' => $this->geneReqId()

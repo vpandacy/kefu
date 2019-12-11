@@ -7,9 +7,9 @@ var merchant_style_index_ops = {
         layui.use('table', function(){
             var table = layui.table;
 
-            table.render({
+            table.render(merchant_common_ops.buildLayuiTableConfig({
                 elem: '#groupChat'
-                ,url: merchant_common_ops.buildMerchantUrl('/style/index/list')
+                ,url: merchant_common_ops.buildMerchantUrl('/style/index/index')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
@@ -24,11 +24,7 @@ var merchant_style_index_ops = {
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
                 ]]
                 ,id: 'groupChat'
-                ,limit: 15
-                ,page: {
-                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
-                }
-            });
+            }));
 
             table.on('toolbar(groupChat)', function (event) {
                 if(event.event == 'add') {
@@ -112,7 +108,7 @@ var merchant_style_index_ops = {
                         error: function () {
                             $.close(index);
                         }
-                    })
+                    });
                 });
             });
         });

@@ -17,20 +17,16 @@ use www\modules\merchant\controllers\common\BaseController;
 class IndexController extends BaseController
 {
     /**
-     * Renders the index view for the module
+     * 风格列表页
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        if($this->isGet()) {
+            return $this->render('index');
+        }
 
-    /**
-     * 获取风格列表页.
-     */
-    public function actionList()
-    {
-        $page = intval($this->get('page',1));
+        $page = intval($this->post('page',1));
 
         $query = GroupChat::find()->where(['merchant_id'=>$this->getMerchantId()]);
 

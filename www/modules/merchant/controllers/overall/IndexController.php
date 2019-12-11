@@ -15,15 +15,11 @@ class IndexController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        if($this->isGet()) {
+            return $this->render('index');
+        }
 
-    /**
-     * 获取常用语言的数据.
-     */
-    public function actionList()
-    {
-        $page = intval($this->get('page',1));
+        $page = intval($this->post('page',1));
 
         $query = CommonWord::find();
 

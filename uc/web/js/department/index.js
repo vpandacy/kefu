@@ -9,9 +9,9 @@ var uc_department_index_ops = {
         layui.use('table', function(){
             var table = layui.table;
 
-            table.render({
+            table.render(uc_common_ops.buildLayuiTableConfig({
                 elem: '#departmentTable'
-                ,url: uc_common_ops.buildUcUrl('/department/list')
+                ,url: uc_common_ops.buildUcUrl('/department/index')
                 ,toolbar: '#departToolbar' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
                 ,cellMinWidth: 80
@@ -27,11 +27,7 @@ var uc_department_index_ops = {
                     ,{title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
                 ]]
                 ,id: 'departmentTable'
-                ,limit: 15
-                ,page: {
-                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
-                }
-            });
+            }));
 
             table.on('toolbar(departmentTable)',function (action) {
                 if(action.event == 'add') {

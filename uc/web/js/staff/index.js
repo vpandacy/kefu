@@ -7,9 +7,9 @@ var uc_staff_index_ops = {
         layui.use('table', function(){
             var table = layui.table;
             // 表格渲染.
-            table.render({
+            table.render(uc_common_ops.buildLayuiTableConfig({
                 elem: '#staff'
-                ,url: uc_common_ops.buildUcUrl('/staff/list')
+                ,url: uc_common_ops.buildUcUrl('/staff/index')
                 ,where: {
                     mobile: $('.search-wrapper [name=mobile]').val(),
                     email: $('.search-wrapper [name=email]').val(),
@@ -44,10 +44,7 @@ var uc_staff_index_ops = {
                 ]]
                 ,id: 'staff'
                 ,limit: 15
-                ,page: {
-                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
-                }
-            });
+            }));
 
             // 表头事件.
             table.on('toolbar(staff)',function (row) {

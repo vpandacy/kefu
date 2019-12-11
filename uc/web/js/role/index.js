@@ -7,9 +7,9 @@
         layui.use('table', function(){
             var table = layui.table;
 
-            table.render({
+            table.render(uc_common_ops.buildLayuiTableConfig({
                 elem: '#roleTable'
-                ,url:uc_common_ops.buildUcUrl('/role/list')
+                ,url:uc_common_ops.buildUcUrl('/role/index')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -24,11 +24,7 @@
                     ,{title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
                 ]]
                 ,id: 'roleTable'
-                ,limit: 15
-                ,page: {
-                    layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
-                }
-            });
+            }));
 
             table.on('toolbar(roleTable)',function (action) {
                 if(action.event == 'add') {

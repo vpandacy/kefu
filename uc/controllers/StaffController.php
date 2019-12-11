@@ -23,40 +23,35 @@ class StaffController extends BaseController
      */
     public function actionIndex()
     {
-        $departments = Department::find()
-            ->where([
-                'status'    =>  ConstantService::$default_status_true,
-                'merchant_id'   =>  $this->getMerchantId(),
-                'app_id'    =>  $this->getAppId(),
-            ])
-            ->select(['id','name'])
-            ->asArray()
-            ->all();
+        if($this->isGet()) {
+            $departments = Department::find()
+                ->where([
+                    'status'    =>  ConstantService::$default_status_true,
+                    'merchant_id'   =>  $this->getMerchantId(),
+                    'app_id'    =>  $this->getAppId(),
+                ])
+                ->select(['id','name'])
+                ->asArray()
+                ->all();
 
 
-        return $this->render('index',[
-            'departments'   =>  $departments,
-            'search_conditions' =>  [
-                'mobile'    =>  trim($this->get('mobile','')),
-                'email'     =>  trim($this->get('email','')),
-                'department_id' =>  trim($this->get('department_id',0)),
-            ]
-        ]);
-    }
+            return $this->render('index',[
+                'departments'   =>  $departments,
+                'search_conditions' =>  [
+                    'mobile'    =>  trim($this->get('mobile','')),
+                    'email'     =>  trim($this->get('email','')),
+                    'department_id' =>  trim($this->get('department_id',0)),
+                ]
+            ]);
+        }
 
-    /**
-     * 获取字段信息
-     * @return \yii\console\Response|\yii\web\Response
-     */
-    public function actionList()
-    {
-        $page = intval($this->get('page',1));
+        $page = intval($this->post('page',1));
 
         $query = Staff::find()->andWhere(['merchant_id'=>$this->getMerchantId()]);
         // 构建条件
-        $mobile = trim($this->get('mobile',''));
-        $email  = trim($this->get('email',''));
-        $department_id = $this->get('department_id',0);
+        $mobile = trim($this->post('mobile',''));
+        $email  = trim($this->post('email',''));
+        $department_id = $this->post('department_id',0);
 
         if($mobile) {
             $query->andWhere(['mobile'=>$mobile]);

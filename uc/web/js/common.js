@@ -100,6 +100,24 @@ var uc_common_ops = {
         }
 
         return theRequest;
+    },
+
+    // 这里生成统一的layui 数据表格的配置. 方便统一管理
+    buildLayuiTableConfig: function (params) {
+        return Object.assign({},{
+            limit: 15,  // 分页信息.
+            page: {     // 分页的模板.
+                layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+            },
+            method: 'POST',
+            // 规定返回的信息.
+            response: {
+                statusCode: 200,
+                countName: 'count',
+                dataName: 'data',
+                statusName: 'code'
+            }
+        }, params);
     }
 };
 

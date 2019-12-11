@@ -16,17 +16,11 @@ class DepartmentController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        if($this->isGet()) {
+            return $this->render('index');
+        }
 
-    /**
-     * 获取列表.
-     * @return \yii\console\Response|\yii\web\Response
-     */
-    public function actionList()
-    {
-
-        $page = intval($this->get('page',1));
+        $page = intval($this->post('page',1));
 
         $query = Department::find()->where(['merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
