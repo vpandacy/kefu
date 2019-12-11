@@ -31,7 +31,7 @@ StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildKFStaticUrl("/cs
     </div>
 </div>
 <script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
+    <div class="layui-btn-container" style="display: block">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="isAll">恢复</button>
     </div>

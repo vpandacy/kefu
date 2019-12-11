@@ -50,7 +50,7 @@ CREATE TABLE `common_word` (
 #### 20191210
 ```
 CREATE TABLE `leave_message` (
-  `id` bigint(20) NOT NULL COMMENT '主键' AUTO_INCREMENT PRIMARY KEY,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户',
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机号',
   `wechat` varchar(255) NOT NULL DEFAULT '' COMMENT '微信号',
@@ -58,14 +58,15 @@ CREATE TABLE `leave_message` (
   `message` varchar(255) NOT NULL DEFAULT '' COMMENT '留言信息',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY(`id`),
   KEY `merchant_id` (`merchant_id`)
 ) ENGINE='InnoDB' DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='留言表';
 
 
 CREATE TABLE `reception_rule` (
-  `id` bigint NOT NULL COMMENT '主键' AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `group_chat_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格分组ID',
-  `merchant_id` bigint NOT NULL DEFAULT '0' COMMENT '商户ID',
+  `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `distribution_mode` tinyint(1) NOT NULL DEFAULT '0' COMMENT '分配方式',
   `reception_rule` tinyint(1) NOT NULL DEFAULT '0' COMMENT '接待规则,0人工客服优先',
   `reception_strategy` tinyint(1) NOT NULL DEFAULT '0' COMMENT '接待策略,0风格分组优先,1管理员优先',
