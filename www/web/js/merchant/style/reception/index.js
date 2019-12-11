@@ -75,9 +75,9 @@ var merchant_style_reception_index_ops = {
         $('[name='+ name +']').each(function (index,ele) {
             ele = $(ele);
             if(ele.val() != value) {
-                ele.removeAttr('checked');
+                ele.prop('checked', false);
             }else{
-                ele.attr('checked',true);
+                ele.prop('checked',true);
             };
         });
     }
