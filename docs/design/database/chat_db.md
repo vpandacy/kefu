@@ -51,15 +51,18 @@ CREATE TABLE `common_word` (
 ```
 CREATE TABLE `leave_message` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `visitor_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '游客ID',
+  `group_chat_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格ID',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户',
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机号',
   `wechat` varchar(255) NOT NULL DEFAULT '' COMMENT '微信号',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
   `message` varchar(255) NOT NULL DEFAULT '' COMMENT '留言信息',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否处理,0未处理,1已处理',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY(`id`),
-  KEY `merchant_id` (`merchant_id`)
+  KEY `index_merchant_group` (`merchant_id`,`group_chat_id`)
 ) ENGINE='InnoDB' DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='留言表';
 
 

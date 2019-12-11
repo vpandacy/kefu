@@ -196,7 +196,7 @@ class GlobalUrlService extends BaseService {
     {
         $domain = \Yii::$app->params['domains']['static'];
         $path = Url::toRoute(array_merge([$path], $params));
-        
+
         if (CommonService::is_SSL()) {
             $domain = str_replace('http://', 'https://', $domain);
         }

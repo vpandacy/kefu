@@ -31,6 +31,8 @@
             },
             // 确认框
             confirm: function (msg,callback,btn) {
+
+                callback = typeof callback == 'function' ? {'ok': callback, 'cancel': null} : callback;
                 callback = (callback != undefined) ? callback : {'ok': null, 'cancel': null};
                 btn =  (callback == undefined || btn == []) ? ['确定', '取消'] : btn;
                 layer.confirm(msg, {
