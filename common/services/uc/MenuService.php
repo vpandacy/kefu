@@ -164,26 +164,30 @@ class MenuService extends BaseService
                     'title' =>  '风格管理',
                     'url'   =>  'merchant/style/index/index'
                 ],
-                'computer'  =>  [
-                    'title' =>  'PC设置',
-                    'url'   =>  'merchant/style/computer/index'
-                ],
-                'mobile'    =>  [
-                    'title' =>  '移动端设计',
-                    'url'   =>  'merchant/style/mobile/index'
-                ],
-                'newsauto'  =>  [
-                    'title' =>  '自动消息',
-                    'url'   =>  'merchant/style/newsauto/index',
+//                'computer'  =>  [
+//                    'title' =>  'PC设置',
+//                    'url'   =>  'merchant/style/computer/index'
+//                ],
+//                'mobile'    =>  [
+//                    'title' =>  '移动端设计',
+//                    'url'   =>  'merchant/style/mobile/index'
+//                ],
+//                'newsauto'  =>  [
+//                    'title' =>  '自动消息',
+//                    'url'   =>  'merchant/style/newsauto/index',
+//                ],
+                'setting'   =>  [
+                    'title' =>  '风格设置',
+                    'url'   =>  'merchant/style/setting/index'
                 ],
                 'reception' =>  [
                     'title' =>  '接待规则',
                     'url'   =>  'merchant/style/reception/index'
                 ],
-                'video'     =>  [
-                    'title' =>  '视频',
-                    'url'   =>  'merchant/style/video/index'
-                ],
+//                'video'     =>  [
+//                    'title' =>  '视频',
+//                    'url'   =>  'merchant/style/video/index'
+//                ],
             ],
             'user'  =>  [
                 'sub_user'  =>  [

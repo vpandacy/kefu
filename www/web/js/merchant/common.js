@@ -31,7 +31,8 @@ var merchant_common_ops = {
                     '/merchant/style/mobile',
                     '/merchant/style/newsauto',
                     '/merchant/style/reception',
-                    '/merchant/style/video'
+                    '/merchant/style/video',
+                    '/merchant/style/setting'
                 ]
             };
 
@@ -72,6 +73,39 @@ var merchant_common_ops = {
             _paramUrl = "?" + _paramUrl;
         }
         return url + _paramUrl;
+    },
+    buildPicStaticUrl:function(bucket,img_key,params){
+        bucket = bucket ? bucket: "pic3";
+        var config = {
+            'hsh': {
+                'http': 'http://cdn.static.test.jiatest.cn',
+                'https': 'https://cdn.static.test.jiatest.cn'
+            }
+        };
+
+        var url = config[bucket].http + '/' + img_key;
+
+        var width = params && params.hasOwnProperty("w") ? params['w']:0;
+        var height = params && params.hasOwnProperty("h") ? params['h']:0;
+        if( !width && !height ){
+            return url;
+        }
+
+        if( params.hasOwnProperty('view_mode') ){
+            url += "?imageView2/"+params['view_mode'];
+        }else{
+            url += "?imageView2/1";
+        }
+
+        if( width ){
+            url += "/w/"+width;
+        }
+
+        if( height ){
+            url += "/h/"+height;
+        }
+        url += "/interlace/1";
+        return url;
     },
     // 这里生成统一的layui 数据表格的配置. 方便统一管理
     buildLayuiTableConfig: function (params) {

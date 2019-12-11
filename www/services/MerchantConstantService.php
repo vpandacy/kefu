@@ -38,5 +38,4 @@ class MerchantConstantService extends BaseService
     public static $group_shunt_modes = [
         0   =>  '指定客服'
     ];
-
 }
