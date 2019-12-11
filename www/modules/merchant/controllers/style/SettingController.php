@@ -1,10 +1,10 @@
 <?php
 namespace www\modules\merchant\controllers\style;
 
+use common\models\merchant\City;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GroupChatSetting;
 use www\modules\merchant\controllers\common\BaseController;
-use www\services\MerchantConstantService;
 
 class SettingController extends BaseController
 {
@@ -16,8 +16,15 @@ class SettingController extends BaseController
             ->asArray()
             ->all();
 
+        $city = City::find()
+            ->where(['city_id'=>0])
+            ->select(['id','name'])
+            ->asArray()
+            ->all();
+
         return $this->render('index', [
-            'groups'    =>  $groups
+            'groups'    =>  $groups,
+            'city'      =>  $city
         ]);
     }
 
