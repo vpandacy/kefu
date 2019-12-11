@@ -168,24 +168,24 @@ class StaffController extends BaseController
         $request_r = ['mobile','email','name','listen_nums','department_id','avatar','password','confirm_password','id'];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
-            return $this->renderJSON([],'参数丢失', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '参数丢失' );
         }
 
         // 开始判断.
         if(!preg_match('/^1\d{10}/', $data['mobile'])) {
-            return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的手机号' );
         }
 
         if(strpos($data['email'],'@') <= 1) {
-            return $this->renderJSON([],'请输入正确的手机号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的手机号' );
         }
 
         if(!$data['name'] || mb_strlen($data['name']) > 255) {
-            return $this->renderJSON([],'请输入正确的姓名/商户名', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的姓名/商户名' );
         }
 
         if($data['listen_nums'] < 0 || !is_numeric($data['listen_nums'])) {
-            return $this->renderJSON([],'请输入正确的接听数', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的接听数' );
         }
 
         $departments = Department::find()
@@ -198,11 +198,11 @@ class StaffController extends BaseController
             ->column();
 
         if($data['department_id'] && !in_array($data['department_id'], $departments)) {
-            return $this->renderJSON([],'请选择正确的部门', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的部门' );
         }
 
         if($data['password'] && $data['password'] != $data['confirm_password']) {
-            return $this->renderJSON([],'两次输入的密码不一致,请重新输入', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '两次输入的密码不一致,请重新输入' );
         }
 
         $role_ids = Role::find()
@@ -215,16 +215,16 @@ class StaffController extends BaseController
             ->column();
 
         if(array_key_exists('role_ids', $data) && array_diff($data['role_ids'], $role_ids)) {
-            return $this->renderJSON([],'请选择正确的角色', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的角色' );
         }
 
         // 检查密码强度.
         if($data['password'] && !CommonService::checkPassLevel($data['password'])) {
-            return $this->renderJSON([], CommonService::getLastErrorMsg(), ConstantService::$response_code_fail);
+            return $this->renderErrJSON( CommonService::getLastErrorMsg() );
         }
 
         if(!$data['id'] && !$data['password']) {
-            return $this->renderJSON([],'新增帐号时请输入密码', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '新增帐号时请输入密码' );
         }
 
         if($data['id'] > 0) {
@@ -232,7 +232,6 @@ class StaffController extends BaseController
                 ->where([
                     'id'=>$data['id'],
                     'merchant_id'=>$this->getMerchantId(),
-//                    'status'=>ConstantService::$default_status_true
                 ])
                 ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
                 ->one();
@@ -241,11 +240,11 @@ class StaffController extends BaseController
         }
 
         if($data['id'] > 0 && !$staff['id']) {
-            return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '非法的员工' );
         }
 
         if(!$staff && Staff::findOne(['email'=>$data['email']])) {
-            return $this->renderJSON([],'该邮箱已经被使用了,请稍后重新添加', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该邮箱已经被使用了,请稍后重新添加' );
         }
 
         if(!$data['id']) {
@@ -266,11 +265,11 @@ class StaffController extends BaseController
         $staff->setAttributes($data,0);
 
         if(!$staff->save(0)) {
-            return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
         if(array_key_exists('role_ids', $data) && !RoleService::createRoleMapping($staff['id'], $this->getAppId(),$data['role_ids'])) {
-            return $this->renderJSON([],RoleService::getLastErrorMsg(), ConstantService::$response_code_fail);
+            return $this->renderErrJSON( RoleService::getLastErrorMsg() );
         }
 
         return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
@@ -284,17 +283,17 @@ class StaffController extends BaseController
         $ids = $this->post('ids');
 
         if(!count($ids)) {
-            return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择需要恢复的帐号' );
         }
 
         if(!Staff::updateAll(['status' => ConstantService::$default_status_true],[ 'and',
             ['id'=>$ids,'merchant_id'=> $this->getMerchantId()],
             ['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]
         ])) {
-            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '恢复失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'恢复成功');
     }
 
     /**
@@ -304,11 +303,11 @@ class StaffController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的帐号' );
         }
 
         if($id == $this->getStaffId()) {
-            return $this->renderJSON([],'您暂不能禁用自己', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '您暂不能禁用自己' );
         }
 
         $staff = Staff::find()
@@ -321,14 +320,14 @@ class StaffController extends BaseController
             ->one();;
 
         if($staff['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该帐号不需要删除', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该帐号不需要删除' );
         }
 
         $staff['status'] = 0;
         if(!$staff->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 }

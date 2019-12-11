@@ -84,16 +84,14 @@ var merchant_user_login_ops = {
                     merchant_name: merchant_name
                 },
                 dataType:'json',
-                success: function ( response ) {
-
+                success: function ( res ) {
                     $.close(index);
-                    if(response.code != 200) {
-                        return $.msg(response.msg);
-                    }
 
-                    return $.alert(response.msg,function () {
+                    var callback = res.code != 200 ? null : function () {
                         location.href = location.href;
-                    });
+                    };
+
+                    return $.msg(res.msg, res.code == 200 , callback);
                 },
                 error: function () {
                     $.close(index);

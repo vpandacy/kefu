@@ -40,13 +40,13 @@ class CodeController extends BaseController
         $group = GroupChat::findOne(['id'=>$group_id,'status' => ConstantService::$default_status_true]);
 
         if(!$group && $group_id) {
-            return $this->renderJSON([],'该风格不存在', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该风格不存在' );
         }
 
         $code = $this->renderPartial('obtain',[
             'group_sn'  =>  $group['sn'],
         ]);
 
-        return $this->renderJSON($code,'获取成功', ConstantService::$response_code_success);
+        return $this->renderJSON($code,'获取成功');
     }
 }

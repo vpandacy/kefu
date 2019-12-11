@@ -24,6 +24,7 @@ class StaffBaseController extends BaseWebController
      * @var Staff
      */
     public $staff = null;
+
     public $current_user = null;
 
     /**

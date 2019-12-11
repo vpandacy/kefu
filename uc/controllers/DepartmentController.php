@@ -52,7 +52,7 @@ class DepartmentController extends BaseController
         $name= $this->post('name','');
 
         if(!$name || mb_strlen($name) > 255) {
-            return $this->renderJSON([],'请输入正确的部门名称', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的部门名称' );
         }
 
         $department = $id > 0
@@ -60,7 +60,7 @@ class DepartmentController extends BaseController
             : new Department();
 
         if($id > 0 && !$department) {
-            return $this->renderJSON([],'不存在该部门记录', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '不存在该部门记录' );
         }
 
         $department->setAttributes([
@@ -71,10 +71,10 @@ class DepartmentController extends BaseController
         ],0);
 
         if(!$department->save(0)) {
-            return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'保存成功');
     }
 
     /**
@@ -84,21 +84,21 @@ class DepartmentController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的帐号' );
         }
 
         $department = Department::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
         if($department['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该部门已经被禁用了,不需要禁用', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('该部门已经被禁用了,不需要禁用' );
         }
 
         $department['status'] = 0;
         if(!$department->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON( [],'操作成功' );
     }
 
     /**
@@ -109,7 +109,7 @@ class DepartmentController extends BaseController
         $ids = $this->post('ids');
 
         if(!count($ids)) {
-            return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('请选择需要恢复的帐号');
         }
 
         if(!Department::updateAll(['status'=>ConstantService::$default_status_true],[
@@ -117,9 +117,9 @@ class DepartmentController extends BaseController
             'merchant_id'=>$this->getMerchantId(),
             'app_id'=>$this->getAppId()
         ])) {
-            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '恢复失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'恢复成功');
     }
 }

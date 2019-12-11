@@ -84,25 +84,29 @@ class ActionController extends BaseController
         $role_id = $this->post('role_id',0);
 
         if(!$role_id) {
-            return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '非法请求' );
         }
 
-        $role = Role::findOne(['id'=>$role_id,'status'=>ConstantService::$default_status_true,'merchant_id'=>$this->getMerchantId()]);
+        $role = Role::findOne([
+            'id'            => $role_id,
+            'status'        => ConstantService::$default_status_true,
+            'merchant_id'   => $this->getMerchantId()
+        ]);
 
         if(!$role) {
-            return $this->renderJSON([],'没有找到对应的角色', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '没有找到对应的角色' );
         }
 
         $action_ids = RoleAction::find()
             ->where([
                 'status'    =>  ConstantService::$default_status_true,
                 'role_id'   =>  $role_id,
-                'app_id'        =>  $this->getAppId()
+                'app_id'    =>  $this->getAppId()
             ])
             ->select(['action_id'])
             ->column();
 
-        return $this->renderJSON($action_ids, '获取成功', ConstantService::$response_code_success);
+        return $this->renderJSON($action_ids, '获取成功');
     }
 
     /**
@@ -115,7 +119,7 @@ class ActionController extends BaseController
         $role_id = $this->post('role_id',0);
 
         if(!$role_id) {
-            return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('非法请求' );
         }
 
         $role = Role::findOne([
@@ -126,13 +130,13 @@ class ActionController extends BaseController
         ]);
 
         if(!$role) {
-            return $this->renderJSON([],'没有找到对应的角色', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '没有找到对应的角色' );
         }
 
         $permission_ids = $this->post('permissions');
 
         if(!$permission_ids || count($permission_ids) <= 0) {
-            return $this->renderJSON([],'请选择需要保存的权限', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择需要保存的权限' );
         }
 
         $actions = Action::find()
@@ -144,14 +148,14 @@ class ActionController extends BaseController
             ->column();
 
         if(array_diff($permission_ids, $actions)) {
-           return $this->renderJSON([],'您选择了不存在权限',ConstantService::$response_code_fail);
+           return $this->renderErrJSON( '您选择了不存在权限' );
         }
 
         $app_id = $this->getAppId();
 
         // 更新之前的所有信息.在插入即可.
         if(RoleAction::updateAll(['status'=>0],['role_id'=>$role_id,'app_id'=>$app_id]) === false ) {
-            return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
 
@@ -169,9 +173,9 @@ class ActionController extends BaseController
             ->execute();
 
         if(!$ret) {
-            return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'数据保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'数据保存成功');
     }
 }

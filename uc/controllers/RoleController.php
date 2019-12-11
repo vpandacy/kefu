@@ -49,13 +49,13 @@ class RoleController extends BaseController
         $name= $this->post('name','');
 
         if(!$name || mb_strlen($name) > 255) {
-            return $this->renderJSON([],'请输入正确的部门名称', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的部门名称' );
         }
 
         $role = $id > 0 ? Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]) : new Role();
 
         if($id > 0 && !$role) {
-            return $this->renderJSON([],'不存在该角色记录', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '不存在该角色记录' );
         }
 
         $role->setAttributes([
@@ -66,10 +66,10 @@ class RoleController extends BaseController
         ],0);
 
         if(!$role->save(0)) {
-            return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON( [],'保存成功' );
     }
 
     /**
@@ -79,21 +79,21 @@ class RoleController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的帐号' );
         }
 
         $role = Role::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
         if($role['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该角色已经被禁用了,不需要禁用', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该角色已经被禁用了,不需要禁用' );
         }
 
         $role['status'] = 0;
         if(!$role->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON( [],'操作成功' );
     }
 
     /**
@@ -104,7 +104,7 @@ class RoleController extends BaseController
         $ids = $this->post('ids');
 
         if(!count($ids)) {
-            return $this->renderJSON([],'请选择需要恢复的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择需要恢复的帐号' );
         }
 
         if(!Role::updateAll(['status'=>ConstantService::$default_status_true],[
@@ -112,9 +112,9 @@ class RoleController extends BaseController
             'merchant_id'=>$this->getMerchantId(),
             'app_id'=>$this->getAppId()
         ])) {
-            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '恢复失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'恢复成功');
     }
 }

@@ -19,7 +19,7 @@
             msg:function( msg,flag,callback ){
                 callback = (callback != undefined && typeof callback == "function") ? callback : null;
                 var params = {
-                    "icon":6,
+                    "icon": 6,
                     "time": 1000,
                     "shade" :[0.5 , '#000' , true]
                 };
@@ -62,7 +62,7 @@
                     dataType: 'json',
                     success: function (res) {
                         if(res.code != 200 ){
-                            common_ops.alert(res.msg);
+                            $.alert(res.msg);
                             return;
                         }
                         $("#pop_layer").html( res.data.content );
@@ -102,6 +102,7 @@
     $.close     = $.lay.close;
     $.closeAll  = $.lay.closeAll;
 }(jQuery);
+
 //uc 统一JS
 var user_center = {
     init: function () {
@@ -132,7 +133,7 @@ var user_center = {
         })
     },
     center:function(){
-        that = this;
+        var that = this;
         $.ajax({
             type: 'get',
             url: common_ops_url.buildUrl('/user/center'),
@@ -188,38 +189,37 @@ $('.menu_bottom').click(function () {
         $(this).toggle();
     });
 });
+
 var lockSize = function () {
     resizeDiv.offsetWidth > 150 ? $('.menu-show').show().addClass('bounceInLeft animated'):'';
-}
+};
+
 var closeSize = function () {
     resizeDiv.offsetWidth < 180 ? $('.menu-show').hide() : '';
-}
+};
+
 function menuLock() {
     EleResize.off(resizeDiv, closeSize);
     $('.left_menu').width('190px');
     $('#merchant .chant_all .right_merchant .right_content').css('margin-left','190px');
     EleResize.on(resizeDiv,lockSize);
 }
+
 function menuClose() {
     EleResize.off(resizeDiv, lockSize);
     $('.left_menu').width('90px');
     $('#merchant .chant_all .right_merchant .right_content').css('margin-left','90px');
     EleResize.on(resizeDiv,closeSize);
 }
+
 $('.menu-title a').mouseover(function () {
     $('.left_menu').width() > 95 ?   $(this).children('.menu-tooltip').hide() : $(this).children('.menu-tooltip').show();
     $(this).children('.menu-tooltip').addClass('fadeIn animated');
-})
+});
+
 $('.menu-title a').mouseout(function () {
     $(this).children('.menu-tooltip').hide();
-})
-
-// $(".menu_info_link").mouseover(function(event){
-//    $('.menu_info_edit').height('190px')
-//    $(".menu_info_link").each(function () {
-//       $(".menu_info_edit").toggle();
-//    });
-// });
+});
 
 var $submenu = $('.submenu');
 var $mainmenu = $('.mainmenu');

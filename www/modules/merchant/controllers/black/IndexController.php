@@ -82,19 +82,19 @@ class IndexController extends BaseController
         $expired_time = $this->post('expired_time','');
 
         if(!$ip) {
-            return $this->renderJSON([],'请输入正确的IP地址', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的IP地址~~' );
         }
 
         if(!$visitor_id) {
-            return $this->renderJSON([],'请输入正确的游客编号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的游客编号~~' );
         }
 
         if(!$staff_id) {
-            return $this->renderJSON([],'请选择正确的接待客服', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的接待客服~~' );
         }
 
         if(!preg_match('/^\d{4}\-\d{2}\-\d{2}\ \d{2}\:\d{2}:\d{2}$/',$expired_time)) {
-            return $this->renderJSON([],'请选择正确的时间', ConstantService::$response_code_fail);
+            return $this->renderJSON( '请选择正确的时间~~' );
         }
 
         // 开始保存信息.
@@ -109,10 +109,10 @@ class IndexController extends BaseController
         ],0);
 
         if(!$blacklist->save(0)) {
-            return $this->renderJSON([],'数据保存成功, 请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderJSON( '数据保存失败, 请联系管理员~~' );
         }
 
-        return $this->renderJSON([],'保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'保存成功');
     }
 
     /**
@@ -122,20 +122,20 @@ class IndexController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的黑名单列表', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的黑名单列表' );
         }
 
         $blacklist = BlackList::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
 
         if($blacklist['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该黑名单已经被删除了,不允许删除', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该黑名单已经被删除了,不允许删除' );
         }
 
         $blacklist['status'] = ConstantService::$default_status_false;
         if(!$blacklist->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 }

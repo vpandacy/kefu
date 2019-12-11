@@ -56,16 +56,14 @@
                             ids: ids
                         },
                         dataType: 'json',
-                        success:function (response) {
+                        success:function (res) {
                             $.close(index);
-                            if(response.code != 200) {
-                                return $.msg(response.msg);
-                            }
 
-                            index = $.alert(response.msg,function () {
-                                $.close(index);
+                            var callback = res.code != 200 ? null : function () {
                                 table.reload('roleTable');
-                            });
+                            };
+
+                            return $.msg(res.msg, res.code == 200 , callback);
                         },
                         error: function () {
                             $.close(index);
@@ -90,16 +88,14 @@
                         data: {
                             id: row.data.id
                         },
-                        success:function (response) {
+                        success:function (res) {
                             $.close(index);
-                            if(response.code != 200) {
-                                return $.msg(response.msg);
-                            }
 
-                            index = $.alert(response.msg,function () {
-                                $.close(index);
+                            var callback = res.code != 200 ? null : function () {
                                 table.reload('roleTable');
-                            });
+                            };
+
+                            return $.msg(res.msg, res.code == 200 , callback);
                         },
                         error: function () {
                             $.close(index);
@@ -148,18 +144,15 @@
                         id: id
                     },
                     dataType: 'json',
-                    success:function (response) {
+                    success:function (res) {
                         $.close(lay_index);
-                        if(response.code != 200) {
-                            return $.msg(response.msg);
-                        }
 
-                        lay_index =  $.alert(response.msg,function () {
-                            table.reload('roleTable');
-
-                            $.close(lay_index);
+                        var callback = res.code != 200 ? null : function () {
                             $.close(index);
-                        });
+                            table.reload('roleTable');
+                        };
+
+                        return $.msg(res.msg, res.code == 200 , callback);
                     },
                     error:function () {
                         $.close(lay_index);

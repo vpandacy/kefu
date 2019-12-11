@@ -27,7 +27,7 @@ class CompanyController extends BaseController
     /**
      * 保存商户基本信息.
      */
-    public function actionSaveInfo()
+    public function actionSave()
     {
         $name = $this->post('name','');
         $contact = $this->post('contact','');
@@ -35,19 +35,19 @@ class CompanyController extends BaseController
         $desc = $this->post('desc','');
 
         if(!$name || mb_strlen($name) > 255) {
-            return $this->renderJSON([],'请填写正确的企业名称', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请填写正确的企业名称' );
         }
 
         if(!$contact) {
-            return $this->renderJSON([],'请填写联系方式', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请填写联系方式' );
         }
 
         if(!$logo) {
-            return $this->renderJSON([],'请上传企业的logo', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请上传企业的logo' );
         }
 
         if(!$desc || mb_strlen($desc) > 255) {
-            return $this->renderJSON([], '请填写对应的企业描述', ConstantService::$response_code_fail);
+            return $this->renderErrJSON(  '请填写对应的企业描述' );
         }
 
         $merchant = Merchant::findOne(['id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
@@ -60,27 +60,27 @@ class CompanyController extends BaseController
         ],0);
 
         if(!$merchant->save(0)) {
-            return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'保存成功');
     }
 
 
     /**
      * 保存商户聊天配置信息.
      */
-    public function actionSaveSetting()
+    public function actionSetting()
     {
         $auto_disconnect = $this->post('auto_disconnect','');
         $greetings = $this->post('greetings','');
 
         if(!preg_match('/^\d+$/',$auto_disconnect)) {
-            return $this->renderJSON([],'请填写正确的自动断开时长', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请填写正确的自动断开时长' );
         }
 
         if(!$greetings || mb_strlen($greetings) > 255) {
-            return $this->renderJSON([], '请填写对应的企业问候语', ConstantService::$response_code_fail);
+            return $this->renderErrJSON(  '请填写对应的企业问候语' );
         }
 
         $setting = MerchantSetting::findOne(['merchant_id'=>$this->getMerchantId()]);
@@ -96,9 +96,9 @@ class CompanyController extends BaseController
         ],0);
 
         if(!$setting->save(0)) {
-            return $this->renderJSON([],'数据保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON( [],'保存成功' );
     }
 }

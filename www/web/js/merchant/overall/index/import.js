@@ -23,16 +23,14 @@ var merchant_overall_index_import_ops = {
                 ,before: function () {
                     index = $.loading(1,{shade: .5});
                 }
-                ,done: function (response) {
+                ,done: function (res) {
                     $.close(index);
-                    if(response.code != 200) {
-                        return $.msg(response.msg);
-                    }
 
-                    index = $.alert(response.msg, function () {
-                        $.close(index);
+                    var callback = res.code != 200 ? null : function () {
                         location.href = merchant_common_ops.buildMerchantUrl('/overall/index/index')
-                    });
+                    };
+
+                    return $.msg(res.msg, res.code == 200 , callback);
 
                 },
                 error: function () {

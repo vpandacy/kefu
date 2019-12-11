@@ -75,16 +75,14 @@ var uc_staff_index_ops = {
                             ids: ids,
                         },
                         dataType: 'json',
-                        success:function (response) {
+                        success:function (res) {
                             $.close(index);
-                            if(response.code != 200) {
-                                return $.msg(response.msg);
-                            }
 
-                            index = $.alert(response.msg,function () {
-                                $.close(index);
+                            var callback = res.code != 200 ? null : function () {
                                 table.reload('staff');
-                            });
+                            };
+
+                            return $.msg(res.msg, res.code == 200 , callback);
                         },
                         error: function () {
                             $.close(index);
@@ -112,16 +110,14 @@ var uc_staff_index_ops = {
                         data: {
                             id: row.data.id
                         },
-                        success:function (response) {
+                        success:function (res) {
                             $.close(index);
-                            if(response.code != 200) {
-                                return $.msg(response.msg);
-                            }
 
-                            index = $.alert(response.msg,function () {
-                                $.close(index);
+                            var callback = res.code != 200 ? null : function () {
                                 table.reload('staff');
-                            });
+                            };
+
+                            return $.msg(res.msg, res.code == 200 , callback);
                         },
                         error: function () {
                             $.close(index);

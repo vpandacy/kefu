@@ -18,17 +18,14 @@ var merchant_black_edit_ops = {
                     url: merchant_common_ops.buildMerchantUrl('/black/index/save'),
                     dataType: 'json',
                     data: data,
-                    success:function (response) {
+                    success:function (res) {
                         $.close(index);
 
-                        if(response.code != 200) {
-                            return $.msg(response.msg)
-                        }
-
-                        index = $.alert(response.msg, function () {
+                        var callback = res.code != 200 ? null : function () {
                             history.go(-1);
-                            $.close(index);
-                        });
+                        };
+
+                        return $.msg(res.msg, res.code == 200 , callback);
                     },
                     error: function () {
                         $.close(index);

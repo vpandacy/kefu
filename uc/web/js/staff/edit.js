@@ -43,15 +43,14 @@ var uc_staff_edit_ops = {
             url: uc_common_ops.buildUcUrl('/staff/save'),
             dataType: 'json',
             data: data,
-            success:function (response) {
-                $.close(index);
-                if(response.code != 200) {
-                    return $.msg(response.msg);
-                }
+            success:function (res) {
+                $.close(lay_index);
 
-                return $.alert(response.msg, function () {
+                var callback = res.code != 200 ? null : function () {
                     history.go(-1);
-                });
+                };
+
+                return $.msg(res.msg, res.code == 200 , callback);
             },
             error: function () {
                 $.close(index);

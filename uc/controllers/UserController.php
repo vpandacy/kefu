@@ -73,32 +73,32 @@ class UserController extends BaseController
         $password = $this->post('password','');
 
         if(strpos($email,'@') < 1) {
-            return $this->renderJSON([],'请输入正确的手机号~~', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的邮箱~~' );
         }
 
         if(!$password) {
-            return $this->renderJSON([],'请输入密码~~', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入密码~~' );
         }
 
         // 检查密码强度.
         if($password && !CommonService::checkPassLevel($password)) {
-            return $this->renderJSON([], CommonService::getLastErrorMsg(), ConstantService::$response_code_fail);
+            return $this->renderErrJSON(  CommonService::getLastErrorMsg() );
         }
 
         if(!$merchant_name) {
-            return $this->renderJSON([],'请输入正确的商户名~~', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的商户名~~' );
         }
 
         $merchant = Merchant::findOne(['name' => $merchant_name]);
         if($merchant) {
-            return $this->renderJSON([],'该商户名已经被使用了~~', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该商户名已经被使用了~~' );
         }
 
         if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $email, $password)){
-            return $this->renderJSON([],MerchantService::getLastErrorMsg(), ConstantService::$response_code_fail);
+            return $this->renderErrJSON( MerchantService::getLastErrorMsg() );
         }
 
-        return $this->renderJSON([], '创建成功,请登录商户~~', ConstantService::$response_code_success);
+        return $this->renderJSON( [], '创建成功,请登录商户~~' );
     }
 
     /**

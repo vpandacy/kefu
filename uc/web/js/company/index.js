@@ -18,13 +18,13 @@ var overall_company_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: uc_common_ops.buildUcUrl('/company/save-info'),
+                    url: uc_common_ops.buildUcUrl('/company/save'),
                     data: data.field,
                     dataType:'json',
-                    success:function (response) {
+                    success:function (res) {
                         $.close(index);
                         // 暂时不做任何处理.
-                        return $.msg(response.msg);
+                        return $.msg(res.msg, res.code == 200);
                     },
                     error: function () {
                         $.close(index);
@@ -39,13 +39,13 @@ var overall_company_ops = {
                 var index = $.loading(1, {shade: .5});
                 $.ajax({
                     type: 'POST',
-                    url: uc_common_ops.buildUcUrl('/company/save-setting'),
+                    url: uc_common_ops.buildUcUrl('/company/setting'),
                     data: data.field,
                     dataType:'json',
-                    success:function (response) {
+                    success:function (res) {
                         $.close(index);
                         // 暂时不做任何处理.
-                        return $.msg(response.msg);
+                        return $.msg(res.msg, res.code == 200);
                     },
                     error: function () {
                         $.close(index);

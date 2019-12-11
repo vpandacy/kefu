@@ -73,11 +73,11 @@ class IndexController extends BaseController
         $request_r = ['id','words'];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
-            return $this->renderJSON([],'参数丢失', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '参数丢失~~' );
         }
 
         if(!$data['words'] || mb_strlen($data['words']) > 255) {
-            return $this->renderJSON([],'请输入正确的姓名/商户名', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('请输入正确的姓名/商户名' );
         }
 
         $words = $data['id'] > 0
@@ -85,7 +85,7 @@ class IndexController extends BaseController
             : new CommonWord();
 
         if($data['id'] > 0 && !$words['id']) {
-            return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '非法的员工~~' );
         }
 
         if(!$data['id']) {
@@ -96,10 +96,10 @@ class IndexController extends BaseController
         $words->setAttributes($data,0);
 
         if(!$words->save(0)) {
-            return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
 
@@ -111,14 +111,14 @@ class IndexController extends BaseController
         $ids = $this->post('ids');
 
         if(!count($ids)) {
-            return $this->renderJSON([],'请选择需要恢复的常用语', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择需要恢复的常用语' );
         }
 
         if(!CommonWord::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
-            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('恢复失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'恢复成功');
     }
 
 
@@ -129,21 +129,21 @@ class IndexController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的常用语', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('请选择正确的常用语' );
         }
 
         $words = CommonWord::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
 
         if($words['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该常用语已经被禁止使用了', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该常用语已经被禁止使用了' );
         }
 
         $words['status'] = 0;
         if(!$words->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
     /**
@@ -159,11 +159,11 @@ class IndexController extends BaseController
         $data = ExcelService::import('file');
 
         if(!$data) {
-            return $this->renderJSON([],ExcelService::getLastErrorMsg(), ConstantService::$response_code_fail);
+            return $this->renderErrJSON( ExcelService::getLastErrorMsg() );
         }
 
         if(count($data) <= 1) {
-            return $this->renderJSON([],'请填写对应的Excel内容', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请填写对应的Excel内容' );
         }
 
         // 去除第一个.
@@ -172,7 +172,7 @@ class IndexController extends BaseController
 
         foreach($data as $row) {
             if(!$row[0]) {
-                return $this->renderJSON([],'导入格式错误,请填写完整的常用语', ConstantService::$response_code_fail);
+                return $this->renderErrJSON( '导入格式错误,请填写完整的常用语' );
             }
 
             array_push($insert_data, [
@@ -187,10 +187,10 @@ class IndexController extends BaseController
             ->execute();
 
         if(!$ret) {
-            return $this->renderJSON([],'数据导入失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据导入失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'数据导入成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'数据导入成功');
 
     }
 }

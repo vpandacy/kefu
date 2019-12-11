@@ -23,15 +23,15 @@ var merchant_overall_code_index_ops = {
                         group_id: value
                     },
                     dataType: 'json',
-                    success:function (response) {
+                    success:function (res) {
                         $.close(index);
-                        if(response.code != 200) {
+                        if(res.code != 200) {
                             $('#style-script pre').text('请选择风格');
-                            return $.msg(response.msg);
+                            return $.msg(res.msg);
                         }
 
-                        $('#style-script pre').text(response.data);
-                        return $.msg(response.msg);
+                        $('#style-script pre').text(res.data);
+                        return $.msg(res.msg, res.code == 200);
                     },
                     error: function () {
                         $.close(index);

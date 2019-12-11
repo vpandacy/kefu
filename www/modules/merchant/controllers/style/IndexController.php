@@ -84,15 +84,15 @@ class IndexController extends BaseController
         $request_r = ['title','desc', 'id'];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
-            return $this->renderJSON([],'参数丢失', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '参数丢失' );
         }
 
         if(!$data['title'] || mb_strlen($data['title']) > 255) {
-            return $this->renderJSON([],'请输入正确的风格名称', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的风格名称' );
         }
 
         if(!$data['desc'] || mb_strlen($data['desc']) > 255) {
-            return $this->renderJSON([],'请输入正确的简历', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请输入正确的简历' );
         }
 
         if($data['id'] > 0) {
@@ -107,7 +107,7 @@ class IndexController extends BaseController
         }
 
         if($data['id'] > 0 && !$group['id']) {
-            return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '非法请求' );
         }
 
         if(!$data['id']) {
@@ -121,10 +121,10 @@ class IndexController extends BaseController
         $group->setAttributes($data,0);
 
         if(!$group->save(0)) {
-            return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
     /**
@@ -135,16 +135,16 @@ class IndexController extends BaseController
         $ids = $this->post('ids');
 
         if(!count($ids)) {
-            return $this->renderJSON([],'请选择需要恢复的风格', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择需要恢复的风格' );
         }
 
         if(!GroupChat::updateAll(['status' => ConstantService::$default_status_true],[ 'and',
             ['id'=>$ids,'merchant_id'=> $this->getMerchantId()],
         ])) {
-            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '恢复失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'恢复成功');
     }
 
     /**
@@ -154,7 +154,7 @@ class IndexController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的帐号', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的帐号' );
         }
 
         $group = GroupChat::find()
@@ -166,15 +166,15 @@ class IndexController extends BaseController
             ->one();
 
         if($group['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该风格不需要禁用', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该风格不需要禁用' );
         }
 
         $group['status'] = 0;
         if(!$group->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('操作失败,请联系管理员');
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
     /**
@@ -251,7 +251,7 @@ class IndexController extends BaseController
         $group_id = $this->post('group_id', 0);
 
         if(!$group_id) {
-            return $this->renderJSON([],'非法请求', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '非法请求' );
         }
 
         $group = GroupChat::find()
@@ -262,13 +262,13 @@ class IndexController extends BaseController
             ->one();
 
         if(!$group) {
-            return $this->renderJSON([],'未找到该风格', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('未找到该风格');
         }
 
         $staff_ids = $this->post('staff_ids');
 
         if(count($staff_ids) <= 0) {
-            return $this->renderJSON([],'请选择正确的员工', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的员工' );
         }
 
         $owner_staff_ids = Staff::find()
@@ -278,12 +278,12 @@ class IndexController extends BaseController
             ->column();
 
         if(array_diff($staff_ids, $owner_staff_ids)) {
-            return $this->renderJSON([],'请选择正确的员工信息', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择正确的员工信息' );
         }
 
         // 开始保存信息.
         if(GroupChatStaff::updateAll(['status'=>ConstantService::$default_status_false],['staff_id'=>$staff_ids]) === false){
-            return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
         $data = [];
@@ -301,9 +301,9 @@ class IndexController extends BaseController
             ->execute();
 
         if(!$ret) {
-            return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'保存成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'保存成功');
     }
 }

@@ -16,6 +16,7 @@ var staff_action_index_ops = {
                 });
 
                 var index = $.loading(1,{shade: .5});
+
                 $.ajax({
                     type: 'POST',
                     url : uc_common_ops.buildUcUrl('/action/list'),
@@ -23,13 +24,13 @@ var staff_action_index_ops = {
                         role_id: role_id
                     },
                     dataType:'json',
-                    success:function (response) {
+                    success:function (res) {
                         $.close(index);
-                        if(response.code != 200) {
-                            return $.msg(response.msg);
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
                         }
 
-                        var action_ids = response.data;
+                        var action_ids = res.data;
 
                         $('.action').each(function () {
                             if(action_ids.indexOf(this.value) >= 0) {
@@ -74,15 +75,9 @@ var staff_action_index_ops = {
                     },
                     dataType: 'json',
                     url: uc_common_ops.buildUcUrl('/action/save'),
-                    success:function (response) {
+                    success:function (res) {
                         $.close(index);
-                        if(response.code != 200) {
-                            return $.msg(response.msg);
-                        }
-
-                        index = $.alert(response.msg, function () {
-                            $.close(index);
-                        });
+                        return $.msg(res.msg, res.code == 200);
                     },
                     error:function () {
                         $.close(index);
