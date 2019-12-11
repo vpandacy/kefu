@@ -20,11 +20,8 @@ class StaffBaseController extends BaseWebController
     public $merchant_info = null;
 
     /**
-     * 员工信息.
-     * @var Staff
+     * @var Staff null
      */
-    public $staff = null;
-
     public $current_user = null;
 
     /**
@@ -76,7 +73,7 @@ class StaffBaseController extends BaseWebController
         }
 
         // 保存信息.
-        $this->staff = $this->current_user = $staff;
+        $this->current_user = $staff;
         return true;
     }
 
@@ -142,7 +139,7 @@ class StaffBaseController extends BaseWebController
      */
     public function getStaffId()
     {
-        return $this->staff ? $this->staff['id'] : 0;
+        return $this->current_user ? $this->current_user['id'] : 0;
     }
 
     public function getAppId()
@@ -181,7 +178,9 @@ class StaffBaseController extends BaseWebController
 
     /**
      * Author: Vincent
+     * @param string $type
      * @param bool $ignore_admin
+     * @return bool
      * 判断当前人是否有当前url的个人my
      * |下属sub|全部的权限all
      * 当然type是其他的也可以的
