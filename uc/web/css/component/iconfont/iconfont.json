@@ -335,6 +335,13 @@
       "unicode_decimal": 59212
     },
     {
+      "icon_id": "11535093",
+      "name": "在线咨询",
+      "font_class": "zaixianzixun",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
       "icon_id": "11641878",
       "name": "加号",
       "font_class": "jiahao1",

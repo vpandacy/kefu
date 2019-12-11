@@ -28,7 +28,7 @@ use common\services\GlobalUrlService;
         </div>
         <div class="menu-show-hide dis_none" onclick="menuClose()">
             <a>
-                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu- " ></i>
+                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
             </a>
         </div>
     </div>
