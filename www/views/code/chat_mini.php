@@ -19,8 +19,7 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/niuniucapture.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/emojisort.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/chat_mini.js')
 ]);
 ?>

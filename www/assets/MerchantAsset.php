@@ -22,8 +22,7 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildUcStaticUrl('/css/component/scrollbar.min.css'),
             GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
-            GlobalUrlService::buildUcStaticUrl('/css/merchant/merchant.css'),
-            GlobalUrlService::buildUcStaticUrl('/css/merchant/merchantfrom.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/common/core.min.css'),
             // 这下面写自己的css.
         ];
 
@@ -33,8 +32,7 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
             // Uc的js.
-            GlobalUrlService::buildUcStaticUrl('/js/component/domResize.js'),
-            GlobalUrlService::buildUcStaticUrl('/js/common/core.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/common/core.min.js'),
             // 这里是自己的js.
             GlobalUrlService::buildKFStaticUrl('/js/merchant/common.js'),
         ];

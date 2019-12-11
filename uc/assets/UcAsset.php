@@ -29,19 +29,17 @@ class UcAsset extends AssetBundle
             GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
 
-            GlobalUrlService::buildUcStaticUrl('/css/merchant/merchant.css'),
-            GlobalUrlService::buildUcStaticUrl('/css/merchant/merchantfrom.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/common/core.min.css'),
         ];
-
 
         $this->js = [
             GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
             GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
-
-            GlobalUrlService::buildUcStaticUrl('/js/component/domResize.js'),
-            GlobalUrlService::buildUcStaticUrl('/js/common/core.js'),
+            // 全局的JS
+            GlobalUrlService::buildUcStaticUrl('/js/common/core.min.js'),
+            // uc自己的JS
             GlobalUrlService::buildUcStaticUrl('/js/common.js'),
         ];
         parent::registerAssetFiles($view);

@@ -1,3 +1,6 @@
+/**
+merchant.css
+ */
 /*滚动条的宽度*/
 ::-webkit-scrollbar {width:6px;height:6px;}
 /*外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果*/
@@ -246,8 +249,8 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     background: rgb(51,60,71);
 }
 #merchant .chant_all .left_menu .menu-title i{
-     color: #c5d0dd;
-     font-size: 20px;
+    color: #c5d0dd;
+    font-size: 20px;
 }
 #merchant .chant_all .left_menu .menu-show-hide {
     width: 100%;
@@ -283,28 +286,28 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     justify-content: flex-end;
     -webkit-justify-content: flex-end;
 }
- #merchant .chant_all .right_merchant .right_top .menu_info_edit{
-     position: absolute;
-     width: 300px;
-     background: #fff;
-     z-index: 9;
-     right: 5px;
-     top: 65px;
-     border: 1px solid #e6e6e6;
-     border-radius: 3px;
+#merchant .chant_all .right_merchant .right_top .menu_info_edit{
+    position: absolute;
+    width: 300px;
+    background: #fff;
+    z-index: 9;
+    right: 5px;
+    top: 65px;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
 
-     padding-top: 0px;
-     margin-top: 0px;
-     padding-bottom: 0px;
-     margin-bottom: 0px;
-     min-height: 10px;
-     z-index: 999;
+    padding-top: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    min-height: 10px;
+    z-index: 999;
 
-     transition:height 2s;
-     -moz-transition:height 2s; /* Firefox 4 */
-     -webkit-transition:height 2s; /* Safari and Chrome */
-     -o-transition:height 2s; /* Opera */
- }
+    transition:height 2s;
+    -moz-transition:height 2s; /* Firefox 4 */
+    -webkit-transition:height 2s; /* Safari and Chrome */
+    -o-transition:height 2s; /* Opera */
+}
 #merchant .chant_all .right_merchant .right_top .menu_info_edit::before{
     content: '';
     display: block;
@@ -428,4 +431,135 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 .staff_tab .tab_active {
     color: #05abef;
     border-bottom: 4px solid #05abef;
+}
+
+
+/**
+merchantform.css
+ */
+/*------------ Color Palette ------------*/
+/*
+LIGHT ORANGE: #e4644b
+DARK ORANGE: #d05942
+DARK BROWN: #484141
+Menu text: #f7f1e3
+Submenu text: #ae9f9f
+*/
+
+/*------------ General Settings ------------*/
+.layui-bg-orange {
+    background-color: #05abef !important;
+}
+ul {
+    list-style: none;
+}
+
+li {
+    cursor: pointer;
+}
+/*------------ Main Menu ------------*/
+.mainmenu {
+    margin: 10px auto;
+    font-size: 16px;
+    position:relative;
+    padding:0;
+}
+.mainmenu > li {
+    background-color: #05abef;
+    border-top: 1px solid #eff2f5;
+    height: 48px;
+    color: #f7f1e3;
+    box-sizing: border-box;
+    position:relative;
+    padding:0 0 0 40px;
+}
+
+.mainmenu > li:first-child {
+    /*border-radius: 7px 7px 0 0;*/
+    border-top: 0;
+}
+
+.mainmenu > li:last-child {
+    border-radius: 0 0 7px 7px;
+}
+
+.mainmenu > li span {
+    display:block;
+    line-height: 48px;
+}
+
+.mainmenu > li .icon {
+    float: left;
+    width: 20px;
+    height: 20px;
+    display:block;
+    position:absolute;
+    left:10px;
+    top:15px;
+}
+
+.mainmenu > li .messages {
+    background: url("../images/messages.png") no-repeat;
+    padding: 0;
+    margin-top: -33px;
+    margin-right: 19px;
+    float: right;
+    display: block;
+    width: 34px;
+    height: 18px;
+    text-align: center;
+    font-size: 11px;
+    line-height: 19px;
+}
+/*------------ Sub Menu ------------*/
+.submenu {
+    padding: 35px;
+    box-sizing: border-box;
+    color: #ae9f9f;
+    font-size: 13px;
+    content: " ";
+    /*opacity: 0.5;*/
+}
+
+
+/*.submenu li {*/
+/*    line-height: 20px;*/
+/*    height: 35px;*/
+/*    padding-top: 11px;*/
+/*    !*margin-left: -40px;*!*/
+/*    background-color: #484141;*/
+/*    border-left: solid 6px #484141;*/
+/*    transition: border-left 220ms ease-in;*/
+/*}*/
+
+/*.submenu .chosen,*/
+/*.submenu .chosen:hover {*/
+/*    border-left: solid 6px #96d145;*/
+/*}*/
+
+/*.submenu li:hover {*/
+/*    border-left: solid 6px #eff2f5;*/
+/*}*/
+
+.submenu li span {
+    /*margin-left:30px;*/
+}
+
+.animate {
+    animation: flip 2000ms ease-in-out alternate;
+}
+
+@keyframes flip {
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.button_tabs div{
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #009688;
+    width: 70px;
+    height: 38px;
+    text-align: center;
 }
