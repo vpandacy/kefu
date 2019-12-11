@@ -33,6 +33,8 @@ class CompanyController extends BaseController
         $contact = $this->post('contact','');
         $logo = $this->post('logo','');
         $desc = $this->post('desc','');
+        $auto_disconnect = $this->post('auto_disconnect','');
+        $greetings = $this->post('greetings','');
 
         if(!$name || mb_strlen($name) > 255) {
             return $this->renderErrJSON( '请填写正确的企业名称' );
@@ -50,6 +52,14 @@ class CompanyController extends BaseController
             return $this->renderErrJSON(  '请填写对应的企业描述' );
         }
 
+        if(!preg_match('/^\d+$/',$auto_disconnect)) {
+            return $this->renderErrJSON( '请填写正确的自动断开时长' );
+        }
+
+        if(!$greetings || mb_strlen($greetings) > 255) {
+            return $this->renderErrJSON(  '请填写对应的企业问候语' );
+        }
+
         $merchant = Merchant::findOne(['id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
 
         $merchant->setAttributes([
@@ -61,26 +71,6 @@ class CompanyController extends BaseController
 
         if(!$merchant->save(0)) {
             return $this->renderErrJSON( '数据保存失败,请联系管理员' );
-        }
-
-        return $this->renderJSON([],'保存成功');
-    }
-
-
-    /**
-     * 保存商户聊天配置信息.
-     */
-    public function actionSetting()
-    {
-        $auto_disconnect = $this->post('auto_disconnect','');
-        $greetings = $this->post('greetings','');
-
-        if(!preg_match('/^\d+$/',$auto_disconnect)) {
-            return $this->renderErrJSON( '请填写正确的自动断开时长' );
-        }
-
-        if(!$greetings || mb_strlen($greetings) > 255) {
-            return $this->renderErrJSON(  '请填写对应的企业问候语' );
         }
 
         $setting = MerchantSetting::findOne(['merchant_id'=>$this->getMerchantId()]);
@@ -99,6 +89,6 @@ class CompanyController extends BaseController
             return $this->renderErrJSON( '数据保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON( [],'保存成功' );
+        return $this->renderJSON([],'保存成功');
     }
 }

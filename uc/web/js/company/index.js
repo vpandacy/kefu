@@ -1,6 +1,4 @@
 ;
-
-
 var overall_company_ops = {
     init: function () {
         this.eventBind();
@@ -19,27 +17,6 @@ var overall_company_ops = {
                 $.ajax({
                     type: 'POST',
                     url: uc_common_ops.buildUcUrl('/company/save'),
-                    data: data.field,
-                    dataType:'json',
-                    success:function (res) {
-                        $.close(index);
-                        // 暂时不做任何处理.
-                        return $.msg(res.msg, res.code == 200);
-                    },
-                    error: function () {
-                        $.close(index);
-                    }
-                });
-
-                return false;
-            });
-
-            // 这里弄两个接口.
-            form.on('submit(settings)', function (data) {
-                var index = $.loading(1, {shade: .5});
-                $.ajax({
-                    type: 'POST',
-                    url: uc_common_ops.buildUcUrl('/company/setting'),
                     data: data.field,
                     dataType:'json',
                     success:function (res) {
