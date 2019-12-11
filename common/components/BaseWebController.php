@@ -103,9 +103,14 @@ class BaseWebController extends Controller
         return Yii::$app->request->isAjax;
     }
 
-    protected function isGetMethod()
+    protected function isGet()
     {
         return Yii::$app->request->isGet;
+    }
+
+    protected function isPost()
+    {
+        return Yii::$app->request->isPost;
     }
 }
 

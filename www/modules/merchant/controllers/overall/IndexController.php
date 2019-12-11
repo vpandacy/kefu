@@ -152,7 +152,7 @@ class IndexController extends BaseController
      */
     public function actionImport()
     {
-        if(Yii::$app->request->isGet) {
+        if($this->isGet()) {
             return $this->render('import');
         }
 

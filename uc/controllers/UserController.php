@@ -21,7 +21,7 @@ class UserController extends BaseController
      */
     public function actionLogin()
     {
-        if (\Yii::$app->request->isGet) {
+        if ($this->isGet()) {
             if ( $this->checkLoginStatus() ) {
                 return $this->redirect(UCUrlService::buildUCUrl("/default/application",$this->app_id));
             }
@@ -32,7 +32,7 @@ class UserController extends BaseController
         $password = $this->post('password','');
 
         if(strpos($email,'@') < 1) {
-            return $this->renderErrJSON('请输入正确的手机号~~' );
+            return $this->renderErrJSON('请输入正确的邮箱~~' );
         }
 
         if(!$password) {
