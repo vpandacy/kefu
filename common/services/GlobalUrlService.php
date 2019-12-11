@@ -118,6 +118,11 @@ class GlobalUrlService extends BaseService {
 	public static function buildKFUrl($uri, $params = []){
         $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['www'];
+
+        if (CommonService::is_SSL()) {
+            $domain = str_replace('http://', 'https://', $domain);
+        }
+
         return $domain.$path;
     }
 
@@ -133,6 +138,11 @@ class GlobalUrlService extends BaseService {
         $params = $params + [ "ver" => $release_version ];
         $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['www'];
+
+        if (CommonService::is_SSL()) {
+            $domain = str_replace('http://', 'https://', $domain);
+        }
+
         return $domain.$path;
     }
 
@@ -145,6 +155,11 @@ class GlobalUrlService extends BaseService {
     public static function buildKFMerchantUrl($uri, $params = []){
         $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['merchant'];
+
+        if (CommonService::is_SSL()) {
+            $domain = str_replace('http://', 'https://', $domain);
+        }
+
         return $domain.$path;
     }
 
@@ -160,6 +175,11 @@ class GlobalUrlService extends BaseService {
         $uri = "/{$merchant_sn}".$uri;
         $path = Url::toRoute(array_merge([ $uri ], $params));
         $domain = \Yii::$app->params['domains']['cs'];
+
+        if (CommonService::is_SSL()) {
+            $domain = str_replace('http://', 'https://', $domain);
+        }
+
         return $domain.$path;
     }
     /*客服系统相关URL end **/
@@ -176,6 +196,11 @@ class GlobalUrlService extends BaseService {
     {
         $domain = \Yii::$app->params['domains']['static'];
         $path = Url::toRoute(array_merge([$path], $params));
+        
+        if (CommonService::is_SSL()) {
+            $domain = str_replace('http://', 'https://', $domain);
+        }
+
         return $domain . $path;
     }
 
