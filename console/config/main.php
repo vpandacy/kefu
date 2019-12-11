@@ -30,11 +30,21 @@ return [
                 ],
             ],
         ],
+        'errorHandler' => [
+            'class' => 'console\controllers\ErrorController'
+        ],
+        "urlManager" => require(__DIR__ . '/router.php')
     ],
     'modules' => [
         'chat' => [
             'class' => 'console\modules\chat\ChatModule',
-        ]
+        ],
+        'guest' => [
+            'class' => 'console\modules\guest\Module',
+        ],
+        'cs' => [
+            'class' => 'console\modules\cs\Module',
+        ],
     ],
     'params' => $params,
 ];
