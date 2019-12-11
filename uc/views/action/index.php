@@ -87,7 +87,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/a
                                                         <?php endif;?>
                                                         <td>
                                                             <div class="layui-form-inline">
-                                                                <input type="checkbox" value="<?=$action['id']?>" class="action" name="permissions[]" title="<?= $action['name']; ?>">
+                                                                <label>
+                                                                    <input type="checkbox" lay-ignore value="<?=$action['id']?>" class="action" name="permissions[]" title="<?= $action['name']; ?>">
+                                                                    <?= $action['name']; ?>
+                                                                </label>
+                                                                
                                                             </div>
                                                         </td>
                                                     </tr>
