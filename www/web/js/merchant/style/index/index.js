@@ -9,7 +9,7 @@ var merchant_style_index_ops = {
 
             table.render({
                 elem: '#groupChat'
-                ,url: url_manager.buildMerchantUrl('/style/index/list')
+                ,url: merchant_common_ops.buildMerchantUrl('/style/index/list')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
@@ -32,7 +32,7 @@ var merchant_style_index_ops = {
 
             table.on('toolbar(groupChat)', function (event) {
                 if(event.event == 'add') {
-                    location.href = url_manager.buildMerchantUrl('/style/index/edit');
+                    location.href = merchant_common_ops.buildMerchantUrl('/style/index/edit');
                     return false;
                 }
 
@@ -51,7 +51,7 @@ var merchant_style_index_ops = {
 
                     $.ajax({
                         type: 'POST',
-                        url: url_manager.buildMerchantUrl('/style/index/recover'),
+                        url: merchant_common_ops.buildMerchantUrl('/style/index/recover'),
                         data: {
                             ids: ids
                         },
@@ -76,14 +76,14 @@ var merchant_style_index_ops = {
 
             table.on('tool(groupChat)', function (event) {
                 if(event.event == 'edit') {
-                    location.href = url_manager.buildMerchantUrl('/style/index/edit', {
+                    location.href = merchant_common_ops.buildMerchantUrl('/style/index/edit', {
                         group_id: event.data.id,
                     });
                     return false;
                 }
 
                 if(event.event == 'assign') {
-                    location.href = url_manager.buildMerchantUrl('/style/index/assign', {
+                    location.href = merchant_common_ops.buildMerchantUrl('/style/index/assign', {
                         group_id: event.data.id
                     });
 
@@ -95,7 +95,7 @@ var merchant_style_index_ops = {
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: url_manager.buildMerchantUrl('/style/index/disable'),
+                        url: merchant_common_ops.buildMerchantUrl('/style/index/disable'),
                         dataType: 'json',
                         data: {
                             id: event.data.id

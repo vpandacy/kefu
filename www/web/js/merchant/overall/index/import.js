@@ -19,7 +19,7 @@ var merchant_overall_index_import_ops = {
                 ,acceptMime:'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 ,exts: 'xls|xlsx'
                 ,bindAction: '#upload-button'
-                ,url: url_manager.buildMerchantUrl('/overall/index/import')
+                ,url: merchant_common_ops.buildMerchantUrl('/overall/index/import')
                 ,before: function () {
                     index = $.loading(1,{shade: .5});
                 }
@@ -31,7 +31,7 @@ var merchant_overall_index_import_ops = {
 
                     index = $.alert(response.msg, function () {
                         $.close(index);
-                        location.href = url_manager.buildMerchantUrl('/overall/index/index')
+                        location.href = merchant_common_ops.buildMerchantUrl('/overall/index/index')
                     });
 
                 },

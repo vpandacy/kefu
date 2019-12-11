@@ -62,7 +62,7 @@ var merchant_common_ops = {
 
         return url + _paramUrl
     },
-    buildMerchantUrl:function(){
+    buildMerchantUrl:function(path, params){
         var url = $(".hidden_val_wrap input[name=domain_app]").val() + path;
         var _paramUrl = '';
         if (params) {

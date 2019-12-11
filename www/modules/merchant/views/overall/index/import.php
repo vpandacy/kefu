@@ -3,7 +3,7 @@ use www\assets\MerchantAsset;
 use common\components\helper\StaticAssetsHelper;
 use common\services\GlobalUrlService;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/merchant/overall/index/import.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/overall/index/import.js'), MerchantAsset::className());
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[

@@ -9,7 +9,7 @@ var merchant_black_index_ops = {
 
             table.render({
                 elem: '#blackListTable'
-                ,url: url_manager.buildMerchantUrl('/black/index/list')
+                ,url: merchant_common_ops.buildMerchantUrl('/black/index/list')
                 ,toolbar: '#blackToolbar' //开启头部工具栏，并为其绑定左侧模板
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
@@ -48,7 +48,7 @@ var merchant_black_index_ops = {
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: url_manager.buildMerchantUrl('/black/index/disable'),
+                        url: merchant_common_ops.buildMerchantUrl('/black/index/disable'),
                         dataType: 'json',
                         data: {
                             id: row.data.id

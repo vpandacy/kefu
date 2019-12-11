@@ -1,7 +1,7 @@
 <?php
 use \common\services\GlobalUrlService;
 use \common\components\helper\StaticAssetsHelper;
-StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
+StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[

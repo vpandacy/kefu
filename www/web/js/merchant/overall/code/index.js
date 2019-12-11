@@ -18,7 +18,7 @@ var merchant_overall_code_index_ops = {
 
                 $.ajax({
                     type: 'POST',
-                    url: url_manager.buildMerchantUrl('/overall/code/obtain'),
+                    url: merchant_common_ops.buildMerchantUrl('/overall/code/obtain'),
                     data: {
                         group_id: value
                     },

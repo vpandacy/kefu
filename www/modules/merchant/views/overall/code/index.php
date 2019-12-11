@@ -3,7 +3,7 @@ use common\services\GlobalUrlService;
 use www\assets\MerchantAsset;
 use common\components\helper\StaticAssetsHelper;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/merchant/overall/code/index.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/overall/code/index.js'), MerchantAsset::className());
 ?>
 <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
     'bar_menu'  =>  'settings',

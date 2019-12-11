@@ -26,7 +26,7 @@ var merchant_style_index_assign_ops = {
 
                 $.ajax({
                     type: 'POST',
-                    url : url_manager.buildMerchantUrl('/style/index/distribution'),
+                    url : merchant_common_ops.buildMerchantUrl('/style/index/distribution'),
                     data: {
                         group_id: data.group_id,
                         staff_ids: select_staff_ids
@@ -39,7 +39,7 @@ var merchant_style_index_assign_ops = {
                         }
 
                         index = $.alert(response.msg,function () {
-                            location.href = url_manager.buildMerchantUrl('/style/index/index');
+                            location.href = merchant_common_ops.buildMerchantUrl('/style/index/index');
                             $.close(index);
                         });
                     },

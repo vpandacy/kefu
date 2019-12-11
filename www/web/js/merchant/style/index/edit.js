@@ -15,7 +15,7 @@ var merchant_style_index_edit_ops = {
 
                 $.ajax({
                     type: 'POST',
-                    url : url_manager.buildMerchantUrl('/style/index/save'),
+                    url : merchant_common_ops.buildMerchantUrl('/style/index/save'),
                     data: data,
                     dataType: 'json',
                     success:function (response) {
@@ -25,7 +25,7 @@ var merchant_style_index_edit_ops = {
                         }
 
                         index = $.alert(response.msg,function () {
-                            location.href = url_manager.buildMerchantUrl('/style/index/index');
+                            location.href = merchant_common_ops.buildMerchantUrl('/style/index/index');
                             $.close(index);
                         });
                     },

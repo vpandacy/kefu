@@ -1,7 +1,7 @@
 <?php
 use \common\services\GlobalUrlService;
 use \common\components\helper\StaticAssetsHelper;
-//StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
+//StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/index.css"),www\assets\MerchantAsset::className() )
 ?>
 <!--  表格用的layui 具体配置参考：https://www.layui.com/demo/table/auto.html -->
 <div id="staff_index_index">
