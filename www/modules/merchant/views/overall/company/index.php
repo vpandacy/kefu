@@ -8,7 +8,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugin
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/plupload/zh_CN.js'), MerchantAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/qiniu/qiniu.min.js'), MerchantAsset::className());
 
-StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl('/js/merchant/overall/company/index.js'), MerchantAsset::className() )
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildKFStaticUrl('/js/merchant/overall/company/index.js'), MerchantAsset::className() )
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[

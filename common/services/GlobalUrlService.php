@@ -86,11 +86,15 @@ class GlobalUrlService extends BaseService {
     }
 
     /**
-     * 设置app_id
+     * 设置App Id
      * @param int $app_id
+     * @throws \Exception
      */
     public static function setAppId($app_id = 0)
     {
+        if(self::$app_id) {
+            throw new \Exception('不能重复设置APP_ID');
+        }
         self::$app_id = $app_id;
     }
 
@@ -102,83 +106,62 @@ class GlobalUrlService extends BaseService {
     {
         return self::$app_id;
     }
+
+
     /*客服系统相关URL start **/
     /**
-     * 生成www端用户
+     * 生成客服应用的链接.
      * @param $uri
      * @param array $params
      * @return string
      */
 	public static function buildKFUrl($uri, $params = []){
-        $path = "";
-        if( $uri ){
-            $path   = Url::toRoute(array_merge([$uri], $params));
-        }
+        $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['www'];
         return $domain.$path;
     }
 
-    public static function buildKFStaticUrl($uri, $params = []){
+    /**
+     * 生成客服应用的静态资源Url
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+    public static function buildKFStaticUrl($uri, $params = [])
+    {
         $release_version = StaticAssetsHelper::getReleaseVersion();
         $params = $params + [ "ver" => $release_version ];
-        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['www'];
         return $domain.$path;
     }
 
+    /**
+     * 生成客服商户端的url.
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
     public static function buildKFMerchantUrl($uri, $params = []){
-        $path = "";
-        if( $uri ){
-            $path   = Url::toRoute(array_merge([$uri], $params));
-        }
+        $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['merchant'];
         return $domain.$path;
     }
 
-    public static function buildKFCSUrl($merchant_sn,$uri, $params = []){
+    /**
+     * 生成客服聊天端url.
+     * @param $merchant_sn
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+    public static function buildKFCSUrl($merchant_sn,$uri, $params = [])
+    {
         $uri = "/{$merchant_sn}".$uri;
         $path = Url::toRoute(array_merge([ $uri ], $params));
         $domain = \Yii::$app->params['domains']['cs'];
         return $domain.$path;
     }
-
-    /**
-     * 商户url.
-     * @param $uri
-     * @param array $params
-     * @return string
-     * @deprecated 此方法废除，调用 buildKFMerchantUrl
-     */
-    public static function buildMerchantUrl(  $uri, $params = [] )
-    {
-        return self::buildKFMerchantUrl( $uri, $params );
-    }
-
-    /**
-     * 生成商户sn.
-     * @param $merchant_sn
-     * @param $uri
-     * @param array $params
-     * @return string
-     * @deprecated 此方法废除，调用 buildKFCSUrl
-     */
-	public static function buildCsUrl( $merchant_sn, $uri, $params = [])
-    {
-        return self::buildKFCSUrl( $merchant_sn,$uri, $params );
-	}
-
-    /**
-     * Author: Vincent
-     * 加载www应用的js 和 css
-     * @param $uri
-     * @param array $params
-     * @return string
-     * @deprecated 此方法废除，调用 buildKFStaticUrl
-     */
-	public static function buildWwwStaticUrl(  $uri, $params = [] )
-    {
-        return self::buildKFStaticUrl($uri, $params ) ;
-	}
     /*客服系统相关URL end **/
 
 

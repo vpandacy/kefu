@@ -8,20 +8,20 @@ StaticPluginHelper::setDepend(AppAsset::className());
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
-    GlobalUrlService::buildWwwStaticUrl('/css/www/code/chat_mini.css'),
-    GlobalUrlService::buildWwwStaticUrl('/css/www/code/tools.css'),
-    GlobalUrlService::buildWwwStaticUrl('/css/www/code/emojibg.css'),
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/chat_mini.css'),
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/tools.css'),
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/emojibg.css'),
 ]);
 
 StaticPluginHelper::includeJsPlugins([
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.min.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.md5.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/niuniucapture.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/capturewrapper.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/emojisort.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/emoji.js'),
-    GlobalUrlService::buildWwwStaticUrl('/js/www/code/chat_mini.js')
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.min.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.md5.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/niuniucapture.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/emojisort.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat_mini.js')
 ]);
 ?>
 <div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">

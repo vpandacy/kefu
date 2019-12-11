@@ -7,7 +7,7 @@ use common\services\GlobalUrlService;
 <!-- 左侧菜单栏 -->
 <div class="left_menu" id="left_menu">
     <div class="menu-logo">
-        <a><img src="<?=GlobalUrlService::buildWwwStaticUrl("/images/merchant/logo1.png");?>"></a>
+        <a><img src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo1.png");?>"></a>
     </div>
     <div class="menu-version"><?=$this->params['merchant']['name']?></div>
     <div class="menu-title">

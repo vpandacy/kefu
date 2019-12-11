@@ -3,7 +3,7 @@ use common\components\helper\StaticAssetsHelper;
 use common\services\GlobalUrlService;
 use www\assets\CsAsset;
 
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/cs/client.js'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/client.js'), CsAsset::className());
 ?>
 <div id='chatExe'>
     <!-- 右键菜单 -->
