@@ -163,8 +163,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                             消息预览
                         </div>
                         <div class="button">
-                            <div class="sumbit">发送<i class="iconfont icon-anjianfengexian"></i><i
-                                        class="iconfont icon-jiantou"></i></div>
+                            <div class="sumbit">发送<i class="iconfont icon-anjianfengexian"></i><i class="iconfont icon-jiantou"></i></div>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,15 @@ var socket = null;
 var client = {
     init: function () {
         socket = this.initSocket();
+        this.eventBind();
+    },
+    eventBind: function() {
+        $(document).on('click', function () {
+            var text = $('.sumbit-input').text();
+            socket.send(client.buildMsg('chat', {
+                msg: text
+            }))
+        });
     },
     initSocket: function () {
         // 使用socket来链接.
@@ -19,7 +28,14 @@ var client = {
 
         // 接收websocket返回的信息.
         socket.addEventListener('message', function (event) {
-            console.dir(event);
+            var data = JSON.parse(event.data);
+            console.dir(data);
+            if(data.cmd == 'assign_kf') {
+                var user = {
+                    customer: data.data.customer
+                };
+                localStorage.setItem('user', JSON.stringify(user));
+            }
         });
 
         // 关闭websocket发送的信息.
@@ -49,7 +65,7 @@ var client = {
         if(data) {
             send_data.data = data;
             send_data.form = $('[name=cs_sn]').val();
-            send_data.to = user.cs_sn ? user.cs_sn : '';
+            send_data.to = user.customer ? user.customer : '';
         }
 
         return JSON.stringify(send_data);

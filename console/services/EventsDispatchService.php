@@ -21,7 +21,7 @@ class EventsDispatchService extends BaseService
         $data = $message['data'];
         Gateway::sendToUid($message['to'], self::buildMsg('chat',[
             'msg'   =>  $data['msg'],
-            'form'  =>  $message['to']  // 来自谁的消息.
+            'form'  =>  $message['form']  // 来自谁的消息.
         ]));
     }
 
@@ -74,7 +74,7 @@ class EventsDispatchService extends BaseService
         }
 
         // 同时还得给客服来一次消息. 不然客服都不知道有游客进来了.
-        Gateway::sendToUid($cs,self::buildMsg(' assign_kf', [
+        Gateway::sendToUid($cs,self::buildMsg('assign_kf', [
             'msg'   =>  '分配成功',
             'customer'  =>  $uuid
         ]));
