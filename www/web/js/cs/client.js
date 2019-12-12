@@ -65,6 +65,8 @@ var client = {
             '   </div>',
             '</div>'
         ].join(""));
+
+        client.scrollToBottom();
     },
     initSocket: function () {
         // 使用socket来链接.
@@ -90,6 +92,10 @@ var client = {
                 localStorage.setItem('user', JSON.stringify(user));
             }
 
+            if(data.cmd == 'ping') {
+                socket.send(client.buildMsg('pong'))
+            }
+
             if(data.cmd == 'chat') {
                 // 这里要组装数据.
                 // 获取游客的信息.
@@ -98,6 +104,8 @@ var client = {
                 user = JSON.parse(user);
 
                 $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.msg));
+
+                client.scrollToBottom();
             }
         });
 
