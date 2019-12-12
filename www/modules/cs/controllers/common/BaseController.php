@@ -10,7 +10,9 @@ use Yii;
 
 class BaseController extends StaffBaseController
 {
-    protected $allow_actions = [];
+    protected $allow_actions = [
+        'cs/user/login'
+    ];
 
     /**
      * 过滤
@@ -31,35 +33,22 @@ class BaseController extends StaffBaseController
 
         if (!$is_login) {
             if (\Yii::$app->request->isAjax) {
-                $this->renderJSON([ 'url' => GlobalUrlService::buildUCUrl("/user/login") ], "未登录,请返回用户中心", -302);
+                $this->renderJSON([ 'url' => GlobalUrlService::buildKFCSUrl("/user/login") ], "未登录,请返回用户中心", -302);
             } else {
-                $this->redirect(GlobalUrlService::buildUCUrl("/user/login"));
+                $this->redirect(GlobalUrlService::buildKFCSUrl("/user/login"));
             }
             return false;
         }
 
         GlobalUrlService::setAppId($this->getAppId());
-        //判断是否有访问该系统的权限，根据当前人登录的app_id判断
-        $own_appids = $this->current_user->getAppIds();
-        if( !in_array(  $this->app_id ,$own_appids ) ){
-            $this->redirect( GlobalUrlService::buildUCUrl("/default/application") );
-            return false;
-        }
 
         //获取商户信息
         $this->merchant_info = MerchantService::checkValid( $this->current_user['merchant_id'] );
         if( !$this->merchant_info ){
-            $this->redirect(GlobalUrlService::buildKFUrl("/default/forbidden", [ 'url' => MerchantService::getLastErrorMsg() ]));
+            $this->redirect(GlobalUrlService::buildKFCSUrl("/default/forbidden", [ 'msg' => MerchantService::getLastErrorMsg() ]));
             return false;
         }
-        if( !$this->checkPrivilege( $action->getUniqueId() ) ) {
-            if(\Yii::$app->request->isAjax){
-                $this->renderJSON([],"您无权访问此页面，请返回",-302);
-            }else{
-                $this->redirect( GlobalUrlService::buildUcUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
-            }
-            return false;
-        }
+
         // 商户信息.
         Yii::$app->view->params['merchant'] = $this->merchant_info;
         // 员工信息.

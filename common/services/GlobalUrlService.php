@@ -165,15 +165,13 @@ class GlobalUrlService extends BaseService {
 
     /**
      * 生成客服聊天端url.
-     * @param $merchant_sn
      * @param $uri
      * @param array $params
      * @return string
      */
-    public static function buildKFCSUrl($merchant_sn,$uri, $params = [])
+    public static function buildKFCSUrl($uri, $params = [])
     {
-        $uri = "/{$merchant_sn}".$uri;
-        $path = Url::toRoute(array_merge([ $uri ], $params));
+        $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
         $domain = \Yii::$app->params['domains']['cs'];
 
         if (CommonService::is_SSL()) {
@@ -181,6 +179,18 @@ class GlobalUrlService extends BaseService {
         }
 
         return $domain.$path;
+    }
+
+
+    /**
+     * 生成客服聊天端静态地址.
+     * @param $uri
+     * @param array $params
+     * @return string
+     */
+    public static function buildKFCSStaticUrl($uri, $params = [])
+    {
+        return self::buildKFStaticUrl($uri, $params);
     }
     /*客服系统相关URL end **/
 

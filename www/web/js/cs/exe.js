@@ -17,9 +17,12 @@ var tab = {
         else{
             var y = e.clientY - 138;
         }
-        document.getElementById('menu').style.left=x+'px';
-        document.getElementById('menu').style.top=y+'px';
-        document.getElementById('menu').style.display='block';
+
+        if(document.getElementById('menu')) {
+            document.getElementById('menu').style.left=x+'px';
+            document.getElementById('menu').style.top=y+'px';
+            document.getElementById('menu').style.display='block';
+        }
         //取消默认的浏览器自带右键
         e.preventDefault();
     },
@@ -27,8 +30,10 @@ var tab = {
         dom.path[1].removeChild(dom.path[0]);
     },
     listHide: function () {
-        document.getElementById('menu').style.display='none';
-    },
+        if(document.getElementById('menu')) {
+            document.getElementById('menu').style.display='none';
+        }
+    }
 };
 $(function () {
     $(".tab .tab-switch .tab-one").click(function() {
