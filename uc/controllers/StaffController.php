@@ -3,6 +3,7 @@
 namespace uc\controllers;
 
 use common\components\DataHelper;
+use common\components\helper\ValidateHelper;
 use common\models\uc\Role;
 use common\models\uc\StaffRole;
 use common\models\uc\Department;
@@ -167,15 +168,15 @@ class StaffController extends BaseController
         }
 
         // 开始判断.
-        if(!preg_match('/^1\d{10}/', $data['mobile'])) {
+        if(!ValidateHelper::validMobile($data['mobile'])) {
             return $this->renderErrJSON( '请输入正确的手机号' );
         }
 
-        if(strpos($data['email'],'@') <= 1) {
+        if(!ValidateHelper::validEmail($data['email'])) {
             return $this->renderErrJSON( '请输入正确的手机号' );
         }
 
-        if(!$data['name'] || mb_strlen($data['name']) > 255) {
+        if(!ValidateHelper::validLength($data['name'], 1, 255)) {
             return $this->renderErrJSON( '请输入正确的姓名/商户名' );
         }
 

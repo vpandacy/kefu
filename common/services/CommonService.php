@@ -110,4 +110,64 @@ class CommonService extends BaseService
         }
         return false;
     }
+
+    /**
+     * 生成uuid.如果太复杂.传入浏览地址和IP,调用genUniqueName即可.
+     * @return string
+     * @throws \Exception
+     */
+    public static function genUUID()
+    {
+        $nodeBytes = random_bytes(6);
+
+        $nodeMsb = substr($nodeBytes, 0, 3);
+        $nodeLsb = substr($nodeBytes, 3);
+
+        $nodeMsb = hex2bin(
+            str_pad(
+                dechex(hexdec(bin2hex($nodeMsb)) | 0x010000),
+                6,
+                '0',
+                STR_PAD_LEFT
+            )
+        );
+
+        $node = $nodeMsb . $nodeLsb;
+
+        $node = str_pad(bin2hex($node), 12, '0', STR_PAD_LEFT);
+
+        $clockSeq = random_int(0, 0x3fff);
+
+        $seconds = strtotime('s');
+
+        $microSeconds = microtime(true) * 10000 % 10000;
+
+        $uuidTime = ($seconds * 10000000) + ($microSeconds * 10) + 0x01b21dd213814000;
+
+        $uuidTime = [
+            'low' => sprintf('%08x', $uuidTime & 0xffffffff),
+            'mid' => sprintf('%04x', ($uuidTime >> 32) & 0xffff),
+            'hi' => sprintf('%04x', ($uuidTime >> 48) & 0x0fff),
+        ];
+
+        $timeHi = hexdec($uuidTime['hi']) & 0x0fff;
+        $timeHi |= 1 << 12;
+
+        $clockSeqHi = $clockSeq & 0x3f;
+        $clockSeqHi |= 0x80;
+
+        $uuid = vsprintf(
+            '%08s-%04s-%04s-%02s%02s-%012s',
+            [
+                $uuidTime['low'],
+                $uuidTime['mid'],
+                sprintf('%04x', $timeHi),
+                sprintf('%02x', $clockSeqHi),
+                sprintf('%02x', $clockSeq & 0xff),
+                $node,
+            ]
+        );
+
+        return $uuid;
+    }
 }

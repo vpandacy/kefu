@@ -1,6 +1,7 @@
 <?php
 namespace www\modules\merchant\controllers\overall;
 
+use common\components\helper\ValidateHelper;
 use common\models\merchant\CommonWord;
 use common\services\ConstantService;
 use common\services\ExcelService;
@@ -72,7 +73,7 @@ class IndexController extends BaseController
             return $this->renderErrJSON( '参数丢失~~' );
         }
 
-        if(!$data['words'] || mb_strlen($data['words']) > 255) {
+        if(!ValidateHelper::validLength($data['words'],1,255)) {
             return $this->renderErrJSON('请输入正确的姓名/商户名' );
         }
 

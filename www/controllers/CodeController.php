@@ -34,9 +34,15 @@ class CodeController extends BaseController
         ]);
     }
 
+    /**
+     * 这里是直接访问.直接访问时生成uuid.
+     * @return string
+     */
     public function actionChat()
     {
         $msn = $this->get('msn','');
+
+        $uuid = $this->getGuestUUID();
 
         if(!$msn) {
             return '<script>alert("您引入的非法客服软件")</script>';
@@ -51,9 +57,11 @@ class CodeController extends BaseController
 
         $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
 
-        return $this->render('chat_mini',[
+        return $this->render('chat',[
             'merchant'  =>  $merchant,
             'setting'   =>  $setting,
+            'uuid'      =>  $uuid,
+            'host'      =>  '127.0.0.1:8282',
             'code'      =>  $this->get('code'),
         ]);
     }

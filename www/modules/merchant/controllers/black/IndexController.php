@@ -2,6 +2,7 @@
 namespace www\modules\merchant\controllers\black;
 
 use common\components\DataHelper;
+use common\components\helper\ValidateHelper;
 use common\models\merchant\BlackList;
 use common\models\uc\Staff;
 use common\services\ConstantService;
@@ -77,15 +78,15 @@ class IndexController extends BaseController
         $staff_id = $this->post('staff_id',0);
         $expired_time = $this->post('expired_time','');
 
-        if(!$ip) {
+        if(!ValidateHelper::validIsEmpty($ip)) {
             return $this->renderErrJSON( '请输入正确的IP地址~~' );
         }
 
-        if(!$visitor_id) {
+        if(!ValidateHelper::validIsEmpty($visitor_id)) {
             return $this->renderErrJSON( '请输入正确的游客编号~~' );
         }
 
-        if(!$staff_id) {
+        if(!ValidateHelper::validIsEmpty($staff_id)) {
             return $this->renderErrJSON( '请选择正确的接待客服~~' );
         }
 

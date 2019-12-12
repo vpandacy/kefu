@@ -1,6 +1,7 @@
 <?php
 namespace uc\controllers;
 
+use common\components\helper\ValidateHelper;
 use common\models\uc\Merchant;
 use common\models\uc\Staff;
 use common\services\CommonService;
@@ -31,7 +32,7 @@ class UserController extends BaseController
         $email = $this->post('email','');
         $password = $this->post('password','');
 
-        if(strpos($email,'@') < 1) {
+        if(!ValidateHelper::validEmail($email)) {
             return $this->renderErrJSON('请输入正确的邮箱~~' );
         }
 
@@ -72,11 +73,11 @@ class UserController extends BaseController
         $merchant_name = $this->post('merchant_name','');
         $password = $this->post('password','');
 
-        if(strpos($email,'@') < 1) {
+        if(!ValidateHelper::validEmail($email)) {
             return $this->renderErrJSON( '请输入正确的邮箱~~' );
         }
 
-        if(!$password) {
+        if(!ValidateHelper::validIsEmpty($password)) {
             return $this->renderErrJSON( '请输入密码~~' );
         }
 
@@ -85,7 +86,7 @@ class UserController extends BaseController
             return $this->renderErrJSON(  CommonService::getLastErrorMsg() );
         }
 
-        if(!$merchant_name) {
+        if(!ValidateHelper::validIsEmpty($merchant_name)) {
             return $this->renderErrJSON( '请输入正确的商户名~~' );
         }
 

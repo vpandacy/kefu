@@ -3,6 +3,7 @@
 namespace www\modules\merchant\controllers\style;
 
 use common\components\DataHelper;
+use common\components\helper\ValidateHelper;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GroupChatStaff;
 use common\models\uc\Department;
@@ -83,11 +84,11 @@ class IndexController extends BaseController
             return $this->renderErrJSON( '参数丢失' );
         }
 
-        if(!$data['title'] || mb_strlen($data['title']) > 255) {
+        if(!ValidateHelper::validLength($data['title'], 1, 255)) {
             return $this->renderErrJSON( '请输入正确的风格名称' );
         }
 
-        if(!$data['desc'] || mb_strlen($data['desc']) > 255) {
+        if(!ValidateHelper::validLength($data['desc'], 1, 255)) {
             return $this->renderErrJSON( '请输入正确的简历' );
         }
 

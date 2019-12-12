@@ -13,69 +13,6 @@ var inputFlie = {
     }
 };
 
-// 关于前台聊天的基本功能.
-var chat = {
-    init: function () {
-        this.eventBind();
-    },
-    eventBind: function () {
-        var that = this;
-        // 发送消息.
-        $('#content').on('keydown', function (event) {
-            // 不等于回车的时候.
-            if(event.keyCode != 13) {
-                return true;
-            }
-            // 修改掉其他事件
-            event.preventDefault();
-            that.send();
-            return false;
-        });
-        
-        $('.submit-button').on('click', function (e) {
-            event.preventDefault();
-
-            that.send();
-        });
-    },
-    send: function () {
-        var msg = $('#content').text();
-
-        if(msg.length <= 0) {
-            return false;
-        }
-
-        var date = new Date();
-        var time_str = [
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-        ].map(function (value) {
-            return value < 10 ? '0' + value : value;
-        }).join(':');
-
-        var div = document.createElement('div');
-        div.style.textAlign = "right";
-        div.innerHTML = [
-            '<div class="content-message message-my">',
-            '    <div class="message-info">',
-            '        <div class="message-name-date name-date-my"><span class="date">',time_str,'</span><span class="message-name">我</span></div>',
-            '        <span class="message-message message-message-my">',msg,'</span>',
-            '    </div>',
-            '</div>'
-        ].join("")
-
-        $('.online-content').append(div);
-
-        $('#content').text('');
-
-        var total_height = $('.online-content')[0].scrollHeight;
-
-        // 每次发送完消息滚动到最底部.
-        $('.online-content').scrollTop(total_height);
-    }
-};
-
 $(function () {
     /**
      * 控制右下角聊天切换状态
@@ -85,6 +22,7 @@ $(function () {
         $('.show-hide-min').css({display:'none'});
         $('.show-hide').css({display:'block'});
     });
+
     $('.show-hide-max').click(function () {
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
@@ -126,7 +64,7 @@ $(function () {
                 '           </div>\n' +
                 '        </div>'
             for (let i = 0 ; i< 2; i ++)  {
-            document.getElementsByClassName('online-content')[0].insertAdjacentHTML('afterbegin',html)
+                document.getElementsByClassName('online-content')[0].insertAdjacentHTML('afterbegin',html)
             }
         },3000);
         // 滚动条回到顶部
@@ -185,6 +123,63 @@ $(document).ready(function(){
         $('#btnUpload').hide();
         Init();
     });
-
-    chat.init();
 });
+// 用于前台的数据存储.
+var chat_storage = {
+    // 封装自己的读取和存储函数.
+    setItem: function (key, value) {
+        if(typeof value == 'object') {
+            value = JSON.stringify(value);
+        }
+
+        if(window.localStorage) {
+            localStorage.setItem(key, value);
+        }
+
+        // 存到cookie中.
+        if(parent.document) {
+            this._setCookie(key, value);
+        }
+
+        return true;
+    },
+    getItem: function (key, default_value) {
+        var value = null;
+
+        if(window.localStorage) {
+            value = localStorage.getItem(key);
+        }
+
+        if(!value && parent.document ) {
+            value = this._getCookie(key);
+        }
+
+        if(!value) {
+            return default_value;
+        }
+
+        // 自动解析数据.
+        try{
+            return JSON.parse(value);
+        }catch (e) {
+            return value;
+        }
+    },
+    // 获取cookie信息.
+    _getCookie: function(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (parent.document.cookie.match(reg)) {
+            arr = parent.document.cookie.match(reg);
+            return unescape(arr[2]);
+        }
+
+        return '';
+    },
+    _setCookie: function (name, value) {
+        var now = new Date();
+        // 先存个十年.
+        now.setTime(now.getTime()+(3650 * 24 * 3600000));
+        parent.document.cookie=name+ "=" + escape(value) + ";path=/;expires="+now.toGMTString()
+        return true;
+    }
+};

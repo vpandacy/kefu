@@ -1,6 +1,7 @@
 <?php
 namespace www\assets;
 
+use common\services\GlobalUrlService;
 use yii\web\AssetBundle;
 
 class AppAsset extends AssetBundle
@@ -16,7 +17,9 @@ class AppAsset extends AssetBundle
     {
         $this->css = [];
 
-        $this->js = [];
+        $this->js = [
+//            GlobalUrlService::buildStaticUrl("/socket/socket.io.js"),
+        ];
 
         parent::registerAssetFiles($view);
     }

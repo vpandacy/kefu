@@ -1,6 +1,7 @@
 <?php
 namespace console\services;
 use common\services\BaseService;
+use console\controllers\BaseController;
 use GatewayWorker\Lib\Gateway;
 
 class GuestBusiHanlderService extends BaseService
@@ -32,8 +33,8 @@ class GuestBusiHanlderService extends BaseService
      */
     public static function onMessage($client_id, $message) {
         // 这里是向单个人发送. 及时回复. 先别发送.
-        //Gateway::sendToClient( $client_id, $message );
-        //return;
+//        Gateway::sendToClient( $client_id, $message );
+//        return;
         $message = json_decode($message, true);
         if( isset( $_SESSION['REMOTE_IP'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
             $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
@@ -57,10 +58,10 @@ class GuestBusiHanlderService extends BaseService
                 //EventsDispatch::guestIn($client_id, $message);
                 break;
             case "pong":
-                //EventsDispatch::addChatHistory( $client_id,$message );
                 break;
             case "ping":
                 //EventsDispatch::addChatHistory( $client_id,$message );
+                Gateway::sendToClient($client_id,json_encode(['cmd'=>'pong']));
                 break;
         };
     }

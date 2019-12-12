@@ -1,6 +1,7 @@
 <?php
 namespace www\modules\merchant\controllers\style;
 
+use common\components\helper\ValidateHelper;
 use common\models\merchant\City;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GroupChatSetting;
@@ -64,15 +65,15 @@ class SettingController extends BaseController
             return $this->renderErrJSON( '参数丢失' );
         }
 
-        if(!$data['company_name'] || mb_strlen($data['company_name']) > 255) {
+        if(!ValidateHelper::validLength($data['company_name'], 1, 255)) {
             return $this->renderErrJSON( '请输入公司名称~~' );
         }
 
-        if(!$data['company_logo']) {
+        if(!ValidateHelper::validIsEmpty($data['company_logo'])) {
             return $this->renderErrJSON( '请上传公司LOGO~~' );
         }
 
-        if(!$data['company_desc'] || mb_strlen($data['company_desc']) > 255) {
+        if(!ValidateHelper::validLength($data['company_desc'], 1, 255)) {
             return $this->renderErrJSON( '请输入公司描述~~' );
         }
 

@@ -1,6 +1,7 @@
 <?php
 namespace uc\controllers;
 
+use common\components\helper\ValidateHelper;
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
 use common\services\ConstantService;
@@ -36,7 +37,7 @@ class CompanyController extends BaseController
         $auto_disconnect = $this->post('auto_disconnect','');
         $greetings = $this->post('greetings','');
 
-        if(!$name || mb_strlen($name) > 255) {
+        if(!ValidateHelper::validLength($name, 1, 255)) {
             return $this->renderErrJSON( '请填写正确的企业名称' );
         }
 
@@ -48,7 +49,7 @@ class CompanyController extends BaseController
             return $this->renderErrJSON( '请上传企业的logo' );
         }
 
-        if(!$desc || mb_strlen($desc) > 255) {
+        if(!ValidateHelper::validLength($desc, 1, 255)) {
             return $this->renderErrJSON(  '请填写对应的企业描述' );
         }
 
@@ -56,7 +57,7 @@ class CompanyController extends BaseController
             return $this->renderErrJSON( '请填写正确的自动断开时长' );
         }
 
-        if(!$greetings || mb_strlen($greetings) > 255) {
+        if(!ValidateHelper::validLength($greetings, 1, 255)) {
             return $this->renderErrJSON(  '请填写对应的企业问候语' );
         }
 

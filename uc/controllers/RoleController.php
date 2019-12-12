@@ -2,6 +2,7 @@
 
 namespace uc\controllers;
 
+use common\components\helper\ValidateHelper;
 use common\models\uc\Role;
 use common\services\ConstantService;
 use uc\controllers\common\BaseController;
@@ -43,7 +44,7 @@ class RoleController extends BaseController
 
         $name= $this->post('name','');
 
-        if(!$name || mb_strlen($name) > 255) {
+        if(!ValidateHelper::validLength($name,1, 255)) {
             return $this->renderErrJSON( '请输入正确的部门名称' );
         }
 

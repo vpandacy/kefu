@@ -8,7 +8,7 @@ StaticPluginHelper::setDepend(AppAsset::className());
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
-    GlobalUrlService::buildKFStaticUrl('/css/www/code/chat_mini.css'),
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/chat.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/tools.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/emojibg.css'),
 ]);
@@ -20,15 +20,20 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/niuniucapture.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat_mini.js')
+    // 这里先分开业务.后期在合并js.
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/core.js'), // 核心.比方说动画.上传动作.
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat.js'), // 主要实现业务逻辑.
 ]);
 ?>
-<div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">
+
+<div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>" data-uuid="<?=$uuid?>">
     <div class="show-hide-min" style="display: block">
         <div class="min-onclick">
-            <div><i class="iconfont icon-xiaoxi"></i> </div>
-            <div><span>和我们在线交谈！</span>  </div>
-            <div id="online_show" class="online_show"><i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-"></i></div>
+            <div><i class="iconfont icon-xiaoxi"></i></div>
+            <div><span>和我们在线交谈！</span></div>
+            <div id="online_show" class="online_show">
+                <i class="iconfonticon-changyongtubiao-xianxingdaochu-zhuanqu-"></i>
+            </div>
         </div>
     </div>
     <div id="show-hide" class="show-hide" style="display: none">
@@ -91,6 +96,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
         </div>
     </div>
+
     <div class="capture-dialog dis_none">
         <div class="modal-content">
             <div class="modal-header">
@@ -127,4 +133,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
         </div>
     </div>
+</div>
+<div class="hidden-wrapper">
+    <input type="hidden" name="host" value="<?=$host?>">
 </div>
