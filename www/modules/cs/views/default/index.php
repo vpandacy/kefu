@@ -46,6 +46,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             </div>
         </div>
     </div>
+
     <!-- 右侧聊天记录、聊天对象-->
     <div class="exe-keep">
         <div class="tab fg1" >
@@ -106,6 +107,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             <a>访客:1329</a>
         </div>
     </div>
+
     <!-- 聊天栏 -->
     <div class="flex1">
         <div class="exe-header">
@@ -136,25 +138,44 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                     </div>
                 </div>
                 <div class="exe-content-history">
-                    <div class="history-close">关闭页面</div>
-                    <div class="history-close ">对话已结束【2019-11-02 08:22:22】</div>
+                    <!-- 这里是提示信息 -->
+<!--                    <div class="history-close">关闭页面</div>-->
+                    <div class="content-message">
+                        <div class="message-img">
+                            <img class="logo" src="http://cdn.static.test.jiatest.cn/o_1dr7olugtots14i91056r4m5jp7.jpg">
+                        </div>
+                        <div class="message-info">
+                            <div class="message-name-date"><span>客服</span><span class="date">07:41:27</span></div>
+                            <span class="message-message">首次问候语</span>
+                        </div>
+                    </div>
+
+                    <div class="content-message message-my">
+                        <div class="message-info">
+                            <div class="message-name-date name-date-my">
+                                <span class="date">16:47:01</span>
+                                <span class="message-name">我</span>
+                            </div>
+                            <span class="message-message message-message-my">来试试</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="exe-content-sumbit">
                     <div>
-                            <span>
-                                <i class="iconfont icon-ai247"></i>
-                                <i class="iconfont icon-biaoqing"></i>
-                                <i class="iconfont icon-tupian"></i>
-                                <i class="iconfont icon-wenjian"></i>
-                                <i class="iconfont icon-jietu"></i>
-                                <i class="iconfont icon-biaoqing"></i>
-                                <i class="iconfont icon-xingbiao"></i>
-                                <i class="iconfont icon-fenxiang"></i>
-                            </span>
                         <span>
-                                <label>功能扩展</label>
-                                <label>消息记录</label>
-                            </span>
+                            <i class="iconfont icon-ai247"></i>
+                            <i class="iconfont icon-biaoqing"></i>
+                            <i class="iconfont icon-tupian"></i>
+                            <i class="iconfont icon-wenjian"></i>
+                            <i class="iconfont icon-jietu"></i>
+                            <i class="iconfont icon-biaoqing"></i>
+                            <i class="iconfont icon-xingbiao"></i>
+                            <i class="iconfont icon-fenxiang"></i>
+                        </span>
+                        <span>
+                            <label>功能扩展</label>
+                            <label>消息记录</label>
+                        </span>
                     </div>
                     <div class="sumbit-input" contenteditable="true" ></div>
                     <div class="sumbit-bottom">

@@ -300,6 +300,8 @@ body {
 
 #chatExe .exe-content .exe-content-history {
     flex-grow: 1;
+    max-height: 573px;
+    overflow-y: auto;
 }
 
 #chatExe .exe-content .exe-content-history .history-close {
@@ -350,7 +352,11 @@ body {
     border: none;
     outline: 0;
     padding: 10px;
+    max-height: 212px;
+    min-height: 50px;
+    overflow-y: auto;
 }
+
 #chatExe .exe-content .exe-content-sumbit .sumbit-bottom {
     display: flex;
     display:-webkit-flex;
@@ -449,4 +455,63 @@ body {
 
 #chatExe .height10 {
     height: 10% !important;
+}
+
+#chatExe .exe-content-history .content-message {
+    padding-left: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#chatExe .exe-content-history .content-message .message-img {
+    width: 45px;
+    /* margin-right: 10px; */
+}
+
+#chatExe .exe-content-history .content-message .logo {
+    width: 35px;
+    border-radius: 50%;
+}
+
+#chatExe .exe-content-history .content-message .message-info {
+    width: 70%;
+}
+
+#chatExe .exe-content-history .content-message .message-info .message-name-date {
+    color: rgb(112, 130, 166);
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#chatExe .exe-content-history .content-message .message-info .message-name-date {
+    color: rgb(112, 130, 166);
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#chatExe .exe-content-history .content-message .message-info .message-name-date .date{
+    padding: 0 15px;
+}
+
+#chatExe .exe-content-history .content-message .message-info .message-message {
+    background: rgb(230, 233, 239);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+#chatExe .exe-content-history .message-my {
+    text-align: right;
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+}
+
+#chatExe .exe-content-history .message-info .message-name-date .message-name{
+    padding-right: 10px;
+}
+
+#chatExe .exe-content-history .message-my .message-info .message-message-my {
+    margin-right: 10px;
 }

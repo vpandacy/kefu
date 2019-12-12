@@ -7,6 +7,7 @@ use common\models\uc\Merchant;
 use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\ConstantService;
+use common\services\GlobalUrlService;
 use GatewayWorker\Lib\Gateway;
 
 class EventsDispatchService extends BaseService
@@ -76,12 +77,16 @@ class EventsDispatchService extends BaseService
         // 同时还得给客服来一次消息. 不然客服都不知道有游客进来了.
         Gateway::sendToUid($cs,self::buildMsg('assign_kf', [
             'msg'   =>  '分配成功',
-            'customer'  =>  $uuid
+            'customer'  =>  $uuid,
+            'nickname'  =>  'Guest-' . substr($uuid, strrpos($uuid,'-')),
+            'avatar'=>  GlobalUrlService::buildStaticUrl('/image/default_avatar.png'),
         ]));
 
         return Gateway::sendToUid($uuid,self::buildMsg('assign_kf',[
             'msg'   =>  '分配成功',
-            'cs_sn' =>  $cs
+            'cs_sn' =>  $cs['sn'],
+            'nickname'  =>  $cs['name'],
+            'avatar'    =>  $cs['avatar'],
         ]));
     }
 
@@ -113,7 +118,11 @@ class EventsDispatchService extends BaseService
         }
 
         // 先写死.后面在修改成根据客服的在线状态.获取客服.还有一些分配的规则.
-        return 'qkztwtm1';
+        return [
+            'sn'    => 'qkztwtm1',
+            'name'  => '张三',
+            'avatar'  =>  GlobalUrlService::buildPicStaticUrl('hsh', 'o_1dr4u1q8g1c6l1t3kot61o8a10gi7.jpg')
+        ];
     }
 
     /**
@@ -131,7 +140,7 @@ class EventsDispatchService extends BaseService
                     'status'        =>  ConstantService::$default_status_true,
                 ])
                 ->select([
-                    'id','sn'
+                    'id', 'sn', 'name', 'avatar'
                 ])
                 ->asArray()
                 ->all();
@@ -164,7 +173,7 @@ class EventsDispatchService extends BaseService
             ->where(['id'=>$staff_ids])
             ->andWhere(['merchant_id'=>$merchant_id, 'status'=>ConstantService::$default_status_true])
             ->select([
-                'id','sn'
+                'id', 'sn', 'name', 'avatar'
             ])
             ->asArray()
             ->all();
