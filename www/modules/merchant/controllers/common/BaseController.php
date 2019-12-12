@@ -58,7 +58,7 @@ class BaseController extends StaffBaseController
             if(\Yii::$app->request->isAjax){
                 $this->renderJSON([],"您无权访问此页面，请返回",-302);
             }else{
-                $this->redirect( GlobalUrlService::buildLZUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
+                $this->redirect( GlobalUrlService::buildKFMerchantUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
             }
             return false;
         }

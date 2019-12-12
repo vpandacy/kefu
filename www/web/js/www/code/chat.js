@@ -42,6 +42,10 @@ var chat = {
             return false;
         }
 
+        socket.send(this.buildMsg('chat',{
+            'msg': msg
+        }));
+
         var date = new Date();
         var time_str = [
             date.getHours(),
@@ -83,7 +87,6 @@ var chat = {
         // 打开websocket信息.
         socket.addEventListener('open', function () {
             var user = chat_storage.getItem('hshkf');
-            console.dir(user);
             // 初次建立链接.
             socket.send(chat.buildMsg('guest_in', {
                 ua: navigator.userAgent,
@@ -99,9 +102,21 @@ var chat = {
             var data = JSON.parse(event.data);
 
             if(data.cmd == 'ping') {
-                socket.send(chat.buildMsg('pong'));
+                return socket.send(chat.buildMsg('pong'));
             }
 
+            // 这里要处理主要业务的逻辑.
+            // 分配客服了.
+            if(data.cmd == 'assign_kf' && data.code == 200) {
+                var user = chat_storage.getItem('hshkf');
+                user.cs_sn = data.data.cs_sn;
+                chat_storage.setItem('hshkf', user);
+            }
+
+            // 这里是聊天信息.
+            if(data.cmd == 'chat' && data.code == 200) {
+
+            }
         });
 
         // 关闭websocket发送的信息.
@@ -125,7 +140,7 @@ var chat = {
         if(data) {
             send_data.data = data;
             send_data.form = user.uuid;
-            send_data.to = user.cs_id ? user.cs_id : '';
+            send_data.to = user.cs_sn ? user.cs_sn : '';
         }
 
         return JSON.stringify(send_data);

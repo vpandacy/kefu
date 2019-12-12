@@ -40,9 +40,13 @@ class GuestBusiHanlderService extends BaseService
             $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
         }
         $message = $message + $_SERVER;
+        // @todo 后面考虑将返回信息给统一返回.不然太麻烦了.就返回信息就得写很多.
         switch ($message['cmd']) {
             case "guest_in"://客户进来到页面，设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
-                //EventsDispatch::guestIn($client_id, $message);
+                EventsDispatchService::guestIn($client_id, $message);
+                break;
+            case 'guest_in_cs': // 暂时还无法分开客服和游客.先通过方法的形式来处理.
+                EventsDispatchService::guestInCs($client_id,$message);
                 break;
             case "guest_connect"://客户链接,要分配客服
                 //找找目前有咩有空闲的客服
@@ -52,7 +56,7 @@ class GuestBusiHanlderService extends BaseService
                 //EventsDispatch::guestClose($client_id, $message);
                 break;
             case "chat"://聊天
-                //EventsDispatch::chatMessage( $client_id,$message );
+                EventsDispatchService::chatMessage( $client_id, $message );
                 break;
             case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                 //EventsDispatch::guestIn($client_id, $message);

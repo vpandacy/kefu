@@ -61,7 +61,7 @@ class CodeController extends BaseController
             'merchant'  =>  $merchant,
             'setting'   =>  $setting,
             'uuid'      =>  $uuid,
-            'host'      =>  '127.0.0.1:8282',
+            'host'      =>  '192.168.117.122:8282', // 写死成自己的.  好调试代码.
             'code'      =>  $this->get('code'),
         ]);
     }

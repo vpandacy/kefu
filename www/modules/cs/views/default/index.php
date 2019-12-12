@@ -5,6 +5,9 @@ use www\assets\CsAsset;
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/client.js'), CsAsset::className());
 ?>
+<div class="form-wrapper" style="display: none">
+    <input type="hidden" name="cs_sn" value="<?=$staff['sn']?>">
+</div>
 <div id='chatExe'>
     <!-- 右键菜单 -->
     <div id="menu" >

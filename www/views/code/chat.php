@@ -14,6 +14,8 @@ StaticPluginHelper::includeCssPlugins([
 ]);
 
 StaticPluginHelper::includeJsPlugins([
+    GlobalUrlService::buildStaticUrl('/socket/swfobject.js'),
+    GlobalUrlService::buildStaticUrl('/socket/web_socket.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.md5.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
@@ -21,10 +23,12 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
     // 这里先分开业务.后期在合并js.
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/core.js'), // 核心.比方说动画.上传动作.
     GlobalUrlService::buildKFStaticUrl('/js/www/code/chat.js'), // 主要实现业务逻辑.
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/core.js'), // 核心.比方说动画.上传动作.
 ]);
+
 ?>
+<script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
 
 <div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>" data-uuid="<?=$uuid?>">
     <div class="show-hide-min" style="display: block">
