@@ -13,7 +13,7 @@ use GatewayWorker\Lib\Gateway;
 class EventsDispatchService extends BaseService
 {
     /**
-     * 先调用通
+     * @todo 先调用通,这种方式肯定是不行的.
      * @param $client_id
      * @param $message
      */
@@ -104,6 +104,7 @@ class EventsDispatchService extends BaseService
 
     /**
      * 这里获取商户下在线客服的sn.
+     * @todo 暂时还是先写死的.需要在更改.
      * @param string $code 风格
      * @param $merchant
      * @return bool|false
