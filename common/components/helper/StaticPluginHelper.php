@@ -39,6 +39,18 @@ class StaticPluginHelper
     }
 
     /**
+     * socket的兼容性js.兼容IE8,9.需要在页面创建并使用
+     * <script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
+     */
+    public static function socketPlugin()
+    {
+        self::includeJsPlugins([
+            '/socket/swfobject.js',
+            '/socket/web_socket.js',
+        ]);
+    }
+
+    /**
      * 批量引入js资源.
      * @param array $plugins
      */

@@ -1,10 +1,16 @@
 <?php
 use common\components\helper\StaticAssetsHelper;
+use common\components\helper\StaticPluginHelper;
 use common\services\GlobalUrlService;
 use www\assets\CsAsset;
 
+StaticPluginHelper::setDepend(CsAsset::className());
+StaticPluginHelper::socketPlugin();
+
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/client.js'), CsAsset::className());
 ?>
+<script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
+
 <div class="form-wrapper" style="display: none">
     <input type="hidden" name="cs_sn" value="<?=$staff['sn']?>">
 </div>

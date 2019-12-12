@@ -5,6 +5,8 @@ use common\components\helper\StaticPluginHelper;
 
 StaticPluginHelper::setDepend(AppAsset::className());
 
+StaticPluginHelper::socketPlugin();
+
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
@@ -14,8 +16,6 @@ StaticPluginHelper::includeCssPlugins([
 ]);
 
 StaticPluginHelper::includeJsPlugins([
-    GlobalUrlService::buildStaticUrl('/socket/swfobject.js'),
-    GlobalUrlService::buildStaticUrl('/socket/web_socket.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.md5.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
