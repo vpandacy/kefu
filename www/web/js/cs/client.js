@@ -155,6 +155,11 @@ var client = {
             '   </div>',
             '</div>'
         ].join("");
+    },
+    scrollToBottom: function () {
+        var height = $('.exe-content-history')[0].scrollHeight;
+
+        $('.exe-content-history').scrollTop(height);
     }
 };
 

@@ -21,7 +21,7 @@ var chat = {
         // 发送消息.
         $('#content').on('keydown', function (event) {
             // 不等于回车的时候.
-            if(event.keyCode != 13) {
+            if(event.keyCode == 13 && event.shiftKey || event.keyCode != 13) {
                 return true;
             }
             // 修改掉其他事件
@@ -30,7 +30,7 @@ var chat = {
             return false;
         });
 
-        $('.submit-button').on('click', function (e) {
+        $('.submit-button').on('click', function (event) {
             event.preventDefault();
             that.send();
         });
@@ -70,10 +70,7 @@ var chat = {
 
         $('#content').text('');
 
-        var total_height = $('.online-content')[0].scrollHeight;
-
-        // 每次发送完消息滚动到最底部.
-        $('.online-content').scrollTop(total_height);
+        chat.scrollToBottom();
     },
     initSocket: function () {
         var host = $('[name=host]').val();
@@ -109,13 +106,21 @@ var chat = {
             // 分配客服了.
             if(data.cmd == 'assign_kf' && data.code == 200) {
                 var user = chat_storage.getItem('hshkf');
-                user.cs_sn = data.data.cs_sn;
+
+                user.cs  = {
+                    cs_sn: data.data.cs_sn,
+                    nickname: data.data.nickname,
+                    avatar: data.data.avatar
+                }
+
                 chat_storage.setItem('hshkf', user);
             }
 
             // 这里是聊天信息.
             if(data.cmd == 'chat' && data.code == 200) {
-
+                var user = chat_storage.getItem('hshkf');
+                $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.msg))
+                chat.scrollToBottom();
             }
         });
 
@@ -140,10 +145,37 @@ var chat = {
         if(data) {
             send_data.data = data;
             send_data.form = user.uuid;
-            send_data.to = user.cs_sn ? user.cs_sn : '';
+            send_data.to = user.cs ? user.cs.cs_sn : '';
         }
 
         return JSON.stringify(send_data);
+    },
+    buildCsMsg: function (nickname, avatar, msg) {
+        var date = new Date();
+
+        var time_str = [
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        ].map(function (value) {
+            return value < 10 ? '0' + value : value;
+        }).join(':');
+
+        return [
+            '<div class="content-message">',
+            '   <div class="message-img">',
+            '       <img class="logo" src="', avatar, '">',
+            '   </div>',
+            '   <div class="message-info">',
+            '       <div class="message-name-date"><span>', nickname, '</span><span class="date">', time_str, '</span></div>',
+            '       <span class="message-message">', msg, '</span>',
+            '   </div>',
+            '</div>'
+        ].join("");
+    },
+    scrollToBottom: function () {
+        var total_height = $('.online-content')[0].scrollHeight;
+        $('.online-content').scrollTop(total_height);
     }
 };
 
