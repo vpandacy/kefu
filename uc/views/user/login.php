@@ -5,40 +5,42 @@ use uc\assets\UcAsset;
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/user/login.js'),UcAsset::className());
 ?>
-<div class="dowebok" id="dowebok">
-    <div class="form-container sign-up-container">
-        <form action="#">
-            <h1>注册</h1>
-            <div class="social-container">
-            </div>
-            <input type="text" name="name" placeholder="姓名或公司名">
-            <input type="text" name="email" placeholder="请输入邮箱地址">
-            <input type="password" name="password" placeholder="密码">
-            <button type="button" class="register">注册</button>
-        </form>
-    </div>
-    <div class="form-container sign-in-container">
-        <form action="#">
-            <h1>登录</h1>
-            <div class="social-container">
-            </div>
-            <input type="text" name="email" placeholder="请输入邮箱进行登录">
-            <input type="password" name="password" placeholder="密码">
-            <a href="#">忘记密码？</a>
-            <button type="button" class="login">登录</button>
-        </form>
-    </div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h1>已有帐号？</h1>
-                <p>请使用您的帐号进行登录</p>
-                <button class="ghost" id="signIn">登录</button>
-            </div>
-            <div class="overlay-panel overlay-right">
-                <h1>没有帐号？</h1>
-                <p>立即注册加入我们，和我们一起开始旅程吧</p>
-                <button class="ghost" id="signUp">注册</button>
+
+<div id="index_login">
+    <div class="login_content dflex">
+        <div class="login_left_back">
+            <img class="login_left_img_one" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg2.png')?>">
+            <img class="login_left_img_two" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg1.png')?>">
+            <img class="login_left_img_three" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg3.png')?>">
+        </div>
+        <div class="login_right_login dflex">
+            <img  class="login_right_img_Four" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg4.png')?>">
+            <div class="login_content_sr">
+                <!--登录-->
+                <div class="login_content_tab sign-in-container">
+                    <span class="web-font welcome_title">欢迎登录</span><br>
+                    <span class="web-font welcome_tip">请使用您本人的账号密码</span>
+                    <input class="login_inp_name" name="email" placeholder="请输入邮箱">
+                    <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
+                    <div class="login_button cupointer login">登录</div>
+                    <div class="textAlign cupointer">
+                        <span class="web-font login_register_hand" onclick="loginActive('login')">没有账号？去注册</span>
+                    </div>
+                </div>
+
+                <!--注册-->
+                <div class="register_content_tab sign-up-container">
+                    <span class="web-font welcome_title">欢迎注册</span><br>
+                    <span class="web-font welcome_tip"></span>
+                    <input class="login_inp_name" type="text" name="name"  placeholder="请输入商户名">
+                    <input class="login_inp_name" style="margin-top: 0;" type="text" name="email" placeholder="请输入邮箱">
+                    <input class="login_inp_password" type="password"  placeholder="请输入密码">
+                    <span class="web-font welcome_password_hand cupointer"></span>
+                    <div class="login_button cupointer register" >注册</div>
+                    <div class="textAlign cupointer">
+                        <span class="web-font login_register_hand" onclick="loginActive('register')">已有账号？去登录</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

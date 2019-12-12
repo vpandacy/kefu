@@ -12,9 +12,10 @@ use common\services\GlobalUrlService;
     <meta charset="utf-8">
     <title>登录</title>
     <link href="<?=GlobalUrlService::buildUcStaticUrl("/css/user/login.css");?>" rel="stylesheet">
+    <link href="<?=GlobalUrlService::buildUcStaticUrl("/css/user/typeface/typeface.css");?>" rel="stylesheet">
 </head>
 <?=$this->beginBody()?>
-<body style="background: url('<?=GlobalUrlService::buildUcStaticUrl("/images/user/bg.jpg");?>') no-repeat 0 0; background-size: cover">
+<body>
 <?=$content?>
 <?=$this->renderFile('@uc/views/common/footer.php')?>
 <?php $this->endBody() ?>

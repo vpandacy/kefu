@@ -1,21 +1,16 @@
 ;
+function loginActive() {
+    // 登录、找回密码、注册 来回切换
+    let loginDom = document.getElementsByClassName('login_content_sr')[0]
+    arguments[0] === 'login' ? loginDom.classList.add('right-panel-active') : loginDom.classList.remove('right-panel-active');
+    arguments[0] === 'password' ? loginDom.classList.add('right-panel-password-active') : loginDom.classList.remove('right-panel-password-active');
+}
+
 var merchant_user_login_ops = {
     init: function () {
         this.eventBind();
     },
     eventBind:function () {
-        var signUpButton = document.getElementById('signUp');
-        var signInButton = document.getElementById('signIn');
-        var container = document.getElementById('dowebok');
-
-        signUpButton.addEventListener('click', function () {
-            container.classList.add('right-panel-active')
-        });
-
-        signInButton.addEventListener('click', function () {
-            container.classList.remove('right-panel-active')
-        });
-
         // 登录.
         $('.login').on('click',function () {
             var email = $('.sign-in-container [name=email]').val(),

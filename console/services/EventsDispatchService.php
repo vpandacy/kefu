@@ -78,8 +78,8 @@ class EventsDispatchService extends BaseService
         Gateway::sendToUid($cs,self::buildMsg('assign_kf', [
             'msg'   =>  '分配成功',
             'customer'  =>  $uuid,
-            'nickname'  =>  'Guest-' . substr($uuid, strrpos($uuid,'-')),
-            'avatar'=>  GlobalUrlService::buildStaticUrl('/image/default_avatar.png'),
+            'nickname'  =>  'Guest-' . substr($uuid, strrpos($uuid,'-') + 1),
+            'avatar'=>  GlobalUrlService::buildKFStaticUrl('/images/default_avatar.png'),
         ]));
 
         return Gateway::sendToUid($uuid,self::buildMsg('assign_kf',[
