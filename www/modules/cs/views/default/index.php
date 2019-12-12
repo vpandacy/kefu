@@ -140,25 +140,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                 <div class="exe-content-history">
                     <!-- 这里是提示信息 -->
 <!--                    <div class="history-close">关闭页面</div>-->
-                    <div class="content-message">
-                        <div class="message-img">
-                            <img class="logo" src="http://cdn.static.test.jiatest.cn/o_1dr7olugtots14i91056r4m5jp7.jpg">
-                        </div>
-                        <div class="message-info">
-                            <div class="message-name-date"><span>客服</span><span class="date">07:41:27</span></div>
-                            <span class="message-message">首次问候语</span>
-                        </div>
-                    </div>
-
-                    <div class="content-message message-my">
-                        <div class="message-info">
-                            <div class="message-name-date name-date-my">
-                                <span class="date">16:47:01</span>
-                                <span class="message-name">我</span>
-                            </div>
-                            <span class="message-message message-message-my">来试试</span>
-                        </div>
-                    </div>
                 </div>
                 <div class="exe-content-sumbit">
                     <div>
