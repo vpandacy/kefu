@@ -76,6 +76,7 @@ body {
     color: rgb(114, 117, 128);
     text-align: center;
     margin: 1rem 0;
+    padding: 5px;
 }
 
 #wapOnline .content .date span {
@@ -151,6 +152,11 @@ body {
 #wapOnline .content .content-message .message-info {
     width: 70%;
 }
+#wapOnline .content  .message-my {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+    padding-right: 1rem;
+}
 
 #wapOnline .content .content-message .message-info .message-name-date {
     color: rgb(112, 130, 166);
@@ -167,4 +173,5 @@ body {
     border-radius: 5px;
     padding: 0.5rem;
     font-size: 0.8rem;
+    display: inline-block;
 }
