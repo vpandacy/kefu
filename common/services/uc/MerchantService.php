@@ -27,11 +27,19 @@ class MerchantService extends BaseService
     }
 
     public static function getInfoById( $saas_merchant_id = 0 ){
-        $info = false;
-        if( $saas_merchant_id ){
-            $info =  Merchant::find()->where([ "id" => $saas_merchant_id ])->one();
+        if( !$saas_merchant_id ){
+            return false;
         }
-        return $info;
+        $cache_key = "merchant_{$saas_merchant_id}";
+        $data = CacheService::get( $cache_key );
+        if( !$data ) {
+            $info = Merchant::find()
+                ->where([ 'id'=> $saas_merchant_id ] )
+                ->asArray()->one();
+            $data = json_encode( $info?:[] );
+            CacheService::set($cache_key,$data,86400 * 30 );
+        }
+        return json_decode( $data,true );
     }
 
     public static function getInfoBySn( $sn = null ){

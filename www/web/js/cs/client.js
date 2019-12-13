@@ -2,11 +2,41 @@
 var socket = null,
     online_users = [], // 在线游客列表.
     current_uuid = '';  // 当前游客. 这里是需要处理信息的. 如果不是当前游客的窗口.
+// 关于前台聊天的基本功能.
+var kf_ws_service = {
+    ws: null,
+    connect:function( host ){
+        this.ws = new WebSocket('ws://' + host);
+        //这个事件应该标注 状态 已连接（绿色）
+        this.ws.addEventListener('open', function () {
+            client.handlerMessage( { "cmd":"ws_connect" } );
+        });
+        // 接收websocket返回的信息.
+        this.ws.addEventListener('message', function (event) {
+            var data = JSON.parse(event.data);
+            client.handlerMessage( data );
+        });
+
+        // 关闭websocket发送的信息.
+        this.ws.addEventListener('close', function () {
+            //关闭
+        });
+
+        // 这里是websocket发生错误的.信息.
+        this.ws.addEventListener('error', function () {
+            //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+        });
+    },
+    socketSend: function (msg) {
+        this.ws.send(JSON.stringify(msg));
+    }
+};
 
 var client = {
     init: function () {
         this.eventBind();
-        socket = this.initSocket();
+        this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        this.initSocket();
     },
     // 事件绑定信息.
     eventBind: function() {
@@ -84,74 +114,39 @@ var client = {
     },
     // 发送消息函数.
     send: function(msg) {
-        var user = ChatStorage.getItem(current_uuid, []),
-            time_str = page.getCurrentTimeStr();
-
-        // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
-        socket.send(client.buildMsg('chat', {
-            content: msg
+        kf_ws_service.socketSend(this.buildMsg('chat', {
+            content: content
         }));
-
-        if(!user.messages) {
-            user.messages = [];
-        }
-
-        // 消息信息.
-        user.messages.push({
-            f_id: $('[name=cs_sn]').val(),
-            t_id: current_uuid,
-            content: msg,
-            time:time_str
-        });
-
-        ChatStorage.setItem(current_uuid, user);
-
+        var date = new Date();
+        var time_str = [
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        ].map(function (value) {
+            return value < 10 ? '0' + value : value;
+        }).join(':');
         // 清空掉.然后在将这个展示到对应的消息上去.
         $('.sumbit-input').text('');
-
         $('.exe-content-history').append(page.renderCsMsg('我',msg, time_str));
         page.scrollToBottom();
+        // 添加新消息进去.
+        $('.exe-content-history').append([
+            '<div class="content-message message-my">',
+            '   <div class="message-info">',
+            '      <div class="message-name-date name-date-my">',
+            '          <span class="date">',time_str,'</span>',
+            '          <span class="message-name">我</span>',
+            '      </div>',
+            '      <span class="message-message message-message-my">',msg,'</span>',
+            '   </div>',
+            '</div>'
+        ].join(""));
+
+        this.scrollToBottom();
     },
     // 初始化websocket
     initSocket: function () {
-        // 使用socket来链接.
-        var socket = new WebSocket('ws://192.168.117.122:8282');
-
-        // 打开websocket信息.
-        socket.addEventListener('open', function () {
-            // 先定义一个不同的事件.后面在根据不同的定义不同的内容.
-            socket.send(client.buildMsg('guest_in_cs', {
-                cs_sn: $('[name=cs_sn]').val()
-            }));
-        });
-
-        // 接收websocket返回的信息.这个函数要重新处理.
-        socket.addEventListener('message', function (event) {
-            var data = JSON.parse(event.data);
-            if(data.cmd == 'assign_kf') {
-                client.assignKf(data);
-            }
-
-            if(data.cmd == 'ping') {
-                socket.send(client.buildMsg('pong'))
-            }
-
-            if(data.cmd == 'chat') {
-                client.chat(data);
-            }
-        });
-
-        // 关闭websocket发送的信息.
-        socket.addEventListener('close', function () {
-
-        });
-
-        // 这里是websocket发生错误的.信息.
-        socket.addEventListener('error', function () {
-
-        });
-
-        return socket;
+        kf_ws_service.connect( this.data['ws'] );
     },
     // 分配客服处理.
     assignKf:function(data) {
@@ -373,13 +368,42 @@ var page = {
             '<div class="content-message message-my">',
             '   <div class="message-info">',
             '      <div class="message-name-date name-date-my">',
-            '          <span class="date">',time_str,'</span>',
-            '          <span class="message-name">',nickname,'</span>',
+            '          <span class="date">', time_str, '</span>',
+            '          <span class="message-name">', nickname, '</span>',
             '      </div>',
-            '      <div class="message-message message-message-my">',msg,'</div>',
+            '      <div class="message-message message-message-my">', msg, '</div>',
             '   </div>',
             '</div>'
         ].join("");
+    },
+    scrollToBottom: function () {
+        var height = $('.exe-content-history')[0].scrollHeight;
+
+        $('.exe-content-history').scrollTop(height);
+    },
+    handlerMessage:function( data ){
+        var that = this;
+        switch (data['cmd']) {
+            case "ping":
+                kf_ws_service.socketSend({ "cmd":"pong" });
+                break;
+            case "ws_connect":
+                kf_ws_service.socketSend( that.buildMsg('kf_in',{} ));
+                break;
+            case "assign_guest"://分配客户过来，要在页面标注熟悉，不能用全局，因为有多个游客
+                break;
+            case "reply":
+                $('.online-content').append( that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content) );
+                that.scrollToBottom();
+                break;
+        }
+    }
+};
+
+// 这个是界面的主要动画效果.
+var page = {
+    init: function () {
+        this.eventBind();
     },
     // 获取当前时间.
     getCurrentTimeStr: function () {
@@ -397,7 +421,6 @@ var page = {
 
 $(document).ready(function () {
     client.init();
-
     page.init();
 
     // 菜单栏切换.

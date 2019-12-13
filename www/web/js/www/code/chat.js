@@ -1,5 +1,4 @@
 ;
-var socket = null;
 // 关于前台聊天的基本功能.
 var kf_ws_service = {
     ws: null,
@@ -101,7 +100,6 @@ var chat_ops = {
             cmd:cmd,
             data:data
         };
-
         return params;
     },
     buildCsMsg: function (nickname, avatar, msg) {

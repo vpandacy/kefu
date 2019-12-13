@@ -20,4 +20,13 @@ class WSCenterService extends BaseService
         $config = \Yii::$app->params['guest']['gateway'];
         return $config['ip'].":".$config['port'];
     }
+
+    /**
+     * 根据路由获取ws
+     * 后面希望这块可以智能路由
+     */
+    public static function getCSWSByRoute( $merchant_id = null ){
+        $config = \Yii::$app->params['cs']['gateway'];
+        return $config['ip'].":".$config['port'];
+    }
 }

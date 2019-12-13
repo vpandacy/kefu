@@ -10,14 +10,14 @@ return [
     'websocket' => 'ws://www.kefu.dev.hsh568.cn/ws/',
     'cdn' => [
         'hsh' => [
-            'https' => 'http://cdn.static.test.jiatest.cn',
-            'http' => 'http://cdn.static.test.jiatest.cn'
+            'https' => 'http://cdn.pic.test.hsh568.cn',
+            'http' => 'http://cdn.pic.test.hsh568.cn'
         ],
         'qiniu_config' => [
             'ak' => 'mZ-oBLEtEh4M2o2TWnFbVXn5P1KxuSPwqXAtZW_z',
             'sk' => 'dsuPhLCGpBUfzsynpdGKaoKOUHdN2y5jJx4AXBjb',
             'bucket' => [
-                'hsh' => 'hsh'
+                'hsh' => 'stkf'
             ]
         ]
     ],

@@ -10,10 +10,6 @@ StaticPluginHelper::socketPlugin();
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/client.js'), CsAsset::className());
 ?>
 <script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
-
-<div class="form-wrapper" style="display: none">
-    <input type="hidden" name="cs_sn" value="<?=$staff['sn']?>">
-</div>
 <div id='chatExe'>
     <!-- 右键菜单 -->
     <div id="menu" >
@@ -197,4 +193,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             </div>
         </div>
     </div>
+</div>
+
+<div class="hidden_wrapper">
+    <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>
 </div>
