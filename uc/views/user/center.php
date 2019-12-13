@@ -5,7 +5,7 @@ use common\services\GlobalUrlService;
 <!--<a><i class="iconfont icon-xinxi-copy"></i></a>-->
 <!--<a><i class="iconfont icon-tongzhi"></i></a>-->
 <a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['current_user']['id']])?>" class="menu_info_link">
-    <img class="menu_info_img" src="<?=$this->params['current_user']['avatar'] ? GlobalUrlService::buildPicStaticUrl('hsh',$this->params['current_user']['avatar']) : GlobalUrlService::buildStaticUrl('/chat/default_avatar.png');?>">
+    <img class="menu_info_img" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$this->params['current_user']['avatar'])?>">
 </a>
 <div class="menu_info_edit dis_none">
     <div class="info_edit_one">
