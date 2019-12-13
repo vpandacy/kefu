@@ -26,8 +26,8 @@ class CodeController extends BaseController
         $code = $this->get('code','');
         $this->layout = false;
         $url = $code
-            ? GlobalUrlService::buildKFUrl('/'. $msn . '/code/chat',['code'=>$code])
-            : GlobalUrlService::buildKFUrl('/' . $msn . '/code/chat');
+            ? GlobalUrlService::buildKFUrl('/'. $msn . '/code/mobile',['code'=>$code])
+            : GlobalUrlService::buildKFUrl('/' . $msn . '/code/mobile');
 
         return $this->render('index',[
             'url'   =>  $url
@@ -94,6 +94,24 @@ class CodeController extends BaseController
      */
     public function actionMobile()
     {
+        $msn = $this->get('msn','');
 
+        if(!$msn) {
+            return '<script>alert("您引入的非法客服软件")</script>';
+        }
+
+        // 这里最好加入到缓存中去.不然到时候会比较麻烦.
+        $merchant = Merchant::findOne(['sn'=>$msn,'status'=>ConstantService::$default_status_true]);
+
+        if(!$merchant) {
+            return '<script>alert("您引入的非法客服软件")</script>';
+        }
+
+        $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
+        $this->layout = 'mobile';
+        return $this->render('mobile', [
+            'merchant'  =>  $merchant,
+            'setting'   =>  $setting
+        ]);
     }
 }
