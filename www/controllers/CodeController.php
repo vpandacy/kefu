@@ -15,7 +15,7 @@ use www\controllers\common\BaseController;
 class CodeController extends BaseController
 {
     public function __construct($id, $module, $config = []){
-        parent::__construct($id, $module, $config = []);
+        parent::__construct($id, $module, $config);
         $this->layout = 'main';
     }
 
@@ -87,5 +87,13 @@ class CodeController extends BaseController
             'merchant'  =>  $merchant,
             'setting'   =>  $setting
         ]);
+    }
+
+    /**
+     * 这里是手机端界面.
+     */
+    public function actionMobile()
+    {
+
     }
 }

@@ -37,7 +37,7 @@ StaticPluginHelper::includeJsPlugins([
             <div><i class="iconfont icon-xiaoxi"></i></div>
             <div><span>和我们在线交谈！</span></div>
             <div id="online_show" class="online_show">
-                <i class="iconfonticon-changyongtubiao-xianxingdaochu-zhuanqu-"></i>
+                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-"></i>
             </div>
         </div>
     </div>

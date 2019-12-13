@@ -113,6 +113,7 @@ var chat = {
                     avatar: data.data.avatar
                 };
 
+                $('#pc-online .header-left span').text(user.cs.nickname);
                 ChatStorage.setItem('hshkf', user);
             }
 
