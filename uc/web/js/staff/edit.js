@@ -44,7 +44,7 @@ var uc_staff_edit_ops = {
             dataType: 'json',
             data: data,
             success:function (res) {
-                $.close(lay_index);
+                $.close(index);
 
                 var callback = res.code != 200 ? null : function () {
                     history.go(-1);

@@ -89,7 +89,7 @@ var client = {
                     avatar: data.data.avatar,
                     nickname: data.data.nickname
                 };
-                localStorage.setItem('user', JSON.stringify(user));
+                ChatSorage.setItem('user', JSON.stringify(user));
             }
 
             if(data.cmd == 'ping') {
@@ -99,9 +99,7 @@ var client = {
             if(data.cmd == 'chat') {
                 // 这里要组装数据.
                 // 获取游客的信息.
-                var user = localStorage.getItem('user');
-
-                user = JSON.parse(user);
+                var user = ChatSorage.getItem('user');
 
                 $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.content));
 
@@ -122,14 +120,12 @@ var client = {
         return socket;
     },
     buildMsg: function (cmd, data) {
-        var user = localStorage.getItem('user'),
+        var user = ChatSorage.getItem('user'),
             send_data = {};
 
         if(!user) {
-            user = '{}';
+            user = {};
         }
-
-        user = JSON.parse(user);
 
         send_data.cmd = cmd;
 
@@ -180,7 +176,7 @@ var page = {
     },
     eventBind: function () {
         $('.icon-guanbi').on('click', function () {
-            $('#chatExe .flex1').css({'display': 'none'});
+            $('#chatExe .flex1').css({'visibility': 'hidden;'});
         });
     }
 };
