@@ -108,7 +108,7 @@ class MerchantService extends BaseService
         $employee->setAttributes([
             'merchant_id'   =>  $merchant->primaryKey,
             'sn'            =>  CommonService::genUniqueName(),
-            'app_ids'       =>  implode('',[',', $app_id, ',']),
+            'app_ids'       =>  implode('',[',', 1, ',']),
             'name'          =>  $merchant_name,
             'email'         =>  $email,
             'avatar'        =>  ConstantService::$default_avatar,
