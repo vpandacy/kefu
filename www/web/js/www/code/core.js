@@ -1,18 +1,4 @@
 ;
-/**
- * FLIE:点击上传,触发隐藏input[type=file]的点击事件
- * changeFile:File值改变的事件
- * @type {{flie: inputFlie.flie, changeFile: inputFlie.changeFile}}
- */
-var inputFlie = {
-    flie : function () {
-        $('#inputFile').click();
-    },
-    changeFile : function  () {
-        // console.log('test')
-    }
-};
-
 $(function () {
     /**
      * 控制右下角聊天切换状态
