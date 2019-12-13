@@ -103,6 +103,8 @@ class CodeController extends BaseController
     {
         $msn = $this->get('msn','');
 
+        $uuid = $this->getGuestUUID();
+
         if(!$msn) {
             return '<script>alert("您引入的非法客服软件")</script>';
         }
@@ -119,7 +121,9 @@ class CodeController extends BaseController
         return $this->render('mobile', [
             'merchant'  =>  $merchant,
             'setting'   =>  $setting,
+            'uuid'      =>  $uuid,
             'host'      =>  '192.168.117.122:8282', // 写死成自己的.  好调试代码.
+            'code'      =>  $this->get('code'),
         ]);
     }
 }

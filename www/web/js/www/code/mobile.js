@@ -29,7 +29,7 @@ var mobile_ops ={
                 return false;
             }
 
-            socket.send(this.buildMsg('chat',{
+            socket.send(that.buildMsg('chat',{
                 content: msg
             }));
 
@@ -73,7 +73,7 @@ var mobile_ops ={
         socket.addEventListener('open', function () {
             var user = ChatStorage.getItem('hshkf');
             // 初次建立链接.
-            socket.send(chat.buildMsg('guest_in', {
+            socket.send(mobile_ops.buildMsg('guest_in', {
                 ua: navigator.userAgent,
                 url: parent.location.href,
                 referer: parent.document.referrer,
@@ -87,7 +87,7 @@ var mobile_ops ={
             var data = JSON.parse(event.data);
 
             if(data.cmd == 'ping') {
-                return socket.send(chat.buildMsg('pong'));
+                return socket.send(mobile_ops.buildMsg('pong'));
             }
 
             // 这里要处理主要业务的逻辑.
