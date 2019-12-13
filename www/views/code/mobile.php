@@ -1,20 +1,24 @@
 <?php
 use common\services\GlobalUrlService;
-use common\components\helper\StaticAssetsHelper;
 use www\assets\AppAsset;
 use common\components\helper\StaticPluginHelper;
 
 StaticPluginHelper::setDepend(AppAsset::className());
 StaticPluginHelper::socketPlugin();
-
-
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),AppAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/www/code/mobile.css'), AppAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'), AppAsset::className());
+// css
+StaticPluginHelper::includeCssPlugins([
+    GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/mobile.css')
+]);
+// js
+StaticPluginHelper::includeJsPlugins([
+    GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/component/storage.js')
+]);
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
-<div id='wapOnline' >
+<div id='wapOnline' data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>" data-uuid="<?=$uuid?>">
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
     <div class="waponline-max dis_none">
         <div class="top">
@@ -44,14 +48,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/w
         <div class="bottom">
             <div class="icon">
                 <i class="iconfont icon-biaoqing"></i>
-                <i class="iconfont icon-tianjia"></i>
-                <i class="iconfont icon-yuyin1"></i>
             </div>
             <div>
-                <input type="text" placeholder="请输入...">
+                <input type="text" name="message" placeholder="请输入...">
             </div>
             <div>
-                <span>发送</span>
+                <input type="hidden" name="host" value="<?=$host?>">
+                <span class="submit">发送</span>
             </div>
         </div>
     </div>

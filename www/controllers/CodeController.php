@@ -118,7 +118,8 @@ class CodeController extends BaseController
         $this->layout = 'mobile';
         return $this->render('mobile', [
             'merchant'  =>  $merchant,
-            'setting'   =>  $setting
+            'setting'   =>  $setting,
+            'host'      =>  '192.168.117.122:8282', // 写死成自己的.  好调试代码.
         ]);
     }
 }
