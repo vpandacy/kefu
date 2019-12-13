@@ -77,7 +77,7 @@ class UserController extends BaseController
             return $this->renderErrJSON( '请输入正确的邮箱~~' );
         }
 
-        if(!ValidateHelper::validIsEmpty($password)) {
+        if(ValidateHelper::validIsEmpty($password)) {
             return $this->renderErrJSON( '请输入密码~~' );
         }
 
@@ -86,7 +86,7 @@ class UserController extends BaseController
             return $this->renderErrJSON(  CommonService::getLastErrorMsg() );
         }
 
-        if(!ValidateHelper::validIsEmpty($merchant_name)) {
+        if(ValidateHelper::validIsEmpty($merchant_name)) {
             return $this->renderErrJSON( '请输入正确的商户名~~' );
         }
 

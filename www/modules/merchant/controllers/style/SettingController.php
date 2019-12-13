@@ -69,7 +69,7 @@ class SettingController extends BaseController
             return $this->renderErrJSON( '请输入公司名称~~' );
         }
 
-        if(!ValidateHelper::validIsEmpty($data['company_logo'])) {
+        if(ValidateHelper::validIsEmpty($data['company_logo'])) {
             return $this->renderErrJSON( '请上传公司LOGO~~' );
         }
 

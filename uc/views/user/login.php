@@ -34,7 +34,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/u
                     <span class="web-font welcome_tip"></span>
                     <input class="login_inp_name" type="text" name="name"  placeholder="请输入商户名">
                     <input class="login_inp_name" style="margin-top: 0;" type="text" name="email" placeholder="请输入邮箱">
-                    <input class="login_inp_password" type="password"  placeholder="请输入密码">
+                    <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
                     <span class="web-font welcome_password_hand cupointer"></span>
                     <div class="login_button cupointer register" >注册</div>
                     <div class="textAlign cupointer">
