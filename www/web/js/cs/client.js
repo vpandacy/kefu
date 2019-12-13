@@ -37,7 +37,7 @@ var client = {
     },
     send: function(msg) {
         socket.send(client.buildMsg('chat', {
-            msg: msg
+            content: msg
         }));
 
         var date = new Date();
