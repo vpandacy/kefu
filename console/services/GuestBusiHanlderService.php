@@ -38,10 +38,8 @@ class GuestBusiHanlderService extends BaseService
      */
     public static function onMessage($client_id, $message)
     {
-        // 这里是向单个人发送. 及时回复. 先别发送.
-//        Gateway::sendToClient( $client_id, $message );
-//        return;
-        $message = json_decode($message, true);
+        $message = @json_decode($message, true);
+        $message = $message??[];
         if (isset($_SESSION['REMOTE_IP']) && isset($_SERVER['REMOTE_ADDR'])) {
             $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
         }
@@ -66,19 +64,16 @@ class GuestBusiHanlderService extends BaseService
                 }
                 break;
             case "chat"://聊天
-                EventsDispatchService::chatMessage( $client_id, $message );
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
                 QueueListService::push2CS( QueueConstant::$queue_guest_chat,$message);
                 break;
-            case "reply":
-                //是从客服过来的
+            case "reply"://客服回复
                 break;
             case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                 break;
             case "pong":
                 break;
             case "ping":
-                //EventsDispatch::addChatHistory( $client_id,$message );
                 Gateway::sendToClient($client_id,json_encode(['cmd'=>'pong']));
                 break;
         };

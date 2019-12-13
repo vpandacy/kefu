@@ -22,7 +22,7 @@ var kf_ws_service = {
 
         // 这里是websocket发生错误的.信息.
         this.ws.addEventListener('error', function () {
-            //错误要把信息发回到监控中心
+            //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
         });
     },
     socketSend: function (msg) {
@@ -32,21 +32,9 @@ var kf_ws_service = {
 var chat_ops = {
     init: function () {
         // 这里要保存用户的信息.和收集用户的一些数据.
-<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697
-        var data = {
-            uuid: $('#online_kf').attr('data-uuid'),
-            msn : $('#online_kf').attr('data-sn'),
-            code: $('#online_kf').attr('data-code')
-        };
-        // 开始存储关键信息.
-        ChatStorage.setItem('hshkf', data);
-        // 开始获取一些基本信息.
-        socket = this.initSocket();
-=======
         this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
         this.eventBind();
         this.initSocket();
->>>>>>> guowei -- 把代维的扫码做一下
     },
     eventBind: function () {
         var that = this;
@@ -67,17 +55,13 @@ var chat_ops = {
         });
     },
     send: function () {
-<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697
         var msg = $('#content').html();
-
-=======
-        var msg = $('#content').text();
->>>>>>> guowei -- 把代维的扫码做一下
         if(msg.length <= 0) {
             return false;
         }
-        socket.send(this.buildMsg('chat',{
-            content: msg
+
+        kf_ws_service.socketSend( this.buildMsg('chat',{
+            'content': msg
         }));
 
         var date = new Date();
@@ -107,89 +91,18 @@ var chat_ops = {
         chat.scrollToBottom();
     },
     initSocket: function () {
-<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697
-        var host = $('[name=host]').val();
-        if(!host) {
-            // 这里是非法的客服.
-            return false;
-        }
-        // 使用socket来链接.
-        var socket = new WebSocket('ws://' + host);
-
-        // 打开websocket信息.
-        socket.addEventListener('open', function () {
-            var user = ChatStorage.getItem('hshkf');
-            // 初次建立链接.
-            socket.send(chat.buildMsg('guest_in', {
-                ua: navigator.userAgent,
-                url: parent.location.href,
-                referer: parent.document.referrer,
-                msn: user.msn,
-                code: user.code
-            }));
-        });
-
-        // 接收websocket返回的信息.
-        socket.addEventListener('message', function (event) {
-            var data = JSON.parse(event.data);
-
-            if(data.cmd == 'ping') {
-                return socket.send(chat.buildMsg('pong'));
-            }
-
-            // 这里要处理主要业务的逻辑.
-            // 分配客服了.
-            if(data.cmd == 'assign_kf' && data.code == 200) {
-                var user = ChatStorage.getItem('hshkf');
-
-                user.cs  = {
-                    cs_sn: data.data.cs_sn,
-                    nickname: data.data.nickname,
-                    avatar: data.data.avatar
-                };
-
-                $('#pc-online .header-left span').text(user.cs.nickname);
-                ChatStorage.setItem('hshkf', user);
-            }
-
-            // 这里是聊天信息.
-            if(data.cmd == 'chat' && data.code == 200) {
-                var user = ChatStorage.getItem('hshkf');
-                $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.content))
-                chat.scrollToBottom();
-            }
-        });
-
-        // 关闭websocket发送的信息.
-        socket.addEventListener('close', function () {
-
-        });
-
-        // 这里是websocket发生错误的.信息.
-        socket.addEventListener('error', function () {
-            
-        });
-
-        return socket;
-=======
         kf_ws_service.connect( this.data['ws'] );
->>>>>>> guowei -- 把代维的扫码做一下
     },
     buildMsg: function (cmd, data) {
-        var user = ChatStorage.getItem('hshkf', {}),
-            send_data = {};
+        data['f_id'] = this.data['uuid'];
+        data['msn'] = this.data['msn'];
+        data['code'] = this.data['code'];
+        var params = {
+            cmd:cmd,
+            data:data
+        };
 
-        send_data.cmd = cmd;
-        send_data.data = {};
-
-        if(data) {
-            send_data.data = data;
-        }
-
-        send_data.data.f_id = user.uuid;
-        send_data.data.t_id = user.cs ? user.cs.cs_sn : '';
-
-        return JSON.stringify(send_data);
+        return params;
     },
     buildCsMsg: function (nickname, avatar, msg) {
         var date = new Date();
@@ -225,38 +138,27 @@ var chat_ops = {
                 kf_ws_service.socketSend({ "cmd":"pong" });
                 break;
             case "ws_connect":
-                kf_ws_service.socketSend(chat.buildMsg('guest_in', {
+                var params = {
                     ua: navigator.userAgent,
-                    url: parent.location.href,
-                    referer: parent.document.referrer,
-                    msn: user.msn,
-                    code: user.code
-                }));
+                    land: parent.location.href,
+                    rf: parent.document.referrer,
+                };
+                kf_ws_service.socketSend( that.buildMsg('guest_in',params ));
                 break;
-        }
-        if(data.cmd == 'ping') {
-            return socket.send(chat.buildMsg('pong'));
-        }
-
-        // 这里要处理主要业务的逻辑.
-        // 分配客服了.
-        if(data.cmd == 'assign_kf' && data.code == 200) {
-            var user = chat_storage.getItem('hshkf');
-
-            user.cs  = {
-                cs_sn: data.data.cs_sn,
-                nickname: data.data.nickname,
-                avatar: data.data.avatar
-            }
-
-            chat_storage.setItem('hshkf', user);
-        }
-
-        // 这里是聊天信息.
-        if(data.cmd == 'chat' && data.code == 200) {
-            var user = chat_storage.getItem('hshkf');
-            $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.msg))
-            chat.scrollToBottom();
+            case "assign_kf":
+                that.data['t_id'] = data.data['sn'];
+                that.data['t_name'] = data.data['name'];
+                that.data['t_avatar'] = data.data['avatar'];
+                break;
+            case "change_kf":
+                that.data['t_id'] = data.data['sn'];
+                that.data['t_name'] = data.data['name'];
+                that.data['t_avatar'] = data.data['avatar'];
+                break;
+            case "reply":
+                $('.online-content').append( that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content) );
+                that.scrollToBottom();
+                break;
         }
     }
 };

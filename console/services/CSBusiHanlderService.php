@@ -33,11 +33,8 @@ class CSBusiHanlderService extends BaseService
      * ];
      */
     public static function onMessage($client_id, $message) {
-        // 这里是向单个人发送. 及时回复. 先别发送.
-        //Gateway::sendToClient( $client_id, $message );
-        //return;
-
-        $message = json_decode($message, true);
+        $message = @json_decode($message, true);
+        $message = $message??[];
         if( isset( $_SESSION['REMOTE_IP'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
             $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
         }
