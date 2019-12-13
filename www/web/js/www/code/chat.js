@@ -36,7 +36,7 @@ var chat = {
         });
     },
     send: function () {
-        var msg = $('#content').text();
+        var msg = $('#content').html();
 
         if(msg.length <= 0) {
             return false;
@@ -61,14 +61,14 @@ var chat = {
             '<div class="content-message message-my">',
             '    <div class="message-info">',
             '        <div class="message-name-date name-date-my"><span class="date">',time_str,'</span><span class="message-name">我</span></div>',
-            '        <span class="message-message message-message-my">',msg,'</span>',
+            '        <div class="message-message message-message-my">',msg,'</div>',
             '    </div>',
             '</div>'
         ].join("")
 
         $('.online-content').append(div);
 
-        $('#content').text('');
+        $('#content').html('');
 
         chat.scrollToBottom();
     },
@@ -168,7 +168,7 @@ var chat = {
             '   </div>',
             '   <div class="message-info">',
             '       <div class="message-name-date"><span>', nickname, '</span><span class="date">', time_str, '</span></div>',
-            '       <span class="message-message">', msg, '</span>',
+            '       <div class="message-message">', msg, '</div>',
             '   </div>',
             '</div>'
         ].join("");

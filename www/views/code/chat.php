@@ -67,7 +67,7 @@ StaticPluginHelper::includeJsPlugins([
                     </div>
                     <div class="message-info">
                         <div class="message-name-date"><span>客服</span><span class="date"><?=date('Y-m-d H:i:s')?></span></div>
-                        <span class="message-message"><?=!$setting ? '您好,欢迎使用好商汇客服系统' : $setting['greetings']?></span>
+                        <div class="message-message"><?=!$setting ? '您好,欢迎使用好商汇客服系统' : $setting['greetings']?></div>
                     </div>
                 </div>
             </div>

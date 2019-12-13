@@ -17,7 +17,7 @@ var client = {
             event.preventDefault();
 
             // 这里准备提交
-            var msg = $('.sumbit-input').text();
+            var msg = $('.sumbit-input').html();
 
             if(!msg || msg.length < 0) {
                 return false;
@@ -27,7 +27,7 @@ var client = {
         });
 
         $('.sumbit').on('click', function () {
-            var msg = $('.sumbit-input').text();
+            var msg = $('.sumbit-input').html();
 
             if(!msg) {
                 return false;
@@ -61,7 +61,7 @@ var client = {
             '          <span class="date">',time_str,'</span>',
             '          <span class="message-name">我</span>',
             '      </div>',
-            '      <span class="message-message message-message-my">',msg,'</span>',
+            '      <div class="message-message message-message-my">',msg,'</div>',
             '   </div>',
             '</div>'
         ].join(""));
@@ -159,7 +159,7 @@ var client = {
             '   </div>',
             '   <div class="message-info">',
             '       <div class="message-name-date"><span>',nickname,'</span><span class="date">', time_str ,'</span></div>',
-            '       <span class="message-message">',msg,'</span>',
+            '       <div class="message-message">',msg,'</div>',
             '   </div>',
             '</div>'
         ].join("");
