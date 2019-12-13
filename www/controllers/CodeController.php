@@ -6,6 +6,8 @@ use common\models\uc\MerchantSetting;
 use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
+use common\services\monitor\WSCenterService;
+use common\services\uc\MerchantService;
 use www\controllers\common\BaseController;
 
 /**
@@ -22,21 +24,26 @@ class CodeController extends BaseController
 
     public function actionIndex()
     {
-        // 这里就能获取到对应的商户和客服了. 先不获取.一直传就可以了.
+        /**
+         * 这里就能获取到对应的商户和客服了. 先不获取.一直传就可以了.
+         */
+        $uuid = $this->getGuestUUID();
         $msn = $this->get('msn','');
         $code = $this->get('code','');
         $this->layout = false;
-
         $is_mobile = CommonService::isMobile();
-
-        $base_url = $is_mobile ? '/' . $msn . '/code/mobile' : '/'. $msn . '/code/chat';
-
-        $url = $code
-            ? GlobalUrlService::buildKFUrl($base_url,['code'=>$code])
-            : GlobalUrlService::buildKFUrl($base_url);
-
-        return $this->render('index',[
+        $params = [
+            'msn' => $msn,
+            'uuid' => $uuid
+        ];
+        if( $code ){
+            $params['code'] = $code;
+        }
+        $url = GlobalUrlService::buildKFMSNUrl( $is_mobile ?'/code/mobile':'/code/chat',$params );
+        header('Content-type: text/javascript');
+        return $this->render('index.js',[
             'url'   =>  $url,
+            'uuid' => $uuid,
             'is_mobile' =>  $is_mobile
         ]);
     }
@@ -48,29 +55,30 @@ class CodeController extends BaseController
     public function actionChat()
     {
         $msn = $this->get('msn','');
-
-        $uuid = $this->getGuestUUID();
-
+        $code = $this->get('code',0);
+        $uuid = $this->get("uuid",$this->getGuestUUID() );
         if(!$msn) {
-            return '<script>alert("您引入的非法客服软件")</script>';
+            return '<script>alert("您引入的非法客服软件-1~~");</script>';
         }
 
         // 这里最好加入到缓存中去.不然到时候会比较麻烦.
-        $merchant = Merchant::findOne(['sn'=>$msn,'status'=>ConstantService::$default_status_true]);
-
-        if(!$merchant) {
-            return '<script>alert("您引入的非法客服软件")</script>';
+        $merchant_info = MerchantService::getInfoBySn( $msn );
+        if( !$merchant_info ) {
+            return '<script>alert("您引入的非法客服软件-2~~");</script>';
         }
 
-        $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
-
-        return $this->render('chat',[
-            'merchant'  =>  $merchant,
-            'setting'   =>  $setting,
-            'uuid'      =>  $uuid,
-            'host'      =>  '192.168.117.122:8282', // 写死成自己的.  好调试代码.
-            'code'      =>  $this->get('code'),
-        ]);
+        $config = MerchantService::getConfig( $merchant_info['id'] );
+        $data = [
+            "merchant_info" => $merchant_info,
+            "setting" => $config,
+            "js_params" => [
+                'uuid' => $uuid,
+                "ws" => WSCenterService::getGuestWSByRoute( $msn ),
+                "code" => $code,
+                "msn" => $msn
+            ]
+        ];
+        return $this->render('chat',$data);
     }
 
     public function actionOnline()

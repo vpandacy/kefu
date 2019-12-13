@@ -23,5 +23,20 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'list_001' => [//当做队列
+            'class' => 'common\components\redis\RedisConnection',
+            'host' => '47.112.117.135',
+            'port' => 6379,
+            'database' => 0
+        ],
+        'cache' => [//当做缓存
+            'class' => 'common\components\redis\RedisCache',
+            'redis' => [
+                'database' => 0,
+                'host' => '47.112.117.135',
+                'port' => 6379,
+                'prefix' => 'CACHE_HSH_'
+            ]
+        ],
     ],
 ];

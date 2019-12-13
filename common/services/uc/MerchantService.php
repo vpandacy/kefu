@@ -3,10 +3,12 @@ namespace common\services\uc;
 
 use common\components\helper\DateHelper;
 use common\models\uc\Merchant;
+use common\models\uc\MerchantSetting;
 use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\CommonService;
 use common\services\ConstantService;
+use common\services\redis\CacheService;
 
 class MerchantService extends BaseService
 {
@@ -24,12 +26,52 @@ class MerchantService extends BaseService
         return $info;
     }
 
+    /**
+     * 保存商户信息.
+     * @param int $saas_merchant_id
+     * @return bool|mixed
+     */
     public static function getInfoById( $saas_merchant_id = 0 ){
-        $info = false;
-        if( $saas_merchant_id ){
-            $info =  Merchant::find()->where([ "id" => $saas_merchant_id ])->one();
+        if( !$saas_merchant_id ){
+            return false;
         }
-        return $info;
+        $cache_key = "merchant_{$saas_merchant_id}";
+        $data = CacheService::get( $cache_key );
+        if( !$data ) {
+            $info = Merchant::find()
+                ->where([ 'id'=> $saas_merchant_id ] )
+                ->asArray()
+                ->one();
+
+            $data = json_encode( $info?:[] );
+            CacheService::set($cache_key,$data,86400 * 30 );
+        }
+        return json_decode( $data,true );
+    }
+
+    /**
+     * 获取商户信息.
+     * @param null $sn
+     * @return bool|mixed
+     */
+    public static function getInfoBySn( $sn = null ) {
+        if( !$sn ){
+            return false;
+        }
+
+        $cache_key = "merchant_{$sn}";
+        $data = CacheService::get( $cache_key );
+
+        if( !$data ) {
+            $info = Merchant::find()
+                ->where([ 'sn'=> $sn,'status'=>ConstantService::$default_status_true])
+                ->asArray()
+                ->one();
+            $data = json_encode( $info?:[] );
+            CacheService::set($cache_key, $data,86400 * 30 );
+        }
+
+        return json_decode( $data,true );
     }
 
     /**
@@ -82,6 +124,31 @@ class MerchantService extends BaseService
         }
 
         return true;
+    }
+
+    /**
+     * 获取商户配置．
+     * @param $merchant_id
+     * @return bool|mixed
+     */
+    public static function getConfig( $merchant_id ){
+        if( !$merchant_id ){
+            return false;
+        }
+
+        $cache_key = "merchant_config_{$merchant_id}";
+        $data = CacheService::get( $cache_key );
+
+        if( !$data ) {
+            $config = MerchantSetting::find()
+                ->where(['merchant_id' => $merchant_id])
+                ->asArray()
+                ->one();
+
+            $data = json_encode( $config?:[] );
+            CacheService::set($cache_key,$data,86400 * 30 );
+        }
+        return json_decode( $data,true );
     }
 
 }

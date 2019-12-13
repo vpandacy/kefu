@@ -2,11 +2,41 @@
 var socket = null,
     online_users = [], // 在线游客列表.
     current_uuid = '';  // 当前游客. 这里是需要处理信息的. 如果不是当前游客的窗口.
+// 关于前台聊天的基本功能.
+var kf_ws_service = {
+    ws: null,
+    connect:function( host ){
+        this.ws = new WebSocket('ws://' + host);
+        //这个事件应该标注 状态 已连接（绿色）
+        this.ws.addEventListener('open', function () {
+            client.handlerMessage( { "cmd":"ws_connect" } );
+        });
+        // 接收websocket返回的信息.
+        this.ws.addEventListener('message', function (event) {
+            var data = JSON.parse(event.data);
+            client.handlerMessage( data );
+        });
+
+        // 关闭websocket发送的信息.
+        this.ws.addEventListener('close', function () {
+            //关闭
+        });
+
+        // 这里是websocket发生错误的.信息.
+        this.ws.addEventListener('error', function () {
+            //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+        });
+    },
+    socketSend: function (msg) {
+        this.ws.send(JSON.stringify(msg));
+    }
+};
 
 var client = {
     init: function () {
         this.eventBind();
-        socket = this.initSocket();
+        this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        this.initSocket();
     },
     // 事件绑定信息.
     eventBind: function() {
@@ -114,44 +144,7 @@ var client = {
     },
     // 初始化websocket
     initSocket: function () {
-        // 使用socket来链接.
-        var socket = new WebSocket('ws://192.168.117.122:8282');
-
-        // 打开websocket信息.
-        socket.addEventListener('open', function () {
-            // 先定义一个不同的事件.后面在根据不同的定义不同的内容.
-            socket.send(client.buildMsg('guest_in_cs', {
-                cs_sn: $('[name=cs_sn]').val()
-            }));
-        });
-
-        // 接收websocket返回的信息.这个函数要重新处理.
-        socket.addEventListener('message', function (event) {
-            var data = JSON.parse(event.data);
-            if(data.cmd == 'assign_kf') {
-                client.assignKf(data);
-            }
-
-            if(data.cmd == 'ping') {
-                socket.send(client.buildMsg('pong'))
-            }
-
-            if(data.cmd == 'chat') {
-                client.chat(data);
-            }
-        });
-
-        // 关闭websocket发送的信息.
-        socket.addEventListener('close', function () {
-
-        });
-
-        // 这里是websocket发生错误的.信息.
-        socket.addEventListener('error', function () {
-
-        });
-
-        return socket;
+        kf_ws_service.connect( this.data['ws'] );
     },
     // 分配客服处理.
     assignKf:function(data) {
@@ -205,7 +198,9 @@ var client = {
 
         user.messages = messages;
 
-        $('.exe-content-history').append(page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
+        if(uuid == current_uuid) {
+            $('.exe-content-history').append(page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
+        }
 
         page.scrollToBottom();
         ChatStorage.setItem(uuid, user);
@@ -214,24 +209,30 @@ var client = {
     },
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
-        var user = ChatStorage.getItem(current_uuid),
-            send_data = {};
-
-        if(!user) {
-            user = {};
+        data['f_id'] = this.data['sn'];
+        data['msn'] = this.data['msn'];
+        var params = {
+            cmd:cmd,
+            data:data
+        };
+        return params;
+    },
+    handlerMessage:function( data ) {
+        var that = this;
+        switch (data['cmd']) {
+            case "ping":
+                kf_ws_service.socketSend({"cmd": "pong"});
+                break;
+            case "ws_connect":
+                kf_ws_service.socketSend(that.buildMsg('kf_in', {}));
+                break;
+            case "assign_guest"://分配客户过来，要在页面标注熟悉，不能用全局，因为有多个游客
+                break;
+            case "reply":
+                $('.online-content').append(that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content));
+                that.scrollToBottom();
+                break;
         }
-
-        send_data.cmd = cmd;
-
-        send_data.data = {};
-        if(data) {
-            send_data.data = data;
-        }
-
-        send_data.data.f_id = $('[name=cs_sn]').val();
-        send_data.data.t_id = user.customer ? user.customer : '';
-
-        return JSON.stringify(send_data);
     }
 };
 
@@ -329,7 +330,7 @@ var page = {
 
         var html = online_users.map(function (uuid) {
             var user = ChatStorage.getItem(uuid),
-                class_name = user.new_message ? 'content-new-message ' : '';
+                class_name = user.new_message >　0 ? 'content-new-message ' : '';
 
             if(uuid == current_uuid) {
                 class_name = class_name + 'content-message-active';
@@ -339,7 +340,7 @@ var page = {
             var icon_types = ['shoji','diannao', 'baidu1'];
             return  [
                 '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
-                '   <div class="', class_name == 'content-message-active' ? '' : 'content-new-message','">',
+                '   <div class="', user.new_message <= 0 ? '' : 'content-new-message','">',
                 '       <i class="iconfont icon-shouji"></i>',
                 '       <span>',user.nickname,'</span>',
                 '   </div>',
@@ -371,10 +372,10 @@ var page = {
             '<div class="content-message message-my">',
             '   <div class="message-info">',
             '      <div class="message-name-date name-date-my">',
-            '          <span class="date">',time_str,'</span>',
-            '          <span class="message-name">',nickname,'</span>',
+            '          <span class="date">', time_str, '</span>',
+            '          <span class="message-name">', nickname, '</span>',
             '      </div>',
-            '      <div class="message-message message-message-my">',msg,'</div>',
+            '      <div class="message-message message-message-my">', msg, '</div>',
             '   </div>',
             '</div>'
         ].join("");
@@ -393,9 +394,9 @@ var page = {
     }
 };
 
+
 $(document).ready(function () {
     client.init();
-
     page.init();
 
     // 菜单栏切换.

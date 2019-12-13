@@ -14,6 +14,11 @@ class BaseController extends StaffBaseController
         'cs/user/login'
     ];
 
+    public function __construct($id, $module, $config = []){
+        parent::__construct($id, $module, $config);
+        $this->setTitle("客服聊天端");
+    }
+
     /**
      * 过滤
      * @param Action $action

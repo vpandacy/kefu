@@ -31,7 +31,7 @@ StaticPluginHelper::includeJsPlugins([
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
 
-<div id="online_kf" data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>" data-uuid="<?=$uuid?>">
+<div id="online_kf">
     <div class="show-hide-min" style="display: block">
         <div class="min-onclick">
             <div><i class="iconfont icon-xiaoxi"></i></div>
@@ -46,7 +46,7 @@ StaticPluginHelper::includeJsPlugins([
             <div class="online-cover dis_none"></div>
             <div class="online-header">
                 <div class="header-left">
-                    <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
+                    <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
                     <span>在线客服</span>
                 </div>
                 <div class="header-right">
@@ -64,7 +64,7 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <div class="content-message">
                     <div class="message-img">
-                        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
+                        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
                     </div>
                     <div class="message-info">
                         <div class="message-name-date"><span>客服</span><span class="date"><?=date('Y-m-d H:i:s')?></span></div>
@@ -139,6 +139,6 @@ StaticPluginHelper::includeJsPlugins([
         </div>
     </div>
 </div>
-<div class="hidden-wrapper">
-    <input type="hidden" name="host" value="<?=$host?>">
+<div class="hidden_wrapper">
+    <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>
 </div>
