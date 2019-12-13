@@ -311,7 +311,7 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 13px;
-    margin-top: 8px;
+    /*margin-top: 8px;*/
     display: inline-block;
 }
 #pc-online .online-content .content-message .message-info .message-message-my {
