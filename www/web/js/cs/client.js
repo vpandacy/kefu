@@ -103,7 +103,7 @@ var client = {
 
                 user = JSON.parse(user);
 
-                $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.msg));
+                $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.content));
 
                 client.scrollToBottom();
             }
@@ -133,6 +133,7 @@ var client = {
 
         send_data.cmd = cmd;
 
+        send_data.data = {};
         if(data) {
             send_data.data = data;
         }

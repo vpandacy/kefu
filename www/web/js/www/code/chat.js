@@ -119,7 +119,7 @@ var chat = {
             // 这里是聊天信息.
             if(data.cmd == 'chat' && data.code == 200) {
                 var user = chat_storage.getItem('hshkf');
-                $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.msg))
+                $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.content))
                 chat.scrollToBottom();
             }
         });
