@@ -327,7 +327,7 @@
 }
 
 #pc-online .online-submit .submit-top {
-    flex-grow: 1;
+    flex: 1;
     padding: 3px;
     border: none;
     outline: none;
