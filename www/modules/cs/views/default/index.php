@@ -67,7 +67,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             </div>
             <div class="tab-content">
                 <div class="content-one online">
-
+                    <div class="tab-content-list content-no-message">
+                        暂无消息
+                    </div>
                 </div>
                 <div class="content-one" style="display: none;">
                     <div oncontextmenu="tab.list(event)" class="tab-content-list">

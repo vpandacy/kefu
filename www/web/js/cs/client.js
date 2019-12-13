@@ -48,6 +48,10 @@ var client = {
             // 阻止事件发生.
             event.preventDefault();
 
+            if($(this).hasClass('content-no-message')) {
+                return true;
+            }
+
             var uuid = $(this).attr('data-uuid');
 
             that.showMenu(uuid, event);
@@ -112,7 +116,7 @@ var client = {
                     allocationTime: data.data.allocation_time
                 };
 
-                ChatSorage.setItem(user.customer, user);
+                ChatStorage.setItem(user.customer, user);
                 // 插入到第一个.然后在渲染到对应的视图中去.
                 online_users.unshift(user.customer);
 
@@ -127,7 +131,13 @@ var client = {
                 // 这里要组装数据.
                 // 获取游客的信息.
                 var uuid = data.data.f_id,
-                    user = ChatSorage.getItem(uuid);
+                    user = ChatStorage.getItem(uuid);
+
+                if(uuid != current_uuid) {
+                    // 有新消息了.
+                    user.new_message = 1;
+                    ChatStorage.setItem(uuid, user);
+                }
 
                 $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.content));
 
@@ -151,7 +161,7 @@ var client = {
     },
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
-        var user = ChatSorage.getItem('user'),
+        var user = ChatStorage.getItem('user'),
             send_data = {};
 
         if(!user) {
@@ -201,20 +211,31 @@ var client = {
         $('.exe-content-history').scrollTop(height);
     },
     // 渲染在线列表.
-    renderOnlineList: function (uuid) {
+    renderOnlineList: function (source_uuid) {
+        if(online_users.length < 1) {
+            $('.tab-content .online').html('<div class="tab-content-list content-no-message">暂无消息</div>');
+            return false;
+        }
+
         // 这里没有列表.所以需要重新处理一下.
-        if(uuid) {
+        if(source_uuid) {
             online_users.sort(function (id) {
                 return id == uuid ? -1 : 0
             });
         }
 
         var html = online_users.map(function (uuid) {
-            var user = ChatSorage.getItem(uuid);
+            var user = ChatStorage.getItem(uuid),
+                class_name = user.new_message ? 'content-new-message' : '';
+
+            if(uuid == current_uuid) {
+                class_name = class_name + ' content-message-active';
+            }
+
             // 这里有图标展示. 这里要注意一下.
             var icon_types = ['shoji','diannao', 'baidu1'];
             return  [
-                '<div oncontextmenu="tab.list(event)" class="tab-content-list" data-uuid="',uuid,'">',
+                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
                 '   <div>',
                 '       <i class="iconfont icon-shouji"></i>',
                 '       <span>',user.nickname,'</span>',

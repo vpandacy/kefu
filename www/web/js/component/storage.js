@@ -1,5 +1,5 @@
 // 公共存储库.
-var ChatSorage = {
+var ChatStorage = {
     // 封装自己的读取和存储函数.
     setItem: function (key, value) {
         if(typeof value == 'object') {

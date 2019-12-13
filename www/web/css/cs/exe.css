@@ -124,7 +124,8 @@ body {
 }
 
 #chatExe .exe-menu {
-    width: 5%;
+    /*width: 5%;*/
+    width: 85px;
     padding: 15px 0px;
     border: 1px solid;
     text-align: center;
@@ -176,7 +177,8 @@ body {
 }
 
 #chatExe .exe-keep {
-    width: 22%;
+    /*width: 22%;*/
+    width: 400px;
     background: rgb(255, 255, 255);
     border-right: 1px solid rgb(216, 221, 230);
     display: flex;
@@ -211,11 +213,28 @@ body {
     padding: 5px 10px;
     font-size: 14px;
 }
+#chatExe .exe-keep .tab .tab-content-list .content-new-message:before {
+    content: "●";
+    color: red;
+    position: absolute;
+    top: -8px;
+}
+#chatExe .exe-keep .tab .content-no-message {
+    justify-content: center;
+    -webkit-justify-content: center;
+    color: rgb(179, 181, 185);
+}
+#chatExe .exe-keep .tab .content-message-active{
+    background: #d6d6d6;
+    color: white;
+    cursor: pointer;
+}
 #chatExe .exe-keep .tab .tab-content-list div{
     pointer-events:none;
+    position: relative;
 }
 #chatExe .exe-keep .tab .tab-content-list:hover {
-    background: #87939a;
+    background: #e2e1e1;
     color: white;
     cursor: pointer;
 }
