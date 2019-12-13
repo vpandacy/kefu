@@ -66,8 +66,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             </div>
             <div class="tab-content">
                 <div class="content-one">
-                <div oncontextmenu="tab.list(event)" class="tab-content-list">
-                    <div>
+                <div oncontextmenu="tab.list(event)" class="tab-content-list content-new-message">
+                    <!--- 加上content-new-message 就有红点了 -->
+                    <div class="content-new-message">
                         <i class="iconfont icon-shouji"></i>
                         <span>莆田4</span>
                     </div>
@@ -84,7 +85,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                         <span class="content-list-time">09:45</span>
                     </div>
                 </div>
-                <div oncontextmenu="tab.list(event)" class="tab-content-list">
+                    <!-- content-message-active  选中消息 -->
+                <div oncontextmenu="tab.list(event)" class="tab-content-list content-message-active">
                     <div>
                         <i class="iconfont icon-baidu1"></i>
                         <span>重庆</span>
@@ -92,6 +94,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                     <div>
                         <span class="content-list-time">09:45</span>
                     </div>
+                </div>
+                    <!-- content-no-message  暂无消息 -->
+                <div oncontextmenu="tab.list(event)" class="tab-content-list content-no-message">
+                        暂无消息
                 </div>
                 </div>
                 <div class="content-one" style="display: none;">
