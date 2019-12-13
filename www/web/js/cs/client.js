@@ -135,9 +135,10 @@ var client = {
 
         if(data) {
             send_data.data = data;
-            send_data.form = $('[name=cs_sn]').val();
-            send_data.to = user.customer ? user.customer : '';
         }
+
+        send_data.data.f_id = $('[name=cs_sn]').val();
+        send_data.data.t_id = user.customer ? user.customer : '';
 
         return JSON.stringify(send_data);
     },
