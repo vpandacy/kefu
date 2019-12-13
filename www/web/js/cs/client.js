@@ -240,6 +240,8 @@ var page = {
     eventBind: function () {
         $('.icon-guanbi').on('click', function () {
             $('#chatExe .flex1').css({'display': 'none'});
+
+            $('.content-message-active').removeClass('content-message-active');
         });
     },
     // 渲染聊天窗口
@@ -324,17 +326,17 @@ var page = {
 
         var html = online_users.map(function (uuid) {
             var user = ChatStorage.getItem(uuid),
-                class_name = user.new_message ? 'content-new-message' : '';
+                class_name = user.new_message ? 'content-new-message ' : '';
 
             if(uuid == current_uuid) {
-                class_name = class_name + ' content-message-active';
+                class_name = class_name + 'content-message-active';
             }
 
             // 这里有图标展示. 这里要注意一下.
             var icon_types = ['shoji','diannao', 'baidu1'];
             return  [
                 '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
-                '   <div class="', class_name ,'">',
+                '   <div class="', class_name == 'content-message-active' ? '' : 'content-new-message','">',
                 '       <i class="iconfont icon-shouji"></i>',
                 '       <span>',user.nickname,'</span>',
                 '   </div>',
