@@ -318,7 +318,7 @@ var page = {
         // 这里没有列表.所以需要重新处理一下.
         if(source_uuid) {
             online_users.sort(function (id) {
-                return id == uuid ? -1 : 0
+                return id == source_uuid ? -1 : 0
             });
         }
 
