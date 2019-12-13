@@ -63,6 +63,14 @@ var ChatSorage = {
 
         return source;
     },
+    // 删除本地记录.
+    removeItem: function(key) {
+        return localStorage.removeItem(key);
+    },
+    // 删除所有的本地缓存.慎用.不推荐使用.
+    clearAll: function() {
+        return localStorage.clear();
+    },
     // 获取cookie信息.
     getParentCookie: function(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");

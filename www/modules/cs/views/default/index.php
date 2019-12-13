@@ -17,11 +17,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
 <div id='chatExe'>
     <!-- 右键菜单 -->
     <div id="menu" >
-        <a id="asu">编辑</a>
-        <a id="agd" onclick="tab.deleteDom(event)">删除</a>
-        <a id="abt">上移</a>
-        <a id="abb">下移</a>
+        <a data-event="edit">编辑</a>
+        <a data-event="del">删除</a>
+        <a data-event="black">拉入黑名单</a>
     </div>
+
+
     <!-- 最右侧菜单栏-->
     <div class="exe-menu">
         <div>
@@ -65,34 +66,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                 </div>
             </div>
             <div class="tab-content">
-                <div class="content-one">
-                <div oncontextmenu="tab.list(event)" class="tab-content-list">
-                    <div>
-                        <i class="iconfont icon-shouji"></i>
-                        <span>莆田4</span>
-                    </div>
-                    <div>
-                        <span class="content-list-time">09:45</span>
-                    </div>
-                </div>
-                <div oncontextmenu="tab.list(event)" class="tab-content-list">
-                    <div>
-                        <i class="iconfont icon-diannao"></i>
-                        <span>杭州</span>
-                    </div>
-                    <div>
-                        <span class="content-list-time">09:45</span>
-                    </div>
-                </div>
-                <div oncontextmenu="tab.list(event)" class="tab-content-list">
-                    <div>
-                        <i class="iconfont icon-baidu1"></i>
-                        <span>重庆</span>
-                    </div>
-                    <div>
-                        <span class="content-list-time">09:45</span>
-                    </div>
-                </div>
+                <div class="content-one online">
+
                 </div>
                 <div class="content-one" style="display: none;">
                     <div oncontextmenu="tab.list(event)" class="tab-content-list">

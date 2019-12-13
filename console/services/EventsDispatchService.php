@@ -80,6 +80,7 @@ class EventsDispatchService extends BaseService
             'customer'  =>  $uuid,
             'nickname'  =>  'Guest-' . substr($uuid, strrpos($uuid,'-') + 1),
             'avatar'=>  GlobalUrlService::buildKFStaticUrl('/images/default_avatar.png'),
+            'allocation_time'    =>  date('H:i'),
         ]));
 
         return Gateway::sendToUid($uuid,self::buildMsg('assign_kf',[
