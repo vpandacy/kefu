@@ -1,11 +1,38 @@
 ;
 var socket = null;
 // 关于前台聊天的基本功能.
-var chat = {
-    init: function () {
-        this.eventBind();
+var kf_ws_service = {
+    ws: null,
+    connect:function( host ){
+        this.ws = new WebSocket('ws://' + host);
+        //这个事件应该标注 状态 已连接（绿色）
+        this.ws.addEventListener('open', function () {
+            chat_ops.handlerMessage( { "cmd":"ws_connect" } );
+        });
+        // 接收websocket返回的信息.
+        this.ws.addEventListener('message', function (event) {
+            var data = JSON.parse(event.data);
+            chat_ops.handlerMessage( data );
+        });
 
+        // 关闭websocket发送的信息.
+        this.ws.addEventListener('close', function () {
+            //关闭
+        });
+
+        // 这里是websocket发生错误的.信息.
+        this.ws.addEventListener('error', function () {
+            //错误要把信息发回到监控中心
+        });
+    },
+    socketSend: function (msg) {
+        this.ws.send(JSON.stringify(msg));
+    }
+};
+var chat_ops = {
+    init: function () {
         // 这里要保存用户的信息.和收集用户的一些数据.
+<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697
         var data = {
             uuid: $('#online_kf').attr('data-uuid'),
             msn : $('#online_kf').attr('data-sn'),
@@ -15,6 +42,11 @@ var chat = {
         ChatStorage.setItem('hshkf', data);
         // 开始获取一些基本信息.
         socket = this.initSocket();
+=======
+        this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        this.eventBind();
+        this.initSocket();
+>>>>>>> guowei -- 把代维的扫码做一下
     },
     eventBind: function () {
         var that = this;
@@ -29,19 +61,21 @@ var chat = {
             that.send();
             return false;
         });
-
         $('.submit-button').on('click', function (event) {
             event.preventDefault();
             that.send();
         });
     },
     send: function () {
+<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697
         var msg = $('#content').html();
 
+=======
+        var msg = $('#content').text();
+>>>>>>> guowei -- 把代维的扫码做一下
         if(msg.length <= 0) {
             return false;
         }
-
         socket.send(this.buildMsg('chat',{
             content: msg
         }));
@@ -73,6 +107,7 @@ var chat = {
         chat.scrollToBottom();
     },
     initSocket: function () {
+<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697
         var host = $('[name=host]').val();
         if(!host) {
             // 这里是非法的客服.
@@ -136,6 +171,9 @@ var chat = {
         });
 
         return socket;
+=======
+        kf_ws_service.connect( this.data['ws'] );
+>>>>>>> guowei -- 把代维的扫码做一下
     },
     buildMsg: function (cmd, data) {
         var user = ChatStorage.getItem('hshkf', {}),
@@ -179,9 +217,50 @@ var chat = {
     scrollToBottom: function () {
         var total_height = $('.online-content')[0].scrollHeight;
         $('.online-content').scrollTop(total_height);
+    },
+    handlerMessage:function( data ){
+        var that = this;
+        switch (data['cmd']) {
+            case "ping":
+                kf_ws_service.socketSend({ "cmd":"pong" });
+                break;
+            case "ws_connect":
+                kf_ws_service.socketSend(chat.buildMsg('guest_in', {
+                    ua: navigator.userAgent,
+                    url: parent.location.href,
+                    referer: parent.document.referrer,
+                    msn: user.msn,
+                    code: user.code
+                }));
+                break;
+        }
+        if(data.cmd == 'ping') {
+            return socket.send(chat.buildMsg('pong'));
+        }
+
+        // 这里要处理主要业务的逻辑.
+        // 分配客服了.
+        if(data.cmd == 'assign_kf' && data.code == 200) {
+            var user = chat_storage.getItem('hshkf');
+
+            user.cs  = {
+                cs_sn: data.data.cs_sn,
+                nickname: data.data.nickname,
+                avatar: data.data.avatar
+            }
+
+            chat_storage.setItem('hshkf', user);
+        }
+
+        // 这里是聊天信息.
+        if(data.cmd == 'chat' && data.code == 200) {
+            var user = chat_storage.getItem('hshkf');
+            $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.msg))
+            chat.scrollToBottom();
+        }
     }
 };
 
 $(document).ready(function () {
-    chat.init();
+    chat_ops.init();
 });

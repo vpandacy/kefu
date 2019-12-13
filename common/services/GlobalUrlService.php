@@ -127,6 +127,14 @@ class GlobalUrlService extends BaseService {
     }
 
     /**
+     * 生成带有msn的url
+     */
+    public static function buildKFMSNUrl($uri, $params = []){
+        $msn = isset( $params['msn'] )? "/{$params['msn']}":"";
+        unset( $params['msn'] );
+        return self::buildKFUrl($msn.$uri,$params);
+    }
+    /**
      * 生成客服应用的静态资源Url
      * @param $uri
      * @param array $params

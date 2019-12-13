@@ -37,10 +37,9 @@ class BaseController extends BaseWebController {
     public function getGuestUUID()
     {
         $cookies = Yii::$app->params['cookies']['guest'];
-
         $uuid = $this->getCookie($cookies['name']);
 
-        if(!$uuid) {
+        if( !$uuid ) {
             $uuid = CommonService::genUUID();
             $this->setCookie($cookies['name'], $uuid, strtotime('+10 year') - time(), $cookies['domain']);
         }

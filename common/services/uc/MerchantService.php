@@ -3,10 +3,12 @@ namespace common\services\uc;
 
 use common\components\helper\DateHelper;
 use common\models\uc\Merchant;
+use common\models\uc\MerchantSetting;
 use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\CommonService;
 use common\services\ConstantService;
+use common\services\redis\CacheService;
 
 class MerchantService extends BaseService
 {
@@ -30,6 +32,22 @@ class MerchantService extends BaseService
             $info =  Merchant::find()->where([ "id" => $saas_merchant_id ])->one();
         }
         return $info;
+    }
+
+    public static function getInfoBySn( $sn = null ){
+        if( !$sn ){
+            return false;
+        }
+        $cache_key = "merchant_{$sn}";
+        $data = CacheService::get( $cache_key );
+        if( !$data ) {
+            $info = Merchant::find()
+                ->where([ 'sn'=> $sn,'status'=>ConstantService::$default_status_true])
+                ->asArray()->one();
+            $data = json_encode( $info?:[] );
+            CacheService::set($cache_key,$data,86400 * 30 );
+        }
+        return json_decode( $data,true );
     }
 
     /**
@@ -82,6 +100,23 @@ class MerchantService extends BaseService
         }
 
         return true;
+    }
+
+
+    public static function getConfig( $merchant_id ){
+        if( !$merchant_id ){
+            return false;
+        }
+        $cache_key = "merchant_config_{$merchant_id}";
+        $data = CacheService::get( $cache_key );
+        if( !$data ) {
+            $config = MerchantSetting::find()
+                ->where(['merchant_id' => $merchant_id])
+                ->asArray()->one();
+            $data = json_encode( $config?:[] );
+            CacheService::set($cache_key,$data,86400 * 30 );
+        }
+        return json_decode( $data,true );
     }
 
 }
