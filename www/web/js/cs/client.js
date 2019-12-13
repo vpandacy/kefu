@@ -8,6 +8,7 @@ var client = {
         this.eventBind();
         socket = this.initSocket();
     },
+    // 事件绑定信息.
     eventBind: function() {
         var that = this;
 
@@ -44,7 +45,7 @@ var client = {
             });
         });
 
-        $('.online').on('contextmenu', '.tab-content-list', function (event) {
+        $('.tab-content .online').on('contextmenu', '.tab-content-list', function (event) {
             // 阻止事件发生.
             event.preventDefault();
 
@@ -57,8 +58,30 @@ var client = {
             that.showMenu(uuid, event);
         });
 
+        // 选择聊天对象.
+        $('.tab-content .online').on('click', '.tab-content-list', function () {
+            var uuid = $(this).attr('data-uuid');
+
+            if(!uuid) {
+                return false;
+            }
+
+            var user = ChatStorage.getItem(uuid);
+
+            if(!user || user.length == 0) {
+                return false;
+            }
+
+            user.new_message = 0;
+            $(this).removeClass('content-new-message');
+            $(this).find('.content-new-message').removeClass('content-new-message');
+            $(this).addClass('content-message-active').siblings().removeClass('content-message-active');
+            ChatStorage.setItem(uuid, user);
+        });
+
 
     },
+    // 发送消息函数.
     send: function(msg) {
         socket.send(client.buildMsg('chat', {
             content: msg
@@ -92,6 +115,7 @@ var client = {
 
         client.scrollToBottom();
     },
+    // 初始化websocket
     initSocket: function () {
         var that = this,
         // 使用socket来链接.
@@ -115,10 +139,12 @@ var client = {
                     nickname: data.data.nickname,
                     allocationTime: data.data.allocation_time
                 };
-
-                ChatStorage.setItem(user.customer, user);
-                // 插入到第一个.然后在渲染到对应的视图中去.
-                online_users.unshift(user.customer);
+                // 如果当前会话的列表中有  就不用去渲染处理了.
+                if(online_users.indexOf(user.customer) < 0) {
+                    ChatStorage.setItem(user.customer, user);
+                    // 插入到第一个.然后在渲染到对应的视图中去.
+                    online_users.unshift(user.customer);
+                }
 
                 that.renderOnlineList();
             }
@@ -132,8 +158,7 @@ var client = {
                 // 获取游客的信息.
                 var uuid = data.data.f_id,
                     user = ChatStorage.getItem(uuid);
-                console.dir(uuid);
-                console.dir(current_uuid);
+                
                 if(uuid != current_uuid) {
                     // 有新消息了.
                     user.new_message = 1;
@@ -213,6 +238,8 @@ var client = {
     },
     // 渲染在线列表.
     renderOnlineList: function (source_uuid) {
+        $('.keep-census .online').text(online_users.length);
+
         if(online_users.length < 1) {
             $('.tab-content .online').html('<div class="tab-content-list content-no-message">暂无消息</div>');
             return false;
@@ -293,7 +320,6 @@ var page = {
         });
     }
 };
-
 
 $(document).ready(function () {
     client.init();

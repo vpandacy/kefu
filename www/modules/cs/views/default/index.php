@@ -85,9 +85,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             </div>
         </div>
         <div class="keep-census">
-            <a>对话:2</a>
-            <a>等待:0</a>
-            <a>访客:1329</a>
+            <a>对话:<span class="online">0</span> </a>
+            <a>等待:<span class="wait">0</span></a>
+            <a>访客:<span class="guest">0</span></a>
         </div>
     </div>
 
