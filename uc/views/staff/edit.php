@@ -31,6 +31,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-block">
+                <input type="text" name="nickname" value="<?=$staff['nickname']?>" lay-verify="required" placeholder="请输入昵称,用于聊天时展示的信息" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-block">
                 <input type="text" name="email" value="<?=$staff['email']?>" lay-verify="required" placeholder="请输入邮件地址" <?=$staff['email'] ? 'disabled' : ''?> autocomplete="off" class="layui-input">

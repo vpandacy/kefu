@@ -161,10 +161,18 @@ class StaffController extends BaseController
     {
         $data = $this->post(null);
 
-        $request_r = ['mobile','email','name','listen_nums','department_id','avatar','password','confirm_password','id'];
+        $request_r = [
+            'mobile', 'email', 'nickname','name','listen_nums',
+            'department_id','avatar','password','confirm_password','id'
+        ];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
             return $this->renderErrJSON( '参数丢失' );
+        }
+
+        // 开始判断.
+        if(!ValidateHelper::validLength($data['nickname'], 1, 255)) {
+            return $this->renderErrJSON( '请输入正确长度的昵称' );
         }
 
         // 开始判断.
