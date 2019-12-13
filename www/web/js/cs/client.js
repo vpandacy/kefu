@@ -171,7 +171,21 @@ var client = {
     }
 };
 
+// 这个是界面的主要动画效果.
+var page = {
+    init: function () {
+        this.eventBind();
+    },
+    eventBind: function () {
+        $('.icon-guanbi').on('click', function () {
+            $('#chatExe .flex1').css({'display': 'none'});
+        });
+    }
+};
+
 
 $(document).ready(function () {
     client.init();
+
+    page.init();
 });

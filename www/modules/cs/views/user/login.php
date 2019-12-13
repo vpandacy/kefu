@@ -1,13 +1,15 @@
 <?php
 use common\components\helper\StaticAssetsHelper;
 use common\services\GlobalUrlService;
-use uc\assets\UcAsset;
+use www\assets\CsAsset;
 
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/login.css'), UcAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/typeface/typeface.css'), UcAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/user/login.js'),UcAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcUrl('/js/common/core.js'),CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),CsAsset::className());
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/login.css'), CsAsset::className());
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/typeface/typeface.css'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/user/login.js'),CsAsset::className());
+
 ?>
-
 <div id="index_login">
     <div class="login_content dflex">
         <div class="login_left_back">
