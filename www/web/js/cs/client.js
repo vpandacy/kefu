@@ -11,7 +11,7 @@ var client = {
     // 事件绑定信息.
     eventBind: function() {
         var that = this;
-
+        // 输入框的回车事件.
         $('.sumbit-input').on('keydown', function (event) {
             if(event.keyCode == 13 && event.shiftKey || event.keyCode != 13) {
                 return true;
@@ -28,7 +28,7 @@ var client = {
 
             that.send(msg);
         });
-
+        // 点击发送按钮.
         $('.sumbit').on('click', function () {
             var msg = $('.sumbit-input').html();
 
@@ -38,13 +38,13 @@ var client = {
             that.send(msg);
         });
 
-        // 这里是删除鼠标右键的效果.
+        // 这里删除 鼠标右键的效果.
         $(document).on('click', function () {
             $('#menu').css({
                 display: 'none'
             });
         });
-
+        // 监听鼠标右键.
         $('.tab-content .online').on('contextmenu', '.tab-content-list', function (event) {
             // 阻止事件发生.
             event.preventDefault();
@@ -55,7 +55,7 @@ var client = {
 
             var uuid = $(this).attr('data-uuid');
 
-            that.showMenu(uuid, event);
+            page.showMenu(uuid, event);
         });
 
         // 选择聊天对象.
@@ -79,22 +79,13 @@ var client = {
 
             // 要开始渲染聊天窗口了.
             page.renderChat(uuid);
-            that.scrollToBottom();
+            page.scrollToBottom();
         });
     },
     // 发送消息函数.
     send: function(msg) {
-        var user = ChatStorage.getItem(current_uuid, []);
-        var date = new Date();
-
-        var time_str = [
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-        ].map(function (value) {
-            return value < 10 ? '0' + value : value;
-        }).join(':');
-
+        var user = ChatStorage.getItem(current_uuid, []),
+            time_str = page.getCurrentTimeStr();
 
         // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
         socket.send(client.buildMsg('chat', {
@@ -118,26 +109,13 @@ var client = {
         // 清空掉.然后在将这个展示到对应的消息上去.
         $('.sumbit-input').text('');
 
-        // 添加新消息进去.
-        $('.exe-content-history').append([
-            '<div class="content-message message-my">',
-            '   <div class="message-info">',
-            '      <div class="message-name-date name-date-my">',
-            '          <span class="date">',time_str,'</span>',
-            '          <span class="message-name">我</span>',
-            '      </div>',
-            '      <div class="message-message message-message-my">',msg,'</div>',
-            '   </div>',
-            '</div>'
-        ].join(""));
-
-        client.scrollToBottom();
+        $('.exe-content-history').append(page.renderCsMsg('我',msg, time_str));
+        page.scrollToBottom();
     },
     // 初始化websocket
     initSocket: function () {
-        var that = this,
         // 使用socket来链接.
-            socket = new WebSocket('ws://192.168.117.122:8282');
+        var socket = new WebSocket('ws://192.168.117.122:8282');
 
         // 打开websocket信息.
         socket.addEventListener('open', function () {
@@ -147,29 +125,11 @@ var client = {
             }));
         });
 
-        // 接收websocket返回的信息.
+        // 接收websocket返回的信息.这个函数要重新处理.
         socket.addEventListener('message', function (event) {
             var data = JSON.parse(event.data);
             if(data.cmd == 'assign_kf') {
-                var user = {
-                    customer: data.data.customer,
-                    avatar: data.data.avatar,
-                    nickname: data.data.nickname,
-                    allocationTime: data.data.allocation_time,
-                    messages: []
-                };
-
-                var old_user = ChatStorage.getItem(user.customer, {});
-                user = Object.assign({}, user, old_user);
-
-                // 如果当前会话的列表中有  就不用去渲染处理了.
-                if(online_users.indexOf(user.customer) < 0) {
-                    ChatStorage.setItem(user.customer, user);
-                    // 插入到第一个.然后在渲染到对应的视图中去.
-                    online_users.unshift(user.customer);
-                }
-
-                that.renderOnlineList();
+                client.assignKf(data);
             }
 
             if(data.cmd == 'ping') {
@@ -177,36 +137,7 @@ var client = {
             }
 
             if(data.cmd == 'chat') {
-                // 这里要组装数据.
-                // 获取游客的信息.
-                var uuid = data.data.f_id,
-                    user = ChatStorage.getItem(uuid),
-                    messages = user.messages;
-
-                if(uuid != current_uuid) {
-                    // 有新消息了.
-                    user.new_message = 1;
-                }
-                // 这里是判断消息长度
-                if(messages.length >= 20) {
-                    messages.shift();
-                }
-
-                messages.push({
-                    f_id: uuid,
-                    t_id: data.data.t_id,
-                    content: data.data.content,
-                    allocationTime: data.data.time
-                });
-
-                user.messages = messages;
-
-                $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.content));
-
-                client.scrollToBottom();
-                ChatStorage.setItem(uuid, user);
-                // 重新将uuid给置顶.
-                that.renderOnlineList(uuid);
+                client.chat(data);
             }
         });
 
@@ -221,6 +152,62 @@ var client = {
         });
 
         return socket;
+    },
+    // 分配客服处理.
+    assignKf:function(data) {
+        var user = {
+            customer: data.data.customer,
+            avatar: data.data.avatar,
+            nickname: data.data.nickname,
+            allocationTime: data.data.allocation_time,
+            messages: []
+        };
+
+        var old_user = ChatStorage.getItem(user.customer, {});
+        user = Object.assign({}, user, old_user);
+
+        // 如果当前会话的列表中有  就不用去渲染处理了.
+        if(online_users.indexOf(user.customer) < 0) {
+            ChatStorage.setItem(user.customer, user);
+            // 插入到第一个.然后在渲染到对应的视图中去.
+            online_users.unshift(user.customer);
+        }
+
+        page.renderOnlineList();
+    },
+    // 被动聊天处理.
+    chat: function(data) {
+        // 这里要组装数据.
+        // 获取游客的信息.
+        var uuid = data.data.f_id,
+            user = ChatStorage.getItem(uuid),
+            messages = user.messages,
+            time_str = page.getCurrentTimeStr();
+
+        if(uuid != current_uuid) {
+            // 有新消息了.
+            user.new_message = 1;
+        }
+        // 这里是判断消息长度
+        if(messages.length >= 20) {
+            messages.shift();
+        }
+
+        messages.push({
+            f_id: uuid,
+            t_id: data.data.t_id,
+            content: data.data.content,
+            allocationTime: data.data.time
+        });
+
+        user.messages = messages;
+
+        $('.exe-content-history').append(page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
+
+        page.scrollToBottom();
+        ChatStorage.setItem(uuid, user);
+        // 重新将uuid给置顶.
+        page.renderOnlineList(uuid);
     },
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
@@ -242,79 +229,46 @@ var client = {
         send_data.data.t_id = user.customer ? user.customer : '';
 
         return JSON.stringify(send_data);
+    }
+};
+
+// 这个是界面的主要动画效果.
+var page = {
+    init: function () {
+        this.eventBind();
     },
-    // 渲染游客的消息记录.
-    buildCustomerMsg: function (nickname, avatar, msg) {
-        var date = new Date();
-
-        var time_str = [
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-        ].map(function (value) {
-            return value < 10 ? '0' + value : value;
-        }).join(':');
-
-        return [
-            '<div class="content-message">',
-            '   <div class="message-img">',
-            '       <img class="logo" src="', avatar ,'">',
-            '   </div>',
-            '   <div class="message-info">',
-            '       <div class="message-name-date"><span>',nickname,'</span><span class="date">', time_str ,'</span></div>',
-            '       <div class="message-message">',msg,'</div>',
-            '   </div>',
-            '</div>'
-        ].join("");
+    eventBind: function () {
+        $('.icon-guanbi').on('click', function () {
+            $('#chatExe .flex1').css({'display': 'none'});
+        });
     },
-    // 滚动到页面最底部.
-    scrollToBottom: function () {
-        var height = $('.exe-content-history')[0].scrollHeight;
+    // 渲染聊天窗口
+    renderChat: function (uuid) {
+        var user = ChatStorage.getItem(uuid),
+            that = this;
 
-        $('.exe-content-history').scrollTop(height);
-    },
-    // 渲染在线列表.
-    renderOnlineList: function (source_uuid) {
-        $('.keep-census .online').text(online_users.length);
-
-        if(online_users.length < 1) {
-            $('.tab-content .online').html('<div class="tab-content-list content-no-message">暂无消息</div>');
+        $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
+        // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
+        if(!user.messages || user.messages.length < 1) {
+            // 置空.就是没有聊天记录.
+            $('.flex1 .exe-content-history').html('');
+            $('#chatExe .flex1').css({'display': 'flex'});
+            this.eventBind();
             return false;
         }
 
-        // 这里没有列表.所以需要重新处理一下.
-        if(source_uuid) {
-            online_users.sort(function (id) {
-                return id == uuid ? -1 : 0
-            });
-        }
-
-        var html = online_users.map(function (uuid) {
-            var user = ChatStorage.getItem(uuid),
-                class_name = user.new_message ? 'content-new-message' : '';
-
-            console.dir('uuid:' + uuid);
-            console.dir('current_uid:' + current_uuid);
-            if(uuid == current_uuid) {
-                class_name = class_name + ' content-message-active';
+        // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
+        var html = user.messages.map(function (message) {
+            if(message.f_id == uuid){
+                return that.renderCustomerMsg(message.nickname, message.avatar, message.content, message.time);
             }
 
-            // 这里有图标展示. 这里要注意一下.
-            var icon_types = ['shoji','diannao', 'baidu1'];
-            return  [
-                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
-                '   <div class="', class_name ,'">',
-                '       <i class="iconfont icon-shouji"></i>',
-                '       <span>',user.nickname,'</span>',
-                '   </div>',
-                '   <div>',
-                '       <span class="content-list-time">',user.allocationTime,'</span>',
-                '   </div>',
-                '</div>'
-            ].join("");
+            return that.renderCsMsg(message.nickname,  message.content, message.time);
         });
 
-        $('.tab-content .online').html(html.join(''));
+        $('.flex1 .exe-content-history').html(html.join(''));
+        $('#chatExe .flex1').css({'display': 'flex'});
+        this.eventBind();
     },
     // 展示对应的右键菜单.
     showMenu:function (uuid, event) {
@@ -345,72 +299,99 @@ var client = {
             }
             return false;
         });
-    }
-};
-
-// 这个是界面的主要动画效果.
-var page = {
-    init: function () {
-        this.eventBind();
     },
-    eventBind: function () {
-        $('.icon-guanbi').on('click', function () {
-            $('#chatExe .flex1').css({'display': 'none'});
-        });
-    },
-    // 渲染聊天窗口
-    renderChat: function (uuid) {
-        var user = ChatStorage.getItem(uuid);
+    // 滚动到页面最底部.
+    scrollToBottom: function () {
+        var height = $('.exe-content-history')[0].scrollHeight;
 
-        $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
-        // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
-        if(!user.messages || user.messages.length < 1) {
-            // 置空.就是没有聊天记录.
-            $('.flex1 .exe-content-history').html('');
-            $('#chatExe .flex1').css({'display': 'flex'});
-            this.eventBind();
+        $('.exe-content-history').scrollTop(height);
+    },
+    // 渲染在线列表.
+    renderOnlineList: function (source_uuid) {
+        $('.keep-census .online').text(online_users.length);
+
+        if(online_users.length < 1) {
+            $('.tab-content .online').html('<div class="tab-content-list content-no-message">暂无消息</div>');
             return false;
         }
 
-        // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
-        var html = user.messages.map(function (message) {
-            if(message.f_id == uuid){
-                return [
-                    '<div class="content-message">',
-                    '   <div class="message-img">',
-                    '       <img class="logo" src="', user.avatar ,'">',
-                    '   </div>',
-                    '   <div class="message-info">',
-                    '       <div class="message-name-date"><span>',user.nickname,'</span><span class="date">', message.time ,'</span></div>',
-                    '       <div class="message-message">',message.content,'</div>',
-                    '   </div>',
-                    '</div>'
-                ].join("");
+        // 这里没有列表.所以需要重新处理一下.
+        if(source_uuid) {
+            online_users.sort(function (id) {
+                return id == uuid ? -1 : 0
+            });
+        }
+
+        var html = online_users.map(function (uuid) {
+            var user = ChatStorage.getItem(uuid),
+                class_name = user.new_message ? 'content-new-message' : '';
+
+            if(uuid == current_uuid) {
+                class_name = class_name + ' content-message-active';
             }
 
-            return [
-                '<div class="content-message message-my">',
-                '   <div class="message-info">',
-                '      <div class="message-name-date name-date-my">',
-                '          <span class="date">',message.time,'</span>',
-                '          <span class="message-name">我</span>',
-                '      </div>',
-                '      <div class="message-message message-message-my">',message.content,'</div>',
+            // 这里有图标展示. 这里要注意一下.
+            var icon_types = ['shoji','diannao', 'baidu1'];
+            return  [
+                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
+                '   <div class="', class_name ,'">',
+                '       <i class="iconfont icon-shouji"></i>',
+                '       <span>',user.nickname,'</span>',
+                '   </div>',
+                '   <div>',
+                '       <span class="content-list-time">',user.allocationTime,'</span>',
                 '   </div>',
                 '</div>'
             ].join("");
         });
 
-        $('.flex1 .exe-content-history').html(html.join(''));
-        $('#chatExe .flex1').css({'display': 'flex'});
-        this.eventBind();
+        $('.tab-content .online').html(html.join(''));
+    },
+    // 渲染游客的消息记录.
+    renderCustomerMsg: function (nickname, avatar, msg, time_str) {
+        return [
+            '<div class="content-message">',
+            '   <div class="message-img">',
+            '       <img class="logo" src="', avatar ,'">',
+            '   </div>',
+            '   <div class="message-info">',
+            '       <div class="message-name-date"><span>',nickname,'</span><span class="date">', time_str ,'</span></div>',
+            '       <div class="message-message">',msg,'</div>',
+            '   </div>',
+            '</div>'
+        ].join("");
+    },
+    renderCsMsg: function (nickname, msg, time_str) {
+        return [
+            '<div class="content-message message-my">',
+            '   <div class="message-info">',
+            '      <div class="message-name-date name-date-my">',
+            '          <span class="date">',time_str,'</span>',
+            '          <span class="message-name">nickname</span>',
+            '      </div>',
+            '      <div class="message-message message-message-my">',msg,'</div>',
+            '   </div>',
+            '</div>'
+        ].join("");
+    },
+    // 获取当前时间.
+    getCurrentTimeStr: function () {
+        var date = new Date();
+
+        return [
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        ].map(function (value) {
+            return value < 10 ? '0' + value : value;
+        }).join(':');
     }
 };
 
 $(document).ready(function () {
     client.init();
-    page.init();
 
+    page.init();
 
     // 菜单栏切换.
     $(".tab .tab-switch .tab-one").click(function() {
