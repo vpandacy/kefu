@@ -46,7 +46,7 @@ var mobile_ops ={
             div.style.textAlign = "right";
             div.innerHTML = [
                 '<div class="content-message message-my">',
-                '    <div class="message-info">',
+                '    <div class="message-info my-message-info">',
                 '        <div class="message-name-date name-date-my"><span class="date">',time_str,'</span><span class="message-name">我</span></div>',
                 '        <div class="message-message message-message-my">',msg,'</div>',
                 '    </div>',
