@@ -3,6 +3,7 @@ namespace console\services;
 use common\services\BaseService;
 use GatewayWorker\Register;
 use GatewayWorker\Gateway;
+use GatewayWorker\Lib\Gateway as DataGateway;
 use GatewayWorker\BusinessWorker;
 use Workerman\Worker;
 
@@ -10,7 +11,9 @@ class GateWayWorkerService extends BaseService
 {
 
     public static function runRegister( $params = [] ){
-        self::initParams();
+        if( !defined('GLOBAL_START') ) {
+            self::initParams();
+        }
         // register 必须是text协议
         $register = new Register("text://{$params['host']}");
         $register->name = $params['name'];
@@ -21,7 +24,9 @@ class GateWayWorkerService extends BaseService
     }
 
     public static function runGateway( $params = [] ){
-        self::initParams();
+        if( !defined('GLOBAL_START') ) {
+            self::initParams();
+        }
 
         //ws协议
         $gateway = new Gateway("Websocket://{$params['host']}");
@@ -50,6 +55,23 @@ class GateWayWorkerService extends BaseService
                 }
             };
         };
+
+        //再启动一个text协议，用来进行数据转发,
+        $params_inner = $params['inner']??[];
+        if( $params_inner ){
+            $inner_worker = new Worker( "text://{$params_inner['host']}" );
+            $inner_worker->name = $params_inner['name'];
+            $inner_worker->onMessage = function( $connection, $data){
+                $message = json_decode( $data,true );
+                if( isset( $message['t_id']) ){
+                    //发送给对应的人
+                    DataGateway::sendToClient( $message['t_id'], json_encode($data) );
+                }
+                var_dump( $data );
+                return $connection->send( "success" );
+            };
+        }
+
         // 如果不是在根目录启动，则运行runAll方法
         if( !defined('GLOBAL_START') )  {
             Worker::runAll();
@@ -57,8 +79,9 @@ class GateWayWorkerService extends BaseService
     }
 
     public static function runBusiWorker( $params = [] ){
-        self::initParams();
-
+        if( !defined('GLOBAL_START') ) {
+            self::initParams();
+        }
         // business worker 进程
         $business_worker = new BusinessWorker();
         // worker名称
@@ -100,7 +123,7 @@ class GateWayWorkerService extends BaseService
     /**
      * 初始化参数,以修复workerman的解析
      */
-    private static function initParams()
+    public static function initParams()
     {
         if(strpos(strtolower(PHP_OS), 'win') === 0)  {
             exit("start.php not support windows, please use start_for_win.bat\n");
@@ -114,13 +137,7 @@ class GateWayWorkerService extends BaseService
         if(!extension_loaded('posix'))  {
             exit("Please install posix extension. See http://doc3.workerman.net/appendices/install-extension.html\n");
         }
-        if( defined( 'GLOBAL_START') ){
-            return;
-        }
 
-        // 标记是全局启动
-        define('GLOBAL_START', 1);
-        // 获取全局的变量.
         global $argc;
         global $argv;
         // 需要自动缩减所在参数. 不然会影响workerman的命令解析.
