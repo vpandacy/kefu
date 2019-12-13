@@ -22,9 +22,10 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/niuniucapture.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
     // 这里先分开业务.后期在合并js.
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat.js'), // 主要实现业务逻辑.
     GlobalUrlService::buildKFStaticUrl('/js/www/code/core.js'), // 核心.比方说动画.上传动作.
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat.js'), // 主要实现业务逻辑.
 ]);
 
 ?>

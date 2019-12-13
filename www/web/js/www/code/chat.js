@@ -12,7 +12,7 @@ var chat = {
             code: $('#online_kf').attr('data-code')
         };
         // 开始存储关键信息.
-        chat_storage.setItem('hshkf', data);
+        ChatSorage.setItem('hshkf', data);
         // 开始获取一些基本信息.
         socket = this.initSocket();
     },
@@ -83,7 +83,7 @@ var chat = {
 
         // 打开websocket信息.
         socket.addEventListener('open', function () {
-            var user = chat_storage.getItem('hshkf');
+            var user = ChatSorage.getItem('hshkf');
             // 初次建立链接.
             socket.send(chat.buildMsg('guest_in', {
                 ua: navigator.userAgent,
@@ -105,7 +105,7 @@ var chat = {
             // 这里要处理主要业务的逻辑.
             // 分配客服了.
             if(data.cmd == 'assign_kf' && data.code == 200) {
-                var user = chat_storage.getItem('hshkf');
+                var user = ChatSorage.getItem('hshkf');
 
                 user.cs  = {
                     cs_sn: data.data.cs_sn,
@@ -113,12 +113,12 @@ var chat = {
                     avatar: data.data.avatar
                 };
 
-                chat_storage.setItem('hshkf', user);
+                ChatSorage.setItem('hshkf', user);
             }
 
             // 这里是聊天信息.
             if(data.cmd == 'chat' && data.code == 200) {
-                var user = chat_storage.getItem('hshkf');
+                var user = ChatSorage.getItem('hshkf');
                 $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.content))
                 chat.scrollToBottom();
             }
@@ -137,7 +137,7 @@ var chat = {
         return socket;
     },
     buildMsg: function (cmd, data) {
-        var user = chat_storage.getItem('hshkf', {}),
+        var user = ChatSorage.getItem('hshkf', {}),
             send_data = {};
 
         send_data.cmd = cmd;
