@@ -159,12 +159,15 @@ var client = {
             customer: data.data.customer,
             avatar: data.data.avatar,
             nickname: data.data.nickname,
-            allocationTime: data.data.allocation_time,
-            messages: []
+            allocationTime: data.data.allocation_time
         };
 
         var old_user = ChatStorage.getItem(user.customer, {});
-        user = Object.assign({}, user, old_user);
+        user = Object.assign({}, old_user,user);
+
+        if(!user.messages) {
+            user.messages = [];
+        }
 
         // 如果当前会话的列表中有  就不用去渲染处理了.
         if(online_users.indexOf(user.customer) < 0) {
