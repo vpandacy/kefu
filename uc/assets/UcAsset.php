@@ -29,7 +29,7 @@ class UcAsset extends AssetBundle
             GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
 
-            GlobalUrlService::buildUcStaticUrl('/css/common/core.min.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/common/core.css'),
         ];
 
         $this->js = [
@@ -38,7 +38,7 @@ class UcAsset extends AssetBundle
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
             // 全局的JS
-            GlobalUrlService::buildUcStaticUrl('/js/common/core.min.js'),
+            GlobalUrlService::buildUcStaticUrl('/js/common/core.js'),
             // uc自己的JS
             GlobalUrlService::buildUcStaticUrl('/js/common.js'),
         ];

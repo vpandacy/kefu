@@ -149,7 +149,7 @@ $('.menu_bottom').click(function () {
 });
 
 var lockSize = function () {
-    resizeDiv.offsetWidth > 150 ? $('.menu-show').show().addClass('bounceInLeft animated'):'';
+    resizeDiv.offsetWidth > 150 ? $('.menu-show').show():'';
 };
 
 var closeSize = function () {
@@ -163,12 +163,12 @@ function menuLock() {
     EleResize.on(resizeDiv,lockSize);
 }
 
-function menuClose() {
-    EleResize.off(resizeDiv, lockSize);
-    $('.left_menu').width('90px');
-    $('#merchant .chant_all .right_merchant .right_content').css('margin-left','90px');
-    EleResize.on(resizeDiv,closeSize);
-}
+// function menuClose() {
+//     EleResize.off(resizeDiv, lockSize);
+//     $('.left_menu').width('90px');
+//     $('#merchant .chant_all .right_merchant .right_content').css('margin-left','90px');
+//     EleResize.on(resizeDiv,closeSize);
+// }
 
 $('.menu-title a').mouseover(function () {
     $('.left_menu').width() > 95 ?   $(this).children('.menu-tooltip').hide() : $(this).children('.menu-tooltip').show();

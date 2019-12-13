@@ -17,7 +17,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
             'current_menu'  =>  'setting'
         ])?>
     </div>
-    <div class="tab_staff_content submenu">
+    <div class="tab_staff_content">
         <form action="" class="layui-form">
             <div class="site-text">
                 <fieldset class="layui-elem-field">

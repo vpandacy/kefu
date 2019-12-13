@@ -82,11 +82,11 @@ class MenuService extends BaseService
     {
         return [
             // 聊天管理
-            'chat'  =>  [
-                'url'   =>  'merchant/chat/index/index',
-                'title' =>  '聊天管理',
-                'icon'  =>  'icon-liaotian'
-            ],
+//            'chat'  =>  [
+//                'url'   =>  'merchant/chat/index/index',
+//                'title' =>  '聊天管理',
+//                'icon'  =>  'icon-liaotian'
+//            ],
             // 全局设置
             'settings'  =>  [
                 'url'   =>  'merchant/overall/index/index',
@@ -136,10 +136,10 @@ class MenuService extends BaseService
                     'title' =>  '常用语管理',
                     'url'   =>  'merchant/overall/index/index'
                 ],
-                'clueauto'  =>  [
-                    'title' =>  '线索自动采集',
-                    'url'   =>  'merchant/overall/clueauto/index',
-                ],
+//                'clueauto'  =>  [
+//                    'title' =>  '线索自动采集',
+//                    'url'   =>  'merchant/overall/clueauto/index',
+//                ],
                 'company'   =>  [
                     'title' =>  '企业设置',
                     'url'   =>  'company/index'

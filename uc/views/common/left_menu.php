@@ -15,18 +15,18 @@ use common\services\GlobalUrlService;
             <a href="<?=GlobalUrlService::buildOriginUrl('/' . $menu['url']);?>">
                 <div class="menu-tooltip"><?=$menu['title']?></div>
                 <i class="iconfont <?=$menu['icon']?>"></i>
-                <div class="menu-show dis_none"><?=$menu['title']?></div>
+                <div class="menu-show dis_none" style="display: block"><?=$menu['title']?></div>
             </a>
         <?php endforeach;?>
     </div>
 
-    <div class="menu_bottom">
-        <div class="menu-show-hide" onclick="menuLock()">
+    <div class="menu_bottom" style="display: none">
+        <div class="menu-show-hide"  onclick="menuLock()">
             <a>
                 <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
             </a>
         </div>
-        <div class="menu-show-hide dis_none" onclick="menuClose()">
+        <div class="menu-show-hide" style="display: none" onclick="menuClose()">
             <a>
                 <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
             </a>
