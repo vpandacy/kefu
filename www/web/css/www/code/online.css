@@ -103,7 +103,13 @@ body {
     margin-top: 15px;
     display: flex;
 }
-
+#online .online-info .online-my-message {
+    display: flex;
+    justify-content: flex-end;
+}
+#online .online-info .online-my-message .message-name-date{
+    text-align: right;
+}
 #online .online-info .content-message .message-img {
     width: 45px;
     margin-right: 10px;
@@ -116,6 +122,7 @@ body {
 
 #online .online-info .content-message .message-info {
     width: 70%;
+    margin-right: 10px;
 }
 
 #online .online-info .content-message .message-info .message-name-date {
@@ -124,8 +131,7 @@ body {
 }
 
 #online .online-info .content-message .message-info .message-name-date .date {
-    padding-left: 15px;
-
+    padding: 0 5px;
 }
 
 #online .online-info .content-message .message-info .message-message {
@@ -183,6 +189,8 @@ body {
 
 #online .online-info .online-right {
     width: 45%;
+    display: flex;
+    flex-direction: column;
 }
 #online .online-info .online-right .right-tab {
     height: 40px;
@@ -191,8 +199,11 @@ body {
     text-align: center;
     font-size: 14px;
 }
+#online .online-info .online-right .right-tab-info{
+    flex: 1;
+}
 #online .online-info .online-right .right-tab .tab-one{
-    flex-grow: 1;
+    flex: 1;
     height: 40px;
 }
 #online .online-info .online-right .right-tab .tab-two{
@@ -200,4 +211,7 @@ body {
     height: 40px;
     border-left: 1px solid #E9EEF2;
     border-bottom: 1px solid #E9EEF2;
+}
+#online .online-info .online-right .right-guanggao {
+    height: 30%;
 }
