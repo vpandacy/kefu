@@ -3,6 +3,7 @@ namespace www\controllers;
 
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
+use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use www\controllers\common\BaseController;
@@ -25,12 +26,18 @@ class CodeController extends BaseController
         $msn = $this->get('msn','');
         $code = $this->get('code','');
         $this->layout = false;
+
+        $is_mobile = CommonService::isMobile();
+
+        $base_url = $is_mobile ? '/' . $msn . '/code/mobile' : '/'. $msn . '/code/chat';
+
         $url = $code
-            ? GlobalUrlService::buildKFUrl('/'. $msn . '/code/mobile',['code'=>$code])
-            : GlobalUrlService::buildKFUrl('/' . $msn . '/code/mobile');
+            ? GlobalUrlService::buildKFUrl($base_url,['code'=>$code])
+            : GlobalUrlService::buildKFUrl($base_url);
 
         return $this->render('index',[
-            'url'   =>  $url
+            'url'   =>  $url,
+            'is_mobile' =>  $is_mobile
         ]);
     }
 

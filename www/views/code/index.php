@@ -1,4 +1,4 @@
-<?php if(!isset($is_mobile)):?>
+<?php if($is_mobile):?>
     window.onload = function () {
         var dynamicLoading = {
             online: function () {
