@@ -16,7 +16,7 @@ $(function () {
     /**
      * 打开新窗口聊天页面
      */
-    $('.icon-fenxiang').click(function () {
+    $('.icon-_DYGYxinyemiandakai').click(function () {
         // 这里要动态生成一下.
         var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
         window.open(data['tab_url'], 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')

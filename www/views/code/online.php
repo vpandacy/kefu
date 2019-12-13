@@ -51,15 +51,17 @@ StaticPluginHelper::includeJsPlugins([
                             <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
                         </div>
                     </div>
+                <div class="content-message online-my-message">
+                    <div class="message-info">
+                        <div class="message-name-date"><span class="date">10:57:56</span><span>我</span></div>
+                        <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
+                    </div>
+                </div>
             </div>
             <div class="submit">
                 <div class="top">
                     <i class="iconfont icon-biaoqing" id="openFace"></i>
-                    <i class="iconfont icon-jianqie" onclick="StartCapture()"></i>
-                    <i class="iconfont icon-wenjian" ></i>
-                    <input type="file" id="inputFile" onchange="inputFlie.changeFile()" style="display: none">
                     <i class="iconfont icon-yiwenshuoming"></i>
-                    <i class="iconfont icon-xingbiao"></i>
                 </div>
                 <div class="print" id="content" contenteditable="true" ></div>
                 <div class="bottom">
@@ -78,6 +80,8 @@ StaticPluginHelper::includeJsPlugins([
                 <div class="tab-one">关于我们</div>
                 <div class="tab-two">客服名片</div>
             </div>
+            <div class="right-tab-info">123</div>
+            <div class="right-guanggao">廣告位（招商中）</div>
         </div>
     </div>
 </div>
