@@ -191,7 +191,7 @@ class MenuService extends BaseService
             ],
             'user'  =>  [
                 'sub_user'  =>  [
-                    'title' =>  '子帐号管理',
+                    'title' =>  '员工管理',
                     'url'   =>  'staff/index'
                 ],
                 'department'=>  [
