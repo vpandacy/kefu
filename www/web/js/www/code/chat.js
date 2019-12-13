@@ -25,7 +25,7 @@ var kf_ws_service = {
         });
     },
     socketSend: function (msg) {
-        this.ws.send(JSON.stringify(msg));
+        this.ws.send( JSON.stringify(msg) );
     }
 };
 var chat_ops = {
@@ -86,8 +86,7 @@ var chat_ops = {
         $('.online-content').append(div);
 
         $('#content').html('');
-
-        chat.scrollToBottom();
+        this.scrollToBottom();
     },
     initSocket: function () {
         kf_ws_service.connect( this.data['ws'] );

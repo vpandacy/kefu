@@ -19,8 +19,6 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.md5.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/niuniucapture.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
     // 这里先分开业务.后期在合并js.
@@ -78,12 +76,12 @@ StaticPluginHelper::includeJsPlugins([
                     <div class="bottom-left">
                         <i class="iconfont icon-biaoqing" id="openFace"></i>
 <!--                        onclick="StartCapture()"-->
-                        <i class="iconfont icon-jianqie" ></i>
-                        <i class="iconfont icon-wenjian" ></i>
-                        <input type="file" id="inputFile" onchange="inputFlie.changeFile()" style="display: none">
+<!--                        <i class="iconfont icon-jianqie" ></i>-->
+<!--                        <i class="iconfont icon-wenjian" ></i>-->
+<!--                        <input type="file" id="inputFile" onchange="inputFlie.changeFile()" style="display: none">-->
                         <i class="iconfont icon-yiwenshuoming"></i>
-                        <i class="iconfont icon-xiazai"></i>
-                        <i class="iconfont icon-xingbiao"></i>
+<!--                        <i class="iconfont icon-xiazai"></i>-->
+<!--                        <i class="iconfont icon-xingbiao"></i>-->
                     </div>
                     <div>
                         <div class="submit-button">发送</div>
@@ -91,7 +89,8 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <div class="online-author">
                     <a>服务状态:已连接</a>
-                    <a>好商汇提供软件支持</a></div>
+                    <a>好商汇提供软件支持</a>
+                </div>
             </div>
             <div class="faceDivBox" style="display:none;">
                 <div class="faceDiv">
