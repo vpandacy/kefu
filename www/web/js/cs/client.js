@@ -176,7 +176,7 @@ var page = {
     },
     eventBind: function () {
         $('.icon-guanbi').on('click', function () {
-            $('#chatExe .flex1').css({'display': 'none'});
+            $('#chatExe .flex1').css({'visibility': 'hidden;'});
         });
     }
 };
