@@ -74,12 +74,17 @@ var ChatStorage = {
     // 获取cookie信息.
     getParentCookie: function(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (!parent.document.cookie.match(reg)) {
-            arr = parent.document.cookie.match(reg);
-            return unescape(arr[2]);
+
+        if(!parent.document.cookie) {
+            return '';
+        }
+        arr = parent.document.cookie.match(reg)
+
+        if(arr == null) {
+            return ''
         }
 
-        return '';
+        return unescape(arr[2]);
     },
     setParentCookie: function (name, value) {
         var now = new Date();

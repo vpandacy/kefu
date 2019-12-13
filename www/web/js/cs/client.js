@@ -132,7 +132,8 @@ var client = {
                 // 获取游客的信息.
                 var uuid = data.data.f_id,
                     user = ChatStorage.getItem(uuid);
-
+                console.dir(uuid);
+                console.dir(current_uuid);
                 if(uuid != current_uuid) {
                     // 有新消息了.
                     user.new_message = 1;
@@ -161,7 +162,7 @@ var client = {
     },
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
-        var user = ChatStorage.getItem('user'),
+        var user = ChatStorage.getItem(current_uuid),
             send_data = {};
 
         if(!user) {
@@ -236,7 +237,7 @@ var client = {
             var icon_types = ['shoji','diannao', 'baidu1'];
             return  [
                 '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
-                '   <div>',
+                '   <div class="', class_name ,'">',
                 '       <i class="iconfont icon-shouji"></i>',
                 '       <span>',user.nickname,'</span>',
                 '   </div>',
@@ -297,4 +298,13 @@ var page = {
 $(document).ready(function () {
     client.init();
     page.init();
+
+
+    // 菜单栏切换.
+    $(".tab .tab-switch .tab-one").click(function() {
+        // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
+        $(this).addClass("switch-action").siblings().removeClass("switch-action");
+        // parent 父元素 next 下一个兄弟节点  children 子节点
+        $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
+    });
 });

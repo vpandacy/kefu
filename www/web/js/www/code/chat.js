@@ -141,6 +141,7 @@ var chat = {
             send_data = {};
 
         send_data.cmd = cmd;
+        send_data.data = {};
 
         if(data) {
             send_data.data = data;
