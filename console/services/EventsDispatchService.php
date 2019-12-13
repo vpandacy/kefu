@@ -20,9 +20,9 @@ class EventsDispatchService extends BaseService
     public static function chatMessage($client_id, $message)
     {
         $data = $message['data'];
-        Gateway::sendToUid($message['to'], self::buildMsg('chat',[
-            'msg'   =>  $data['msg'],
-            'form'  =>  $message['form']  // 来自谁的消息.
+        Gateway::sendToUid($data['t_id'], self::buildMsg('chat',[
+            'content'   =>  $data['content'],
+            'f_id'      =>  $data['f_id']  // 来自谁的消息.
         ]));
     }
 
@@ -35,7 +35,7 @@ class EventsDispatchService extends BaseService
      */
     public static function guestIn($client_id, $message)
     {
-        $uuid = isset($message['form']) ? $message['form'] : '';
+        $uuid = isset($message['data']['f_id']) ? $message['data']['f_id'] : '';
 
         $data = $message['data'];
 

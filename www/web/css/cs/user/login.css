@@ -130,7 +130,7 @@ body {
 }
 #index_login .login_content .login_right_login .login_content_sr input {
     height:35px;
-    background: #eee;
+    background-color: #eee;
     border: none;
     padding: 0 0 0 5px;
     width: 98%;

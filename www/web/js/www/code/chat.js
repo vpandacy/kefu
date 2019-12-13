@@ -43,7 +43,7 @@ var chat = {
         }
 
         socket.send(this.buildMsg('chat',{
-            'msg': msg
+            content: msg
         }));
 
         var date = new Date();
@@ -111,7 +111,7 @@ var chat = {
                     cs_sn: data.data.cs_sn,
                     nickname: data.data.nickname,
                     avatar: data.data.avatar
-                }
+                };
 
                 chat_storage.setItem('hshkf', user);
             }
@@ -119,7 +119,7 @@ var chat = {
             // 这里是聊天信息.
             if(data.cmd == 'chat' && data.code == 200) {
                 var user = chat_storage.getItem('hshkf');
-                $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.msg))
+                $('.online-content').append(chat.buildCsMsg(user.cs.nickname, user.cs.avatar, data.data.content))
                 chat.scrollToBottom();
             }
         });
@@ -144,9 +144,10 @@ var chat = {
 
         if(data) {
             send_data.data = data;
-            send_data.form = user.uuid;
-            send_data.to = user.cs ? user.cs.cs_sn : '';
         }
+
+        send_data.data.f_id = user.uuid;
+        send_data.data.t_id = user.cs ? user.cs.cs_sn : '';
 
         return JSON.stringify(send_data);
     },

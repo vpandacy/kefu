@@ -104,3 +104,9 @@ CREATE TABLE `role_action` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='角色权限表';
 ```
+### 20191213
+```
+ALTER TABLE `staff`
+    ADD `nickname` varchar(255) NOT NULL DEFAULT '' COMMENT '用户昵称' AFTER `merchant_id`,
+    ADD `is_online` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否在线,0不在线,1在线' AFTER `listen_nums`;
+```

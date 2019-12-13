@@ -37,7 +37,7 @@ var client = {
     },
     send: function(msg) {
         socket.send(client.buildMsg('chat', {
-            msg: msg
+            content: msg
         }));
 
         var date = new Date();
@@ -103,7 +103,7 @@ var client = {
 
                 user = JSON.parse(user);
 
-                $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.msg));
+                $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.content));
 
                 client.scrollToBottom();
             }
@@ -133,11 +133,13 @@ var client = {
 
         send_data.cmd = cmd;
 
+        send_data.data = {};
         if(data) {
             send_data.data = data;
-            send_data.form = $('[name=cs_sn]').val();
-            send_data.to = user.customer ? user.customer : '';
         }
+
+        send_data.data.f_id = $('[name=cs_sn]').val();
+        send_data.data.t_id = user.customer ? user.customer : '';
 
         return JSON.stringify(send_data);
     },
@@ -171,7 +173,21 @@ var client = {
     }
 };
 
+// 这个是界面的主要动画效果.
+var page = {
+    init: function () {
+        this.eventBind();
+    },
+    eventBind: function () {
+        $('.icon-guanbi').on('click', function () {
+            $('#chatExe .flex1').css({'display': 'none'});
+        });
+    }
+};
+
 
 $(document).ready(function () {
     client.init();
+
+    page.init();
 });
