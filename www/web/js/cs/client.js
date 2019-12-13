@@ -197,7 +197,7 @@ var client = {
             f_id: uuid,
             t_id: data.data.t_id,
             content: data.data.content,
-            allocationTime: data.data.time
+            time: data.data.time
         });
 
         user.messages = messages;
@@ -260,10 +260,10 @@ var page = {
         // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
         var html = user.messages.map(function (message) {
             if(message.f_id == uuid){
-                return that.renderCustomerMsg(message.nickname, message.avatar, message.content, message.time);
+                return that.renderCustomerMsg(user.nickname, user.avatar, message.content, message.time);
             }
 
-            return that.renderCsMsg(message.nickname,  message.content, message.time);
+            return that.renderCsMsg('我',  message.content, message.time);
         });
 
         $('.flex1 .exe-content-history').html(html.join(''));
@@ -367,7 +367,7 @@ var page = {
             '   <div class="message-info">',
             '      <div class="message-name-date name-date-my">',
             '          <span class="date">',time_str,'</span>',
-            '          <span class="message-name">nickname</span>',
+            '          <span class="message-name">',nickname,'</span>',
             '      </div>',
             '      <div class="message-message message-message-my">',msg,'</div>',
             '   </div>',
