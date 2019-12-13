@@ -22,16 +22,16 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
     <!-- 最右侧菜单栏-->
     <div class="exe-menu">
         <div>
-            <img class="menu-head" src="./asstes/test.png">
+            <img class="menu-head" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo.png");?>">
             <div class="menu-online"></div>
             <div class="menu-icon-top">
                 <i class="iconfont icon-xiaoxi icon icon-action fsize32"></i>
             </div>
-            <div class="menu-icon-top">
+            <div class="menu-icon-top" style="display: none">
                 <i class="iconfont icon-shoujidiannao icon fsize32"></i>
             </div>
         </div>
-        <div class="menu-icon-bottom">
+        <div class="menu-icon-bottom" style="display: none">
             <div class="menu-icon-top">
                 <i class="iconfont icon-shezhi icon fsize22"></i>
             </div>
@@ -95,12 +95,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                 <span>湖北省孝感市 [ 移动 ] (117.152.175.202)</span>
             </div>
             <div class="exe-header-info-right">
-                <span>广点通c1</span>
-                <span><i class="iconfont icon-anjianfengexian"></i></span>
-                <span><i class="iconfont icon-kefu"></i></span>
-                <span><i class="iconfont icon-icon_notice"></i></span>
-                <span><i class="iconfont icon-zuixiaohua"></i></span>
-                <span><i class="iconfont icon-zuidahua"></i></span>
+<!--                <span>广点通c1</span>-->
+<!--                <span><i class="iconfont icon-anjianfengexian"></i></span>-->
+<!--                <span><i class="iconfont icon-kefu"></i></span>-->
+<!--                <span><i class="iconfont icon-icon_notice"></i></span>-->
+<!--                <span><i class="iconfont icon-zuixiaohua"></i></span>-->
+<!--                <span><i class="iconfont icon-zuidahua"></i></span>-->
                 <span><i class="iconfont icon-guanbi"></i></span>
             </div>
         </div>

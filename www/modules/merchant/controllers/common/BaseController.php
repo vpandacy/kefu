@@ -26,7 +26,7 @@ class BaseController extends StaffBaseController
         $app_id = ConstantService::$merchant_app_id;
         $this->setAppId( $app_id );
         Yii::$app->view->params['app_id'] = $this->getAppId();
-        GlobalUrlService::setAppId($this->getAppId());
+
         $is_login = $this->checkLoginStatus();
         if( in_array($action->getUniqueId(), $this->allow_actions )) {
             return true;
@@ -34,12 +34,14 @@ class BaseController extends StaffBaseController
 
         if (!$is_login) {
             if (\Yii::$app->request->isAjax) {
-                $this->renderJSON([ "url" => GlobalUrlService::buildUCUrl("/user/login") ], "未登录,请返回用户中心", -302);
+                $this->renderJSON([ "url" => GlobalUrlService::buildUcUrl("/user/login") ], "未登录,请返回用户中心", -302);
             } else {
                 $this->redirect(GlobalUrlService::buildUCUrl("/user/login"));
             }
             return false;
         }
+
+        GlobalUrlService::setAppId($this->getAppId());
 
         //判断是否有访问该系统的权限，根据当前人登录的app_id判断
         $own_appids = $this->current_user->getAppIds();

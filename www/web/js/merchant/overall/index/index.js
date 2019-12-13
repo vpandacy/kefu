@@ -8,6 +8,7 @@ var merchant_overall_index_ops = {
                 elem: '#commonWordTable'
                 ,url:merchant_common_ops.buildMerchantUrl('/overall/index/index')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,defaultToolbar: ['filter','print']
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
                     {type:'checkbox', fixed: 'left'}

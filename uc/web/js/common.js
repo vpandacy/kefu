@@ -149,15 +149,13 @@ $('.menu_bottom').click(function () {
 });
 
 var lockSize = function () {
-    resizeDiv.offsetWidth > 90 ? $('.menu_max_logo').show() : '';
-    resizeDiv.offsetWidth > 90 ? $('.menu_min_logo').hide() : '';
-    resizeDiv.offsetWidth > 150 ? $('.menu-show').show().addClass('bounceInLeft animated'):'';
+    // resizeDiv.offsetWidth > 150 ? $('.menu-show').show():'';
+    // resizeDiv.offsetWidth > 150 ? $('.menu-show').show().addClass('bounceInLeft animated'):'';
 };
 
 var closeSize = function () {
-    resizeDiv.offsetWidth < 180 ? $('.menu_min_logo').show() : '';
-    resizeDiv.offsetWidth < 180 ? $('.menu_max_logo').hide(): '';
-    resizeDiv.offsetWidth < 180 ? $('.menu-show').hide() : '';
+    // resizeDiv.offsetWidth < 180 ? $('.menu_min_logo').show() : '';
+    // resizeDiv.offsetWidth < 180 ? $('.menu-show').hide() : '';
 };
 
 
@@ -168,12 +166,12 @@ function menuLock() {
     EleResize.on(resizeDiv,lockSize);
 }
 
-function menuClose() {
-    EleResize.off(resizeDiv, lockSize);
-    $('.left_menu').width('90px');
-    $('#merchant .chant_all .right_merchant .right_content').css('margin-left','90px');
-    EleResize.on(resizeDiv,closeSize);
-}
+// function menuClose() {
+//     EleResize.off(resizeDiv, lockSize);
+//     $('.left_menu').width('90px');
+//     $('#merchant .chant_all .right_merchant .right_content').css('margin-left','90px');
+//     EleResize.on(resizeDiv,closeSize);
+// }
 
 $('.menu-title a').mouseover(function () {
     $('.left_menu').width() > 95 ?   $(this).children('.menu-tooltip').hide() : $(this).children('.menu-tooltip').show();

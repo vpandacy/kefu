@@ -17,7 +17,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/c
     ])?>
     <div class="tab_staff_content">
         <!-- 增加动画 -->
-        <div class="site-text submenu">
+        <div class="site-text">
             <form action="" class="layui-form">
                 <fieldset class="layui-elem-field">
                     <legend>基本信息</legend>

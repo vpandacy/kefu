@@ -22,7 +22,7 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildUcStaticUrl('/css/component/scrollbar.min.css'),
             GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
             GlobalUrlService::buildUcStaticUrl('/css/common_default.css'),
-            GlobalUrlService::buildUcStaticUrl('/css/common/core.min.css'),
+            GlobalUrlService::buildUcStaticUrl('/css/common/core.css'),
             // 这下面写自己的css.
         ];
 

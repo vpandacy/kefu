@@ -92,6 +92,7 @@ class MerchantService extends BaseService
             'sn'        =>  CommonService::genUniqueName(),
             'name'      =>  $merchant_name,
             'email'         =>  $email,
+            'logo'      =>  ConstantService::$default_avatar,
             'app_id'    =>  $app_id,
             'created_time'  =>  $now,
             'updated_time'  =>  $now
@@ -110,6 +111,7 @@ class MerchantService extends BaseService
             'app_ids'       =>  implode('',[',', $app_id, ',']),
             'name'          =>  $merchant_name,
             'email'         =>  $email,
+            'avatar'        =>  ConstantService::$default_avatar,
             'password'      =>  $password,
             'listen_nums'   =>  0,
             'status'        =>  ConstantService::$default_status_true,

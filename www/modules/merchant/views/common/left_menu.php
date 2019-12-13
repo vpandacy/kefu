@@ -18,21 +18,8 @@ use common\services\GlobalUrlService;
             <a href="<?=GlobalUrlService::buildKFUrl('/' . $menu['url']);?>">
                 <div class="menu-tooltip"><?=$menu['title']?></div>
                 <i class="iconfont <?=$menu['icon']?>"></i>
-                <div class="menu-show dis_none"><?=$menu['title']?></div>
+                <div class="menu-show dis_none" style="display: block"><?=$menu['title']?></div>
             </a>
         <?php endforeach;?>
-    </div>
-
-    <div class="menu_bottom">
-        <div class="menu-show-hide" onclick="menuLock()">
-            <a>
-                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
-            </a>
-        </div>
-        <div class="menu-show-hide dis_none" onclick="menuClose()">
-            <a>
-                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
-            </a>
-        </div>
     </div>
 </div>

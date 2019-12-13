@@ -111,7 +111,7 @@ class UserController extends BaseController
         $cookie = \Yii::$app->params['cookies']['staff'];
 
         $this->removeCookie($cookie['name'],$cookie['domain']);
-        return $this->redirect(GlobalUrlService::buildUcUrl('/user/login'));
+        return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/'));
     }
 
     /**
