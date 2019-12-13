@@ -61,14 +61,12 @@ var client = {
         // 选择聊天对象.
         $('.tab-content .online').on('click', '.tab-content-list', function () {
             var uuid = $(this).attr('data-uuid');
-
             if(!uuid) {
                 return false;
             }
 
             var user = ChatStorage.getItem(uuid);
-
-            if(!user || user.length == 0) {
+            if(!user) {
                 return false;
             }
 
@@ -76,17 +74,17 @@ var client = {
             $(this).removeClass('content-new-message');
             $(this).find('.content-new-message').removeClass('content-new-message');
             $(this).addClass('content-message-active').siblings().removeClass('content-message-active');
+            current_uuid = uuid;
             ChatStorage.setItem(uuid, user);
+
+            // 要开始渲染聊天窗口了.
+            page.renderChat(uuid);
+            that.scrollToBottom();
         });
-
-
     },
     // 发送消息函数.
     send: function(msg) {
-        socket.send(client.buildMsg('chat', {
-            content: msg
-        }));
-
+        var user = ChatStorage.getItem(current_uuid, []);
         var date = new Date();
 
         var time_str = [
@@ -96,6 +94,26 @@ var client = {
         ].map(function (value) {
             return value < 10 ? '0' + value : value;
         }).join(':');
+
+
+        // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
+        socket.send(client.buildMsg('chat', {
+            content: msg
+        }));
+
+        if(!user.messages) {
+            user.messages = [];
+        }
+
+        // 消息信息.
+        user.messages.push({
+            f_id: $('[name=cs_sn]').val(),
+            t_id: current_uuid,
+            content: msg,
+            time:time_str
+        });
+
+        ChatStorage.setItem(current_uuid, user);
 
         // 清空掉.然后在将这个展示到对应的消息上去.
         $('.sumbit-input').text('');
@@ -137,8 +155,13 @@ var client = {
                     customer: data.data.customer,
                     avatar: data.data.avatar,
                     nickname: data.data.nickname,
-                    allocationTime: data.data.allocation_time
+                    allocationTime: data.data.allocation_time,
+                    messages: []
                 };
+
+                var old_user = ChatStorage.getItem(user.customer, {});
+                user = Object.assign({}, user, old_user);
+
                 // 如果当前会话的列表中有  就不用去渲染处理了.
                 if(online_users.indexOf(user.customer) < 0) {
                     ChatStorage.setItem(user.customer, user);
@@ -157,17 +180,31 @@ var client = {
                 // 这里要组装数据.
                 // 获取游客的信息.
                 var uuid = data.data.f_id,
-                    user = ChatStorage.getItem(uuid);
-                
+                    user = ChatStorage.getItem(uuid),
+                    messages = user.messages;
+
                 if(uuid != current_uuid) {
                     // 有新消息了.
                     user.new_message = 1;
-                    ChatStorage.setItem(uuid, user);
                 }
+                // 这里是判断消息长度
+                if(messages.length >= 20) {
+                    messages.shift();
+                }
+
+                messages.push({
+                    f_id: uuid,
+                    t_id: data.data.t_id,
+                    content: data.data.content,
+                    allocationTime: data.data.time
+                });
+
+                user.messages = messages;
 
                 $('.exe-content-history').append(client.buildCustomerMsg(user.nickname, user.avatar, data.data.content));
 
                 client.scrollToBottom();
+                ChatStorage.setItem(uuid, user);
                 // 重新将uuid给置顶.
                 that.renderOnlineList(uuid);
             }
@@ -256,6 +293,8 @@ var client = {
             var user = ChatStorage.getItem(uuid),
                 class_name = user.new_message ? 'content-new-message' : '';
 
+            console.dir('uuid:' + uuid);
+            console.dir('current_uid:' + current_uuid);
             if(uuid == current_uuid) {
                 class_name = class_name + ' content-message-active';
             }
@@ -316,8 +355,55 @@ var page = {
     },
     eventBind: function () {
         $('.icon-guanbi').on('click', function () {
-            $('#chatExe .flex1').css({'visibility': 'hidden;'});
+            $('#chatExe .flex1').css({'display': 'none'});
         });
+    },
+    // 渲染聊天窗口
+    renderChat: function (uuid) {
+        var user = ChatStorage.getItem(uuid);
+
+        $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
+        // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
+        if(!user.messages || user.messages.length < 1) {
+            // 置空.就是没有聊天记录.
+            $('.flex1 .exe-content-history').html('');
+            $('#chatExe .flex1').css({'display': 'flex'});
+            this.eventBind();
+            return false;
+        }
+
+        // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
+        var html = user.messages.map(function (message) {
+            if(message.f_id == uuid){
+                return [
+                    '<div class="content-message">',
+                    '   <div class="message-img">',
+                    '       <img class="logo" src="', user.avatar ,'">',
+                    '   </div>',
+                    '   <div class="message-info">',
+                    '       <div class="message-name-date"><span>',user.nickname,'</span><span class="date">', message.time ,'</span></div>',
+                    '       <div class="message-message">',message.content,'</div>',
+                    '   </div>',
+                    '</div>'
+                ].join("");
+            }
+
+            return [
+                '<div class="content-message message-my">',
+                '   <div class="message-info">',
+                '      <div class="message-name-date name-date-my">',
+                '          <span class="date">',message.time,'</span>',
+                '          <span class="message-name">我</span>',
+                '      </div>',
+                '      <div class="message-message message-message-my">',message.content,'</div>',
+                '   </div>',
+                '</div>'
+            ].join("");
+        });
+
+        $('.flex1 .exe-content-history').html(html.join(''));
+        $('#chatExe .flex1').css({'display': 'flex'});
+        this.eventBind();
     }
 };
 

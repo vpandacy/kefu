@@ -92,7 +92,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
     </div>
 
     <!-- 聊天栏 -->
-    <div class="flex1">
+    <div class="flex1" style="display: none;">
         <div class="exe-header">
             <div class="exe-header-info-left">
                 <span>11166754250007</span>
@@ -161,13 +161,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
-                        <div>+添加标签</div>
-                        <div>姓名：</div>
-                        <div>电话：</div>
-                        <div>邮箱：</div>
-                        <div>QQ：</div>
-                        <div>微信：</div>
-                        <div>备注：</div>
+                            <div>+添加标签</div>
+                            <div>姓名：</div>
+                            <div>电话：</div>
+                            <div>邮箱：</div>
+                            <div>QQ：</div>
+                            <div>微信：</div>
+                            <div>备注：</div>
                         </div>
                         <div class="content-one" style="display: none;">
                             <div>+添加标签</div>
