@@ -1,4 +1,3 @@
-<<<<<<< ec9f3a243f6563b9f865f9c480f8dba2d72ed697:www/views/code/index.php
 <?php if($is_mobile):?>
     window.onload = function () {
         var dynamicLoading = {
@@ -11,9 +10,6 @@
         dynamicLoading.online();
     };
 <?php else:?>
-=======
-;
->>>>>>> guowei -- 把代维的扫码做一下:www/views/code/index.js
 window.onload = function () {
     var dynamicLoading = {
         online: function () {

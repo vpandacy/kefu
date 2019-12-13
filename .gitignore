@@ -43,5 +43,6 @@ www/web/index.php
 www/web/index-test.php
 www/web/robots.txt
 www/runtime
+www/views/default/index.php
 
 
