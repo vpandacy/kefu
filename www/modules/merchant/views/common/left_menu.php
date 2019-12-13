@@ -7,7 +7,10 @@ use common\services\GlobalUrlService;
 <!-- 左侧菜单栏 -->
 <div class="left_menu" id="left_menu">
     <div class="menu-logo">
-        <a><img src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo1.png");?>"></a>
+        <a>
+            <img class="menu_min_logo" alt="商通" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo.png");?>">
+            <img class="menu_max_logo dis_none" alt="商通" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/biglogo.png");?>">
+        </a>
     </div>
     <div class="menu-version"><?=$this->params['merchant']['name']?></div>
     <div class="menu-title">
@@ -18,18 +21,5 @@ use common\services\GlobalUrlService;
                 <div class="menu-show dis_none" style="display: block"><?=$menu['title']?></div>
             </a>
         <?php endforeach;?>
-    </div>
-
-    <div class="menu_bottom">
-        <div class="menu-show-hide" onclick="menuLock()">
-            <a>
-                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
-            </a>
-        </div>
-        <div class="menu-show-hide dis_none" onclick="menuClose()">
-            <a>
-                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1" ></i>
-            </a>
-        </div>
     </div>
 </div>

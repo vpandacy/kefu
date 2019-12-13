@@ -31,11 +31,9 @@ $(function () {
      * 打开新窗口聊天页面
      */
     $('.icon-fenxiang').click(function () {
-        var code = $('#online_kf').attr('data-code'),
-            msn  = $('#online_kf').attr('data-sn');
-
         // 这里要动态生成一下.
-        window.open('http://www.kefu.dev.hsh568.cn/'+ msn +'/code/online?code=' + code, 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
+        var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        window.open(data['tab_url'], 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
     });
@@ -89,38 +87,4 @@ $(document).ready(function(){
      * */
     sdEditorEmoj.Init(emojiconfig);
     sdEditorEmoj.setEmoji({type:'div',id:"content"});
-
-    /**
-     * 截图初始化
-     */
-    $().ready(function(){
-        $('#moreparams').hide();
-
-        $('#captureselectSize').click( function(){
-            var autoFlag = $("#captureselectSize").attr("checked")=="checked" ? 1 : 0;
-            if(autoFlag == 1){
-                $('#moreparams').show();
-            }
-            else{
-                $('#moreparams').hide();
-            }
-        });
-        $('#getimagefromclipboard').click( function(){
-            $('#posdetail').hide();
-        });
-        $('#showprewindow').click( function(){
-            $('#posdetail').hide();
-        });
-        $('#fullscreen').click( function(){
-            $('#posdetail').hide();
-        });
-        $('#specificarea').click( function(){
-            $('#posdetail').show();
-        });
-
-        $('#showprewindow').click();
-        $('#autoupload').click();
-        $('#btnUpload').hide();
-        Init();
-    });
 });

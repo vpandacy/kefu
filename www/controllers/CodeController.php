@@ -68,11 +68,18 @@ class CodeController extends BaseController
         }
 
         $config = MerchantService::getConfig( $merchant_info['id'] );
+        $params = [
+            "msn" => $msn,
+            "code" => $code,
+            "uuid" => $uuid
+        ];
+        $tab_url = GlobalUrlService::buildKFMSNUrl( '/code/online',$params );
         $data = [
             "merchant_info" => $merchant_info,
             "setting" => $config,
             "js_params" => [
                 'uuid' => $uuid,
+                "tab_url" => $tab_url,
                 "ws" => WSCenterService::getGuestWSByRoute( $msn ),
                 "code" => $code,
                 "msn" => $msn

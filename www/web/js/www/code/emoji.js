@@ -33,7 +33,7 @@ var sdEditorEmoj = {
         });
         // 点击除按钮和弹框之外任意地方隐藏表情
         $("body").click(function (e) {
-            if (!$(e.target).closest(".min-onclick,.icon-biaoqing,.faceDivBox").length) {
+            if (!$(e.target).closest("#content,.min-onclick,.icon-biaoqing,.faceDivBox").length) {
                 $(".faceDivBox").fadeOut();
             }
         });

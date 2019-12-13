@@ -149,12 +149,15 @@ $('.menu_bottom').click(function () {
 });
 
 var lockSize = function () {
-    resizeDiv.offsetWidth > 150 ? $('.menu-show').show():'';
+    // resizeDiv.offsetWidth > 150 ? $('.menu-show').show():'';
+    // resizeDiv.offsetWidth > 150 ? $('.menu-show').show().addClass('bounceInLeft animated'):'';
 };
 
 var closeSize = function () {
-    resizeDiv.offsetWidth < 180 ? $('.menu-show').hide() : '';
+    // resizeDiv.offsetWidth < 180 ? $('.menu_min_logo').show() : '';
+    // resizeDiv.offsetWidth < 180 ? $('.menu-show').hide() : '';
 };
+
 
 function menuLock() {
     EleResize.off(resizeDiv, closeSize);

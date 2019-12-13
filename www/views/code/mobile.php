@@ -8,13 +8,15 @@ StaticPluginHelper::socketPlugin();
 // css
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
-    GlobalUrlService::buildKFStaticUrl('/css/www/code/mobile.css')
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/mobile.css'),
+    GlobalUrlService::buildKFStaticUrl('/css/www/code/emojibg.css'),
 ]);
 // js
 StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/component/storage.js')
+    GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js')
 ]);
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
@@ -47,15 +49,21 @@ StaticPluginHelper::includeJsPlugins([
         </div>
         <div class="bottom">
             <div class="icon">
-                <i class="iconfont icon-biaoqing"></i>
+                <i class="iconfont icon-biaoqing" id="openFace"></i>
             </div>
             <div>
-                <input type="text" name="message" placeholder="请输入...">
+                <input type="text" id="content" name="message" placeholder="请输入...">
             </div>
             <div>
                 <input type="hidden" name="host" value="<?=$host?>">
                 <span class="submit">发送</span>
             </div>
+        </div>
+        <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;overflow: auto;">
+            <div class="faceDiv">
+                <section class="emoji-box"></section>
+            </div>
+<!--            <a class="closeFaceBox" href="javascript:void(0)">×</a>-->
         </div>
     </div>
 </div>
