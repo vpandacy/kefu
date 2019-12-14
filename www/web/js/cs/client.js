@@ -172,11 +172,19 @@ var client = {
 
         // 如果当前会话的列表中有  就不用去渲染处理了.
         if(online_users.indexOf(user.uuid) < 0) {
-            ChatStorage.setItem(user.uuid, user);
             // 插入到第一个.然后在渲染到对应的视图中去.
             online_users.unshift(user.uuid);
         }
 
+        if(online_users.length == 1) {
+            current_uuid = online_users[0];
+            user.new_message = 0;
+
+            page.renderChat(user.uuid);
+            page.scrollToBottom();
+        }
+
+        ChatStorage.setItem(user.uuid, user);
         page.renderOnlineList();
     },
     // 被动聊天处理.

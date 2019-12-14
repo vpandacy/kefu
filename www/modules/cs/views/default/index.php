@@ -69,11 +69,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
     </div>
 
     <!-- 聊天栏 -->
-    <div class="flex1" style="display: none;">
+    <div class="flex1" style="display: flex;">
         <div class="exe-header">
             <div class="exe-header-info-left">
-                <span>11166754250007</span>
-                <span>湖北省孝感市 [ 移动 ] (117.152.175.202)</span>
+                <span>暂无</span>
+                <span>暂无 (117.152.175.202)</span>
             </div>
             <div class="exe-header-info-right">
 <!--                <span>广点通c1</span>-->
