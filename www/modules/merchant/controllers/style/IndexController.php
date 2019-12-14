@@ -227,8 +227,9 @@ class IndexController extends BaseController
 
         $staff_ids = GroupChatStaff::find()
             ->where([
-                'group_chat_id'  =>  $group_id,
-                'merchant_id'   =>  $this->getMerchantId()
+                'group_chat_id' =>  $group_id,
+                'merchant_id'   =>  $this->getMerchantId(),
+                'status'        =>  ConstantService::$default_status_true
             ])
             ->select(['staff_id'])
             ->column();
@@ -279,7 +280,7 @@ class IndexController extends BaseController
         }
 
         // 开始保存信息.
-        if(GroupChatStaff::updateAll(['status'=>ConstantService::$default_status_false],['staff_id'=>$staff_ids]) === false){
+        if(GroupChatStaff::updateAll(['status'=>ConstantService::$default_status_false],['group_chat_id'=>$group_id]) === false){
             return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
