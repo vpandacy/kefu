@@ -71,7 +71,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
             <div class="right-tab-info">
                 <div style="padding: 20px;">
-                    <?=$merchant['desc']?>
+                    <?=$merchant['desc'] ?? '暂无公司简介'?>
                 </div>
             </div>
 <!--            <div class="right-guanggao">-->
