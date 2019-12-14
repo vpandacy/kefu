@@ -54,32 +54,32 @@ body {
     margin-top: 0.5rem;
 }
 
-#wapOnline .content {
+#wapOnline .message {
     flex-grow: 1;
     background-color: #ffffff;
 }
 
-#wapOnline .content .tip {
+#wapOnline .message .tip {
     color: rgb(114, 117, 128);
     text-align: center;
     margin-top: 0.5rem;
 
 }
 
-#wapOnline .content .tip span {
+#wapOnline .message .tip span {
     background: rgb(238, 241, 243);
     padding: 3px;
     font-size: 0.8rem;
 }
 
-#wapOnline .content .date {
+#wapOnline .message .date {
     color: rgb(114, 117, 128);
     text-align: center;
     margin: 1rem 0;
     padding: 5px;
 }
 
-#wapOnline .content .date span {
+#wapOnline .message .date span {
     padding: 3px;
     font-size: 0.5rem;
 }
@@ -93,7 +93,10 @@ body {
     border-bottom: 1px solid #E9EEF2;
     color: rgb(142, 143, 147);
 }
-
+#wapOnline .bottom .mobile-text-disflex {
+    display: flex;
+    align-items: center;
+}
 #wapOnline .bottom .icon {
     display: flex;
     display: -webkit-flex;
@@ -121,11 +124,13 @@ body {
     margin-left: 1rem;
 }
 
-#wapOnline .bottom input {
+#wapOnline .bottom  #content {
     height: 2rem;
-    width: 95%;
+    line-height: 2rem;
+    width: 80%;
     border: none;
     padding-left: 15px;
+    outline: none;
 
 }
 
@@ -133,42 +138,46 @@ body {
     outline: none;
 }
 
-#wapOnline .content .content-message {
+#wapOnline .message .content-message {
     padding-left: 1rem;
     margin-top: 1rem;
     display: flex;
 }
-
-#wapOnline .content .content-message .message-img {
+#wapOnline .message .online-my-message {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+}
+#wapOnline .message .content-message .message-img {
     width: 2.5rem;
     margin-right: 1rem;
 }
 
-#wapOnline .content .content-message .logo {
+#wapOnline .message .content-message .logo {
     width: 3rem;
     border-radius: 50%;
 }
 
-#wapOnline .content .content-message .message-info {
+#wapOnline .message .content-message .message-info {
     width: 70%;
+    margin-right: 10px;
 }
-#wapOnline .content  .message-my {
+#wapOnline .message  .message-my {
     justify-content: flex-end;
     -webkit-justify-content: flex-end;
     padding-right: 1rem;
 }
 
-#wapOnline .content .content-message .message-info .message-name-date {
+#wapOnline .message .content-message .message-info .message-name-date {
     color: rgb(112, 130, 166);
     font-size: 15px;
 }
 
-#wapOnline .content .content-message .message-info .message-name-date .date {
+#wapOnline .message .content-message .message-info .message-name-date .date {
     padding-left: 15px;
 
 }
 
-#wapOnline .content .content-message .message-info .message-message {
+#wapOnline .message .content-message .message-info .message-message {
     background: rgb(230, 233, 239);
     border-radius: 5px;
     padding: 0.5rem;

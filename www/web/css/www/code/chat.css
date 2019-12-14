@@ -233,80 +233,78 @@
     margin-left: 10px;
 }
 
-#pc-online .online-content {
+#pc-online .message {
     overflow-y: auto;
     background: rgb(251, 250, 249);
     flex: 1;
 }
 
-#pc-online .online-content .content-tip {
+#pc-online .message .content-tip {
     display: inline-flex;
     display: -webkit-inline-flex;
     flex-direction: column;
     color: rgb(112, 130, 166);
     font-size: 14px;
 }
-#pc-online .online-content .content-tip:nth-child(1) {
+#pc-online .message .content-tip:nth-child(1) {
     cursor: pointer;
 }
-#pc-online .online-content .tip-div {
+#pc-online .message .tip-div {
     width: 100%;
     text-align: center;
 }
 
-#pc-online .online-content .tip-div .content-tip span:nth-child(2) {
+#pc-online .message .tip-div .content-tip span:nth-child(2) {
     margin: 5px 15px 15px 15px;
 }
 
-#pc-online .online-content .tip-div .content-tip span:nth-child(3) {
+#pc-online .message .tip-div .content-tip span:nth-child(3) {
     background: rgb(230, 233, 239);
     padding: 0 10px;
     line-height: 25px;
 }
 
-#pc-online .online-content .content-message {
+#pc-online .message .content-message {
     padding-left: 10px;
     margin-top: 15px;
     margin-bottom: 10px;
     display: flex;
 }
-#pc-online .online-content .message-my {
+#pc-online .message .online-my-message {
     justify-content: flex-end;
     -webkit-justify-content: flex-end;
 }
 
-#pc-online .online-content .content-message .message-img {
+#pc-online .message .content-message .message-img {
     width: 45px;
     /*margin-right: 10px;*/
 }
 
-#pc-online .online-content .content-message .logo {
+#pc-online .message .content-message .logo {
     width: 35px;
     border-radius: 50%;
 }
 
-#pc-online .online-content .content-message .message-info {
+#pc-online .message .content-message .message-info {
     width: 70%;
+    margin-right: 10px;
 }
 
-#pc-online .online-content .content-message .message-info .message-name-date {
+#pc-online .message .content-message .message-info .message-name-date {
     color: rgb(112, 130, 166);
     font-size: 15px;
     margin-bottom: 10px;
 }
-#pc-online .online-content .content-message .message-info .name-date-my {
-    text-align: right;
-}
 
-#pc-online .online-content .content-message .message-info .message-name-date .date {
+#pc-online .message .content-message .message-info .message-name-date .date {
     padding: 0 15px;
 
 }
-#pc-online .online-content .content-message .message-info .message-name-date .message-name {
+#pc-online .message .content-message .message-info .message-name-date .message-name {
     padding-right: 10px;
 }
 
-#pc-online .online-content .content-message .message-info .message-message {
+#pc-online .message .content-message .message-info .message-message {
     background: rgb(230, 233, 239);
     border-radius: 5px;
     padding: 10px;
@@ -314,7 +312,7 @@
     /*margin-top: 8px;*/
     display: inline-block;
 }
-#pc-online .online-content .content-message .message-info .message-message-my {
+#pc-online .message .content-message .message-info .message-message-my {
     margin-right: 10px;
 }
 

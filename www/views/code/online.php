@@ -19,10 +19,11 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.md5.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/niuniucapture.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
+    // 公共的socket聊天JS
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     // 自己的js.
     GlobalUrlService::buildKFStaticUrl('/js/www/code/online.js')
 ]);
@@ -49,12 +50,6 @@ StaticPluginHelper::includeJsPlugins([
                     </div>
                     <div class="message-info">
                         <div class="message-name-date"><span>楠楠</span><span class="date">10:57:56</span></div>
-                        <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
-                    </div>
-                </div>
-                <div class="content-message online-my-message">
-                    <div class="message-info">
-                        <div class="message-name-date"><span class="date">10:57:56</span><span>我</span></div>
                         <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
                     </div>
                 </div>
@@ -92,4 +87,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
         </div>
     </div>
+</div>
+<div class="hidden_wrapper">
+    <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>
 </div>

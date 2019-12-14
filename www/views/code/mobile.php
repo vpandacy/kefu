@@ -14,6 +14,7 @@ StaticPluginHelper::includeCssPlugins([
 // js
 StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js')
@@ -31,7 +32,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
             <div></div>
         </div>
-        <div class="content">
+        <div class="message">
             <div class="tip">
                 <span>欢迎您的咨询，期待为您服务！</span>
             </div>
@@ -51,12 +52,12 @@ StaticPluginHelper::includeJsPlugins([
             <div class="icon">
                 <i class="iconfont icon-biaoqing" id="openFace"></i>
             </div>
-            <div>
-                <input type="text" id="content" name="message" placeholder="请输入...">
+            <div class="mobile-text-disflex">
+                <div type="text" contenteditable="true" id="content" name="message" placeholder="请输入...">
             </div>
             <div>
                 <input type="hidden" name="host" value="<?=$host?>">
-                <span class="submit">发送</span>
+                <span class="submit-button">发送</span>
             </div>
         </div>
         <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;overflow: auto;">
@@ -66,4 +67,7 @@ StaticPluginHelper::includeJsPlugins([
 <!--            <a class="closeFaceBox" href="javascript:void(0)">×</a>-->
         </div>
     </div>
+</div>
+<div class="hidden_wrapper">
+    <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>
 </div>
