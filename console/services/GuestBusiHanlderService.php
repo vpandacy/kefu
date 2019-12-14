@@ -30,7 +30,7 @@ class GuestBusiHanlderService extends BaseService
             $inner_worker->name = $params_inner['name'];
             $inner_worker->onMessage = function( $connection, $data){
                 $message = json_decode( $data,true );
-                var_dump( $message );
+                self::consoleLog( var_export( $message,true ) );
                 if( isset( $message['data']['t_id']) ){
 
                     //发送给对应的人
@@ -73,7 +73,7 @@ class GuestBusiHanlderService extends BaseService
         // @todo 后面考虑将返回信息给统一返回.不然太麻烦了.就返回信息就得写很多.
         $data = $message['data'] ?? [];
         $f_id = $data['f_id'] ?? 0;
-        var_dump( $message );
+        self::consoleLog( var_export( $message,true ) );
         switch ($message['cmd']) {
             case "guest_in"://客户进来到页面，设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                 if ($f_id) {
