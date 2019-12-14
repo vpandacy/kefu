@@ -62,7 +62,7 @@ var chat_ops = {
             return false;
         }
 
-        kf_ws_service.socketSend( this.buildMsg('chat',{
+        kf_ws_service.socketSend( this.buildMsg('reply',{
             'content': msg
         }));
 
@@ -173,7 +173,7 @@ var chat_ops = {
                 that.data['t_avatar'] = data.data['avatar'];
                 break;
             case "reply":
-                $('.online-content').append( that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content) );
+                $('.message').append( that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content) );
                 that.scrollToBottom();
                 break;
         }
