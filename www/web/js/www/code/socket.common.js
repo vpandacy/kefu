@@ -16,12 +16,10 @@ var kf_ws_service = {
         // 关闭websocket发送的信息.
         this.ws.addEventListener('close', function () {
             //关闭
-            console.log("close");
         });
         // 这里是websocket发生错误的.信息.
         this.ws.addEventListener('error', function () {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
-            console.log("error");
         });
     },
     socketSend: function (msg) {
@@ -31,7 +29,6 @@ var kf_ws_service = {
 var chat_ops = {
     // 这里要保存用户的信息.和收集用户的一些数据.
     init: function () {
-        console.log($(".hidden_wrapper input[name=params]").val())
         this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
         this.eventBind();
         this.initSocket();

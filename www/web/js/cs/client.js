@@ -127,16 +127,13 @@ var client = {
     send: function(msg) {
         var user = ChatStorage.getItem(current_uuid, []),
             time_str = page.getCurrentTimeStr();
-
         // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
         kf_ws_service.ws.send(JSON.stringify(client.buildMsg('reply', {
             content: msg
         })));
-
         if(!user.messages) {
             user.messages = [];
         }
-
         // 消息信息.
         user.messages.push({
             f_id: $('[name=cs_sn]').val(),
