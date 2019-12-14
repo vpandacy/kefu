@@ -7,17 +7,17 @@ StaticPluginHelper::setDepend(AppAsset::className());
 StaticPluginHelper::socketPlugin();
 // css
 StaticPluginHelper::includeCssPlugins([
+    GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/mobile.css'),
-    GlobalUrlService::buildKFStaticUrl('/css/www/code/emojibg.css'),
 ]);
 // js
 StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+    GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js')
 ]);
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>

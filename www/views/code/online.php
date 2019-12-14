@@ -9,18 +9,18 @@ StaticPluginHelper::socketPlugin();
 
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
+    GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/online.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/tools.css'),
-    GlobalUrlService::buildKFStaticUrl('/css/www/code/emojibg.css'),
 ]);
 
 StaticPluginHelper::includeJsPlugins([
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.min.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.md5.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/jquery.json-2.3.min.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/capturewrapper.js'),
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/emoji.min.js'),
+    GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+    GlobalUrlService::buildStaticUrl('/chat/jquery.md5.js'),
+    GlobalUrlService::buildStaticUrl('/chat/jquery.json-2.3.min.js'),
+    GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
+    GlobalUrlService::buildKFStaticUrl('/chat/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
     // 公共的socket聊天JS
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
@@ -31,7 +31,7 @@ StaticPluginHelper::includeJsPlugins([
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
 <div id='online'>
     <div class="online-header">
-        <img class="logo" src="<?=GlobalUrlService::buildKFStaticUrl('/images/www/code/test.png')?>">
+        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
         <div class="info">
             <span class="title">金牌客服</span>
             <span class="tip">为您在线解答售前(5*8)/售后咨询(7*24)服务</span>
@@ -42,22 +42,13 @@ StaticPluginHelper::includeJsPlugins([
             <div class="message">
                 <div class="tip-div">
                     <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
-                    <span class="message-tip">欢迎您的咨询，期待为您服务！</span>
-                </div>
-                <div class="content-message">
-                    <div class="message-img">
-                        <img class="logo" src="/images/www/code/test.png">
-                    </div>
-                    <div class="message-info">
-                        <div class="message-name-date"><span>楠楠</span><span class="date">10:57:56</span></div>
-                        <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
-                    </div>
+                    <span class="message-tip"><?=$setting['greetings'] ?? '欢迎您的咨询，期待为您服务！'?></span>
                 </div>
             </div>
             <div class="submit">
                 <div class="top">
                     <i class="iconfont icon-biaoqing" id="openFace"></i>
-                    <i class="iconfont icon-yiwenshuoming"></i>
+<!--                    <i class="iconfont icon-yiwenshuoming"></i>-->
                 </div>
                 <div class="print" id="content" contenteditable="true" ></div>
                 <div class="bottom">
@@ -73,18 +64,21 @@ StaticPluginHelper::includeJsPlugins([
         </div>
         <div class="online-right">
             <div class="right-tab">
-                <div class="tab-one">关于我们</div>
-                <div class="tab-one right-tab-active">客服名片</div>
+                <div class="tab-one">
+                    公司简介
+                </div>
+<!--                <div class="tab-one right-tab-active">客服名片</div>-->
             </div>
             <div class="right-tab-info">
-                <div>1</div>
-                <div class="dis_none">2</div>
-            </div>
-            <div class="right-guanggao">
-                <div class="online-advertisement">
-                    <div></div>
+                <div style="padding: 20px;">
+                    <?=$merchant['desc']?>
                 </div>
             </div>
+<!--            <div class="right-guanggao">-->
+<!--                <div class="online-advertisement">-->
+<!--                    <div></div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
