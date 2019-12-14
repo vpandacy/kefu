@@ -38,7 +38,7 @@ class GateWayWorkerService extends BaseService
         $gateway->lanIp = '127.0.0.1';
         // 内部通讯起始端口，假如$gateway->count=4，起始端口为4000
         // 则一般会使用4000 4001 4002 4003 4个端口作为内部通讯端口
-        $gateway->startPort = 4000;
+        $gateway->startPort = $params['start_port'];
         // 服务注册地址
         $gateway->registerAddress = $params['register_host'];
         //心跳间隔
@@ -55,22 +55,6 @@ class GateWayWorkerService extends BaseService
                 }
             };
         };
-
-        //再启动一个text协议，用来进行数据转发,
-        $params_inner = $params['inner']??[];
-        if( $params_inner ){
-            $inner_worker = new Worker( "text://{$params_inner['host']}" );
-            $inner_worker->name = $params_inner['name'];
-            $inner_worker->onMessage = function( $connection, $data){
-                $message = json_decode( $data,true );
-                if( isset( $message['t_id']) ){
-                    //发送给对应的人
-                    DataGateway::sendToClient( $message['t_id'], json_encode($data) );
-                }
-                var_dump( $data );
-                return $connection->send( "success" );
-            };
-        }
 
         // 如果不是在根目录启动，则运行runAll方法
         if( !defined('GLOBAL_START') )  {
@@ -103,17 +87,8 @@ class GateWayWorkerService extends BaseService
             // 返回假，让进程重启，避免进程继续无限阻塞
             return false;
         };
-
-
-        // 监听一个text端口,我觉得还是用http协议 相对来说比较重
-//        $inner_http_worker = new Worker( 'text://0.0.0.0:2223' );
-//        $inner_http_worker->name = 'customer_text';
-//        // 当http客户端发来数据时触发
-//        $inner_http_worker->onMessage = function( $connection, $data){
-//            $message = json_decode( $data,true );
-//            return $connection->send( "success" );
-//        };
-
+        $params_inner = $params['inner']??[];
+        $business_worker->transfer_params = $params_inner;
         // 如果不是在根目录启动，则运行runAll方法
         if( !defined('GLOBAL_START') )  {
             Worker::runAll();

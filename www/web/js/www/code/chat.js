@@ -17,11 +17,13 @@ var kf_ws_service = {
         // 关闭websocket发送的信息.
         this.ws.addEventListener('close', function () {
             //关闭
+            console.log("close");
         });
 
         // 这里是websocket发生错误的.信息.
         this.ws.addEventListener('error', function () {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+            console.log("error");
         });
     },
     socketSend: function (msg) {
@@ -95,6 +97,9 @@ var chat_ops = {
         data['f_id'] = this.data['uuid'];
         data['msn'] = this.data['msn'];
         data['code'] = this.data['code'];
+        if( this.data.hasOwnProperty("t_id") ){
+            data['t_id'] = this.data['t_id'];
+        }
         var params = {
             cmd:cmd,
             data:data
@@ -142,10 +147,14 @@ var chat_ops = {
                 };
                 kf_ws_service.socketSend( that.buildMsg('guest_in',params ));
                 break;
+            case "hello":
+                kf_ws_service.socketSend( that.buildMsg('guest_connect',{} ));
+                break;
             case "assign_kf":
                 that.data['t_id'] = data.data['sn'];
                 that.data['t_name'] = data.data['name'];
                 that.data['t_avatar'] = data.data['avatar'];
+                //显示一些系统文字提醒，例如已分配哪个客服
                 break;
             case "change_kf":
                 that.data['t_id'] = data.data['sn'];

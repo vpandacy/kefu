@@ -28,10 +28,16 @@ class ConstantService extends BaseService
 
     // 定义一些常量ID.
     public static $merchant_app_id = 1;
-
+    
     /**
      * 默认头像.
      * @var string
      */
     public static $default_avatar = 'default_avatar.png';
+
+    public static $chat_cmd_assign_kf = "assign_kf";
+    public static $chat_cmd_guest_connect = "guest_connect";
+    public static $chat_cmd_system = "system";
+    public static $chat_cmd_hello = "hello";
+
 }

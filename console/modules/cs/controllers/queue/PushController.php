@@ -34,13 +34,13 @@ class PushController extends QueueBaseController
         }
         //将消息同步到客服ws中心
         $config = \Yii::$app->params['cs'];
-        $data['cmd'] = "reply";
         $url = 'tcp://'.$config['push']['host'];
         $client = stream_socket_client( $url );
         stream_set_timeout( $client,2 );
         fwrite( $client,  json_encode( $data )."\n" );
+        $ret = fgets($client, 10);
         fclose( $client);
-        return $this->echoLog( "ok" );
+        return $this->echoLog( "ok:".$ret );
     }
 
     public function actionTest(){
