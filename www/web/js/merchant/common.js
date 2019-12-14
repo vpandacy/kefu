@@ -76,12 +76,11 @@ var merchant_common_ops = {
     },
     buildPicStaticUrl:function(bucket,img_key,params){
         bucket = bucket ? bucket: "pic3";
-        var config = {
-            'hsh': {
-                'http': 'http://cdn.static.test.jiatest.cn',
-                'https': 'https://cdn.static.test.jiatest.cn'
-            }
-        };
+        var config = $('[name=domain_cdn]').val();
+
+        if(config) {
+            config = JSON.parse(config);
+        }
 
         var url = config[bucket].http + '/' + img_key;
 
@@ -130,6 +129,9 @@ var merchant_common_ops = {
 var common_ops_url = {
     buildUrl:function( path, params ){
         return merchant_common_ops.buildUCUrl( path, params );
+    },
+    buildCdnPicSUrl: function (bucket, img_key, params) {
+        return merchant_common_ops.buildPicStaticUrl(bucket, img_key, params);
     }
 };
 
