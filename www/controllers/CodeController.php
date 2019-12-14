@@ -124,7 +124,7 @@ class CodeController extends BaseController
     public function actionMobile()
     {
         $msn = $this->get('msn','');
-        $code = $this->get('code',0);
+        $code = $this->get('code','');
         $uuid = $this->get("uuid",$this->getGuestUUID() );
 
         if(!$msn) {
@@ -143,6 +143,7 @@ class CodeController extends BaseController
         return $this->render('mobile', [
             'merchant'  =>  $merchant,
             'setting'   =>  $setting,
+            'code'      =>  $code,
             "js_params" => [
                 'uuid' => $uuid,
                 "ws" => WSCenterService::getGuestWSByRoute( $msn ),
