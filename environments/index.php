@@ -45,6 +45,22 @@ return [
 
         ],
     ],
+    'test' => [
+        'path' => 'test',
+        'setWritable' => [
+            'console/runtime',
+            'www/runtime',
+            'www/web/assets',
+            'uc/runtime',
+            'uc/web/assets',
+        ],
+        'setExecutable' => [
+            'yii',
+        ],
+        'setCookieValidationKey' => [
+
+        ],
+    ],
     'Production' => [
         'path' => 'dev',
         'setWritable' => [

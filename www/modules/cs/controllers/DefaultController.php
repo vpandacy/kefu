@@ -13,7 +13,7 @@ class DefaultController extends BaseController
         $data = [
             "staff" => $this->current_user,
             "js_params" => [
-                "ws" => WSCenterService::getGuestWSByRoute( $current_info['id'] ),
+                "ws" => WSCenterService::getCSWSByRoute( $current_info['id'] ),
                 "sn" => $current_info['sn'],
                 "msn" => $this->merchant_info['sn'],
             ]

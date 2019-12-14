@@ -28,7 +28,6 @@ class PushController extends QueueBaseController
         }
         //将消息同步到客服ws中心
         $config = \Yii::$app->params['guest'];
-        $data['cmd'] = "reply";
         $url = 'tcp://'.$config['push']['host'];
         $client = stream_socket_client( $url );
         stream_set_timeout( $client,2 );

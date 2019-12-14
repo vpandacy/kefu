@@ -34,4 +34,10 @@ class ConstantService extends BaseService
      * @var string
      */
     public static $default_avatar = 'default_avatar.png';
+
+    public static $chat_cmd_assign_kf = "assign_kf";
+    public static $chat_cmd_guest_connect = "guest_connect";
+    public static $chat_cmd_system = "system";
+    public static $chat_cmd_hello = "hello";
+
 }

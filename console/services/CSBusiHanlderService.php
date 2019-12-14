@@ -4,6 +4,7 @@ use common\services\BaseService;
 use common\services\constant\QueueConstant;
 use common\services\QueueListService;
 use GatewayWorker\Lib\Gateway;
+use Workerman\Worker;
 
 class CSBusiHanlderService extends BaseService
 {
@@ -12,7 +13,29 @@ class CSBusiHanlderService extends BaseService
      * 然后通过这里转发给对应的客服人员
      */
     public static function onWorkerStart(  $worker ) {
+        //如果不特殊处理，就会启动多次，而一个端口被占用，在此启动就会报错
+        if( $worker->id != 0 ){
+            return;
+        }
+        //再启动一个text协议，用来进行数据转发,
+        $params_inner = $worker->transfer_params;
+        if( $params_inner ){
+            $inner_worker = new Worker( "text://{$params_inner['host']}" );
+            $inner_worker->name = $params_inner['name'];
+            $inner_worker->onMessage = function( $connection, $data){
+                $message = json_decode( $data,true );
+                var_dump( $message );
+                if( isset( $message['data']['t_id']) ){
 
+                    //发送给对应的人
+                    $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+                    Gateway::sendToClient( $tmp_client[0], $data );
+                }
+                return $connection->send( "success" );
+            };
+            // 运行worker
+            $inner_worker->listen();
+        }
     }
 
     /**
@@ -41,6 +64,7 @@ class CSBusiHanlderService extends BaseService
         $message = $message + $_SERVER;
         $data = $message['data'] ?? [];
         $f_id = $data['f_id'] ?? 0;
+        var_dump( $message );
         switch ($message['cmd']) {
             case "chat"://聊天
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
