@@ -40,17 +40,18 @@ StaticPluginHelper::includeJsPlugins([
         <div class="info-message">
             <div class="message">
                 <div class="tip-div">
+                    <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
                     <span class="message-tip">欢迎您的咨询，期待为您服务！</span>
                 </div>
                 <div class="content-message">
-                        <div class="message-img">
+                    <div class="message-img">
                         <img class="logo" src="/images/www/code/test.png">
                     </div>
-                        <div class="message-info">
-                            <div class="message-name-date"><span>楠楠</span><span class="date">10:57:56</span></div>
-                            <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
-                        </div>
+                    <div class="message-info">
+                        <div class="message-name-date"><span>楠楠</span><span class="date">10:57:56</span></div>
+                        <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
                     </div>
+                </div>
                 <div class="content-message online-my-message">
                     <div class="message-info">
                         <div class="message-name-date"><span class="date">10:57:56</span><span>我</span></div>
@@ -65,8 +66,8 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <div class="print" id="content" contenteditable="true" ></div>
                 <div class="bottom">
-                <div class="submit-button">发送</div>
-            </div>
+                    <div class="submit-button">发送</div>
+                </div>
             </div>
             <div class="faceDivBox" style="display:none;width: 500px;height: 150px;bottom: 155px;">
                 <div class="faceDiv">
@@ -81,7 +82,11 @@ StaticPluginHelper::includeJsPlugins([
                 <div class="tab-two">客服名片</div>
             </div>
             <div class="right-tab-info">123</div>
-            <div class="right-guanggao">廣告位（招商中）</div>
+            <div class="right-guanggao">
+                <div class="online-advertisement">
+                    <div></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

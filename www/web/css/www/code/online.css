@@ -81,6 +81,8 @@ body {
 
 #online .online-info .info-message .message {
     flex-grow: 1;
+    overflow-y: auto;
+    height: 337px;
 }
 
 #online .online-info .info-message .message .tip-div {
@@ -169,6 +171,8 @@ body {
     flex-grow: 1;
     outline: none;
     padding: 10px;
+    height: 82px;
+    overflow-y: auto;
 }
 #online .online-info .info-message .submit .bottom{
     display: flex;
@@ -198,6 +202,7 @@ body {
     display: flex;
     text-align: center;
     font-size: 14px;
+    cursor: pointer;
 }
 #online .online-info .online-right .right-tab-info{
     flex: 1;
@@ -214,4 +219,9 @@ body {
 }
 #online .online-info .online-right .right-guanggao {
     height: 30%;
+}
+#online .online-info .online-right .right-guanggao .online-advertisement {
+    width: 90%;
+    border-top: 1px solid #DDE5ED;
+    margin: 0 auto;
 }
