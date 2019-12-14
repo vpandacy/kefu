@@ -27,26 +27,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
             <div class="menu-icon-top">
                 <i class="iconfont icon-xiaoxi icon icon-action fsize32"></i>
             </div>
-            <div class="menu-icon-top" style="display: none">
-                <i class="iconfont icon-shoujidiannao icon fsize32"></i>
-            </div>
-        </div>
-        <div class="menu-icon-bottom" style="display: none">
-            <div class="menu-icon-top">
-                <i class="iconfont icon-shezhi icon fsize22"></i>
-            </div>
-            <div class="menu-icon-top">
-                <i class="iconfont icon-guanliyuan icon fsize22"></i>
-            </div>
-            <div class="menu-icon-top">
-                <i class="iconfont icon-kuai icon fsize22"></i>
-            </div>
-            <div class="menu-icon-top">
-                <i class="iconfont icon-fengshan icon fsize22"></i>
-            </div>
-            <div class="menu-icon-top">
-                <i class="iconfont icon-gengduo icon fsize22"></i>
-            </div>
         </div>
     </div>
 
