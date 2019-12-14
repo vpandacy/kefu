@@ -32,7 +32,7 @@ class CSBusiHanlderService extends BaseService
                         if( isset( $message['data']['t_id']) ){
                             //发送给对应的人
                             $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
-                            Gateway::sendToClient( $tmp_client[0], $data );
+                            $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
                         }
                         return $connection->send( "success" );
                     }catch (\Exception $e){
