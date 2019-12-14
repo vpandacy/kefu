@@ -25,7 +25,6 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     // 这里先分开业务.后期在合并js.
     GlobalUrlService::buildKFStaticUrl('/js/www/code/core.js'), // 核心.比方说动画.上传动作.
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat.js'), // 主要实现业务逻辑.
 ]);
 
 ?>

@@ -123,7 +123,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     position: absolute;
     top: 0;
     right: 0;
-    height: 500px;
+    height: 300px;
     width: 300px;
     /*border: 1px solid red;*/
     overflow: auto;
@@ -173,7 +173,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     box-sizing: content-box;
 }
 #merchant .chant_all .left_menu .menu-logo a img {
-    width: 100%;
+    width: 150%;
 }
 #merchant .chant_all .left_menu .menu-version {
     width: 100%;

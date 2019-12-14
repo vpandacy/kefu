@@ -142,6 +142,8 @@ var client = {
             time:time_str
         });
 
+        user.messages = user.messages.slice(0,20);
+
         ChatStorage.setItem(current_uuid, user);
 
         // 清空掉.然后在将这个展示到对应的消息上去.
