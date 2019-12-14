@@ -20,26 +20,30 @@ class CSBusiHanlderService extends BaseService
             return;
         }
         //再启动一个text协议，用来进行数据转发,
-        $params_inner = $worker->transfer_params;
-        if( $params_inner ){
-            $inner_worker = new Worker( "text://{$params_inner['host']}" );
-            $inner_worker->name = $params_inner['name'];
-            $inner_worker->onMessage = function( $connection, $data){
-                $message = json_decode( $data,true );
-                self::consoleLog( var_export( $message,true ) );
-                if( isset( $message['data']['t_id']) ){
-                    //发送给对应的人
-                    $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
-                    // 这里要注意一下．
-                    // 如果$tmp_client_id为空.
-                    // 则默认为没有客服在线.
-                    // 这个时候需要通知用户.
-                    $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
-                }
-                return $connection->send( "success" );
-            };
-            // 运行worker
-            $inner_worker->listen();
+        try{
+            $params_inner = $worker->transfer_params;
+            if( $params_inner ){
+                $inner_worker = new Worker( "text://{$params_inner['host']}" );
+                $inner_worker->name = $params_inner['name'];
+                $inner_worker->onMessage = function( $connection, $data){
+                    try{
+                        $message = json_decode( $data,true );
+                        self::consoleLog( var_export( $message,true ) );
+                        if( isset( $message['data']['t_id']) ){
+                            //发送给对应的人
+                            $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+                            $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
+                        }
+                        return $connection->send( "success" );
+                    }catch (\Exception $e){
+
+                    }
+                };
+                // 运行worker
+                $inner_worker->listen();
+            }
+        }catch (\Exception $e){
+
         }
     }
 
@@ -61,47 +65,48 @@ class CSBusiHanlderService extends BaseService
      * ];
      */
     public static function onMessage($client_id, $message) {
-        $message = @json_decode($message, true);
-        $message = $message??[];
-        if( isset( $_SESSION['REMOTE_IP'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
-            $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
+        try{
+            $message = @json_decode($message, true);
+            $message = $message??[];
+            if( isset( $_SESSION['REMOTE_IP'] ) && isset( $_SERVER['REMOTE_ADDR'] ) ){
+                $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
+            }
+            $message = $message + $_SERVER;
+            $data = $message['data'] ?? [];
+            $f_id = $data['f_id'] ?? 0;
+            self::consoleLog( var_export( $message,true ) );
+            switch ($message['cmd']) {
+                case "chat"://聊天
+                    //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
+                    QueueListService::push2Guest( QueueConstant::$queue_cs_chat,$message);
+                    break;
+                case "reply":
+                    //是从游客过来的
+                    break;
+                case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
+                    if ($f_id) {
+                        //建立绑定关系，后面就可以根据f_id找到这个人了
+                        Gateway::bindUid($client_id, $f_id);
+                    }
+                    break;
+                case "pong":
+                    //EventsDispatch::addChatHistory( $client_id,$message );
+                    break;
+                case "ping":
+                    //EventsDispatch::addChatHistory( $client_id,$message );
+                    break;
+            };
+        }catch (\Exception $e){
+
         }
-        $message = $message + $_SERVER;
-        $data = $message['data'] ?? [];
-        $f_id = $data['f_id'] ?? 0;
-        self::consoleLog( var_export( $message,true ) );
-        switch ($message['cmd']) {
-            case "guest_connect":
-                // 这里是游客已经连接上来了.通知客服.做好准备.
-                Gateway::sendToUid($data['t_id'], ChatEventService::buildMsg(ConstantService::$chat_cmd_guest_connect,[
-                    'f_id'  =>  $f_id,
-                    't_id'  =>  $data['t_id']
-                ]));
-                break;
-            case "reply":
-                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                QueueListService::push2Guest( QueueConstant::$queue_guest_chat, $message);
-                break;
-            case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
-                if ($f_id) {
-                    //建立绑定关系，后面就可以根据f_id找到这个人了
-                    Gateway::bindUid($client_id, $f_id);
-                }
-                break;
-            case "pong":
-                //EventsDispatch::addChatHistory( $client_id,$message );
-                break;
-            case "ping":
-                //EventsDispatch::addChatHistory( $client_id,$message );
-                break;
-        };
     }
 
     /**
      * 当游客端用户断开连接时触发
      * @param int $client_id 连接id
+     * 这里的问题是不知道这个client id 对应的客服，所以也要编辑好，不然到时候无法关闭了
      */
-    public static function onClose($client_id){
-        // 向所有人发送
+    public static function onClose( $client_id ){
+        // 向所有人发送,发消息给对应的kf，然后客服工作台在设置
     }
 }
