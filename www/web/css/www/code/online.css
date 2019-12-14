@@ -192,6 +192,7 @@ body {
     line-height: 30px;
     border-radius: 3px;
     margin: 0 10px 10px 0;
+    cursor: pointer;
 }
 
 #online .online-info .online-right {
