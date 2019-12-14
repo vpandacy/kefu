@@ -2,6 +2,7 @@
 namespace common\services\chat;
 
 use common\models\uc\Staff;
+use common\services\applog\AppLogService;
 use common\services\BaseService;
 use common\services\ConstantService;
 use common\services\uc\MerchantService;
@@ -45,5 +46,10 @@ class ChatEventService extends BaseService
             "data" => $data
         ];
         return json_encode( $params );
+    }
+
+    public static function handlerError( $error_msg = "" ){
+        self::consoleLog( $error_msg );
+        AppLogService::addErrLog( "app-ws", $error_msg);
     }
 }
