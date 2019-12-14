@@ -169,8 +169,8 @@ body {
 }
 
 #chatExe .exe-menu .menu-online {
-    width: 12%;
-    height: 4%;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: rgb(86, 216, 59);
     margin: 0 auto;
