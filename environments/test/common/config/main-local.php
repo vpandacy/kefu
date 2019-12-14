@@ -15,6 +15,13 @@ return [
             'password' => 'mqQ7sJ7CSLZztTaY',
             'charset'  => 'utf8mb4',
         ],
+        'chat_logs_db' =>  [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=chat_logs_db',
+            'username' => 'www',
+            'password' => 'mqQ7sJ7CSLZztTaY',
+            'charset' => 'utf8mb4',
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
