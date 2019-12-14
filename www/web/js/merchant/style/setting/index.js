@@ -80,6 +80,8 @@ var merchant_style_setting_index_ops = {
                             '<img width="100" height="100" src="', merchant_common_ops.buildPicStaticUrl('hsh', data.company_logo) ,'" alt="">',
                         '</div>'
                     ].join(''));
+                }else{
+                    $('.img-wrapper').html('')
                 }
 
                 // 重绘
