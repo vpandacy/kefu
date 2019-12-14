@@ -2,6 +2,7 @@
 namespace www\modules\merchant\controllers\common;
 
 use common\components\StaffBaseController;
+use common\services\applog\AppLogService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use common\services\uc\MenuService;
@@ -70,6 +71,8 @@ class BaseController extends StaffBaseController
         Yii::$app->view->params['merchant'] = $this->merchant_info;
         // 员工信息.
         Yii::$app->view->params['current_user'] = $this->current_user;
+
+        AppLogService::addAccessLog($this->current_user);
         return true;
     }
 }

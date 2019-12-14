@@ -22,7 +22,8 @@
         "workerman/gateway-worker": "^3.0",
         "qiniu/php-sdk": "^7.2",
         "phpoffice/phpspreadsheet": "^1.10",
-        "workerman/gatewayclient": "^3.0.13"
+        "workerman/gatewayclient": "^3.0.13",
+        "ipip/db": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
