@@ -1,7 +1,7 @@
 <?php
 return [
     'domains' => [
-        'www' => 'http://www.kefu.test.hsh568.cn/',
+        'www' => 'http://www.kefu.test.hsh568.cn',
         'merchant' => 'http://www.kefu.test.hsh568.cn/merchant',
         'cs' => 'http://www.kefu.test.hsh568.cn/cs',
         'static' => 'http://static.test.hsh568.cn',
