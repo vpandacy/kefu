@@ -12,7 +12,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
 <script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
 <div id='chatExe'>
     <!-- 右键菜单 -->
-    <div id="menu" >
+    <div id="menu" style="z-index: 1">
         <a data-event="edit">编辑</a>
         <a data-event="del">删除</a>
         <a data-event="black">拉入黑名单</a>
