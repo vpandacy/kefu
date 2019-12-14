@@ -68,7 +68,7 @@ class CSBusiHanlderService extends BaseService
         switch ($message['cmd']) {
             case "chat"://聊天
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                QueueListService::push2Guest( QueueConstant::$queue_cs_chat,$message);
+                QueueListService::push2Guest( QueueConstant::$queue_guest_chat,$message);
                 break;
             case "reply":
                 //是从游客过来的

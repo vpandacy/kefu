@@ -119,7 +119,7 @@ class GuestBusiHanlderService extends BaseService
                 break;
             case "chat"://聊天
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                QueueListService::push2CS( QueueConstant::$queue_guest_chat,$message);
+                QueueListService::push2CS( QueueConstant::$queue_cs_chat,$message);
                 break;
             case "reply"://客服回复
                 break;
