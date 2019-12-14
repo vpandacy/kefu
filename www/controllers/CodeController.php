@@ -91,7 +91,8 @@ class CodeController extends BaseController
     public function actionOnline()
     {
         $msn = $this->get('msn','');
-
+        $uuid = $this->get("uuid",$this->getGuestUUID() );
+        $code = $this->get('code',0);
         if(!$msn) {
             return '<script>alert("您引入的非法客服软件")</script>';
         }
@@ -107,7 +108,13 @@ class CodeController extends BaseController
 
         return $this->render('online',[
             'merchant'  =>  $merchant,
-            'setting'   =>  $setting
+            'setting'   =>  $setting,
+            "js_params" => [
+                'uuid' => $uuid,
+                "ws" => WSCenterService::getGuestWSByRoute( $msn ),
+                "code" => $code,
+                "msn" => $msn
+            ]
         ]);
     }
 
@@ -136,9 +143,12 @@ class CodeController extends BaseController
         return $this->render('mobile', [
             'merchant'  =>  $merchant,
             'setting'   =>  $setting,
-            'uuid'      =>  $uuid,
-            'host'      =>  '192.168.117.122:8282', // 写死成自己的.  好调试代码.
-            'code'      =>  $this->get('code'),
+            "js_params" => [
+                'uuid' => $uuid,
+                "ws" => WSCenterService::getGuestWSByRoute( $msn ),
+                "code" => $code,
+                "msn" => $msn
+            ]
         ]);
     }
 }
