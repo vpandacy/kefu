@@ -46,7 +46,7 @@ return [
         ],
     ],
     'test' => [
-        'path' => 'dev',
+        'path' => 'test',
         'setWritable' => [
             'console/runtime',
             'www/runtime',
