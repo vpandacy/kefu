@@ -2,10 +2,10 @@
 #echo "TaskManager monitor v1.0"
 
 
-SCRIPTS=("news" "media-import" "staff-head" "message-import" "message-cal" "merchant" "sync-message-board" "merchant-notice" "kf-message-push" "uc/attendance-import" "dw/kf-message-push" "dw/media-import" "dw/merchant" "dw/merchant-notice" "dw/message-cal" "dw/message-import" "dw/news");
+SCRIPTS=("cs/queue/push" "guest/queue/push");
 
 BASE_DIR=$(dirname $(dirname $(cd "$(dirname "$0")"; pwd)))"/";
-LOG_DIR="/data/www/logs/jobs/queue/";
+LOG_DIR="/data/www/logs/kefu/";
 
 L=${#SCRIPTS[*]}
 
@@ -113,7 +113,7 @@ if [ "$1" = "start" ]; then
         #do running!
         while [ -e $pid_path ]; do
             #php "$BASE_DIR""yii" "queue/"$2"/start" "$LOG_DIR""log/"
-            current_full_cmd="php ${BASE_DIR}yii queue/$2/start >> ${job_log_path}"
+            current_full_cmd="php ${BASE_DIR}yii $2/start >> ${job_log_path}"
             echo ${current_full_cmd}
             eval $current_full_cmd
             sleep 1
