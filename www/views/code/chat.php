@@ -10,9 +10,9 @@ StaticPluginHelper::socketPlugin();
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),
+    GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/chat.css'),
-    GlobalUrlService::buildKFStaticUrl('/css/www/code/tools.css'),
 ]);
 
 StaticPluginHelper::includeJsPlugins([

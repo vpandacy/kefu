@@ -259,12 +259,21 @@ var client = {
 var page = {
     init: function () {
         this.eventBind();
+        this.emojInit();
     },
     eventBind: function () {
         $('.icon-guanbi').on('click', function () {
             $('#chatExe .flex1').css({'display': 'none'});
 
             $('.content-message-active').removeClass('content-message-active');
+        });
+    },
+    // 琛ㄦ儏鍒濆鍖�
+    emojInit: function () {
+        sdEditorEmoj.Init(emojiconfig);
+        sdEditorEmoj.setEmoji({
+            type: 'div',
+            id: "content"
         });
     },
     // 渲染聊天窗口

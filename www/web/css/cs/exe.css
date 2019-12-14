@@ -368,6 +368,10 @@ body {
     color: rgb(98, 119, 140);
 }
 
+#chatExe .exe-content .exe-content-sumbit .faceDiv{
+    height: 100% !important;
+}
+
 #chatExe .exe-content .exe-content-sumbit .sumbit-input {
     flex: 1;
     border: none;

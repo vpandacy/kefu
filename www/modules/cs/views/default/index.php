@@ -7,6 +7,9 @@ use www\assets\CsAsset;
 StaticPluginHelper::setDepend(CsAsset::className());
 StaticPluginHelper::socketPlugin();
 
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),CsAsset::className());
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'), CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/client.js'), CsAsset::className());
 ?>
 <script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
@@ -101,11 +104,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                     <!-- 这里是提示信息 -->
 <!--                    <div class="history-close">关闭页面</div>-->
                 </div>
-                <div class="exe-content-sumbit">
+                <div class="exe-content-sumbit" style="position: relative;">
                     <div>
                         <span>
 <!--                            <i class="iconfont icon-ai247"></i>-->
-                            <i class="iconfont icon-biaoqing"></i>
+                            <i class="iconfont icon-biaoqing" id="openFace"></i>
 <!--                            <i class="iconfont icon-tupian"></i>-->
 <!--                            <i class="iconfont icon-wenjian"></i>-->
 <!--                            <i class="iconfont icon-jietu"></i>-->
@@ -118,7 +121,15 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
 <!--                            <label>消息记录</label>-->
 <!--                        </span>-->
                     </div>
-                    <div class="sumbit-input" contenteditable="true" ></div>
+
+                    <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;overflow: auto;">
+                        <div class="faceDiv">
+                            <section class="emoji-box"></section>
+                        </div>
+                        <!--            <a class="closeFaceBox" href="javascript:void(0)">×</a>-->
+                    </div>
+
+                    <div class="sumbit-input" id="content" contenteditable="true" ></div>
                     <div class="sumbit-bottom">
                         <div></div>
                         <div class="button">
