@@ -56,7 +56,6 @@ StaticPluginHelper::includeJsPlugins([
                 <div type="text" contenteditable="true" id="content" name="message" placeholder="请输入...">
             </div>
             <div>
-                <input type="hidden" name="host" value="<?=$host?>">
                 <span class="submit-button">发送</span>
             </div>
         </div>
