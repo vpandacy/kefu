@@ -40,14 +40,14 @@ class GuestBusiHanlderService extends BaseService
                         }
                         return $connection->send( "success" );
                     }catch (\Exception $e){
-
+                        ChatEventService::handlerError( $e->getTraceAsString() );
                     }
                 };
                 // 运行worker
                 $inner_worker->listen();
             }
         }catch (\Exception $e){
-
+            ChatEventService::handlerError( $e->getTraceAsString() );
         }
     }
 
@@ -142,7 +142,7 @@ class GuestBusiHanlderService extends BaseService
                     break;
             };
         }catch (\Exception $e){
-
+            ChatEventService::handlerError( $e->getTraceAsString() );
         }
     }
 

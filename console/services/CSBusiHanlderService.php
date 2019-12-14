@@ -3,7 +3,6 @@ namespace console\services;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
-use common\services\ConstantService;
 use common\services\QueueListService;
 use GatewayWorker\Lib\Gateway;
 use Workerman\Worker;
@@ -36,14 +35,14 @@ class CSBusiHanlderService extends BaseService
                         }
                         return $connection->send( "success" );
                     }catch (\Exception $e){
-
+                        ChatEventService::handlerError( $e->getTraceAsString() );
                     }
                 };
                 // 运行worker
                 $inner_worker->listen();
             }
         }catch (\Exception $e){
-
+            ChatEventService::handlerError( $e->getTraceAsString() );
         }
     }
 
@@ -94,7 +93,7 @@ class CSBusiHanlderService extends BaseService
                     break;
             };
         }catch (\Exception $e){
-
+            ChatEventService::handlerError( $e->getTraceAsString() );
         }
     }
 
