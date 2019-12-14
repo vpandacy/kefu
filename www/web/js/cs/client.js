@@ -238,7 +238,7 @@ var client = {
             case "guest_connect":
                 that.assignKf(data);
                 break;
-            case "reply":
+            case "chat":
                 that.chat(data);
                 break;
         }

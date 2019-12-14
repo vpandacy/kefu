@@ -58,8 +58,8 @@ var chat_ops = {
         if(msg.length <= 0) {
             return false;
         }
-
-        kf_ws_service.socketSend( this.buildMsg('reply',{
+        // 发送动作为chat.
+        kf_ws_service.socketSend( this.buildMsg('chat',{
             'content': msg
         }));
 

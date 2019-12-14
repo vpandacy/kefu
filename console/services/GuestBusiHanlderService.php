@@ -92,7 +92,7 @@ class GuestBusiHanlderService extends BaseService
                     $params = [
                         "content" => time()
                     ];
-                    $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_assign_kf,$params );
+                    $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_hello,$params );
                     Gateway::sendToClient( $client_id,$data );
                     break;
                 case "guest_connect"://客户链接,要分配客服
@@ -129,7 +129,7 @@ class GuestBusiHanlderService extends BaseService
                         Gateway::unbindUid($client_id, $f_id);
                     }
                     break;
-                case "reply"://客服回复
+                case "chat": // 游客聊天动作.
                     //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
                     QueueListService::push2CS( QueueConstant::$queue_cs_chat,$message);
                     break;
