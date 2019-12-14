@@ -160,10 +160,14 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                     <div class="tab-content">
                         <div class="content-one">
                         <input type="text" placeholder="关键词搜索">
-                        <div class="content-select">
-                            <i class="iconfont icon-wenjian"></i>
-                            <span>默认私有词语</span>
-                        </div>
+                            <div class="words-content">
+                                <?php foreach($words as $word):?>
+                                    <div class="content-select">
+                                        <i class="iconfont icon-wenjian"></i>
+                                        <span><?=$word['words']?></span>
+                                    </div>
+                                <?php endforeach;?>
+                            </div>
                         </div>
                         <div class="content-one" style="display: none;">
                             123
