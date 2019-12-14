@@ -10,22 +10,23 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         'bar_menu'  =>  'settings',
         'current_menu'  =>  'common_words'
     ])?>
+
+    <div class="tab_staff_content">
+        <div class="site-text">
+            <div class="layui-form-item">
+                <label class="layui-form-label">请选择文件</label>
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn" id="upload">
+                        <i class="layui-icon">&#xe67c;</i>上传文件
+                    </button>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" id="upload-button" lay-submit="" lay-filter="commonWords">上传</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-<ul class="submenu">
-    <div class="layui-form-item">
-        <label class="layui-form-label">请选择文件</label>
-        <div class="layui-input-block">
-            <button type="button" class="layui-btn" id="upload">
-                <i class="layui-icon">&#xe67c;</i>上传文件
-            </button>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" id="upload-button" lay-submit="" lay-filter="commonWords">上传</button>
-        </div>
-    </div>
-</ul>
-
