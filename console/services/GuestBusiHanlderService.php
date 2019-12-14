@@ -102,7 +102,7 @@ class GuestBusiHanlderService extends BaseService
                         "t_id" => $kf_info['sn']
                     ];
                     $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$transfer_params );
-                    QueueListService::push2CS( QueueConstant::$queue_guest_chat,json_decode($transfer_data,true) );
+                    QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true) );
                 }else{
                     $params = [
                         "content" => ChatEventService::getLastErrorMsg()
