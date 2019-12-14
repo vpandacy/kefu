@@ -7,6 +7,9 @@ mkdir -p /data/www/logs/kefu/logs
 
 ##### 列表
 ```
-nohup php yii /data/www/private_kefu/kefu/guest/server/run-all start >> /data/www/logs/kefu/guest_ws.log &
-nohup php yii /data/www/private_kefu/kefu/cs/server/run-all start >> /data/www/logs/kefu/cs_ws.log &
+nohup php /data/www/private_kefu/kefu/yii guest/server/run-all start >> /data/www/logs/kefu/guest_ws.log &
+nohup php /data/www/private_kefu/kefu/yii cs/server/run-all start >> /data/www/logs/kefu/cs_ws.log &
+
+nohup /bin/bash /data/www/private_kefu/kefu/console/bin/QueueManager.sh start cs/queue/push >> /data/www/logs/kefu/queue.log &
+nohup /bin/bash /data/www/private_kefu/kefu/console/bin/QueueManager.sh start guest/queue/push >> /data/www/logs/kefu/queue.log &
 ```
