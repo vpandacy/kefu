@@ -61,7 +61,7 @@ var chat_ops = {
             return false;
         }
 
-        kf_ws_service.socketSend( this.buildMsg('chat',{
+        kf_ws_service.socketSend( this.buildMsg('reply',{
             'content': msg
         }));
 

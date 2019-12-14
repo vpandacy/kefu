@@ -129,9 +129,9 @@ var client = {
             time_str = page.getCurrentTimeStr();
 
         // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
-        kf_ws_service.ws.send(client.buildMsg('reply', {
+        kf_ws_service.ws.send(JSON.stringify(client.buildMsg('reply', {
             content: msg
-        }));
+        })));
 
         if(!user.messages) {
             user.messages = [];
@@ -221,6 +221,7 @@ var client = {
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
         data['f_id'] = this.data['sn'];
+        data['t_id'] = current_uuid;
         data['msn'] = this.data['msn'];
         var params = {
             cmd:cmd,

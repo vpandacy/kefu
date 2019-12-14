@@ -431,7 +431,7 @@ body {
 #chatExe .exe-info .two .tab-content .words-content{
     width: 100%;
     overflow-y: auto;
-    max-height: 356px;
+    max-height: 378px;
 }
 
 #chatExe .exe-info .two .content-select {

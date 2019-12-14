@@ -28,7 +28,6 @@ class PushController extends QueueBaseController
 
     protected function handle($data)
     {
-
         if ( !$data ) {
             return $this->echoLog("no data to handler");
         }
