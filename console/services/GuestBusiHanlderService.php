@@ -99,10 +99,14 @@ class GuestBusiHanlderService extends BaseService
                     //转发消息给对应的客服，做好接待准备
                     $transfer_params = [
                         "f_id" => $f_id,
-                        "t_id" => $kf_info['sn']
+                        "t_id" => $kf_info['sn'],
+                        // 随机生成一个昵称.
+                        'nickname'  =>  'Guest-' . substr($f_id, strrpos($f_id,'-') + 1),
+                        'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
+                        'allocation_time'   =>  date('H:i:s'),
                     ];
                     $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$transfer_params );
-                    QueueListService::push2CS( QueueConstant::$queue_guest_chat,json_decode($transfer_data,true) );
+                    QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true) );
                 }else{
                     $params = [
                         "content" => ChatEventService::getLastErrorMsg()
@@ -117,11 +121,9 @@ class GuestBusiHanlderService extends BaseService
                     Gateway::unbindUid($client_id, $f_id);
                 }
                 break;
-            case "chat"://聊天
-                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                QueueListService::push2CS( QueueConstant::$queue_guest_chat,$message);
-                break;
             case "reply"://客服回复
+                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
+                QueueListService::push2CS( QueueConstant::$queue_cs_chat,$message);
                 break;
             case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                 break;

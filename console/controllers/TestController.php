@@ -24,4 +24,13 @@ class TestController extends BaseController
     public function actionWs(){
 
     }
+
+    public function actionRun()
+    {
+        $path = dirname(dirname(__DIR__)) . '/yii';
+        while(true) {
+            system('php ' . $path . ' cs/queue/push/start');
+            system('php ' . $path . ' guest/queue/push/start');
+        }
+    }
 }

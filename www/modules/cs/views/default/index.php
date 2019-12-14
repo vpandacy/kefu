@@ -34,12 +34,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
     <div class="exe-keep">
         <div class="tab fg1" >
             <div class="tab-switch"  >
-                <div class="tab-one switch-action">
-                    <i class="iconfont icon-xiaoxi fsize25"></i>
-                </div>
                 <div class="tab-one">
-                    <i class="iconfont icon-dingshi fsize25"></i>
+<!--                    <i class="iconfont icon-xiaoxi fsize25"></i>-->
+                    游客区
                 </div>
+<!--                <div class="tab-one">-->
+<!--                    <i class="iconfont icon-dingshi fsize25"></i>-->
+<!--                </div>-->
             </div>
             <div class="tab-content">
                 <div class="content-one online">
@@ -103,26 +104,23 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                 <div class="exe-content-sumbit">
                     <div>
                         <span>
-                            <i class="iconfont icon-ai247"></i>
+<!--                            <i class="iconfont icon-ai247"></i>-->
                             <i class="iconfont icon-biaoqing"></i>
-                            <i class="iconfont icon-tupian"></i>
-                            <i class="iconfont icon-wenjian"></i>
-                            <i class="iconfont icon-jietu"></i>
-                            <i class="iconfont icon-biaoqing"></i>
-                            <i class="iconfont icon-xingbiao"></i>
-                            <i class="iconfont icon-fenxiang"></i>
+<!--                            <i class="iconfont icon-tupian"></i>-->
+<!--                            <i class="iconfont icon-wenjian"></i>-->
+<!--                            <i class="iconfont icon-jietu"></i>-->
+<!--                            <i class="iconfont icon-biaoqing"></i>-->
+<!--                            <i class="iconfont icon-xingbiao"></i>-->
+<!--                            <i class="iconfont icon-fenxiang"></i>-->
                         </span>
-                        <span>
-                            <label>功能扩展</label>
-                            <label>消息记录</label>
-                        </span>
+<!--                        <span>-->
+<!--                            <label>功能扩展</label>-->
+<!--                            <label>消息记录</label>-->
+<!--                        </span>-->
                     </div>
                     <div class="sumbit-input" contenteditable="true" ></div>
                     <div class="sumbit-bottom">
-                        <div>
-                            <input type="checkbox" />
-                            消息预览
-                        </div>
+                        <div></div>
                         <div class="button">
                             <div class="sumbit">发送<i class="iconfont icon-anjianfengexian"></i><i class="iconfont icon-jiantou"></i></div>
                         </div>
@@ -154,16 +152,20 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/c
                 </div>
                 <div class="tab fGrow1 two">
                     <div class="tab-switch height10 height50" >
-                        <div class="tab-one switch-action" ><a>常用语</a></div>
-                        <div class="tab-one"><a>常用文件</a></div>
+                        <div class="tab-one" ><a>常用语</a></div>
+<!--                        <div class="tab-one"><a>常用文件</a></div>-->
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
-                        <input type="text" placeholder="关键词搜索">
-                        <div class="content-select">
-                            <i class="iconfont icon-wenjian"></i>
-                            <span>默认私有词语</span>
-                        </div>
+<!--                        <input type="text" placeholder="关键词搜索">-->
+                            <div class="words-content">
+                                <?php foreach($words as $word):?>
+                                    <div class="content-select">
+                                        <i class="iconfont icon-wenjian"></i>
+                                        <span><?=$word['words']?></span>
+                                    </div>
+                                <?php endforeach;?>
+                            </div>
                         </div>
                         <div class="content-one" style="display: none;">
                             123

@@ -15,8 +15,7 @@ class CompanyController extends BaseController
      */
     public function actionIndex()
     {
-        $merchant = $this->merchant_info;
-
+        $merchant = Merchant::findOne(['id'=>$this->merchant_info['id']]);
         $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
 
         return $this->render('index',[

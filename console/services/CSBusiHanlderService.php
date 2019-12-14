@@ -1,7 +1,9 @@
 <?php
 namespace console\services;
 use common\services\BaseService;
+use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
+use common\services\ConstantService;
 use common\services\QueueListService;
 use GatewayWorker\Lib\Gateway;
 use Workerman\Worker;
@@ -26,10 +28,13 @@ class CSBusiHanlderService extends BaseService
                 $message = json_decode( $data,true );
                 self::consoleLog( var_export( $message,true ) );
                 if( isset( $message['data']['t_id']) ){
-
                     //发送给对应的人
                     $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
-                    Gateway::sendToClient( $tmp_client[0], $data );
+                    // 这里要注意一下．
+                    // 如果$tmp_client_id为空.
+                    // 则默认为没有客服在线.
+                    // 这个时候需要通知用户.
+                    $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
                 }
                 return $connection->send( "success" );
             };
@@ -66,12 +71,16 @@ class CSBusiHanlderService extends BaseService
         $f_id = $data['f_id'] ?? 0;
         self::consoleLog( var_export( $message,true ) );
         switch ($message['cmd']) {
-            case "chat"://聊天
-                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                QueueListService::push2Guest( QueueConstant::$queue_cs_chat,$message);
+            case "guest_connect":
+                // 这里是游客已经连接上来了.通知客服.做好准备.
+                Gateway::sendToUid($data['t_id'], ChatEventService::buildMsg(ConstantService::$chat_cmd_guest_connect,[
+                    'f_id'  =>  $f_id,
+                    't_id'  =>  $data['t_id']
+                ]));
                 break;
             case "reply":
-                //是从游客过来的
+                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
+                QueueListService::push2Guest( QueueConstant::$queue_guest_chat, $message);
                 break;
             case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                 if ($f_id) {

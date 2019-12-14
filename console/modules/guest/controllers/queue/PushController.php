@@ -16,7 +16,7 @@ class PushController extends QueueBaseController
     public function __construct($id, $module, $config = [])
     {
         $this->queue_name = QueueConstant::$queue_guest_chat;
-        $this->instance_name = QueueConstant::$instance_cs;
+        $this->instance_name = QueueConstant::$instance_quest;
         parent::__construct($id, $module, $config);
     }
 

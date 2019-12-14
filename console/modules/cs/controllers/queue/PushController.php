@@ -21,14 +21,13 @@ class PushController extends QueueBaseController
 {
     public function __construct($id, $module, $config = [])
     {
-        $this->queue_name = QueueConstant::$queue_guest_chat;
+        $this->queue_name = QueueConstant::$queue_cs_chat;
         $this->instance_name = QueueConstant::$instance_cs;
         parent::__construct($id, $module, $config);
     }
 
     protected function handle($data)
     {
-
         if ( !$data ) {
             return $this->echoLog("no data to handler");
         }

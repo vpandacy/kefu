@@ -1,13 +1,5 @@
 <?php
-/**
- * Class ChatEventService
- * Author: Vincent
- * WeChat: apanly
- * CreateTime: 2019/12/13 10:34 PM
- */
-
 namespace common\services\chat;
-
 
 use common\models\uc\Staff;
 use common\services\BaseService;
@@ -31,8 +23,15 @@ class ChatEventService extends BaseService
         }
 
         $staff_info = Staff::find()
-            ->where([ "status" => ConstantService::$default_status_true ,"merchant_id" => $merchant_info['id'] ])
-            ->orderBy(new Expression('rand()'))->limit(1)->asArray()->one();
+            ->where([
+                "status" => ConstantService::$default_status_true,
+                "merchant_id" => $merchant_info['id'],
+                'is_online' =>  1,
+            ])
+//            ->orderBy(new Expression('rand()'))
+            ->limit(1)
+            ->asArray()
+            ->one();
         if( !$staff_info ){
             return self::_err("暂无客服~~");
         }

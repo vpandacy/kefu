@@ -111,6 +111,17 @@ var client = {
             page.renderChat(uuid);
             page.scrollToBottom();
         });
+
+        // 点击选择常用语
+        $('.content-one .content-select').on('click', function () {
+            var content = $(this).find('span').html();
+
+            if(content.length <= 0) {
+                return false;
+            }
+
+            $('.sumbit-input').html(content);
+        });
     },
     // 发送消息函数.
     send: function(msg) {
@@ -118,9 +129,9 @@ var client = {
             time_str = page.getCurrentTimeStr();
 
         // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
-        socket.send(client.buildMsg('chat', {
+        kf_ws_service.ws.send(JSON.stringify(client.buildMsg('reply', {
             content: msg
-        }));
+        })));
 
         if(!user.messages) {
             user.messages = [];
@@ -149,13 +160,13 @@ var client = {
     // 分配客服处理.
     assignKf:function(data) {
         var user = {
-            customer: data.data.customer,
+            uuid: data.data.f_id,
             avatar: data.data.avatar,
             nickname: data.data.nickname,
             allocationTime: data.data.allocation_time
         };
 
-        var old_user = ChatStorage.getItem(user.customer, {});
+        var old_user = ChatStorage.getItem(user.uuid, {});
         user = Object.assign({}, old_user,user);
 
         if(!user.messages) {
@@ -163,10 +174,10 @@ var client = {
         }
 
         // 如果当前会话的列表中有  就不用去渲染处理了.
-        if(online_users.indexOf(user.customer) < 0) {
-            ChatStorage.setItem(user.customer, user);
+        if(online_users.indexOf(user.uuid) < 0) {
+            ChatStorage.setItem(user.uuid, user);
             // 插入到第一个.然后在渲染到对应的视图中去.
-            online_users.unshift(user.customer);
+            online_users.unshift(user.uuid);
         }
 
         page.renderOnlineList();
@@ -210,6 +221,7 @@ var client = {
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
         data['f_id'] = this.data['sn'];
+        data['t_id'] = current_uuid;
         data['msn'] = this.data['msn'];
         var params = {
             cmd:cmd,
@@ -226,11 +238,11 @@ var client = {
             case "ws_connect":
                 kf_ws_service.socketSend(that.buildMsg('kf_in', {}));
                 break;
-            case "assign_guest"://分配客户过来，要在页面标注熟悉，不能用全局，因为有多个游客
+            case "guest_connect":
+                that.assignKf(data);
                 break;
             case "reply":
-                $('.online-content').append(that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content));
-                that.scrollToBottom();
+                that.chat(data);
                 break;
         }
     }
