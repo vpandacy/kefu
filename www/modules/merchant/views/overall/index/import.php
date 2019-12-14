@@ -15,10 +15,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         <div class="site-text">
             <div class="layui-form-item">
                 <label class="layui-form-label">请选择文件</label>
-                <div class="layui-input-block">
+                <div class="layui-input-inline" style="width: auto">
                     <button type="button" class="layui-btn" id="upload">
                         <i class="layui-icon">&#xe67c;</i>上传文件
                     </button>
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    <a href="<?=GlobalUrlService::buildKFStaticUrl('/other/import.xlsx')?>">导入示例下载</a>
                 </div>
             </div>
 
