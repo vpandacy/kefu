@@ -124,8 +124,8 @@ class CodeController extends BaseController
     public function actionMobile()
     {
         $msn = $this->get('msn','');
-
-        $uuid = $this->getGuestUUID();
+        $code = $this->get('code',0);
+        $uuid = $this->get("uuid",$this->getGuestUUID() );
 
         if(!$msn) {
             return '<script>alert("您引入的非法客服软件")</script>';
