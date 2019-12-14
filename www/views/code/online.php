@@ -79,9 +79,12 @@ StaticPluginHelper::includeJsPlugins([
         <div class="online-right">
             <div class="right-tab">
                 <div class="tab-one">关于我们</div>
-                <div class="tab-two">客服名片</div>
+                <div class="tab-one right-tab-active">客服名片</div>
             </div>
-            <div class="right-tab-info">123</div>
+            <div class="right-tab-info">
+                <div>1</div>
+                <div class="dis_none">2</div>
+            </div>
             <div class="right-guanggao">
                 <div class="online-advertisement">
                     <div></div>

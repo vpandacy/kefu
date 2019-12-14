@@ -4,37 +4,12 @@ $(document).ready(function() {
      * */
     sdEditorEmoj.Init(emojiconfig);
     sdEditorEmoj.setEmoji({type: 'div', id: "content"});
-    /**
-     * 截图初始化
-     */
-    $().ready(function(){
-        $('#moreparams').hide();
-
-        $('#captureselectSize').click( function(){
-            var autoFlag = $("#captureselectSize").attr("checked")=="checked" ? 1 : 0;
-            if(autoFlag == 1){
-                $('#moreparams').show();
-            }
-            else{
-                $('#moreparams').hide();
-            }
-        });
-        $('#getimagefromclipboard').click( function(){
-            $('#posdetail').hide();
-        });
-        $('#showprewindow').click( function(){
-            $('#posdetail').hide();
-        });
-        $('#fullscreen').click( function(){
-            $('#posdetail').hide();
-        });
-        $('#specificarea').click( function(){
-            $('#posdetail').show();
-        });
-
-        $('#showprewindow').click();
-        $('#autoupload').click();
-        $('#btnUpload').hide();
-        Init();
-    })
+    // 菜单栏切换.
+    $(".online-right .right-tab .tab-one").click(function() {
+        console.log($(this))
+        // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
+        $(this).addClass("right-tab-active").siblings().removeClass("right-tab-active");
+        // parent 父元素 next 下一个兄弟节点  children 子节点
+        $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
+    });
 })

@@ -30,6 +30,9 @@ body {
 #online a {
     cursor: pointer;
 }
+#online .dis_none {
+    display: none;
+}
 #online .iconfont {
     cursor: pointer;
 }
@@ -211,10 +214,12 @@ body {
     flex: 1;
     height: 40px;
 }
-#online .online-info .online-right .right-tab .tab-two{
+#online .online-info .online-right .right-tab .tab-one:last-child{
     flex: 1;
     height: 40px;
     border-left: 1px solid #E9EEF2;
+}
+#online .online-info .online-right .right-tab .right-tab-active{
     border-bottom: 1px solid #E9EEF2;
 }
 #online .online-info .online-right .right-guanggao {
