@@ -21,7 +21,7 @@ StaticPluginHelper::includeJsPlugins([
 ]);
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
-<div id='wapOnline' data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>" data-uuid="<?=$uuid?>">
+<div id='wapOnline' data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
     <div class="waponline-max dis_none">
         <div class="top">
