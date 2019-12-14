@@ -207,7 +207,7 @@ body {
     height: 40px;
 }
 #online .online-info .online-right .right-tab .tab-two{
-    flex-grow: 1;
+    flex: 1;
     height: 40px;
     border-left: 1px solid #E9EEF2;
     border-bottom: 1px solid #E9EEF2;
