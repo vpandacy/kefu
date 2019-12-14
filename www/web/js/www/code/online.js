@@ -8,7 +8,6 @@ var online_ops = {
     // 菜單TAB切換
     tabSwitch : function () {
         $(".online-right .right-tab .tab-one").click(function() {
-            console.log($(this))
             // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
             $(this).addClass("right-tab-active").siblings().removeClass("right-tab-active");
             // parent 父元素 next 下一个兄弟节点  children 子节点
