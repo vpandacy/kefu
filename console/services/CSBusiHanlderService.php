@@ -24,7 +24,7 @@ class CSBusiHanlderService extends BaseService
             $inner_worker->name = $params_inner['name'];
             $inner_worker->onMessage = function( $connection, $data){
                 $message = json_decode( $data,true );
-                var_dump( $message );
+                self::consoleLog( var_export( $message,true ) );
                 if( isset( $message['data']['t_id']) ){
 
                     //发送给对应的人
@@ -64,7 +64,7 @@ class CSBusiHanlderService extends BaseService
         $message = $message + $_SERVER;
         $data = $message['data'] ?? [];
         $f_id = $data['f_id'] ?? 0;
-        var_dump( $message );
+        self::consoleLog( var_export( $message,true ) );
         switch ($message['cmd']) {
             case "chat"://聊天
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
