@@ -1,6 +1,7 @@
 <?php
 namespace console\controllers;;
 
+use common\services\applog\AppLogService;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\UserException;
@@ -30,7 +31,7 @@ class ErrorController extends \yii\base\ErrorHandler{
             $message .= "\n" . $this->formatMessage("Stack trace:\n", [Console::BOLD]) . $exception->getTraceAsString();
         }
 
-       //AppLogService::addErrLog(Yii::$app->id,$message);
+       AppLogService::addErrLog(Yii::$app->id,$message);
 
         if (PHP_SAPI === 'cli') {
             Console::stderr($message . "\n");
