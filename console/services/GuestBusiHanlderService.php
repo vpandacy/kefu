@@ -101,7 +101,7 @@ class GuestBusiHanlderService extends BaseService
                         "f_id" => $f_id,
                         "t_id" => $kf_info['sn'],
                         // 随机生成一个昵称.
-                        'nickname'  =>  'Guest-' . substr($f_id, strrpos($f_id,'-') + 1),
+                        'nickname'  =>  'Guest-' . substr($f_id, -12),
                         'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
                         'allocation_time'   =>  date('H:i:s'),
                     ];
