@@ -192,10 +192,9 @@ class CodeController extends BaseController
         }
 
         // 这里最好加入到缓存中去.不然到时候会比较麻烦.
-        $merchant = Merchant::findOne(['sn'=>$msn,'status'=>ConstantService::$default_status_true]);
-
-        if(!$merchant) {
-            return $this->renderErrJSON('找不到商户信息');
+        $merchant = MerchantService::getInfoBySn( $msn );
+        if( !$merchant ) {
+            return $this->renderErrJSON('找不到该商户信息');
         }
 
         $group_chat_id = 0;
@@ -213,7 +212,7 @@ class CodeController extends BaseController
         $leave_message = new LeaveMessage();
 
         $leave_message->setAttributes([
-            'vistor_id'     =>  $uuid,  // 这里先暂定.
+            'visitor_id'    =>  $uuid,  // 这里先暂定.
             'merchant_id'   =>  $merchant['id'],
             'group_chat_id' =>  $group_chat_id,
             'mobile'        =>  $mobile,
