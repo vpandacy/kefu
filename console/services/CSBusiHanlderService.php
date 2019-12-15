@@ -3,6 +3,7 @@ namespace console\services;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
+use common\services\ConstantService;
 use common\services\QueueListService;
 use GatewayWorker\Lib\Gateway;
 use Workerman\Worker;
@@ -75,20 +76,20 @@ class CSBusiHanlderService extends BaseService
             $f_id = $data['f_id'] ?? 0;
             self::consoleLog( var_export( $message,true ) );
             switch ($message['cmd']) {
-                case "reply"://聊天
+                case ConstantService::$chat_cmd_reply://聊天
                     //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
                     QueueListService::push2Guest( QueueConstant::$queue_guest_chat,$message);
                     break;
-                case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
+                case ConstantService::$chat_cmd_kf_in://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                     if ($f_id) {
                         //建立绑定关系，后面就可以根据f_id找到这个人了
                         Gateway::bindUid($client_id, $f_id);
                     }
                     break;
-                case "pong":
+                case ConstantService::$chat_cmd_pong:
                     //EventsDispatch::addChatHistory( $client_id,$message );
                     break;
-                case "ping":
+                case ConstantService::$chat_cmd_ping:
                     //EventsDispatch::addChatHistory( $client_id,$message );
                     break;
             };

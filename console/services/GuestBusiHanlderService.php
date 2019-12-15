@@ -83,7 +83,7 @@ class GuestBusiHanlderService extends BaseService
             $f_id = $data['f_id'] ?? 0;
             self::consoleLog( var_export( $message,true ) );
             switch ($message['cmd']) {
-                case "guest_in"://客户进来到页面，设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
+                case ConstantService::$chat_cmd_guest_in://客户进来到页面，设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                     if ($f_id) {
                         //建立绑定关系，后面就可以根据f_id找到这个人了
                         Gateway::bindUid($client_id, $f_id);
@@ -95,7 +95,7 @@ class GuestBusiHanlderService extends BaseService
                     $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_hello,$params );
                     Gateway::sendToClient( $client_id,$data );
                     break;
-                case "guest_connect"://客户链接,要分配客服
+                case ConstantService::$chat_cmd_guest_connect://客户链接,要分配客服
                     $code = isset($data['code']) ?? '';
                     $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code);
                     if( $kf_info ){
@@ -125,21 +125,19 @@ class GuestBusiHanlderService extends BaseService
                     Gateway::sendToClient( $client_id,$data );
                     //找找目前有咩有空闲的客服，找一个在线的客服分配过去
                     break;
-                case "guest_close":
-                    if ($f_id) {//也要进入redis，进入数据记录
+                case ConstantService::$chat_cmd_guest_close:
+                    if ($f_id) { // 也要进入redis，进入数据记录. 清除掉绑定信息.
                         Gateway::unbindUid($client_id, $f_id);
                     }
                     break;
-                case "chat": // 游客聊天动作.
+                case ConstantService::$chat_cmd_chat: // 游客聊天动作.
                     //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
                     QueueListService::push2CS( QueueConstant::$queue_cs_chat,$message);
                     break;
-                case "kf_in"://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
+                case ConstantService::$chat_cmd_pong:
                     break;
-                case "pong":
-                    break;
-                case "ping":
-                    Gateway::sendToClient($client_id,json_encode(['cmd'=>'pong']));
+                case ConstantService::$chat_cmd_ping:
+                    Gateway::sendToClient($client_id,json_encode(['cmd'=>ConstantService::$chat_cmd_pong]));
                     break;
             };
         }catch (\Exception $e){
