@@ -96,7 +96,8 @@ class GuestBusiHanlderService extends BaseService
                     Gateway::sendToClient( $client_id,$data );
                     break;
                 case "guest_connect"://客户链接,要分配客服
-                    $kf_info = ChatEventService::getKFByRoute( $data['msn'] );
+                    $code = isset($data['code']) ?? '';
+                    $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code);
                     if( $kf_info ){
                         $params = [
                             "sn" => $kf_info['sn'],
