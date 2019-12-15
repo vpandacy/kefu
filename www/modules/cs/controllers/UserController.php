@@ -59,10 +59,17 @@ class UserController extends BaseController
         }
         // 开始创建登录的信息.
         $this->createLoginStatus( $staff_info );
-        $data = [
+
+        // 登录成功则认为可以接待游客.
+        $staff_info['is_online'] = ConstantService::$default_status_true;
+
+        if(!$staff_info->save(0)) {
+            return $this->renderErrJSON('数据保存失败，请联系管理员');
+        }
+
+        return $this->renderJSON([
             "url" => $url ?? GlobalUrlService::buildKFUrl('/cs')
-        ];
-        return $this->renderJSON($data,'登录成功~~~~' );
+        ],'登录成功~~~~' );
     }
 
     /**

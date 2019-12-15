@@ -110,6 +110,11 @@ class UserController extends BaseController
     {
         $cookie = \Yii::$app->params['cookies']['staff'];
 
+        // 更新在线的状态.如果是退出登录了.
+        Staff::updateAll(['is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+
+        // @todo 这里还要通知游客客服已经退出登录了.
+        
         $this->removeCookie($cookie['name'],$cookie['domain']);
         return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/'));
     }
