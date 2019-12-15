@@ -3,12 +3,10 @@ namespace common\services;
 
 class ConstantService extends BaseService
 {
+    //　接口请求失败.
     public static $response_code_fail = -1;
 
-    /**
-     * 配合layui的接口请求.
-     * @var int
-     */
+    // 接口请求成功.
     public static $response_code_success = 200;
 
     // 帐号正常.
