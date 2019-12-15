@@ -114,7 +114,7 @@ class UserController extends BaseController
         Staff::updateAll(['is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
 
         // @todo 这里还要通知游客客服已经退出登录了.
-        
+
         $this->removeCookie($cookie['name'],$cookie['domain']);
         return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/'));
     }

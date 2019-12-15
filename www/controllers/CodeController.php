@@ -1,6 +1,9 @@
 <?php
 namespace www\controllers;
 
+use common\components\helper\ValidateHelper;
+use common\models\merchant\GroupChat;
+use common\models\merchant\LeaveMessage;
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
 use common\services\CommonService;
@@ -151,5 +154,78 @@ class CodeController extends BaseController
                 "msn" => $msn
             ]
         ]);
+    }
+
+    /**
+     * 保存留言信息.
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionLeave()
+    {
+        $uuid = $this->getGuestUUID();
+
+        $code = $this->post('code','');
+        $msn  = $this->post('msn','');
+        $mobile = $this->post('mobile','');
+        $wechat = $this->post('wechat','');
+        $name = $this->post('name','');
+        $message = $this->post('message','');
+
+        if(!$msn) {
+            return $this->renderErrJSON('找不到该客服信息');
+        }
+
+        if($wechat && !ValidateHelper::validLength($wechat,1,255)) {
+            return $this->renderErrJSON('请输入正确格式的微信号，长度不能超过255');
+        }
+
+        if($name && !ValidateHelper::validLength($name,1,255)) {
+            return $this->renderErrJSON('请输入正确格式的姓名，长度不能超过255');
+        }
+
+        if(!ValidateHelper::validMobile($mobile)) {
+            return $this->renderErrJSON('请输入正确的手机号');
+        }
+
+        if(ValidateHelper::validIsEmpty($message) || !ValidateHelper::validLength($message,1,255)) {
+            return $this->renderErrJSON('请输入正确格式的留言信息，长度不能超过255');
+        }
+
+        // 这里最好加入到缓存中去.不然到时候会比较麻烦.
+        $merchant = Merchant::findOne(['sn'=>$msn,'status'=>ConstantService::$default_status_true]);
+
+        if(!$merchant) {
+            return $this->renderErrJSON('找不到商户信息');
+        }
+
+        $group_chat_id = 0;
+        if($code) {
+            $group_chat_id = GroupChat::find()->where(['sn'=>$code,'merchant_id'=>$merchant['id']])
+                ->select(['id'])
+                ->scalar();
+
+            if(!$group_chat_id) {
+                return $this->renderErrJSON('没有找到该风格信息');
+            }
+        }
+
+        // 开始入库.
+        $leave_message = new LeaveMessage();
+
+        $leave_message->setAttributes([
+            'vistor_id'     =>  $uuid,  // 这里先暂定.
+            'merchant_id'   =>  $merchant['id'],
+            'group_chat_id' =>  $group_chat_id,
+            'mobile'        =>  $mobile,
+            'wechat'        =>  $wechat,
+            'name'          =>  $name,
+            'message'       =>  $message
+        ],0);
+
+        if(!$leave_message->save(0)) {
+            return $this->renderErrJSON('数据保存失败，请联系客服');
+        }
+
+        return $this->renderJSON( '感谢您的留言' );
     }
 }
