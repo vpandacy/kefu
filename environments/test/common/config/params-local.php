@@ -10,8 +10,8 @@ return [
     'websocket' => 'ws://www.kefu.test.hsh568.cn/ws/',
     'cdn' => [
         'hsh' => [
-            'https' => 'http://cdn.pic.test.hsh568.cn',
-            'http' => 'http://cdn.pic.test.hsh568.cn'
+            'https' => 'http://cdn.pic.kefu.test.hsh568.cn',
+            'http' => 'http://cdn.pic.kefu.test.hsh568.cn'
         ],
         'qiniu_config' => [
             'ak' => 'mZ-oBLEtEh4M2o2TWnFbVXn5P1KxuSPwqXAtZW_z',
