@@ -33,7 +33,9 @@ class ServerController extends BaseController
      */
     public function actionReg( $act = 'start' ,$cs_idx = 1 ){
         $config = \Yii::$app->params[ "cs_{$cs_idx}"];
-        GateWayWorkerService::runRegister( $config['register']);
+        $params = $config['register'];
+        $params['name'] = "{$params['name']}_{$cs_idx}";
+        GateWayWorkerService::runRegister( $params );
     }
 
     /**
@@ -42,7 +44,9 @@ class ServerController extends BaseController
      */
     public function actionGateway( $act = 'start' ,$cs_idx = 1,$gateway_idx = 1  ){
         $config = \Yii::$app->params[ "cs_{$cs_idx}"];
-        GateWayWorkerService::runGateway( $config[ "gateway_{$gateway_idx}" ] );
+        $params = $config[ "gateway_{$gateway_idx}"];
+        $params['name'] = "{$params['name']}_{$cs_idx}_{$gateway_idx}";
+        GateWayWorkerService::runGateway( $params );
     }
 
     /**
@@ -52,6 +56,7 @@ class ServerController extends BaseController
         $config = \Yii::$app->params[ "cs_{$cs_idx}"];
         $params = $config[ "busi_worker_{$busiworker_idx}" ];
         $params['handler'] = CSBusiHanlderService::class;
+        $params['name'] = "{$params['name']}_{$cs_idx}_{$busiworker_idx}";
         GateWayWorkerService::runBusiWorker( $params );
     }
 
