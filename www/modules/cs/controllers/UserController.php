@@ -2,8 +2,10 @@
 namespace www\modules\cs\controllers;
 
 use common\components\helper\ValidateHelper;
+use common\components\ValidateCode;
 use common\models\uc\Merchant;
 use common\models\uc\Staff;
+use common\services\CaptchaService;
 use www\modules\cs\controllers\common\BaseController;
 use common\services\CommonService;
 use common\services\ConstantService;
@@ -78,12 +80,14 @@ class UserController extends BaseController
      */
     public function actionReg()
     {
-        $email = $this->post('email','');
+        $mobile = $this->post('mobile','');
         $merchant_name = $this->post('merchant_name','');
+        $captcha = $this->post('captcha','');
+        $img_captch = $this->post('img_captcha','');
         $password = $this->post('password','');
 
-        if(!ValidateHelper::validEmail($email)) {
-            return $this->renderErrJSON( '请输入正确的邮箱~~' );
+        if(!ValidateHelper::validMobile($mobile)) {
+            return $this->renderErrJSON( '请输入正确的手机号~~' );
         }
 
         if(ValidateHelper::validIsEmpty($password)) {
@@ -99,15 +103,75 @@ class UserController extends BaseController
             return $this->renderErrJSON( '请输入正确的商户名~~' );
         }
 
+        $captcha_config = \Yii::$app->params['cookies']['validate_code'];
+        $source_code = $this->getCookie($captcha_config['name']);
+
+        if($img_captch != $source_code) {
+            return $this->renderErrJSON('请输入正确的图形验证码');
+        }
+
+        if(!CaptchaService::checkCaptcha($mobile, 1, $captcha)) {
+            return $this->renderErrJSON('您输入的手机验证码不一致');
+        }
+
         $merchant = Merchant::findOne(['name' => $merchant_name]);
         if($merchant) {
             return $this->renderErrJSON( '该商户名已经被使用了~~' );
         }
 
-        if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $email, $password)){
+        if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $mobile, $password)){
             return $this->renderErrJSON( MerchantService::getLastErrorMsg() );
         }
 
         return $this->renderJSON( [], '创建成功,请登录商户~~' );
+    }
+
+    /**
+     * 获取图形验证码.
+     */
+    public function actionCaptcha()
+    {
+        $captcha_config = \Yii::$app->params['cookies']['validate_code'];
+
+        $font_path = \Yii::$app->getBasePath() . '/web/fonts/captcha.ttf';
+
+        $captcha = new ValidateCode($font_path);
+
+        $captcha->doimg();
+        // 要设置成统一的cookie名称.
+        $this->setCookie($captcha_config['name'],$captcha->getCode(),0, $captcha_config['domain']);
+        exit;
+    }
+
+    /**
+     * 获取手机验证码.
+     */
+    public function actionGetCaptcha()
+    {
+        $mobile = $this->post('mobile','');
+
+        if(!$mobile || !ValidateHelper::validMobile($mobile)) {
+            return $this->renderErrJSON('请输入正确的手机号');
+        }
+
+        $code = $this->post('code', '');
+
+        if(!$code) {
+            return $this->renderErrJSON('请输入图形验证码');
+        }
+
+        $captcha_config = \Yii::$app->params['cookies']['validate_code'];
+        $source_code = $this->getCookie($captcha_config['name']);
+
+        if($code != $source_code) {
+            return $this->renderErrJSON('请输入正确的图形验证码');
+        }
+
+        // 这里要获取上一次的手机验证码.
+        if(!CaptchaService::geneCustomCaptcha($mobile, 1)) {
+            return $this->renderErrJSON(CaptchaService::getLastErrorMsg());
+        }
+
+        return $this->renderJSON([],'发送成功');
     }
 }
