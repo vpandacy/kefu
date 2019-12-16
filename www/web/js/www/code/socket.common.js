@@ -31,6 +31,7 @@ var chat_ops = {
     // 这里要保存用户的信息.和收集用户的一些数据.
     init: function () {
         this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        localStorage.setItem('serverInfo',JSON.stringify(this.data))
         this.eventBind();
         this.initSocket();
     },

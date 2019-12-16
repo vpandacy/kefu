@@ -197,7 +197,7 @@ body {
 }
 
 #online .online-info .online-right {
-    width: 45%;
+    width: 30%;
     display: flex;
     flex-direction: column;
 }

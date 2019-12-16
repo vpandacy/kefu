@@ -74,11 +74,11 @@ StaticPluginHelper::includeJsPlugins([
                     <?=$merchant['desc'] ?? '暂无公司简介'?>
                 </div>
             </div>
-<!--            <div class="right-guanggao">-->
-<!--                <div class="online-advertisement">-->
-<!--                    <div></div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div class="right-guanggao">
+                <div class="online-advertisement">
+                    <div></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
