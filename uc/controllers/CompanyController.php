@@ -4,7 +4,7 @@ namespace uc\controllers;
 use common\components\helper\ValidateHelper;
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
-use common\services\ConstantService;
+use common\services\uc\MerchantService;
 use uc\controllers\common\BaseController;
 
 class CompanyController extends BaseController
@@ -60,33 +60,12 @@ class CompanyController extends BaseController
             return $this->renderErrJSON(  '请填写对应的企业问候语' );
         }
 
-        $merchant = Merchant::findOne(['id'=>$this->getMerchantId(),'app_id'=>$this->getAppId()]);
-
-        $merchant->setAttributes([
-            'logo'  =>  $logo,
-            'contact'   =>  $contact,
-            'name'  =>  $name,
-            'desc'  =>  $desc
-        ],0);
-
-        if(!$merchant->save(0)) {
-            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
+        if(!MerchantService::updateMerchant($this->getMerchantId(), $this->getAppId(), $logo, $contact, $name, $desc)) {
+            return $this->renderErrJSON(MerchantService::getLastErrorMsg());
         }
 
-        $setting = MerchantSetting::findOne(['merchant_id'=>$this->getMerchantId()]);
-
-        if(!$setting) {
-            $setting = new MerchantSetting();
-        }
-
-        $setting->setAttributes([
-            'auto_disconnect'   =>  $auto_disconnect,
-            'greetings'         =>  $greetings,
-            'merchant_id'       =>  $this->getMerchantId()
-        ],0);
-
-        if(!$setting->save(0)) {
-            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
+        if(!MerchantService::updateMerchantConfig($this->getMerchantId(), $auto_disconnect, $greetings)) {
+            return $this->renderErrJSON(MerchantService::getLastErrorMsg());
         }
 
         return $this->renderJSON([],'保存成功');

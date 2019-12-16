@@ -31,20 +31,27 @@ return [
             'domain' => '.kefu.dev.hsh568.cn',
         ],
     ],
-    'guest' => [
+    'guest_1' => [
         "register" => [
-            "host" => '0.0.0.0:8210',
+            'ip' => '192.168.22.21',
+            'port' => '8210',
             'name' => 'guest_register'
         ],
-        'gateway' => [
-            "host" => '0.0.0.0:8230',
-            'ip' => 'www.kefu.test.hsh568.cn',
+        'gateway_1' => [
+            'ip' => '192.168.22.21',
             'port' => '8230',
             'start_port' => 8231 ,
             "name" => 'guest_gateway',
             "register_host" => "0.0.0.0:8210",
         ],
-        'busi_worker' => [
+        'gateway_2' => [
+            'ip' => '192.168.22.21',
+            'port' => '8240',
+            'start_port' => 8241 ,
+            "name" => 'guest_gateway',
+            "register_host" => "0.0.0.0:8210",
+        ],
+        'busi_worker_1' => [
             "name" => 'guest_busworker',
             "register_host" => "0.0.0.0:8210",
             "inner" => [
@@ -56,20 +63,27 @@ return [
             'host' => '127.0.0.1:8220'
         ]
     ],
-    'cs' => [
+    'cs_1' => [
         "register" => [
-            "host" => '0.0.0.0:9210',
+            'ip' => '192.168.22.21',
+            'port' => '9210',
             'name' => 'cs_register'
         ],
-        'gateway' => [
-            "host" => '0.0.0.0:9230',
-            'ip' => 'www.kefu.test.hsh568.cn',
+        'gateway_1' => [
+            'ip' => '192.168.22.21',
             'port' => '9230',
             'start_port' => 9231 ,
             "name" => 'cs_gateway',
             "register_host" => "0.0.0.0:9210",
         ],
-        'busi_worker' => [
+        'gateway_2' => [
+            'ip' => '192.168.22.21',
+            'port' => '9240',
+            'start_port' => 9241 ,
+            "name" => 'cs_gateway',
+            "register_host" => "0.0.0.0:9210",
+        ],
+        'busi_worker_1' => [
             "name" => 'cs_busworker',
             "register_host" => "0.0.0.0:9210",
             "inner" => [

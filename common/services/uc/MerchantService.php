@@ -87,6 +87,10 @@ class MerchantService extends BaseService
         $merchant = new Merchant();
         $now = DateHelper::getFormatDateTime();
 
+        if(Staff::findOne(['mobile'=>$mobile])) {
+            return self::_err('该手机号已经被别人使用了，请重新更换一个手机号');
+        }
+
         $merchant->setAttributes([
             'status'    =>  ConstantService::$default_status_true,
             'sn'        =>  CommonService::genUniqueName(),
@@ -150,6 +154,74 @@ class MerchantService extends BaseService
             CacheService::set($cache_key,$data,86400 * 30 );
         }
         return json_decode( $data,true );
+    }
+
+    /**
+     * 更新商户信息.
+     * @param int $merchant_id
+     * @param int $app_id
+     * @param string $logo
+     * @param string $contact
+     * @param string $name
+     * @param string $desc
+     * @return bool
+     */
+    public static function updateMerchant($merchant_id,$app_id,$logo,$contact,$name,$desc)
+    {
+        $merchant = Merchant::findOne(['id'=>$merchant_id,'app_id'=>$app_id]);
+
+        if(!$merchant) {
+            return self::_err('暂找不到对应的商户信息');
+        }
+
+        $merchant->setAttributes([
+            'logo'  =>  $logo,
+            'contact'   =>  $contact,
+            'name'  =>  $name,
+            'desc'  =>  $desc
+        ],0);
+
+        if(!$merchant->save(0)) {
+            return self::_err('数据保存失败,请联系管理员' );
+        }
+
+        // 重新设置缓存信息.
+        $cache_key = "merchant_{$merchant['sn']}";
+        $data = json_encode($merchant->toArray());
+        CacheService::set($cache_key, $data, 86400 * 30);
+        $cache_key = "merchant_{$merchant['id']}";
+        CacheService::set($cache_key, $data, 86400 * 30);
+        return true;
+    }
+
+    /**
+     * 保存商户的配置信息.
+     * @param string $merchant_id
+     * @param int $auto_disconnect
+     * @param string $greetings
+     * @return bool
+     */
+    public static function updateMerchantConfig($merchant_id, $auto_disconnect, $greetings)
+    {
+        $setting = MerchantSetting::findOne(['merchant_id'=>$merchant_id]);
+
+        if(!$setting) {
+            $setting = new MerchantSetting();
+        }
+
+        $setting->setAttributes([
+            'auto_disconnect'   =>  $auto_disconnect,
+            'greetings'         =>  $greetings,
+            'merchant_id'       =>  $merchant_id
+        ],0);
+
+        if(!$setting->save(0)) {
+            return self::_err( '数据保存失败,请联系管理员' );
+        }
+
+        $cache_key = 'merchant_config_' . $setting['id'];
+        CacheService::set($cache_key, json_encode($setting->toArray()),86400 * 30);
+        return true;
     }
 
 }

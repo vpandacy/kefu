@@ -83,7 +83,7 @@ class CodeController extends BaseController
             "js_params" => [
                 'uuid' => $uuid,
                 "tab_url" => $tab_url,
-                "ws" => WSCenterService::getGuestWSByRoute( $msn ),
+                "ws" => WSCenterService::getGuestWSByRoute( $merchant_info['id'] ),
                 "code" => $code,
                 "msn" => $msn
             ]

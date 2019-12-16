@@ -22,7 +22,7 @@ class PushController extends QueueBaseController
         $this->instance_name = QueueConstant::$instance_quest;
         parent::__construct($id, $module, $config);
         //初始化socket，这样可以复用socket ，减少初始化的事情
-        $config = \Yii::$app->params['guest'];
+        $config = \Yii::$app->params['guest_1'];
         $url = 'tcp://'.$config['push']['host'];
         $this->socket  = new ChatSocketService( $url );
     }

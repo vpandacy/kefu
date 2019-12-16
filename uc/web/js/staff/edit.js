@@ -45,12 +45,7 @@ var uc_staff_edit_ops = {
             data: data,
             success:function (res) {
                 $.close(index);
-
-                var callback = res.code != 200 ? null : function () {
-                    history.go(-1);
-                };
-
-                return $.msg(res.msg, res.code == 200 , callback);
+                return $.msg(res.msg, res.code == 200 );
             },
             error: function () {
                 $.close(index);

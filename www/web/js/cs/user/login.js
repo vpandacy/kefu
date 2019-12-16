@@ -13,11 +13,11 @@ var merchant_user_login_ops = {
     eventBind:function () {
         // 登录.
         $('.login').on('click',function () {
-            var email = $('.sign-in-container [name=email]').val(),
+            var account = $('.sign-in-container [name=account]').val(),
                 password = $('.sign-in-container [name=password]').val();
 
-            if(!email || email.indexOf('@') <= 1) {
-                return $.msg('请填写正确的邮箱地址');
+            if(!account) {
+                return $.msg('请输入正确的登录凭证');
             }
 
             if(!password || password.length > 255) {
@@ -30,7 +30,7 @@ var merchant_user_login_ops = {
                 type: 'POST',
                 url: cs_common_ops.buildKFCSurl('/user/login'),
                 data: {
-                    email: email,
+                    account: account,
                     password: password
                 },
                 dataType: 'json',
