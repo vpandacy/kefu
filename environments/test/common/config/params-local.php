@@ -4,7 +4,7 @@ return [
         'www' => 'http://www.kefu.test.hsh568.cn',
         'merchant' => 'http://www.kefu.test.hsh568.cn/merchant',
         'cs' => 'http://www.kefu.test.hsh568.cn/cs',
-        'static' => 'http://static.test.hsh568.cn',
+        'static' => 'http://static.kefu.test.hsh568.cn',
         'uc' => 'http://uc.kefu.test.hsh568.cn',
     ],
     'websocket' => 'ws://www.kefu.test.hsh568.cn/ws/',
