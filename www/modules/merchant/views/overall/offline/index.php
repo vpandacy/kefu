@@ -7,8 +7,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
-        'bar_menu'  =>  'settings',
-        'current_menu'  =>  'offline'
+        'bar_menu'  =>  'message',
+        'current_menu'  =>  'leave'
     ])?>
     <div class="tab_staff_content">
         <form action="" class="layui-form">

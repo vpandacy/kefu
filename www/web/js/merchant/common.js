@@ -13,13 +13,13 @@ var merchant_common_ops = {
             uris = {
                 'liaotian'      : [
                     '/merchant/chat/index',
-                    '/merchant/chat/download'
+                    '/merchant/chat/download',
+                    '/merchant/overall/offline'
                 ],
                 'quanjushezhi'  : [
                     '/merchant/overall/index',
                     '/merchant/overall/clueauto',
                     '/merchant/overall/breakauto',
-                    '/merchant/overall/offline',
                     '/merchant/overall/code'
                 ],
                 'heimingdan'    : [

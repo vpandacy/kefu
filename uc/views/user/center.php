@@ -21,7 +21,7 @@ use common\services\GlobalUrlService;
             </div>
         </div>
         <div>
-            <a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
+            <a href="<?=GlobalUrlService::buildUcUrl('/company/index',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
         </div>
     </div>
     <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildUcUrl("/user/logout");?>">
