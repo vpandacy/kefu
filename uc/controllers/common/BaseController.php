@@ -20,6 +20,7 @@ class BaseController extends StaffBaseController {
         'user/register',
         'user/logout',
         'user/captcha',
+        'user/get-captcha',
         '/default/application'
     ];
 
