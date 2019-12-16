@@ -22,7 +22,7 @@ var merchant_style_index_ops = {
                         return row.status == 1 ? '正常' : '禁用';
                     }}
                     ,{field:'created_time', title: '创建时间'}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
                 ]]
                 ,id: 'groupChat'
             }));
@@ -82,6 +82,13 @@ var merchant_style_index_ops = {
                         group_id: event.data.id
                     });
 
+                    return false;
+                }
+
+                if(event.event == 'get') {
+                    location.href = merchant_common_ops.buildMerchantUrl('/overall/code/index', {
+                        code: event.data.id
+                    });
                     return false;
                 }
 
