@@ -194,4 +194,34 @@ class MerchantService extends BaseService
         return true;
     }
 
+    /**
+     * 保存商户的配置信息.
+     * @param string $merchant_id
+     * @param int $auto_disconnect
+     * @param string $greetings
+     * @return bool
+     */
+    public static function updateMerchantConfig($merchant_id, $auto_disconnect, $greetings)
+    {
+        $setting = MerchantSetting::findOne(['merchant_id'=>$merchant_id]);
+
+        if(!$setting) {
+            $setting = new MerchantSetting();
+        }
+
+        $setting->setAttributes([
+            'auto_disconnect'   =>  $auto_disconnect,
+            'greetings'         =>  $greetings,
+            'merchant_id'       =>  $merchant_id
+        ],0);
+
+        if(!$setting->save(0)) {
+            return self::_err( '数据保存失败,请联系管理员' );
+        }
+
+        $cache_key = 'merchant_config_' . $setting['id'];
+        CacheService::set($cache_key, json_encode($setting->toArray()),86400 * 30);
+        return true;
+    }
+
 }
