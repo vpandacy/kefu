@@ -24,6 +24,12 @@ use common\services\GlobalUrlService;
             <a href="<?=GlobalUrlService::buildUcUrl('/company/index',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
         </div>
     </div>
+    <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildKFCSUrl('/');?>">
+        <div>
+            <i class="iconfont icon-diannao"></i>
+        </div>
+        <div>工作台</div>
+    </a>
     <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildUcUrl("/staff/edit",['staff_id'=>$this->params['current_user']['id']]);?>">
         <div>
             <i class="iconfont icon-shezhi"></i>
