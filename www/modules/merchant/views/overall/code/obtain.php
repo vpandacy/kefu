@@ -10,10 +10,10 @@ $url = $group_sn
 ?>
 <script>
     (function() {
-        var _hshcode = document.createElement("script"),
+        var _ht_kf_code = document.createElement("script"),
             s = document.getElementsByTagName("script")[0];
 
-        _hshcode.src = "<?=$url?>";
-        s.parentNode.insertBefore(_hshcode, s);
+        _ht_kf_code.src = "<?=$url?>";
+        s.parentNode.insertBefore(_ht_kf_code, s);
     })();
 </script>
