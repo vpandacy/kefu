@@ -144,4 +144,11 @@ CREATE TABLE `queue_sms` (
   KEY `idx_status_mobile` (`status`,`mobile`),
   KEY `idx_ip` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='短信发送队列表';
+
+
+ALTER TABLE `staff` ADD INDEX `mobile` (`mobile`);
+ALTER TABLE `staff` ADD INDEX `email` (`email`);
+ALTER TABLE `merchant` ADD INDEX `sn` (`sn`);
+ALTER TABLE `staff` ADD INDEX `sn` (`sn`);
+ALTER TABLE `staff_role` ADD INDEX `staff_id` (`staff_id`);
 ```
