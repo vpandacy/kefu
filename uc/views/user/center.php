@@ -4,7 +4,7 @@ use common\services\GlobalUrlService;
 <!--<a><i class="iconfont icon-quanjushezhi"></i></a>-->
 <!--<a><i class="iconfont icon-xinxi-copy"></i></a>-->
 <!--<a><i class="iconfont icon-tongzhi"></i></a>-->
-<a href="<?=GlobalUrlService::buildUcUrl('/staff/edit',['staff_id'=>$this->params['current_user']['id']])?>" class="menu_info_link">
+<a href="javascript:;" class="menu_info_link">
     <img class="menu_info_img" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$this->params['current_user']['avatar'])?>">
 </a>
 <div class="menu_info_edit dis_none">
@@ -24,6 +24,12 @@ use common\services\GlobalUrlService;
             <a href="<?=GlobalUrlService::buildUcUrl('/company/index',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
         </div>
     </div>
+    <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildUcUrl("/staff/edit",['staff_id'=>$this->params['current_user']['id']]);?>">
+        <div>
+            <i class="iconfont icon-shezhi"></i>
+        </div>
+        <div>修改密码</div>
+    </a>
     <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildUcUrl("/user/logout");?>">
         <div>
             <i class="iconfont icon-tuichu"></i>
