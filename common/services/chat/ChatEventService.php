@@ -44,7 +44,6 @@ class ChatEventService extends BaseService
                     'status'    =>  ConstantService::$default_status_true
                 ])
                 ->one();
-
             if(!$chat) {
                 return self::_err('风格信息异常-3~~');
             }

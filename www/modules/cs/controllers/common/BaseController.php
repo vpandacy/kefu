@@ -17,6 +17,7 @@ class BaseController extends StaffBaseController
     public function __construct($id, $module, $config = []){
         parent::__construct($id, $module, $config);
         $this->setTitle("客服聊天端");
+        $this->layout = 'main';
     }
 
     /**

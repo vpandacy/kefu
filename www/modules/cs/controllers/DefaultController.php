@@ -29,8 +29,8 @@ class DefaultController extends BaseController
             'js_params' => [
                 'ws' => WSCenterService::getCSWSByRoute( $current_info['id'] ),
                 'sn' => $current_info['sn'],
-                'msn' => $this->merchant_info['sn'],
+                'msn'=> $this->merchant_info['sn'],
             ]
-        ] );
+        ]);
     }
 }

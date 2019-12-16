@@ -7,7 +7,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcUrl('/js/common/
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),CsAsset::className());
 StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/login.css'), CsAsset::className());
 StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/typeface/typeface.css'), CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/cs/user/login.js'),CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/user/login.js'),CsAsset::className());
 
 ?>
 <div id="index_login">

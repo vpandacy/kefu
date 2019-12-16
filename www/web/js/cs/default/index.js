@@ -181,7 +181,7 @@ var client = {
         if(online_users.length == 1) {
             current_uuid = online_users[0];
             user.new_message = 0;
-
+            ChatStorage.setItem(user.uuid, user);
             page.renderChat(user.uuid);
             page.scrollToBottom();
         }
@@ -268,7 +268,7 @@ var page = {
             $('.content-message-active').removeClass('content-message-active');
         });
     },
-    // 琛ㄦ儏鍒濆鍖�
+    // 初始化表情
     emojInit: function () {
         sdEditorEmoj.Init(emojiconfig);
         sdEditorEmoj.setEmoji({
@@ -280,7 +280,7 @@ var page = {
     renderChat: function (uuid) {
         var user = ChatStorage.getItem(uuid),
             that = this;
-
+        console.dir(user);
         $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
         // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
         if(!user.messages || user.messages.length < 1) {
@@ -307,7 +307,8 @@ var page = {
     // 展示对应的右键菜单.
     showMenu:function (uuid, event) {
         var x = ((parseInt(event.clientX) + 100) <= window.innerWidth) ? event.clientX : event.clientX - 98,
-            y = ((parseInt(event.clientY) + 140) <= window.innerHeight) ? event.clientY : event.clientY - 138;
+            y = ((parseInt(event.clientY) + 140) <= window.innerHeight) ? event.clientY : event.clientY - 138,
+            user = ChatStorage.getItem(uuid);
 
         // 展示出来.并将uuid存成局部变量.
         $('#menu').css({
@@ -324,11 +325,76 @@ var page = {
                 case 'edit':
                     alert('您点击了编辑,uuid:' + uuid);
                     break;
-                case 'del':
-                    alert('您点击的删除,uuid:' + uuid);
+                // 关闭聊天操作.
+                case 'close':
+                    $.confirm('您确认要关闭与游客:' + user.nickname + '的聊天吗?是否继续?',function(){
+                        var index = $.loading(1, {shade: .5});
+                        $.ajax({
+                            type: 'POST',
+                            url: cs_common_ops.buildKFCSurl('/visitor/close'),
+                            data: {
+                                uuid: uuid
+                            },
+                            dataType: 'json',
+                            success:function (res) {
+                                $.close(index);
+                                if(res.code != 200) {
+                                    return $.msg(res.msg);
+                                }
+
+                                // 这里要删除游客信息,并缩小减少online_users.
+                                if(uuid == current_uuid) {
+                                    $('#chatExe .flex1').css({'display': 'none'});
+                                }
+
+                                index = online_users.indexOf(uuid)
+
+                                online_users = online_users.filter(function (curr, curr_index) {
+                                    return index != curr_index;
+                                });
+
+                                page.renderOnlineList();
+                            },
+                            error: function () {
+                                $.close(index)
+                            }
+                        });
+                    });
                     break;
                 case 'black':
-                    alert('点击了拉入黑名单,uuid:' + uuid);
+                    $.confirm('您确认要将该游客拉入黑名单吗？凡在黑名单中的游客将无法发起聊天.是否继续?', function () {
+                        var index = $.loading(1, {shade: .5});
+                        $.ajax({
+                            type: 'POST',
+                            url: cs_common_ops.buildKFCSurl('/visitor/blacklist'),
+                            data: {
+                                uuid: uuid
+                            },
+                            dataType: 'json',
+                            success:function (res) {
+                                $.close(index);
+                                if(res.code != 200) {
+                                    return $.msg(res.msg);
+                                }
+
+                                // 这里要删除游客信息,并缩小减少online_users.
+                                if(uuid == current_uuid) {
+                                    $('#chatExe .flex1').css({'display': 'none'});
+                                }
+
+                                index = online_users.indexOf(uuid)
+
+                                online_users = online_users.filter(function (curr, curr_index) {
+                                    return index != curr_index;
+                                });
+
+                                page.renderOnlineList();
+                            },
+                            error: function () {
+                                $.close(index)
+                            }
+                        });
+                    });
                     break;
             }
             return false;

@@ -12,12 +12,14 @@ CsAsset::register($this);
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>exe端聊天</title>
+    <title><?=$this->title?></title>
     <?=$this->head() ?>
 </head>
 <?=$this->beginBody()?>
-<body onclick="tab.listHide(true)">
-<?=$content?>
+<body>
+    <?=$content?>
+
+    <?=$this->renderFile('@www/modules/cs/views/common/footer.php')?>
 </body>
 <?php $this->endBody() ?>
 </html>

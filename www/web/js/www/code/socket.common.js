@@ -16,6 +16,7 @@ var kf_ws_service = {
         // 关闭websocket发送的信息.
         this.ws.addEventListener('close', function () {
             //关闭
+            console.dir('close');
         });
         // 这里是websocket发生错误的.信息.
         this.ws.addEventListener('error', function () {
@@ -172,6 +173,11 @@ var chat_ops = {
             case "reply":
                 $('.message').append( that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content) );
                 that.scrollToBottom();
+                break;
+            case 'close_guest':
+                console.dir('您已经被客服关闭聊天了');
+                // 主动调用.
+                // kf_ws_service.ws.close();
                 break;
         }
     }

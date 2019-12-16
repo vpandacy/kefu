@@ -33,11 +33,21 @@ class GuestBusiHanlderService extends BaseService
                     try{
                         $message = json_decode( $data,true );
                         self::consoleLog( var_export( $message,true ) );
-                        if( isset( $message['data']['t_id']) ){
+                        if( isset( $message['data']['t_id'])){
                             //发送给对应的人
                             $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+                            // 发送事件给游客
                             $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
                         }
+
+                        // 主动断开链接. 客服关闭后.
+                        if(ConstantService::$chat_cmd_close_guest == $message['cmd']) {
+                            // 发送给对应的人
+                            $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+                            // 关闭信息.
+                            $tmp_client && Gateway::closeClient( $tmp_client[0] );
+                        }
+
                         return $connection->send( "success" );
                     }catch (\Exception $e){
                         ChatEventService::handlerError( $e->getTraceAsString() );
@@ -96,7 +106,7 @@ class GuestBusiHanlderService extends BaseService
                     Gateway::sendToClient( $client_id,$data );
                     break;
                 case ConstantService::$chat_cmd_guest_connect://客户链接,要分配客服
-                    $code = isset($data['code']) ?? '';
+                    $code = $data['code'] ?? '';
                     $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code);
                     if( $kf_info ){
                         $params = [
@@ -110,7 +120,7 @@ class GuestBusiHanlderService extends BaseService
                             "f_id" => $f_id,
                             "t_id" => $kf_info['sn'],
                             // 随机生成一个昵称.
-                            'nickname'  =>  'Guest-' . substr($f_id, strrpos($f_id,'-') + 1),
+                            'nickname'  =>  'Guest-' . substr($f_id, strlen($f_id) - 12),
                             'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
                             'allocation_time'   =>  date('H:i:s'),
                         ];

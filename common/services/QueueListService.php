@@ -35,11 +35,14 @@ class QueueListService extends BaseService
         if( !$list_name ){
             return false;
         }
+
         $redis = RedisService::getInstance( QueueConstant::$instance_quest );
+
         $value = [
             "data" => $value,
             "created_time" => time()
         ];
+
         return $redis->rPush($list_name, serialize($value));
     }
 
