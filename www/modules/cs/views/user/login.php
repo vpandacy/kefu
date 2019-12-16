@@ -24,7 +24,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <div class="login_content_tab sign-in-container">
                     <span class="web-font welcome_title">欢迎登录</span><br>
                     <span class="web-font welcome_tip">请使用您本人的账号密码</span>
-                    <input class="login_inp_name" name="email" placeholder="请输入邮箱">
+                    <input class="login_inp_name" name="account" placeholder="请输入邮箱或手机号">
                     <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
                     <div class="login_button cupointer login">登录</div>
                     <div class="textAlign cupointer">
