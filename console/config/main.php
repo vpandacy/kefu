@@ -36,14 +36,14 @@ return [
         "urlManager" => require(__DIR__ . '/router.php')
     ],
     'modules' => [
-        'chat' => [
-            'class' => 'console\modules\chat\ChatModule',
-        ],
         'guest' => [
             'class' => 'console\modules\guest\Module',
         ],
         'cs' => [
             'class' => 'console\modules\cs\Module',
+        ],
+        'queue'    =>  [
+            'class' => 'console\modules\queue\Module',
         ],
     ],
     'params' => $params,
