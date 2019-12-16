@@ -26,7 +26,7 @@ class CodeController extends BaseController
 
         $current_code = $this->get('code',0);
 
-        $group = $current_code ? GroupChat::findOne(['id' => $current_code]) : new GroupChat();
+        $group = $current_code ? GroupChat::findOne(['id' => $current_code,'merchant_id'=>$this->getMerchantId()]) : new GroupChat();
 
         return $this->render('index',[
             'groups'    =>  $group_chats,
