@@ -65,6 +65,29 @@ $(function () {
         $('.online-cover').hide();
         $('.capture-dialog').hide();
     });
+    $('.from-button-message').click(()=>{
+        let fromData = ['name','mobile','wechat','message']
+        let param = {}
+        fromData.forEach((value, index, array) => {
+            param[value] = $("#online-from [name="+value+"]").val()
+        })
+        param['msn'] = JSON.parse(localStorage.getItem("serverInfo")).msn
+        param['code'] = JSON.parse(localStorage.getItem("serverInfo")).code
+        $.ajax({
+            url:'/code/leave',
+            type:'post',
+            data:param,
+            dataType: 'json',
+            success: res => {
+                res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
+            }
+        })
+    });
+    // 服务端的close_guest关闭客服 则触发
+    window.ws.addEventListener('message', event =>{
+        var data = JSON.parse(event.data);
+        data.cmd === 'close_guest' ? $('#online-from').show() : '';
+    });
 });
 
 $(document).ready(function(){
