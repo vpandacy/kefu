@@ -78,20 +78,19 @@ class MerchantService extends BaseService
      * 创建一个商户.
      * @param int $app_id
      * @param $merchant_name
-     * @param $email
+     * @param $mobile
      * @param $password
      * @return bool
      */
-    public static function createMerchant($app_id, $merchant_name,$email,$password)
+    public static function createMerchant($app_id, $merchant_name,$mobile,$password)
     {
         $merchant = new Merchant();
         $now = DateHelper::getFormatDateTime();
 
         $merchant->setAttributes([
-            'status'    =>  -2,
+            'status'    =>  ConstantService::$default_status_true,
             'sn'        =>  CommonService::genUniqueName(),
             'name'      =>  $merchant_name,
-            'email'         =>  $email,
             'logo'      =>  ConstantService::$default_avatar,
             'app_id'    =>  $app_id,
             'created_time'  =>  $now,
@@ -108,9 +107,9 @@ class MerchantService extends BaseService
         $employee->setAttributes([
             'merchant_id'   =>  $merchant->primaryKey,
             'sn'            =>  CommonService::genUniqueName(),
-            'app_ids'       =>  implode('',[',', 1, ',']),
+            'app_ids'       =>  ',1,',
             'name'          =>  $merchant_name,
-            'email'         =>  $email,
+            'mobile'        =>  $mobile,
             'avatar'        =>  ConstantService::$default_avatar,
             'password'      =>  $password,
             'listen_nums'   =>  0,

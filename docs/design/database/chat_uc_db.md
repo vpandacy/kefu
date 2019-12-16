@@ -110,3 +110,38 @@ ALTER TABLE `staff`
     ADD `nickname` varchar(255) NOT NULL DEFAULT '' COMMENT '用户昵称' AFTER `merchant_id`,
     ADD `is_online` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否在线,0不在线,1在线' AFTER `listen_nums`;
 ```
+### 20191216
+```
+CREATE TABLE `queue_captcha` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '类型 1：邮件 2：手机',
+  `account` varchar(30) NOT NULL DEFAULT '' COMMENT '账号 可能是邮件地址或者手机号码',
+  `captcha` varchar(10) NOT NULL DEFAULT '' COMMENT '验证码',
+  `ip` varchar(20) NOT NULL DEFAULT '' COMMENT '客户端ip',
+  `expires_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间 一般有效期5分钟',
+  `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '使用状态 0：未使用 1：已使用',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近一次更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_account_type` (`account`,`type`),
+  KEY `idx_created_time` (`created_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='验证码表';
+
+CREATE TABLE `queue_sms` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `mobile` varchar(256) NOT NULL DEFAULT '' COMMENT '手机号码',
+  `sign` varchar(10) NOT NULL DEFAULT '' COMMENT '签名',
+  `content` varchar(255) NOT NULL DEFAULT '' COMMENT '发送手机内容',
+  `channel` varchar(30) NOT NULL DEFAULT '' COMMENT '发送渠道名称',
+  `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '发送状态 1成功 0 失败 -2 等待发送 -1 发送中',
+  `return_msg` varchar(500) NOT NULL DEFAULT '' COMMENT '返回信息',
+  `taskid` varchar(60) NOT NULL DEFAULT '' COMMENT '任务id',
+  `ip` varchar(15) NOT NULL DEFAULT '' COMMENT '客户端发送ip',
+  `send_number` int(11) NOT NULL DEFAULT '1' COMMENT '发送条数，默认1',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最近一次更新时间',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_status_mobile` (`status`,`mobile`),
+  KEY `idx_ip` (`ip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='短信发送队列表';
+```

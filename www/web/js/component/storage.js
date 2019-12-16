@@ -10,7 +10,7 @@ var ChatStorage = {
             localStorage.setItem(key, value);
         }
 
-        if(parent.document) {
+        if(parent != window) {
             this.setParentCookie(name, value);
         }
 
