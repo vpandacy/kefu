@@ -1,33 +1,33 @@
 ;
 // 关于前台聊天的基本功能.
+window.ws= null;
 var kf_ws_service = {
-    ws: null,
     connect:function( host ){
-        this.ws = new WebSocket('ws://' + host);
+        window.ws = new WebSocket('ws://' + host);
         //这个事件应该标注 状态 已连接（绿色）
-        this.ws.addEventListener('open', function () {
+        window.ws.addEventListener('open', function () {
             chat_ops.handlerMessage( { "cmd":"ws_connect" } );
         });
         // 接收websocket返回的信息.
-        this.ws.addEventListener('message', function (event) {
+        window.ws.addEventListener('message', function (event) {
             var data = JSON.parse(event.data);
             chat_ops.handlerMessage( data );
         });
         // 关闭websocket发送的信息.
-        this.ws.addEventListener('close', function () {
+        window.ws.addEventListener('close', function () {
             //关闭
             console.dir('close');
         });
         // 这里是websocket发生错误的.信息.
-        this.ws.addEventListener('error', function () {
+        window.ws.addEventListener('error', function () {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
         });
     },
     socketSend: function (msg) {
-        this.ws.send( JSON.stringify(msg) );
+        window.ws.send( JSON.stringify(msg) );
     }
 };
-var chat_ops = {
+window.chat_ops = {
     // 这里要保存用户的信息.和收集用户的一些数据.
     init: function () {
         this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
@@ -184,5 +184,5 @@ var chat_ops = {
     }
 }
 $(document).ready(function () {
-    chat_ops.init();
+    window.chat_ops.init();
 });

@@ -10,6 +10,7 @@ StaticPluginHelper::socketPlugin();
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),
+    GlobalUrlService::buildStaticUrl('/jqMsg/message.css'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/chat.css'),
@@ -17,6 +18,7 @@ StaticPluginHelper::includeCssPlugins([
 
 StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
+    GlobalUrlService::buildStaticUrl('/jqMsg/message.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/jquery.md5.js'),
     GlobalUrlService::buildStaticUrl('/chat/jquery.json-2.3.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
@@ -84,7 +86,7 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <div class="online-author">
                     <a>服务状态:已连接</a>
-                    <a>好商汇提供软件支持</a>
+                    <a>好商汇提供软件支持123</a>
                 </div>
             </div>
             <div class="faceDivBox" style="display:none;">
@@ -92,6 +94,28 @@ StaticPluginHelper::includeJsPlugins([
                     <section class="emoji-box"></section>
                 </div>
                 <a class="closeFaceBox" href="javascript:void(0)">×</a>
+            </div>
+        </div>
+        <div id="online-from">
+            <div>您好, 我们的服务时间：8:00-24:00，现在客服不在线，请留言. 如果没有留下您的联系方式，客服将无法和您联系！</div>
+            <div class="from-list">
+                <div class="from-title"><span ></span><span>姓名</span></div>
+                <input name="name">
+            </div>
+            <div class="from-list">
+                <div class="from-title"><span></span><span>手机号</span></div>
+                <input name="mobile">
+            </div>
+            <div class="from-list">
+                <div class="from-title"><span></span><span>微信号</span></div>
+                <input name="wechat">
+            </div>
+            <div class="from-list">
+                <div class="from-title"><span></span><span>留言内容</span></div>
+                <textarea name="message"></textarea>
+            </div>
+            <div class="from-list">
+                <div class="from-button-message">提交留言</div>
             </div>
         </div>
     </div>
