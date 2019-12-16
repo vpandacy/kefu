@@ -11,7 +11,9 @@ use Yii;
 class BaseController extends StaffBaseController
 {
     protected $allow_actions = [
-        'cs/user/login'
+        'cs/user/login',
+        'cs/user/reg',
+        'cs/user/get-captcha'
     ];
 
     public function __construct($id, $module, $config = []){
