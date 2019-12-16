@@ -25,8 +25,10 @@ class SmsController extends  BaseController {
             }
 
             $tmp_ret = SmsService::doSend( $_sms_info['mobile'],$_sms_info['content'],$_sms_info['channel'],$_sms_info['ip'],$_sms_info['sign'] );
-            $_sms_info->status = $tmp_ret?1:0;
-            $_sms_info->return_msg = $tmp_ret?$tmp_ret:SmsService::getLastErrorMsg();
+            $_sms_info->setAttributes([
+                'status'    =>  $tmp_ret ? 1 : 0,
+                'return_msg'=>  $tmp_ret ? $tmp_ret : SmsService::getLastErrorMsg()
+            ]);
             $_sms_info->save( 0 );
             //$tmp_ret = SmsService::parseResult($tmp_ret);
             if( !$tmp_ret ){

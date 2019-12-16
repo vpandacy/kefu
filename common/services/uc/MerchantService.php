@@ -87,6 +87,10 @@ class MerchantService extends BaseService
         $merchant = new Merchant();
         $now = DateHelper::getFormatDateTime();
 
+        if(Staff::findOne(['mobile'=>$mobile])) {
+            return self::_err('该手机号已经被别人使用了，请重新更换一个手机号');
+        }
+
         $merchant->setAttributes([
             'status'    =>  ConstantService::$default_status_true,
             'sn'        =>  CommonService::genUniqueName(),
