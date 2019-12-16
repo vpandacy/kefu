@@ -25,7 +25,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <select name="role_id" lay-filter="choice" lay-verify="required" lay-search="">
                             <option value="0">所有风格</option>
                             <?php foreach($groups as $group):?>
-                                <option value="<?=$group['id']?>"><?=$group['title']?></option>
+                                <option value="<?=$group['id']?>" <?=$current['id'] == $group['id'] ? 'selected' : ''?>><?=$group['title']?></option>
                             <?php endforeach;?>
                         </select>
                     </div>

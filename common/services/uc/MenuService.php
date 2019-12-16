@@ -87,17 +87,16 @@ class MenuService extends BaseService
 //                'title' =>  '聊天管理',
 //                'icon'  =>  'icon-liaotian'
 //            ],
-            // 全局设置
-            'settings'  =>  [
-                'url'   =>  'merchant/overall/index/index',
-                'title' =>  '全局设置',
-                'icon'  =>  'icon-quanjushezhi',
+            // 用户管理.
+            'user'  =>  [
+                'url'   =>  'staff/index',
+                'title' =>  '员工管理',
+                'icon'  =>  'icon-yonghuguanli'
             ],
-            // 黑名单管理
-            'blacklist' =>  [
-                'url'   =>  'merchant/black/index/index',
-                'title' =>  '黑名单管理',
-                'icon'  =>  'icon-heimingdan'
+            'message'   =>  [
+                'title' =>  '留言管理',
+                'url'   =>  'merchant/overall/offline/index',
+                'icon'  =>  'icon-liaotian',
             ],
             // 风格管理
             'style'     =>  [
@@ -105,12 +104,19 @@ class MenuService extends BaseService
                 'title' =>  '风格管理',
                 'icon'  =>  'icon-fengge'
             ],
-            // 用户管理.
-            'user'  =>  [
-                'url'   =>  'staff/index',
-                'title' =>  '用户管理',
-                'icon'  =>  'icon-yonghuguanli'
+            // 黑名单管理
+            'blacklist' =>  [
+                'url'   =>  'merchant/black/index/index',
+                'title' =>  '黑名单管理',
+                'icon'  =>  'icon-heimingdan'
             ],
+            // 全局设置
+            'settings'  =>  [
+                'url'   =>  'merchant/overall/index/index',
+                'title' =>  '全局设置',
+                'icon'  =>  'icon-quanjushezhi',
+            ],
+
         ];
     }
 
@@ -143,10 +149,6 @@ class MenuService extends BaseService
                 'company'   =>  [
                     'title' =>  '企业设置',
                     'url'   =>  'company/index'
-                ],
-                'offline'   =>  [
-                    'title' =>  '留言管理',
-                    'url'   =>  'merchant/overall/offline/index',
                 ],
                 'code'      =>  [
                     'title' =>  '客服代码',
@@ -205,6 +207,12 @@ class MenuService extends BaseService
                 'action'    =>  [
                     'title' =>  '权限管理',
                     'url'   =>  'action/index',
+                ],
+            ],
+            'message'   =>  [
+                'leave' =>  [
+                    'title' =>  '留言管理',
+                    'url'   =>  'merchant/overall/offline/index'
                 ],
             ],
         ];

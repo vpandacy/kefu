@@ -19,7 +19,8 @@ var uc_common_ops = {
             ],
             'liaotian'      : [
                 '/merchant/chat/index',
-                '/merchant/chat/download'
+                '/merchant/chat/download',
+                '/merchant/overall/offline'
             ],
             'quanjushezhi'  : [
                 '/company'
@@ -30,6 +31,7 @@ var uc_common_ops = {
             for(var i = 0; i < uris[index].length; i++) {
                 if(pathname.indexOf(uris[index][i]) > -1) {
                     nav_name = index;
+                    break;
                 }
             }
         }

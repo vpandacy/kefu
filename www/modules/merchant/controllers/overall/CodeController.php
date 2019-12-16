@@ -24,9 +24,14 @@ class CodeController extends BaseController
             ->asArray()
             ->all();
 
+        $current_code = $this->get('code',0);
+
+        $group = $current_code ? GroupChat::findOne(['id' => $current_code,'merchant_id'=>$this->getMerchantId()]) : new GroupChat();
+
         return $this->render('index',[
             'groups'    =>  $group_chats,
-            'code'      =>  DataHelper::encode($this->renderPartial('obtain',['group_sn'=>''])),
+            'current'   =>  $group,
+            'code'      =>  DataHelper::encode($this->renderPartial('obtain',['group_sn'=>$group['sn']])),
         ]);
     }
 
