@@ -8,8 +8,8 @@ use common\services\GlobalUrlService;
 <div class="left_menu" id="left_menu">
     <div class="menu-logo">
         <a>
-            <img class="menu_min_logo" alt="商通" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo.png");?>">
-            <img class="menu_max_logo dis_none" alt="商通" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/biglogo.png");?>">
+            <img class="menu_min_logo dis_none" alt="商通" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo.png");?>">
+            <img class="menu_max_logo " src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/biglogo.png");?>">
         </a>
     </div>
     <div class="menu-version"><?=$this->params['merchant']['name']?></div>
