@@ -15,7 +15,7 @@ class GateWayWorkerService extends BaseService
             self::initParams();
         }
         // register 必须是text协议
-        $register = new Register("text://{$params['host']}");
+        $register = new Register("text://0.0.0.0:{$params['port']}");
         $register->name = $params['name'];
         // 如果不是在根目录启动，则运行runAll方法
         if( !defined('GLOBAL_START') )  {
@@ -29,7 +29,7 @@ class GateWayWorkerService extends BaseService
         }
 
         //ws协议
-        $gateway = new Gateway("Websocket://{$params['host']}");
+        $gateway = new Gateway("Websocket://0.0.0.0:{$params['port']}");
         // gateway名称，status方便查看
         $gateway->name = $params['name'];
         // gateway进程数
@@ -112,13 +112,7 @@ class GateWayWorkerService extends BaseService
         if(!extension_loaded('posix'))  {
             exit("Please install posix extension. See http://doc3.workerman.net/appendices/install-extension.html\n");
         }
-
-        global $argc;
         global $argv;
-        // 需要自动缩减所在参数. 不然会影响workerman的命令解析.
-        $argc = $argc - 1;
-        array_shift($argv);
-
 
         $runtime = \Yii::$app->getRuntimePath() . '/workerman';
 
