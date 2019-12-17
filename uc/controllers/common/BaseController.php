@@ -21,12 +21,12 @@ class BaseController extends StaffBaseController {
         'user/logout',
         'user/captcha',
         'user/get-captcha',
-        '/default/application'
     ];
 
     //这些URL不需要检验权限
     public $ignore_url = [
-        'default/application'
+        'default/application',
+        'upload/qiniu-token'
     ];
 
     public function __construct($id, $module, $config = [])  {
