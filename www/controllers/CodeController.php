@@ -42,7 +42,7 @@ class CodeController extends BaseController
         if( $code ){
             $params['code'] = $code;
         }
-        $url = GlobalUrlService::buildKFMSNUrl( $is_mobile ?'/code/mobile':'/code/chat',$params );
+        $url = GlobalUrlService::buildKFMSNUrl( $is_mobile ? '/code/mobile' : '/code/chat', $params );
         header('Content-type: text/javascript');
         return $this->render('index.js',[
             'url'   =>  $url,
@@ -76,16 +76,19 @@ class CodeController extends BaseController
             "code" => $code,
             "uuid" => $uuid
         ];
+
         $tab_url = GlobalUrlService::buildKFMSNUrl( '/code/online',$params );
+
         $data = [
             "merchant_info" => $merchant_info,
-            "setting" => $config,
-            "js_params" => [
-                'uuid' => $uuid,
-                "tab_url" => $tab_url,
-                "ws" => WSCenterService::getGuestWSByRoute( $merchant_info['id'] ),
-                "code" => $code,
-                "msn" => $msn
+            "js_params"     => [
+                'uuid'              => $uuid,
+                "tab_url"           => $tab_url,
+                "ws"                => WSCenterService::getGuestWSByRoute( $merchant_info['id'] ),
+                "code"              => $code,
+                "msn"               => $msn,
+                "auto_disconnect"   => $config['auto_disconnect'] ?? 0,
+                "greetings"         => $config['greetings'] ?? '您好,欢迎使用好商汇客服系统',
             ]
         ];
         return $this->render('chat',$data);
@@ -113,10 +116,12 @@ class CodeController extends BaseController
             'merchant'  =>  $merchant,
             'setting'   =>  $setting,
             "js_params" => [
-                'uuid' => $uuid,
-                "ws" => WSCenterService::getGuestWSByRoute( $msn ),
-                "code" => $code,
-                "msn" => $msn
+                'uuid'              => $uuid,
+                "ws"                => WSCenterService::getGuestWSByRoute( $msn ),
+                "code"              => $code,
+                "msn"               => $msn,
+                "auto_disconnect"   => $setting['auto_disconnect'] ?? 0,
+                "greetings"         => $setting['greetings'] ?? '您好,欢迎使用好商汇客服系统',
             ]
         ]);
     }
@@ -148,10 +153,12 @@ class CodeController extends BaseController
             'setting'   =>  $setting,
             'code'      =>  $code,
             "js_params" => [
-                'uuid' => $uuid,
-                "ws" => WSCenterService::getGuestWSByRoute( $msn ),
-                "code" => $code,
-                "msn" => $msn
+                'uuid'              => $uuid,
+                "ws"                => WSCenterService::getGuestWSByRoute( $msn ),
+                "code"              => $code,
+                "msn"               => $msn,
+                "auto_disconnect"   => $setting['auto_disconnect'] ?? 0,
+                "greetings"         => $setting['greetings'] ?? '您好,欢迎使用好商汇客服系统',
             ]
         ]);
     }

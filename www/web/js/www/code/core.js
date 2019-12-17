@@ -19,6 +19,8 @@ $(function () {
     $('.icon-_DYGYxinyemiandakai').click(function () {
         // 这里要动态生成一下.
         var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        // 主动关闭聊天框.
+        window.ws.close();
         window.open(data['tab_url'], 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
@@ -93,19 +95,18 @@ $(function () {
     window.ws.addEventListener('message', event => {
         console.log(event.data);
         var data = JSON.parse(event.data);
-        console.log(event.data)
-            switch (data.cmd) {
-                case 'ws_connect'||'hello':
-                    $('.ws_flag').text('正在连接客服...')
-                    break;
-                case 'assign_kf'||'change_kf'||'reply':
-                    $('.ws_flag').text('连接成功')
-                    break;
-                case 'close_guest':
-                    $('#online-from').show()
-                    $('.ws_flag').text('连接关闭')
-                    break;
-            }
+        switch (data.cmd) {
+            case 'ws_connect'||'hello':
+                $('.ws_flag').text('正在连接客服...')
+                break;
+            case 'assign_kf'||'change_kf'||'reply':
+                $('.ws_flag').text('连接成功')
+                break;
+            case 'close_guest':
+                $('#online-from').show()
+                $('.ws_flag').text('连接关闭')
+                break;
+        }
     });
 });
 
@@ -115,4 +116,23 @@ $(document).ready(function(){
      * */
     sdEditorEmoj.Init(emojiconfig);
     sdEditorEmoj.setEmoji({type:'div',id:"content"});
+
+
+    var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+    // 不主动断开.
+    if(data.auto_disconnect == 0) {
+        return;
+    }
+
+    var auto_disconnect = parseInt(data.auto_disconnect);
+    auto_disconnect = 10;
+    var interval = setInterval(function () {
+        auto_disconnect -= 1;
+        if(auto_disconnect <= 0) {
+            clearInterval(interval);
+            $('.content-tip .line').text('由于您长时间没有对话，系统已经关闭您的会话');
+            // 主动关闭聊天.
+            window.ws.close();
+        }
+    }, 1000);
 });

@@ -89,10 +89,10 @@ class UserController extends BaseController
      */
     public function actionRegister()
     {
-        $mobile = $this->post('mobile','');
+        $mobile = $this->post('account','');
         $merchant_name = $this->post('merchant_name','');
         $captcha = $this->post('captcha','');
-        $img_captch = $this->post('img_captcha','');
+        $img_captcha = $this->post('img_captcha','');
         $password = $this->post('password','');
 
         if(!ValidateHelper::validMobile($mobile)) {
@@ -115,7 +115,7 @@ class UserController extends BaseController
         $captcha_config = Yii::$app->params['cookies']['validate_code'];
         $source_code = $this->getCookie($captcha_config['name']);
 
-        if($img_captch != $source_code) {
+        if(strtolower($img_captcha) != $source_code) {
             return $this->renderErrJSON('请输入正确的图形验证码');
         }
 
