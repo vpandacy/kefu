@@ -68,7 +68,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/c
                         <div class="layui-form-item">
                             <label class="layui-form-label">自动断开</label>
                             <div class="layui-input-block">
-                                <input type="text" name="auto_disconnect" value="<?=$setting['auto_disconnect']?>" required="" lay-verify="required" placeholder="请输入自动断开时间(秒)" autocomplete="off" class="layui-input">
+                                <input type="text" name="auto_disconnect" value="<?=$setting['auto_disconnect']?>" required="" lay-verify="required" placeholder="请输入自动断开时间(秒)" autocomplete="off" class="layui-input layui-input-inline">
+                                <div class="disconnect_time">ms</div>
                             </div>
                         </div>
 
