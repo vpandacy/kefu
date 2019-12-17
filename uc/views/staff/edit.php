@@ -9,6 +9,28 @@ StaticPluginHelper::qiniuPlugin();
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/staff/edit.js'), UcAsset::className());
 ?>
+<style>
+    .upload_container {
+        position: absolute;
+        border: 1px solid #e6e6e6;
+        top: 20px;
+        width: 180px;
+        left: 50%;
+        height: 170px;
+    }
+    .upload_container .icon-jiahao1 {
+        color: rgba(1, 170, 237, 1);
+        font-size: 40px;
+    }
+    .upload_container .layui-upload-list {
+        margin: auto;
+        text-align: center;
+        line-height: 163px;
+    }
+    .upload_container .upload_but {
+        width: 100%;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',
@@ -18,7 +40,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
         <div class="site-text">
             <form class="layui-form" method="post">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">姓名/商户名</label>
+                    <label class="layui-form-label">商户/姓名</label>
                     <div class="layui-input-block">
                         <input type="text" name="name" value="<?=$staff['name']?>" lay-verify="required" placeholder="请输入姓名或商户名" autocomplete="off" class="layui-input">
                     </div>
@@ -27,7 +49,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 <div class="layui-form-item">
                     <label class="layui-form-label">昵称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="nickname" value="<?=$staff['nickname']?>" lay-verify="required" placeholder="请输入昵称,用于聊天时展示的信息" autocomplete="off" class="layui-input">
+                        <input type="text" name="nickname" value="<?=$staff['nickname']?>" title="用于聊天时展示的信息" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -48,7 +70,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 <div class="layui-form-item">
                     <label class="layui-form-label">接听数</label>
                     <div class="layui-input-block">
-                        <input type="text" name="listen_nums" value="<?=$staff['listen_nums']?>" lay-verify="required" placeholder="请输入接听数量,0代表没有上限" autocomplete="off" class="layui-input">
+                        <input type="text" name="listen_nums" value="<?=$staff['listen_nums']?>" lay-verify="required" title="0代表没有上限" placeholder="请输入接听数量" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -73,22 +95,28 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                     </div>
                 </div>
 
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">请上传头像</label>
-                    <div class="layui-input-block" id="upload_container">
-                        <button class="layui-btn" id="upload" type="button">
-                            <i class="layui-icon"></i>上传头像
-                        </button>
+                <div class="layui-form-item upload_container" id="upload_container">
+<!--                    <label class="layui-form-label">请上传头像</label>-->
+                    <div class="layui-upload">
+                        <div class="layui-upload-list">
+                            <i class="iconfont icon-jiahao1"></i>
+                        </div>
+                        <button type="button" class="layui-btn upload_but" id="upload" >上传头像</button>
                         <input type="hidden" name="avatar" value="<?=$staff['avatar']?>">
                     </div>
-                    <div class="img-wrapper" style="margin-top: 10px;">
-                        <?php if($staff['avatar']) :?>
-                            <div class="layui-input-block">
-                                <img width="100" height="100" src="<?=GlobalUrlService::buildPicStaticUrl('hsh', $staff['avatar'])?>" alt="">
-                            </div>
-                        <?php endif;?>
-                    </div>
+<!--                    <div class="layui-input-block" id="upload_container">-->
+<!--                        <button class="layui-btn" id="upload" type="button">-->
+<!--                            <i class="layui-icon"></i>上传头像-->
+<!--                        </button>-->
+<!--                        <input type="hidden" name="avatar" value="--><?//=$staff['avatar']?><!--">-->
+<!--                    </div>-->
+<!--                    <div class="img-wrapper" style="margin-top: 10px;">-->
+<!--                        --><?php //if($staff['avatar']) :?>
+<!--                            <div class="layui-input-block">-->
+<!--                                <img width="100" height="100" src="--><?//=GlobalUrlService::buildPicStaticUrl('hsh', $staff['avatar'])?><!--" alt="">-->
+<!--                            </div>-->
+<!--                        --><?php //endif;?>
+<!--                    </div>-->
                 </div>
 
                 <div class="layui-form-item">

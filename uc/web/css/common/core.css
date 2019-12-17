@@ -69,6 +69,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 #merchant .site-text {
     border: 1px solid #eee;
     padding: 20px;
+    position: relative;
 }
 #merchant fieldset {
     border: none;
