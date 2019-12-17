@@ -83,7 +83,7 @@ var merchant_user_login_ops = {
             var index = $.loading(1,{shade: .5});
             $.ajax({
                 type: 'POST',
-                url: uc_common_ops.buildUcUrl('/user/register'),
+                url: uc_common_ops.buildUcUrl('/user/reg'),
                 data: param,
                 dataType: 'json',
                 success: function ( res ) {

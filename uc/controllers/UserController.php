@@ -88,7 +88,7 @@ class UserController extends BaseController
      * 注册.
      * @return \yii\console\Response|\yii\web\Response
      */
-    public function actionRegister()
+    public function actionReg()
     {
         $mobile = $this->post('account','');
         $merchant_name = $this->post('merchant_name','');
