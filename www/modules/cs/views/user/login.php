@@ -12,12 +12,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 <div id="index_login">
     <div class="login_content dflex">
         <div class="login_left_back">
-            <img class="login_left_img_one" src="<?=GlobalUrlService::buildKFCSStaticUrl('/images/cs/user/bg2.png')?>">
-            <img class="login_left_img_two" src="<?=GlobalUrlService::buildKFCSStaticUrl('/images/cs/user/bg1.png')?>">
-            <img class="login_left_img_three" src="<?=GlobalUrlService::buildKFCSStaticUrl('/images/cs/user/bg3.png')?>">
+            <img class="login_left_img_one" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg2.png')?>">
+            <img class="login_left_img_two" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg1.png')?>">
+            <img class="login_left_img_three" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg3.png')?>">
         </div>
         <div class="login_right_login dflex">
-            <img  class="login_right_img_Four" src="<?=GlobalUrlService::buildKFCSStaticUrl('/images/cs/user/bg4.png')?>">
+            <img  class="login_right_img_Four" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg4.png')?>">
             <div class="login_content_sr">
                 <!--登录-->
                 <div class="login_content_tab sign-in-container">
@@ -32,18 +32,43 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 </div>
 
                 <!--注册-->
-                <div class="register_content_tab sign-up-container">
-                    <span class="web-font welcome_title">欢迎注册</span><br>
-                    <span class="web-font welcome_tip"></span>
-                    <input class="login_inp_name" type="text" name="name"  placeholder="请输入商户名">
-                    <input class="login_inp_name" style="margin-top: 0;" type="text" name="email" placeholder="请输入邮箱">
-                    <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
-                    <span class="web-font welcome_password_hand cupointer"></span>
-                    <div class="login_button cupointer register" >注册</div>
-                    <div class="textAlign cupointer">
-                        <span class="web-font login_register_hand" onclick="loginActive('register')">已有账号？去登录</span>
+                <form class="layui-form" action="">
+                    <div class="register_content_tab sign-up-container">
+                        <span class="web-font welcome_title">欢迎注册</span><br>
+                        <span class="web-font welcome_tip"></span>
+                        <input class="login_inp_name" type="text" name="merchant_name"  placeholder="请输入商户名">
+                        <input class="login_inp_name" style="margin-top: 0;" type="text" name="account" placeholder="请输入手机号">
+                        <div class="po-relative">
+                            <input class="login_inp_name " style="margin-top: 0;" type="text" name="img_captcha" placeholder="请输入验证码">
+                            <div class="graphic_code cupointer_img">
+                                <img  class="cupointer_img" onclick="this.src='<?=GlobalUrlService::buildKFCSUrl('/user/captcha')?>' + '?time='+ Math.random()" src="<?=GlobalUrlService::buildKFCSUrl('/user/captcha')?>">
+                            </div>
+                        </div>
+                        <div class="po-relative">
+                            <input class="login_inp_name" style="margin-top: 0;" type="text" name="captcha" placeholder="请输入手机验证码">
+                            <div onclick="merchant_user_login_ops.sendemail()" class="iphone_code cupointer">获取验证码</div>
+                        </div>
+                        <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
+                        <span class="web-font welcome_password_hand cupointer"></span>
+                        <div class="login_button cupointer register" >注册</div>
+                        <div class="textAlign cupointer">
+                            <span class="web-font login_register_hand" onclick="loginActive('register')">已有账号？去登录</span>
+                        </div>
                     </div>
-                </div>
+                </form>
+            </div>
+        </div>
+        <!-- 遮掩层（选择应用） -->
+        <div class="login_cover disnone" onclick="document.getElementsByClassName('login_cover')[0].classList.add('disnone');document.getElementsByClassName('login_cover_content')[0].classList.add('disnone');">
+        </div>
+        <div class="login_cover_content disnone" >
+            <img onclick="document.getElementsByClassName('login_cover')[0].classList.add('disnone');document.getElementsByClassName('login_cover_content')[0].classList.add('disnone');" class="login_cover_close cupointer" src="images/close.png">
+            <div class="login_cover_title">选择应用</div>
+            <div class="login_cover_button dflex cupointer">
+                <div class="login_applications">客服系统</div>
+                <div>客服系统</div>
+                <div>客服系统</div>
+                <div>客服系统</div>
             </div>
         </div>
     </div>
