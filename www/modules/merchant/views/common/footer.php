@@ -8,5 +8,6 @@ unset( $cdn_config['qiniu_config'] );
     <input type="hidden" name="domain_app" value="<?=GlobalUrlService::buildKFMerchantUrl("");?>"/>
     <input type="hidden" name="domain_uc" value="<?=GlobalUrlService::buildUCUrl("");?>"/>
     <input type="hidden" name="domain_cdn" value='<?=json_encode($cdn_config)?>'>
+    <input type="hidden" name="domain_static" value='<?=GlobalUrlService::buildStaticUrl('')?>'>
     <input type="hidden" name="login_status" value="<?=isset($this->params['current_user'])?1:0;?>"/>
 </div>

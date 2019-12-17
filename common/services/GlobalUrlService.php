@@ -213,7 +213,8 @@ class GlobalUrlService extends BaseService {
     public static function buildStaticUrl($path, $params = [])
     {
         $domain = \Yii::$app->params['domains']['static'];
-        $path = Url::toRoute(array_merge([$path], $params));
+
+        $path = $path == '' ? $path :  Url::toRoute(array_merge([$path], $params));
 
         if (CommonService::is_SSL()) {
             $domain = str_replace('http://', 'https://', $domain);

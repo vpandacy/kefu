@@ -53,6 +53,18 @@ var uc_common_ops = {
         }
         return url + _paramUrl;
     },
+    // 静态资源信息.
+    buildStaticUrl:function( path ,params) {
+        var url = $(".hidden_val_wrap input[name=domain_static]").val() + path;
+        var _paramUrl = '';
+        if (params) {
+            _paramUrl = Object.keys(params).map(function (k) {
+                return [encodeURIComponent(k), encodeURIComponent(params[k])].join("=");
+            }).join('&');
+            _paramUrl = "?" + _paramUrl;
+        }
+        return url + _paramUrl;
+    },
     buildPicStaticUrl:function(bucket,img_key,params){
         bucket = bucket ? bucket: "pic3";
         var config = $('[name=domain_cdn]').val();
