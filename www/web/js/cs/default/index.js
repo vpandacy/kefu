@@ -56,6 +56,10 @@ var client = {
                 return false;
             }
 
+            if(!current_uuid) {
+                return $.msg('请选择游客进行聊天');
+            }
+
             that.send(msg);
         });
         // 点击发送按钮.
@@ -65,6 +69,12 @@ var client = {
             if(!msg) {
                 return false;
             }
+
+
+            if(!current_uuid) {
+                return $.msg('请选择游客进行聊天');
+            }
+
             that.send(msg);
         });
 
@@ -266,6 +276,7 @@ var page = {
             $('#chatExe .flex1').css({'display': 'none'});
 
             $('.content-message-active').removeClass('content-message-active');
+            current_uuid = '';
         });
     },
     // 初始化表情
@@ -345,6 +356,7 @@ var page = {
                                 // 这里要删除游客信息,并缩小减少online_users.
                                 if(uuid == current_uuid) {
                                     $('#chatExe .flex1').css({'display': 'none'});
+                                    current_uuid = '';
                                 }
 
                                 index = online_users.indexOf(uuid)

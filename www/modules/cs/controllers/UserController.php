@@ -29,22 +29,34 @@ class UserController extends BaseController
             $this->layout = 'main';
             return $this->render('login');
         }
-        $email = $this->post('email','');
+        $account = $this->post('account','');
         $password = $this->post('password','');
+        $type = strpos($account,'@') > 0 ? 2 : 1;
 
-        if(!ValidateHelper::validEmail($email)) {
+        if($type == 2 && !ValidateHelper::validEmail($account)) {
             return $this->renderErrJSON('请输入正确的邮箱~~' );
+        }
+
+        if($type == 1 && !ValidateHelper::validMobile($account)) {
+            return $this->renderErrJSON('请输入正确的手机号~~');
         }
 
         if(!$password) {
             return $this->renderErrJSON('请输入密码');
         }
 
-        // 开始检查.
-        $staff_info = Staff::findOne([ 'email' => $email,'status' => ConstantService::$default_status_true ]);
+        $query = Staff::find();
+
+        if($type == 1) {
+            $query->andWhere(['mobile'=>$account,'is_root'=>1,'status'=>ConstantService::$default_status_true]);
+        }else{
+            $query->andWhere([ 'email' => $account,'status' => ConstantService::$default_status_true ]);
+        }
+
+        $staff_info = $query->one();
 
         if( !$staff_info ) {
-            return $this->renderErrJSON('登录失败，请检查用户名和密码~~');
+            return $this->renderErrJSON('登录失败，请检查邮箱或手机号和密码~~');
         }
 
         if($staff_info['password'] != $this->genPassword($staff_info['merchant_id'], $password, $staff_info['salt'])) {

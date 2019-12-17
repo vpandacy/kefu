@@ -60,7 +60,7 @@ class UserController extends BaseController
         $staff_info = $query->one();
 
         if( !$staff_info ) {
-            return $this->renderErrJSON('登录失败，请检查用户名和密码~~');
+            return $this->renderErrJSON('登录失败，请检查邮箱或手机号和密码~~');
         }
 
         if($staff_info['password'] != $this->genPassword($staff_info['merchant_id'], $password, $staff_info['salt'])) {
