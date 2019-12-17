@@ -102,3 +102,31 @@ CREATE TABLE `group_chat_setting` (
   UNIQUE KEY `index_merchant_group` (`merchant_id`,`group_chat_id`)
 ) ENGINE='InnoDB' DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='风格设置表';
 ```
+
+#### 2019-12-17 郭威
+```
+CREATE TABLE `guest_history_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `merchant_id` bigint(11) NOT NULL DEFAULT '0' COMMENT '商户id',
+  `member_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '会员id',
+  `uuid` varchar(64) NOT NULL DEFAULT '' COMMENT '用户uuid',
+  `client_id` varchar(64) NOT NULL DEFAULT '' COMMENT 'ws 客户端id',
+  `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '接待客服id',
+  `referer_url` varchar(1000) NOT NULL DEFAULT '' COMMENT '来源url',
+  `referer_media` tinyint(3) NOT NULL DEFAULT '0' COMMENT '来源媒体',
+  `land_url` varchar(1000) NOT NULL DEFAULT '' COMMENT '落地页url',
+  `client_ip` varchar(20) NOT NULL DEFAULT '' COMMENT '游客ip',
+  `client_ua` varchar(300) NOT NULL DEFAULT '' COMMENT '游客浏览器信息',
+  `province_id` int(11) NOT NULL DEFAULT '0' COMMENT '游客来源省id',
+  `city_id` int(11) NOT NULL DEFAULT '0' COMMENT '游客来源城市id',
+  `chat_stype_id` int(11) NOT NULL DEFAULT '0' COMMENT '对话分格id',
+  `closed_time` datetime NOT NULL COMMENT '关闭对话时间',
+  `chat_duration` int(11) NOT NULL DEFAULT '0' COMMENT '聊天时长，单位秒',
+  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '聊天状态 ：-1 聊天中 1：聊天正常结束 0：聊天异常结束',
+  `source` tinyint(3) NOT NULL DEFAULT '0' COMMENT '来源 1：PC 2：手机H5 3：微信',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后一次更新时间',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_client_id` (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='游客历史记录表（游客进入）';
+```
