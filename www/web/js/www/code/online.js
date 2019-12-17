@@ -61,11 +61,38 @@ var online_ops = {
             $('#online-from').hide();
             $('.chat-close').hide();
             window.chat_ops.init();
+            online_ops.autoClose();
         })
     },
+    autoClose: function () {
+        var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        // 不主动断开.
+        if(data.auto_disconnect == 0) {
+            return;
+        }
+
+        var auto_disconnect = parseInt(data.auto_disconnect);
+        var interval = setInterval(function () {
+            auto_disconnect -= 1;
+            if(auto_disconnect <= 0) {
+                clearInterval(interval);
+                $('.message span').text('由于您长时间没有对话，系统已经关闭您的会话');
+                window.ws.close();
+                // 主动关闭聊天.
+                $('.chat-close').show();
+                // 打开留言
+                online_ops.messageOpen();
+                // 提交留言
+                online_ops.messageSubmit();
+                // 开始新对话
+                online_ops.messageInit();
+            }
+        }, 1000);
+    }
 }
 $(document).ready(function () {
     online_ops.emojInit();
     online_ops.tabSwitch();
     online_ops.wsClose();
+    online_ops.autoClose();
 });
