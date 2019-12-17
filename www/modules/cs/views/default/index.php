@@ -122,11 +122,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 <!--                        </span>-->
                     </div>
 
-                    <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;overflow: auto;">
+                    <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;">
                         <div class="faceDiv">
                             <section class="emoji-box"></section>
                         </div>
-                        <!--            <a class="closeFaceBox" href="javascript:void(0)">×</a>-->
+                                    <a class="closeFaceBox" href="javascript:void(0)">×</a>
                     </div>
 
                     <div class="sumbit-input" id="content" contenteditable="true" ></div>
