@@ -20,31 +20,13 @@ var admin_common_ops = {
         var nav_name = null;
 
 
-        if (pathname.indexOf("/customer/") > -1) {
-            nav_name = "customer";
+        if (pathname.indexOf("/log/") > -1) {
+            nav_name = "log";
         }
-        if (pathname.indexOf("/platform/") > -1) {
-            nav_name = "platform";
-        }
-        if (pathname.indexOf("/customer/apply/") > -1 || pathname.indexOf("/customer/transfer/") > -1 || pathname.indexOf("/platform/apply/") > -1 || pathname.indexOf("/platform/refund/") > -1 || pathname.indexOf("/platform/task/") > -1) {
-            nav_name = "works";
+        if (pathname.indexOf("/merchant/") > -1) {
+            nav_name = "merchant";
         }
 
-        if (pathname.indexOf("/staff/") > -1 || pathname.indexOf("/department/") > -1
-            || pathname.indexOf("/role/") > -1) {
-            nav_name = "staff";
-        }
-
-        if (pathname.indexOf("/info-credit/") > -1 || pathname.indexOf("/info-customer/") > -1 || pathname.indexOf("/info/") > -1) {
-            nav_name = "info";
-        }
-
-        if (pathname.indexOf("/financial/") > -1) {
-            nav_name = "financial";
-        }
-        if (pathname.indexOf("/action/") > -1) {
-            nav_name = "rbac";
-        }
         if (nav_name == null) {
             return;
         }
