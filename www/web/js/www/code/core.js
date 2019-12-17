@@ -25,11 +25,9 @@ $(function () {
         $('.show-hide-min').css({display:'block'});
         $('.show-hide').css({display:'none'});
     });
-
     $('.icon-wenjian').click(function () {
         inputFlie.flie();
     });
-
     /**
      * 定时加载图标显示隐藏
      */
@@ -85,7 +83,6 @@ $(function () {
             }
         });
     });
-
     // ws_connect代表链接过来了
     // hello 代表初次链接成功了.系统返回的返回消息.
     // assign_kf 这个是链接成功过后  系统分配了客服.
@@ -108,31 +105,46 @@ $(function () {
                 break;
         }
     });
+    // 留言or 新会话
+    $('.online_new_message').click(()=> {
+        $('#online-from').hide();
+        $('.chat-close').hide();
+        window.chat_ops.init();
+        chat_ops_min.autoClose();
+    });
+    $('.online_from_message').click(()=> {
+        $('#online-from').show();
+        $('.chat-close').hide();
+        window.chat_ops.init();
+        chat_ops_min.autoClose();
+    })
 });
-
+var chat_ops_min = {
+    autoClose:()=> {
+        var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+        // 不主动断开.
+        if(data.auto_disconnect == 0) {
+            return;
+        }
+        var auto_disconnect = parseInt(data.auto_disconnect);
+        auto_disconnect = 10;
+        var interval = setInterval(function () {
+            auto_disconnect -= 1;
+            if(auto_disconnect <= 0) {
+                clearInterval(interval);
+                $('.content-tip .line').text('由于您长时间没有对话，系统已经关闭您的会话');
+                $('.chat-close').show();
+                // 主动关闭聊天.
+                window.ws.close();
+            }
+        }, 1000);
+    }
+}
 $(document).ready(function(){
     /**
      * 表情
      * */
     sdEditorEmoj.Init(emojiconfig);
     sdEditorEmoj.setEmoji({type:'div',id:"content"});
-
-
-    var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
-    // 不主动断开.
-    if(data.auto_disconnect == 0) {
-        return;
-    }
-
-    var auto_disconnect = parseInt(data.auto_disconnect);
-    auto_disconnect = 10;
-    var interval = setInterval(function () {
-        auto_disconnect -= 1;
-        if(auto_disconnect <= 0) {
-            clearInterval(interval);
-            $('.content-tip .line').text('由于您长时间没有对话，系统已经关闭您的会话');
-            // 主动关闭聊天.
-            window.ws.close();
-        }
-    }, 1000);
+    chat_ops_min.autoClose();
 });
