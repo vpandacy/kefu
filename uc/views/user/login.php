@@ -29,16 +29,21 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/u
                 </div>
 
                 <!--注册-->
+                <form class="layui-form" action="">
                 <div class="register_content_tab sign-up-container">
                     <span class="web-font welcome_title">欢迎注册</span><br>
                     <span class="web-font welcome_tip"></span>
-                    <input class="login_inp_name" type="text" name="name"  placeholder="请输入商户名">
+                    <input class="login_inp_name" type="text" name="merchant_name"  placeholder="请输入商户名">
                     <input class="login_inp_name" style="margin-top: 0;" type="text" name="email" placeholder="请输入手机号">
-                    <div>
-                        <input class="login_inp_name" style="margin-top: 0;" type="text" name="captcha" placeholder="请输入验证码">
+                    <div class="po-relative">
+                        <input class="login_inp_name " style="margin-top: 0;" type="text" name="img_captcha" placeholder="请输入验证码">
+                        <div class="graphic_code cupointer_img">
+                            <img  class="cupointer_img" onclick="this.src='<?=GlobalUrlService::buildUcUrl('/user/captcha')?>' + '?time='+ Math.random()" src="<?=GlobalUrlService::buildUcUrl('/user/captcha')?>">
+                        </div>
                     </div>
-                    <div>
+                    <div class="po-relative">
                         <input class="login_inp_name" style="margin-top: 0;" type="text" name="captcha" placeholder="请输入手机验证码">
+                        <div onclick="merchant_user_login_ops.sendemail()" class="iphone_code cupointer">获取验证码</div>
                     </div>
                     <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
                     <span class="web-font welcome_password_hand cupointer"></span>
@@ -47,6 +52,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/u
                         <span class="web-font login_register_hand" onclick="loginActive('register')">已有账号？去登录</span>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>

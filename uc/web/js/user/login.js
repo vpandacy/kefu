@@ -1,4 +1,5 @@
 ;
+var countdown=60;
 function loginActive() {
     // 登录、找回密码、注册 来回切换
     let loginDom = document.getElementsByClassName('login_content_sr')[0]
@@ -47,56 +48,82 @@ var merchant_user_login_ops = {
                 error:function () {
                     $.close(index);
                 }
-            })
+            });
         });
-
         // 注册.
         $('.register').on('click',function () {
-            var email = $('.sign-up-container [name=email]').val(),
-                password = $('.sign-up-container [name=password]').val(),
-                merchant_name = $('.sign-up-container [name=name]').val();
-
-            if(!email || email.indexOf('@') <= 1) {
-                return $.msg('请填写正确的邮箱地址');
-            }
-
-            if(!password || password.length > 255) {
-                return $.msg('请填写登录密码');
-            }
-
-            if(!merchant_name) {
+            let fromData = ['merchant_name','email','img_captcha','captcha','password']
+            let param = {}
+            if(!$(".sign-up-container [name='merchant_name']").val()) {
                 return $.msg('请填写正确的商户名称');
             }
-
-            var index = $.loading(1,{shade: .5});
-
-            $.ajax({
-                type: 'POST',
-                url: uc_common_ops.buildUcUrl('/user/register'),
-                data: {
-                    email: email,
-                    password: password,
-                    merchant_name: merchant_name
-                },
-                dataType:'json',
-                success: function ( res ) {
-                    $.close(index);
-
-                    var callback = res.code != 200 ? null : function () {
-                        location.href = location.href;
-                    };
-
-                    return $.msg(res.msg, res.code == 200 , callback);
-                },
-                error: function () {
-                    $.close(index);
-                }
-            })
+            if(!$(".sign-up-container [name='email']").val() || $(".sign-up-container [name='email']").val().length < 11) {
+                return $.msg('请填写正确的手机号');
+            }
+            if(!$(".sign-up-container [name='img_captcha']").val()) {
+                return $.msg('请填写图形验证码');
+            }
+            if(!$(".sign-up-container [name='captcha']").val()) {
+                return $.msg('请填写手机验证码');
+            }
+            if(!$(".sign-up-container [name='password']").val() || $(".sign-up-container [name='password']").val().length > 255) {
+                return $.msg('请填写登录密码');
+            }
+            fromData.forEach((value, index, array) => {
+                param[value] = $(".sign-up-container [name="+value+"]").val();
+            });
         });
+    },
+    captchaImg: function () {
+        $('.cupointer').on('click',function () {});
+    },
+    captchatAjax: function () {
+        var index = $.loading(1,{shade: .5});
+        var iphoneDom = $(".iphone_code");
+        $.ajax({
+            type: 'POST',
+            url: uc_common_ops.buildUcUrl('/user/get-captcha'),
+            data: {
+                mobile: arguments[0],
+                code: arguments[1]
+            },
+            dataType: 'json',
+            success: function ( res ) {
+                $.close(index);
+                var callback  = null;
+                if (res.code == 200) {
+                    this.captcha(iphoneDom);
+                }else  {
+
+                }
+                $.msg(res.msg,res.code == 200, callback);
+            },
+            error:function () {
+                $.close(index);
+            }
+        });
+    },
+    sendemail: function (){
+        let email = $(".sign-up-container [name='email']").val();
+        let img_captcha = $(".sign-up-container [name='img_captcha']").val();
+        this.captchatAjax(email,img_captcha);
+    },
+    captcha: function (obj) {
+        if (countdown == 0) {
+            obj.attr('disabled',false);
+            obj.text("获取验证码");
+            countdown = 60;
+            return;
+        } else {
+            obj.attr('disabled',true);
+            obj.text(countdown + 's')
+            countdown--;
+        }
+        setTimeout(function() {
+            merchant_user_login_ops.captcha(obj);
+         },1000);
     }
 };
-
-
 $(document).ready(function () {
     merchant_user_login_ops.init();
 });

@@ -125,6 +125,33 @@ body {
 #index_login .login_content .login_right_login .login_content_sr .login_inp_name{
     margin: 20px 0px 15px 0;
 }
+/**/
+#index_login .login_content .login_right_login .login_content_sr .po-relative {
+    position: relative;
+}
+#index_login .login_content .login_right_login .login_content_sr .graphic_code{
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* height: 95%; */
+    height: 35px;
+    width: 100px;
+}
+#index_login .login_content .login_right_login .login_content_sr .iphone_code{
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* height: 95%; */
+    height: 35px;
+    width: 100px;
+    background: rgba(87,148,255,1);
+    color: white;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+    border: none;
+}
+/**/
 #index_login .login_content .login_right_login .login_content_sr .login_inp_password{
     margin: 0px 0px 5px 0;
 }
