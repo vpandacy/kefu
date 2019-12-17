@@ -4,7 +4,7 @@ window.ws= null;
 var kf_ws_service = {
     connect:function( host ){
         window.ws = new WebSocket('ws://' + host);
-        //这个事件应该标注 状态 已连接（绿色）
+        //链接websocket
         window.ws.addEventListener('open', function () {
             chat_ops.handlerMessage( { "cmd":"ws_connect" } );
         });
@@ -15,8 +15,6 @@ var kf_ws_service = {
         });
         // 关闭websocket发送的信息.
         window.ws.addEventListener('close', function () {
-            //关闭
-            console.dir('close');
         });
         // 这里是websocket发生错误的.信息.
         window.ws.addEventListener('error', function () {

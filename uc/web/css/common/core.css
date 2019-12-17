@@ -158,6 +158,20 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 /*#merchant .chant_all .left_menu:hover {*/
 /*    width: 190px;*/
 /*}*/
+#merchant input[name='auto_disconnect'] {
+    position: relative;
+}
+#merchant .disconnect_time {
+    position: absolute;
+    left: 140px;
+    text-align: center;
+    background: rgba(1, 170, 237, 1);
+    color: white;
+    width: 50px;
+    height: 38px;
+    line-height: 38px;
+}
+
 #merchant .chant_all .left_menu .menu-logo {
     width: 100%;
     height: 70px;

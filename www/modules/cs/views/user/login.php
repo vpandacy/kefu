@@ -6,7 +6,6 @@ use www\assets\CsAsset;
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcUrl('/js/common/core.js'),CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),CsAsset::className());
 StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/login.css'), CsAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/typeface/typeface.css'), CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/user/login.js'),CsAsset::className());
 
 ?>

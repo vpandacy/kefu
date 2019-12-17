@@ -81,12 +81,31 @@ $(function () {
             success: res => {
                 res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
             }
-        })
+        });
     });
+
+    // ws_connect代表链接过来了
+    // hello 代表初次链接成功了.系统返回的返回消息.
+    // assign_kf 这个是链接成功过后  系统分配了客服.
+    // change_kf 代表是更换客服.
+    // reply 代表客服回复消息过来了．
     // 服务端的close_guest关闭客服 则触发
-    window.ws.addEventListener('message', event =>{
+    window.ws.addEventListener('message', event => {
+        console.log(event.data);
         var data = JSON.parse(event.data);
-        data.cmd === 'close_guest' ? $('#online-from').show() : '';
+        console.log(event.data)
+            switch (data.cmd) {
+                case 'ws_connect'||'hello':
+                    $('.ws_flag').text('正在连接客服...')
+                    break;
+                case 'assign_kf'||'change_kf'||'reply':
+                    $('.ws_flag').text('连接成功')
+                    break;
+                case 'close_guest':
+                    $('#online-from').show()
+                    $('.ws_flag').text('连接关闭')
+                    break;
+            }
     });
 });
 

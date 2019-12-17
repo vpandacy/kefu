@@ -83,8 +83,8 @@ StaticPluginHelper::includeJsPlugins([
                     </div>
                 </div>
                 <div class="online-author">
-                    <a>服务状态:已连接</a>
-                    <a>好商汇提供软件支持123</a>
+                    <a>服务状态:<span class="ws_flag"></span></a>
+                    <a>好商汇提供软件支持</a>
                 </div>
             </div>
             <div class="faceDivBox" style="display:none;">
