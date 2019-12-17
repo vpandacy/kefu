@@ -280,7 +280,8 @@ class StaffController extends BaseController
             $data['sn'] = CommonService::genUniqueName();
             $data['merchant_id'] = $this->getMerchantId();
             $data['status'] = ConstantService::$default_status_true;
-            $staff['salt'] = CommonService::genUniqueName();
+            $data['salt'] = CommonService::genUniqueName();
+            $data['avatar'] = ConstantService::$default_avatar;
             // 设置应用ID.
             $data['app_ids'] = ',' . $this->getAppId() . ',';
         }
