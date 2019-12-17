@@ -52,12 +52,12 @@ var merchant_user_login_ops = {
         });
         // 注册.
         $('.register').on('click',function () {
-            let fromData = ['merchant_name','email','img_captcha','captcha','password']
+            let fromData = ['merchant_name','account','img_captcha','captcha','password']
             let param = {}
             if(!$(".sign-up-container [name='merchant_name']").val()) {
                 return $.msg('请填写正确的商户名称');
             }
-            if(!$(".sign-up-container [name='email']").val() || $(".sign-up-container [name='email']").val().length < 11) {
+            if(!$(".sign-up-container [name='account']").val() || $(".sign-up-container [name='account']").val().length != 11) {
                 return $.msg('请填写正确的手机号');
             }
             if(!$(".sign-up-container [name='img_captcha']").val()) {
@@ -71,6 +71,21 @@ var merchant_user_login_ops = {
             }
             fromData.forEach((value, index, array) => {
                 param[value] = $(".sign-up-container [name="+value+"]").val();
+            });
+            var index = $.loading(1,{shade: .5});
+            $.ajax({
+                type: 'POST',
+                url: uc_common_ops.buildUcUrl('/user/register'),
+                data: param,
+                dataType: 'json',
+                success: function ( res ) {
+                    $.close(index);
+                    var callback  = null;
+                    $.msg(res.msg,res.code == 200, callback);
+                },
+                error:function () {
+                    $.close(index);
+                }
             });
         });
     },
@@ -92,7 +107,7 @@ var merchant_user_login_ops = {
                 $.close(index);
                 var callback  = null;
                 if (res.code == 200) {
-                    this.captcha(iphoneDom);
+                    merchant_user_login_ops.captcha(iphoneDom);
                 }else  {
 
                 }
@@ -104,7 +119,7 @@ var merchant_user_login_ops = {
         });
     },
     sendemail: function (){
-        let email = $(".sign-up-container [name='email']").val();
+        let email = $(".sign-up-container [name='account']").val();
         let img_captcha = $(".sign-up-container [name='img_captcha']").val();
         this.captchatAjax(email,img_captcha);
     },
