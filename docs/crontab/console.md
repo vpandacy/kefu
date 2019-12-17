@@ -12,4 +12,5 @@ nohup php /data/www/private_kefu/kefu/yii cs/server/run-all start >> /data/www/l
 
 nohup /bin/bash /data/www/private_kefu/kefu/console/bin/QueueManager.sh start cs/queue/push >> /data/www/logs/kefu/queue.log &
 nohup /bin/bash /data/www/private_kefu/kefu/console/bin/QueueManager.sh start guest/queue/push >> /data/www/logs/kefu/queue.log &
+nohup /bin/bash /data/www/private_kefu/kefu/console/bin/QueueManager.sh start chat/queue/chat >> /data/www/logs/kefu/chat.log &
 ```
