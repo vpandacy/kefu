@@ -2,7 +2,7 @@
 var uc_staff_edit_ops = {
     init: function () {
         this.eventBind();
-
+        this.layuiSelect();
         uploader.init('upload_container', 'upload', this, 'hsh');
     },
     eventBind: function () {
@@ -16,9 +16,10 @@ var uc_staff_edit_ops = {
                 data = data.field;
 
                 var role_ids = [];
-                $('[name=role_ids]:checked').each(function () {
+                $('[name=role_ids]:selected').each(function () {
                     role_ids.push(this.value);
                 });
+                console.log(role_ids)
                 // 添加权限.
                 data.role_ids = role_ids;
 
@@ -33,6 +34,24 @@ var uc_staff_edit_ops = {
                 // 保存数据
                 that.save(data);
                 return false;
+            });
+        });
+    },
+    layuiSelect: function () {
+        layui.use(['multiSelect'],function() {
+            var $ = layui.jquery,form = layui.form,multiSelect = layui.multiSelect;
+            $('#get-val').click(function() {
+                var vals = [],
+                    texts = [];
+                $('select[multiple] option:selected').each(function() {
+                    vals.push($(this).val());
+                    texts.push($(this).text());
+                })
+                console.dir(vals);
+                console.dir(texts);
+            })
+            form.on('select(test)',function(data){
+                console.dir(data);
             });
         });
     },
@@ -54,13 +73,10 @@ var uc_staff_edit_ops = {
     },
     // 七牛上传成功所调用的函数.
     uploadSuccess:function (file_key, wrapper) {
-        var img_wrapper = $('#' + wrapper).parents('.layui-form-item').find('.img-wrapper');
+        var img_wrapper = $('#' + wrapper).find('img')
+        img_wrapper.attr('src',uc_common_ops.buildPicStaticUrl('hsh', file_key))
+        console.log(img_wrapper)
         $('#' + wrapper + ' [name=avatar]').val(file_key);
-        img_wrapper.html([
-            '<div class="layui-input-block">',
-                '<img width="100" height="100" src="', uc_common_ops.buildPicStaticUrl('hsh', file_key) ,'" alt="">',
-            '</div>'
-        ].join(''));
     },
     // 七牛上传失败所调用的函数
     uploadError: function (up, err, errTip) {
@@ -71,16 +87,4 @@ var uc_staff_edit_ops = {
 
 $(document).ready(function () {
     uc_staff_edit_ops.init();
-    layui.use('upload', function() {
-        var $ = layui.jquery
-            , upload = layui.upload;
-        // //拖拽上传
-        // upload.render({
-        //     elem: '#test10'
-        //     ,url: '/upload/'
-        //     ,done: function(res){
-        //         console.log(res)
-        //     }
-        // });
-    });
 });

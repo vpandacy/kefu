@@ -7,6 +7,7 @@ use uc\assets\UcAsset;
 StaticPluginHelper::setDepend(UcAsset::className());
 StaticPluginHelper::qiniuPlugin();
 
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/layui/layui_extends/multiSelect.js'), UcAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/staff/edit.js'), UcAsset::className());
 ?>
 <style>
@@ -15,7 +16,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
         border: 1px solid #e6e6e6;
         top: 20px;
         width: 180px;
-        left: 50%;
+        left: 30%;
         height: 170px;
     }
     .upload_container .icon-jiahao1 {
@@ -23,9 +24,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
         font-size: 40px;
     }
     .upload_container .layui-upload-list {
-        margin: auto;
+        margin: 0 auto;
         text-align: center;
         line-height: 163px;
+    }
+    .upload_container .layui-upload-list img {
+        width: 180px;
+        height: 170px;
     }
     .upload_container .upload_but {
         width: 100%;
@@ -89,9 +94,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 <div class="layui-form-item">
                     <label class="layui-form-label">请选择角色</label>
                     <div class="layui-input-block">
-                        <?php foreach($roles as $role):?>
-                            <input type="checkbox" name="role_ids" <?=in_array($role['id'], $role_ids) ? 'checked' : ''?> value="<?=$role['id']?>" title="<?=$role['name']?>">
-                        <?php endforeach;?>
+
+                        <select multiple="multiple" lay-filter="test">
+                            <?php foreach($roles as $role):?>
+                            <option <?=in_array($role['id'], $role_ids) ? 'selected' : ''?> name="role_ids" value="<?=$role['id']?>" title="<?=$role['name']?>"><?=$role['name']?></option>
+                            <?php endforeach;?>
+                        </select>
                     </div>
                 </div>
 
@@ -99,24 +107,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
 <!--                    <label class="layui-form-label">请上传头像</label>-->
                     <div class="layui-upload">
                         <div class="layui-upload-list">
-                            <i class="iconfont icon-jiahao1"></i>
+                            <img  src="<?=GlobalUrlService::buildPicStaticUrl('hsh', $staff['avatar'])?>" alt="">
                         </div>
                         <button type="button" class="layui-btn upload_but" id="upload" >上传头像</button>
                         <input type="hidden" name="avatar" value="<?=$staff['avatar']?>">
                     </div>
-<!--                    <div class="layui-input-block" id="upload_container">-->
-<!--                        <button class="layui-btn" id="upload" type="button">-->
-<!--                            <i class="layui-icon"></i>上传头像-->
-<!--                        </button>-->
-<!--                        <input type="hidden" name="avatar" value="--><?//=$staff['avatar']?><!--">-->
-<!--                    </div>-->
-<!--                    <div class="img-wrapper" style="margin-top: 10px;">-->
-<!--                        --><?php //if($staff['avatar']) :?>
-<!--                            <div class="layui-input-block">-->
-<!--                                <img width="100" height="100" src="--><?//=GlobalUrlService::buildPicStaticUrl('hsh', $staff['avatar'])?><!--" alt="">-->
-<!--                            </div>-->
-<!--                        --><?php //endif;?>
-<!--                    </div>-->
                 </div>
 
                 <div class="layui-form-item">
