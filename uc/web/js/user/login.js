@@ -6,13 +6,16 @@ function loginActive() {
     arguments[0] === 'login' ? loginDom.classList.add('right-panel-active') : loginDom.classList.remove('right-panel-active');
     arguments[0] === 'password' ? loginDom.classList.add('right-panel-password-active') : loginDom.classList.remove('right-panel-password-active');
 }
+function login(account,password) {
 
+}
 var merchant_user_login_ops = {
     init: function () {
         this.eventBind();
     },
     eventBind:function () {
         // 登录.
+        var url = '';
         $('.login').on('click',function () {
             var account = $('.sign-in-container [name=account]').val(),
                 password = $('.sign-in-container [name=password]').val();
@@ -24,9 +27,7 @@ var merchant_user_login_ops = {
             if(!password || password.length > 255) {
                 return $.msg('请填写登录密码');
             }
-
             var index = $.loading(1,{shade: .5});
-
             $.ajax({
                 type: 'POST',
                 url: uc_common_ops.buildUcUrl('/user/login'),
@@ -40,7 +41,10 @@ var merchant_user_login_ops = {
                     var callback = null;
                     if (res.code == 200) {
                         callback = function(){
-                            window.location.href = res.data.url;
+                            // 弹出选择应用
+                            document.getElementsByClassName('login_cover')[0].classList.remove('disnone');
+                            document.getElementsByClassName('login_cover_content')[0].classList.remove('disnone');
+                            url = res.data.url;
                         };
                     }
                     $.msg(res.msg,res.code == 200, callback);
@@ -50,6 +54,10 @@ var merchant_user_login_ops = {
                 }
             });
         });
+        $('.login_applications').on('click',function () {
+            window.location.href = url;
+
+        })
         // 注册.
         $('.register').on('click',function () {
             let fromData = ['merchant_name','account','img_captcha','captcha','password']
