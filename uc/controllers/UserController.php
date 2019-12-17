@@ -140,16 +140,19 @@ class UserController extends BaseController
      */
     public function actionCaptcha()
     {
+        $this->layout = false;
         $captcha_config = Yii::$app->params['cookies']['validate_code'];
 
         $font_path = Yii::$app->getBasePath() . '/web/fonts/captcha.ttf';
 
         $captcha = new ValidateCode($font_path);
 
+        Yii::$app->response->headers->add('Content-Type','image/png');
+        Yii::$app->response->format = 'raw';
+
         $captcha->doimg();
-        // 要设置成统一的cookie名称.
-        $this->setCookie($captcha_config['name'],$captcha->getCode(),0, $captcha_config['domain']);
-        exit;
+        $this->setCookie($captcha_config['name'],$captcha->getCode(), 0, $captcha_config['domain']);
+        return Yii::$app->end();
     }
 
     /**
