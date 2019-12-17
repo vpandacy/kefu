@@ -11,6 +11,7 @@ namespace console\modules\cs\controllers\queue;
 
 use common\services\chat\ChatSocketService;
 use common\services\constant\QueueConstant;
+use common\services\ConstantService;
 use common\services\QueueListService;
 use console\controllers\QueueBaseController;
 
@@ -40,7 +41,13 @@ class PushController extends QueueBaseController
         }
         //需要同时将消息转发一份到对话队列，然后存储起来
         QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$data );
-        //将消息同步到客服ws中心
+        //将消息同步到客服ws中心，如果是关闭，还要找到对应的客服是谁，然后通知客服了和 UUID
+        $cmd = $data['cmd'];
+        switch ($cmd){
+            case ConstantService::$chat_cmd_guest_close://客户关闭了ws
+                //需要查找对应的客服
+                break;
+        }
         $ret = $this->socket->send( json_encode( $data ) );
         return $this->echoLog( "ok:".$ret );
     }

@@ -7,6 +7,7 @@ use common\models\uc\Staff;
 use common\services\applog\AppLogService;
 use common\services\BaseService;
 use common\services\ConstantService;
+use common\services\redis\CacheService;
 use common\services\uc\MerchantService;
 use yii\db\Expression;
 
@@ -77,6 +78,24 @@ class ChatEventService extends BaseService
         ];
         return json_encode( $params );
     }
+
+    public static function setGuestBindCache( $client_id , $params = [] ){
+        $cache_key = "guest_{$client_id}";
+        $data = json_encode( $params );
+        return CacheService::set($cache_key,$data,86400 * 30 );
+    }
+
+    public static function getGuestBindCache(  $client_id ){
+        $cache_key = "guest_{$client_id}";
+        $data = CacheService::get( $cache_key );
+        return @json_decode( $data,true );
+    }
+
+    public static function clearGuestBindCache( $client_id ){
+        $cache_key = "guest_{$client_id}";
+        return CacheService::delete( $cache_key );
+    }
+
 
     public static function handlerError( $error_msg = "" ){
         self::consoleLog( $error_msg );

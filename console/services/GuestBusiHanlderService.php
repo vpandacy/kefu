@@ -2,6 +2,7 @@
 
 namespace console\services;
 
+use common\components\helper\DateHelper;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
@@ -91,19 +92,26 @@ class GuestBusiHanlderService extends BaseService
             // @todo 后面考虑将返回信息给统一返回.不然太麻烦了.就返回信息就得写很多.
             $data = $message['data'] ?? [];
             $f_id = $data['f_id'] ?? 0;
-            self::consoleLog( var_export( $message,true ) );
+            Worker::log( var_export( $message,true ) );
             switch ($message['cmd']) {
                 case ConstantService::$chat_cmd_guest_in://客户进来到页面，设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                     if ($f_id) {
                         //建立绑定关系，后面就可以根据f_id找到这个人了
                         Gateway::bindUid($client_id, $f_id);
+                        $cache_params = [
+                            "uuid" => $f_id,
+                            "msn" => $data['msn']??''
+                        ];
+                        ChatEventService::setGuestBindCache( $client_id ,$cache_params);
                         //后面的输入应该进入redis，存起来，为了后续分析
                     }
                     $params = [
                         "content" => time()
                     ];
-                    $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_hello,$params );
-                    Gateway::sendToClient( $client_id,$data );
+                    $ws_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_hello,$params );
+                    Gateway::sendToClient( $client_id,$ws_data );
+                    //需要同时将消息转发一份到对话队列，然后存储起来
+                    QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$message );
                     break;
                 case ConstantService::$chat_cmd_guest_connect://客户链接,要分配客服
                     $code = $data['code'] ?? '';
@@ -126,6 +134,12 @@ class GuestBusiHanlderService extends BaseService
                         ];
                         $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$transfer_params );
                         QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true) );
+
+                        //同时换成起来对应的客服信息
+                        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+                        $cache_params['kf_id'] = $kf_info['id'];
+                        $cache_params['kf_sn'] = $kf_info['sn'];
+                        ChatEventService::setGuestBindCache( $client_id ,$cache_params);
                     }else{
                         $params = [
                             "content" => ChatEventService::getLastErrorMsg()
@@ -158,9 +172,20 @@ class GuestBusiHanlderService extends BaseService
     /**
      * 当游客端用户断开连接时触发
      * @param int $client_id 连接id
+     * 客户端关闭了，需要通知客服，但是client_id 对应的客服是谁，我们不知道，
+     * 所以需要通过client_id 找到 对应的客服（可以去表中查下）
      */
     public static function onClose($client_id)
     {
-        // 向所有人发送
+        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+        ChatEventService::clearGuestBindCache( $client_id );
+        $close_params = [
+            "client_id" => $client_id,
+            "closed_time" => DateHelper::getFormatDateTime()
+        ];
+        $close_params = array_merge( $close_params,$cache_params );
+        $close_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_close,$close_params );
+        Worker::log( $close_data );
+        QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($close_data,true) );
     }
 }

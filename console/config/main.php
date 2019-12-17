@@ -45,6 +45,9 @@ return [
         'queue'    =>  [
             'class' => 'console\modules\queue\Module',
         ],
+        'chat' => [
+            'class' => 'console\modules\chat\Module',
+        ]
     ],
     'params' => $params,
 ];

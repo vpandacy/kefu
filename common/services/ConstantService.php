@@ -3,6 +3,9 @@ namespace common\services;
 
 class ConstantService extends BaseService
 {
+    public static $default_date = "1970-01-01";
+    public static $default_datetime = "1970-01-01 00:00:00";
+
     //　接口请求失败.
     public static $response_code_fail = -1;
 
@@ -15,7 +18,7 @@ class ConstantService extends BaseService
     // 帐号异常.
     public static $default_status_false = 0;
 
-
+    public static $default_status_neg_1 = -1;
     /**
      * 应用关系对应.
      * @var array
@@ -32,6 +35,7 @@ class ConstantService extends BaseService
      * @var string
      */
     public static $default_avatar = 'default_avatar.png';
+
 
     //------- 游客动作　start ------//
     // 游客初次连接动作.

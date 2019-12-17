@@ -55,7 +55,7 @@ return [
             'host' => '127.0.0.1',
             'port' => 6379,
             'database' => 0,
-            'prefix' => 'kf_chat_log_'
+            'prefix' => 'kf_chat_'
         ],
         'cache' => [//当做缓存
             'class' => 'common\components\redis\RedisCache',
