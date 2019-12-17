@@ -56,7 +56,6 @@ class BaseController extends StaffBaseController
     private function getMenu(){
 
         $menus = AppMenuService::getAdminMenu();
-
         foreach ($menus as $key => &$_menu ){
             //如果强制设置了不显示，那就不要在判断
             if( isset( $_menu['hidden']) ){
@@ -83,7 +82,6 @@ class BaseController extends StaffBaseController
             $_menu['hidden'] = ($tmp_counter <= 0 );
 
         }
-
         return $menus;
     }
 }

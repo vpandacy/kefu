@@ -6,6 +6,7 @@ class ConstantService extends BaseService
     public static $default_date = "1970-01-01";
     public static $default_datetime = "1970-01-01 00:00:00";
 
+
     //　接口请求失败.
     public static $response_code_fail = -1;
 
