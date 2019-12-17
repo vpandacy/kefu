@@ -175,7 +175,7 @@ class UserController extends BaseController
         $captcha_config = Yii::$app->params['cookies']['validate_code'];
         $source_code = $this->getCookie($captcha_config['name']);
 
-        if($code != $source_code) {
+        if(strtolower($code) != $source_code) {
             return $this->renderErrJSON('请输入正确的图形验证码');
         }
 
