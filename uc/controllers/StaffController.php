@@ -269,7 +269,7 @@ class StaffController extends BaseController
             $data['status'] = ConstantService::$default_status_true;
             $staff['salt'] = CommonService::genUniqueName();
             // 设置应用ID.
-            $data['app_id'] = ',' . $this->getAppId() . ',';
+            $data['app_ids'] = ',' . $this->getAppId() . ',';
         }
 
         if($data['password']) {
