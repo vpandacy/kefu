@@ -21,7 +21,7 @@ class ErrorController extends BaseWebController
 
         $err_msg = $msg . " [file: {$file}][line: {$line}][err code:$code.][url:{$url}][referer:{$referer}][post:".http_build_query($_POST)."]";
         AppLogService::addErrLog( \Yii::$app->id ,$err_msg );
-        $reback_url = GlobalUrlService::buildAdminUrl("/");
+        $reback_url = GlobalUrlService::buildKFAdminUrl("/");
 
         $this->layout = false;
         return $this->render("index",[

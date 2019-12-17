@@ -79,4 +79,19 @@ class StaticPluginHelper
             StaticAssetsHelper::includeAppCssStatic($plugin, self::getDepend());
         }
     }
+
+    /**
+     * 批量引入js资源.
+     * @param array $plugins
+     */
+    public static function daterangepicker()
+    {
+        StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl("/plugins/daterangepicker/daterangepicker.min.css"),
+            self::getDepend());
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/plugins/daterangepicker/moment.min.js"),
+            self::getDepend());
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/plugins/daterangepicker/jquery.daterangepicker.min.js"),
+            self::getDepend());
+    }
+
 }

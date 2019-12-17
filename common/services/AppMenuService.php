@@ -5,7 +5,7 @@ use uc\services\ConstantService;
 
 class AppMenuService
 {
-    public static $uc_keys = [ 'staff','rbac','log','attendance','business','sysconf' ];
+    public static $uc_keys = [ 'log' ];
     public static $uc_sub_keys = ['category'];
     public static $staff_attendance_menus = [
         "title"=> "考勤管理",
@@ -99,7 +99,7 @@ class AppMenuService
                 "title" => "商户管理",
                 "icon" => "users",
                 "sub" => [
-                    [ "title" => "商户列表","url" => "/log/index" ],
+                    [ "title" => "商户列表","url" => "/merchant/index" ],
                 ]
             ],
 
