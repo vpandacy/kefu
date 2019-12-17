@@ -2,7 +2,7 @@
 #echo "TaskManager monitor v1.0"
 
 
-SCRIPTS=("cs/queue/push" "guest/queue/push");
+SCRIPTS=("cs/queue/push" "guest/queue/push" "chat/queue/chat");
 
 BASE_DIR=$(dirname $(dirname $(cd "$(dirname "$0")"; pwd)))"/";
 LOG_DIR="/data/www/logs/kefu/";
