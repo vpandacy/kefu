@@ -119,12 +119,8 @@ class GateWayWorkerService extends BaseService
         if(!is_dir($runtime)) {
             mkdir($runtime,0777, true);
         }
-
-
         $params = $argv;
-
         $params = array_slice($params, 0, count($params) -  1);
-
         $pid_file = str_replace(['-',' '],'',implode('_', $params));
         $pid_file = str_replace('/','',$pid_file);
         $start_file = $pid_file . '_start_file';
@@ -132,5 +128,6 @@ class GateWayWorkerService extends BaseService
         // 存取对应的pid.
         $argv[0] = $start_file;
         Worker::$pidFile = $runtime . '/' . $pid_file . '.pid';
+        Worker::$logFile = $runtime . '/'.$start_file.".log";
     }
 }

@@ -10,7 +10,6 @@ StaticPluginHelper::socketPlugin();
 // 这种引入还是一般.
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),
-    GlobalUrlService::buildStaticUrl('/jqMsg/message.css'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/chat.css'),
@@ -18,7 +17,6 @@ StaticPluginHelper::includeCssPlugins([
 
 StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
-    GlobalUrlService::buildStaticUrl('/jqMsg/message.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/jquery.md5.js'),
     GlobalUrlService::buildStaticUrl('/chat/jquery.json-2.3.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),

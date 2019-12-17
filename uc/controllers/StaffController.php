@@ -66,7 +66,7 @@ class StaffController extends BaseController
             $query->andWhere(['department_id'=>$department_id]);
         }
 
-        $query->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]);
+//        $query->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]);
 
         $count = $query->count();
 
@@ -269,7 +269,7 @@ class StaffController extends BaseController
             $data['status'] = ConstantService::$default_status_true;
             $staff['salt'] = CommonService::genUniqueName();
             // 设置应用ID.
-            $data['app_id'] = ',' . $this->getAppId() . ',';
+            $data['app_ids'] = ',' . $this->getAppId() . ',';
         }
 
         if($data['password']) {
