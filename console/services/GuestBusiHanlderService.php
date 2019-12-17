@@ -149,11 +149,6 @@ class GuestBusiHanlderService extends BaseService
                     Gateway::sendToClient( $client_id,$data );
                     //找找目前有咩有空闲的客服，找一个在线的客服分配过去
                     break;
-                case ConstantService::$chat_cmd_guest_close:
-                    if ($f_id) { // 也要进入redis，进入数据记录. 清除掉绑定信息.
-                        Gateway::unbindUid($client_id, $f_id);
-                    }
-                    break;
                 case ConstantService::$chat_cmd_chat: // 游客聊天动作.
                     //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
                     QueueListService::push2CS( QueueConstant::$queue_cs_chat,$message);

@@ -255,6 +255,9 @@ var client = {
             case "ws_connect":
                 kf_ws_service.socketSend(that.buildMsg('kf_in', {}));
                 break;
+            case "guest_close":
+                console.dir(data);
+                break;
             case "guest_connect":
                 that.assignKf(data);
                 break;

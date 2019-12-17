@@ -14,6 +14,7 @@ class BaseController extends StaffBaseController
         'cs/user/login',
         'cs/user/reg',
         'cs/user/get-captcha',
+        'cs/user/captcha',
         'cs/default/forbidden',
     ];
 
