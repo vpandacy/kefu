@@ -25,7 +25,9 @@ class BaseController extends StaffBaseController {
     ];
 
     //这些URL不需要检验权限
-    public $ignore_url = [];
+    public $ignore_url = [
+        'default/application'
+    ];
 
     public function __construct($id, $module, $config = [])  {
         parent::__construct($id, $module, $config);

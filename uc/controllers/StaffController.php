@@ -243,6 +243,19 @@ class StaffController extends BaseController
             return $this->renderErrJSON('您更换的手机号已经被别人所使用了');
         }
 
+
+        $other_staff = Staff::find()
+            ->where([
+                'email'=>$data['email']
+            ])
+            ->andWhere(['!=','id',$data['id']])
+            ->one();
+
+        // 这里还需要检查一下mobile.
+        if($other_staff) {
+            return $this->renderErrJSON('您添加的邮箱已经被其他人所使用了');
+        }
+
         if($data['id'] > 0) {
             $staff = Staff::find()
                 ->where([
