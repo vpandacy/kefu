@@ -264,4 +264,23 @@ class GlobalUrlService extends BaseService {
         $url .= "/interlace/1";
         return $url;
     }
+    public static function buildKFAdminUrl($uri, $params = [])
+    {
+        $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';
+        $domain = \Yii::$app->params['domains']['admin'];
+
+        if (CommonService::is_SSL()) {
+            $domain = str_replace('http://', 'https://', $domain);
+        }
+        return $domain.$path;
+    }
+
+    /**
+     * Author: apanly
+     * 页面空链接
+     */
+    public static function buildNullUrl()
+    {
+        return "javascript:void(0);";
+    }
 } 

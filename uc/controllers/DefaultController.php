@@ -20,6 +20,10 @@ class DefaultController extends BaseController
             if( in_array( ConstantService::$merchant_app_id ,$own_appids ) ){
                 return $this->redirect(GlobalUrlService::buildKFMerchantUrl("/default/index"));
             }
+            //admin系统
+            if( in_array( ConstantService::$admin_app_id ,$own_appids ) ){
+                return $this->redirect(GlobalUrlService::buildKFAdminUrl("/default/index"));
+            }
         }
         return $this->render("application");
     }
@@ -28,5 +32,12 @@ class DefaultController extends BaseController
     {
         $this->layout = false;
         return $this->render('forbidden');
+    }
+    /**
+     * 菜单栏右上角
+     */
+    public function actionMenu(){
+        $content = $this->renderPartial("menu",[ "current_user" => $this->current_user]);
+        return $this->renderJSON([ "content" => $content ]);
     }
 }

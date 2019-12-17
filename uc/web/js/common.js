@@ -131,6 +131,33 @@ var uc_common_ops = {
                 statusName: 'code'
             }
         }, params);
+    },
+    updateNews: function (id) {
+        $.ajax({
+            url: common_ops_url.buildUrl("/news/ops"),
+            type: "POST",
+            data: {
+                id: id,
+                act: "has_read"
+            },
+            dataType: "json",
+            success: function (res) {
+            }
+        });
+    },
+    avatarMenu:function(){
+        var that = this;
+        $.ajax({
+            url: common_ops_url.buildUrl("/default/menu"),
+            dataType: "json",
+            success: function (res) {
+                if (res.code != 200 ) {
+                    return;
+                }
+
+                $(".main-header .user-menu").html( res.data.content );
+            }
+        });
     }
 };
 

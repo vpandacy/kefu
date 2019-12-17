@@ -67,11 +67,9 @@ class StaffBaseController extends BaseWebController
         }
 
         $staff = Staff::findOne([ 'id' => $staff_id,'status' => ConstantService::$default_status_true]);
-
         if(!$staff || !$this->checkToken($verify_token, $staff)) {
             return false;
         }
-
         // 保存信息.
         $this->current_user = $staff;
         return true;

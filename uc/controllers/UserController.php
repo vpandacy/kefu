@@ -29,6 +29,7 @@ class UserController extends BaseController
             if ( $this->checkLoginStatus() ) {
                 return $this->redirect(UCUrlService::buildUCUrl("/default/application",$this->app_id));
             }
+
             $this->layout = 'basic';
             return $this->render('login');
         }
