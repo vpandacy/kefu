@@ -11,6 +11,7 @@ namespace console\modules\cs\controllers\queue;
 
 use common\services\chat\ChatSocketService;
 use common\services\constant\QueueConstant;
+use common\services\QueueListService;
 use console\controllers\QueueBaseController;
 
 /***
@@ -37,6 +38,8 @@ class PushController extends QueueBaseController
         if ( !$data ) {
             return $this->echoLog("no data to handler");
         }
+        //需要同时将消息转发一份到对话队列，然后存储起来
+        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$data );
         //将消息同步到客服ws中心
         $ret = $this->socket->send( json_encode( $data ) );
         return $this->echoLog( "ok:".$ret );

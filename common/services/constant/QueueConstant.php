@@ -20,4 +20,9 @@ class QueueConstant
     // 客服的redis队列名称.  如果组件有前缀.在redis中则为 前缀+队列名.
     public static $queue_cs_chat = "cs_chat";
 
+    //专门做一个队列存储聊天信息，然后通过job存到数据库中
+    public static $instance_chat_log = "list_chat_log";
+    //对应的queue
+    public static $queue_chat_log = "chat_log";
+
 }

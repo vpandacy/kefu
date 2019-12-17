@@ -50,6 +50,13 @@ return [
             'database' => 0,
             'prefix' => 'kf_cs_'
         ],
+        'list_chat_log' => [
+            'class' => 'common\components\redis\RedisConnection',
+            'host' => '127.0.0.1',
+            'port' => 6379,
+            'database' => 0,
+            'prefix' => 'kf_chat_log_'
+        ],
         'cache' => [//当做缓存
             'class' => 'common\components\redis\RedisCache',
             'redis' => [

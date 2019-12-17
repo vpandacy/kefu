@@ -46,6 +46,19 @@ class QueueListService extends BaseService
         return $redis->rPush($list_name, serialize($value));
     }
 
+    public static function push2ChatDB( $list_name = null ,$value = [] ){
+        if( !$list_name ){
+            return false;
+        }
+
+        $redis = RedisService::getInstance( QueueConstant::$instance_chat_log );
+
+        $value = [
+            "data" => $value,
+            "created_time" => time()
+        ];
+        return $redis->rPush($list_name, serialize($value));
+    }
     /**
      * 从redis队列中取出一个.
      * @param string|null $instance_name

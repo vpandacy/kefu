@@ -36,6 +36,13 @@ return [
             'port' => 6379,
             'database' => 0
         ],
+        'list_chat_log' => [
+            'class' => 'common\components\redis\RedisConnection',
+            'host' => '47.112.117.135',
+            'port' => 6379,
+            'database' => 0,
+            'prefix' => 'kf_chat_log_'
+        ],
         'cache' => [//当做缓存
             'class' => 'common\components\redis\RedisCache',
             'redis' => [
