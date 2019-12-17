@@ -13,7 +13,8 @@ class BaseController extends StaffBaseController
     protected $allow_actions = [
         'cs/user/login',
         'cs/user/reg',
-        'cs/user/get-captcha'
+        'cs/user/get-captcha',
+        'cs/default/forbidden',
     ];
 
     public function __construct($id, $module, $config = []){

@@ -19,4 +19,10 @@ class DefaultController extends BaseController
         return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/overall/index/index'));
         return $this->render('index');
     }
+
+    public function actionForbidden()
+    {
+        $this->layout = false;
+        return $this->render('forbidden');
+    }
 }

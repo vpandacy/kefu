@@ -21,6 +21,7 @@ class BaseController extends StaffBaseController {
         'user/logout',
         'user/captcha',
         'user/get-captcha',
+        'default/forbidden',
     ];
 
     //这些URL不需要检验权限

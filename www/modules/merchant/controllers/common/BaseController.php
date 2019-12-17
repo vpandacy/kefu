@@ -12,7 +12,9 @@ use Yii;
 
 class BaseController extends StaffBaseController
 {
-    private $allow_actions = [];
+    private $allow_actions = [
+        'merchant/default/forbidden',
+    ];
     //这些URL不需要检验权限
     public $ignore_url = [];
 

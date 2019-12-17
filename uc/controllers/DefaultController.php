@@ -23,4 +23,10 @@ class DefaultController extends BaseController
         }
         return $this->render("application");
     }
+
+    public function actionForbidden()
+    {
+        $this->layout = false;
+        return $this->render('forbidden');
+    }
 }

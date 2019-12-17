@@ -7,11 +7,11 @@ use common\services\GlobalUrlService;
 <head>
     <meta charset="UTF-8">
     <title>error</title>
-    <link href="<?=GlobalUrlService::buildUcUrl('/css/default/forbidden.css')?>"" rel="stylesheet" />
+    <link href="<?=GlobalUrlService::buildUcUrl('/css/default/forbidden.css')?>" rel="stylesheet" />
 </head>
 <body>
 <div id="error_kefu">
-    <img src="<?=GlobalUrlService::buildUcUrl('/images/default/forbidden.css')?>"">
+    <img src="<?=GlobalUrlService::buildUcUrl('/images/default/forbidden.png')?>">
 </div>
 </body>
 </html>
