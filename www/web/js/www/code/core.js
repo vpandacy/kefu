@@ -110,6 +110,7 @@ $(function () {
         $('#online-from').hide();
         $('.chat-close').hide();
         window.chat_ops.init();
+        $('.content-tip .line').text('显示上次聊天记录');
         chat_ops_min.autoClose();
     });
     $('.online_from_message').click(()=> {
@@ -127,7 +128,7 @@ var chat_ops_min = {
             return;
         }
         var auto_disconnect = parseInt(data.auto_disconnect);
-        auto_disconnect = 10;
+        // auto_disconnect = 1000;
         var interval = setInterval(function () {
             auto_disconnect -= 1;
             if(auto_disconnect <= 0) {
