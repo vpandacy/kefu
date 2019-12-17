@@ -34,7 +34,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/u
                     <span class="web-font welcome_title">欢迎注册</span><br>
                     <span class="web-font welcome_tip"></span>
                     <input class="login_inp_name" type="text" name="merchant_name"  placeholder="请输入商户名">
-                    <input class="login_inp_name" style="margin-top: 0;" type="text" name="email" placeholder="请输入手机号">
+                    <input class="login_inp_name" style="margin-top: 0;" type="text" name="account" placeholder="请输入手机号">
                     <div class="po-relative">
                         <input class="login_inp_name " style="margin-top: 0;" type="text" name="img_captcha" placeholder="请输入验证码">
                         <div class="graphic_code cupointer_img">
