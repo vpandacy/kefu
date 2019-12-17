@@ -19,7 +19,6 @@ var uc_staff_edit_ops = {
                 $('[name=role_ids]:selected').each(function () {
                     role_ids.push(this.value);
                 });
-                console.log(role_ids)
                 // 添加权限.
                 data.role_ids = role_ids;
 
@@ -38,7 +37,9 @@ var uc_staff_edit_ops = {
         });
     },
     layuiSelect: function () {
-        layui.use(['multiSelect'],function() {
+        layui.config({
+            base: uc_common_ops.buildStaticUrl('/layui/layui_extends/')
+        }).use(['multiSelect'],function() {
             var $ = layui.jquery,form = layui.form,multiSelect = layui.multiSelect;
             $('#get-val').click(function() {
                 var vals = [],
@@ -75,7 +76,6 @@ var uc_staff_edit_ops = {
     uploadSuccess:function (file_key, wrapper) {
         var img_wrapper = $('#' + wrapper).find('img')
         img_wrapper.attr('src',uc_common_ops.buildPicStaticUrl('hsh', file_key))
-        console.log(img_wrapper)
         $('#' + wrapper + ' [name=avatar]').val(file_key);
     },
     // 七牛上传失败所调用的函数
