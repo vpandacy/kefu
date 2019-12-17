@@ -66,7 +66,7 @@ class StaffController extends BaseController
             $query->andWhere(['department_id'=>$department_id]);
         }
 
-        $query->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]);
+//        $query->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]);
 
         $count = $query->count();
 
