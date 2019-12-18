@@ -411,6 +411,9 @@ var page = {
                         });
                     });
                     break;
+                case 'transfer':
+                    page.transferCS(user);
+                    break;
             }
             return false;
         });
@@ -500,6 +503,71 @@ var page = {
         ].map(function (value) {
             return value < 10 ? '0' + value : value;
         }).join(':');
+    },
+    transferCS: function (user) {
+        // 先获取所有的在线的客服.
+        $.ajax({
+            type: 'GET',
+            url: cs_common_ops.buildKFCSurl('/user/online'),
+            data: null,
+            dataType: 'json',
+            success:function (res) {
+                if(res.code != 200) {
+                    return $.msg(res.msg);
+                }
+
+                var html = res.data.map(function (ele,index) {
+                    return '<option value="' + ele.id +'">' + ele.name +'</option>';
+                });
+
+                var index = $.open({
+                    content:'<select name="cs">' + html.join('') +'</select>',
+                    title: '请选择客服',
+                    btn: ['确定','取消'],
+                    yes: function () {
+                        $.close(index);
+                        var cs_id = $('[name=cs]').val();
+                        index = $.loading(1, {shade: .5});
+
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'json',
+                            url: cs_common_ops.buildKFCSurl('/visitor/transfer'),
+                            data: {
+                                uuid: user.uuid,
+                                cs_id: cs_id
+                            },
+                            success: function (res) {
+                                $.close(index);
+                                if(res.code != 200) {
+                                    return $.msg(res.msg);
+                                }
+
+                                $.msg(res.msg,true, function () {
+                                    if(user.uuid == current_uuid) {
+                                        $('#chatExe .flex1').css({'display': 'none'});
+                                        current_uuid = '';
+                                    }
+
+                                    online_users = online_users.filter(function (curr) {
+                                        return curr != user.uuid;
+                                    });
+
+                                    page.renderOnlineList();
+                                });
+                            },
+                            error: function () {
+                                $.close(index);
+                            }
+                        })
+
+                    },
+                    btn2: function () {
+                        $.close(index);
+                    }
+                });
+            }
+        })
     }
 };
 

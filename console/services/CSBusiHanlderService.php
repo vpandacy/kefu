@@ -35,13 +35,6 @@ class CSBusiHanlderService extends BaseService
                             $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
                         }
 
-                        // 这种方式通知不好.
-                        if($message['cmd'] == ConstantService::$chat_cmd_guest_close && isset($message['data']['kf_sn'])) {
-                            //发送给对应的人
-                            $tmp_client = Gateway::getClientIdByUid( $message['data']['kf_sn'] );
-                            $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
-                        }
-
                         return $connection->send( "success" );
                     }catch (\Exception $e){
                         ChatEventService::handlerError( $e->getTraceAsString() );
@@ -80,30 +73,9 @@ class CSBusiHanlderService extends BaseService
                 $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
             }
             $message = $message + $_SERVER;
-            $data = $message['data'] ?? [];
-            $f_id = $data['f_id'] ?? 0;
             self::consoleLog( var_export( $message,true ) );
-            switch ($message['cmd']) {
-                case ConstantService::$chat_cmd_reply://聊天
-                    //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                    QueueListService::push2Guest( QueueConstant::$queue_guest_chat,$message);
-                    break;
-                case ConstantService::$chat_cmd_kf_in://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
-                    if ($f_id) {
-                        //建立绑定关系，后面就可以根据f_id找到这个人了
-                        Gateway::bindUid($client_id, $f_id);
-                        ChatEventService::setCSBindCache($client_id, [
-                            'f_id'    =>  $f_id,
-                        ]);
-                    }
-                    break;
-                case ConstantService::$chat_cmd_pong:
-                    //EventsDispatch::addChatHistory( $client_id,$message );
-                    break;
-                case ConstantService::$chat_cmd_ping:
-                    //EventsDispatch::addChatHistory( $client_id,$message );
-                    break;
-            };
+            // 处理消息事件.
+            self::handleMessage($client_id,$message);
         }catch (\Exception $e){
             ChatEventService::handlerError( $e->getTraceAsString() );
         }
@@ -130,5 +102,38 @@ class CSBusiHanlderService extends BaseService
         ]);
 
         ChatEventService::clearCSBindCache($client_id);
+    }
+
+    /**
+     * 处理客服消息事件.
+     * @param string $client_id
+     * @param array $message
+     */
+    public static function handleMessage($client_id, $message)
+    {
+        $data = $message['data'] ?? [];
+        $f_id = $data['f_id'] ?? 0;
+
+        switch ($message['cmd']) {
+            case ConstantService::$chat_cmd_reply://聊天
+                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
+                QueueListService::push2Guest( QueueConstant::$queue_guest_chat,$message);
+                break;
+            case ConstantService::$chat_cmd_kf_in://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
+                if ($f_id) {
+                    //建立绑定关系，后面就可以根据f_id找到这个人了
+                    Gateway::bindUid($client_id, $f_id);
+                    ChatEventService::setCSBindCache($client_id, [
+                        'f_id'    =>  $f_id,
+                    ]);
+                }
+                break;
+            case ConstantService::$chat_cmd_pong:
+                //EventsDispatch::addChatHistory( $client_id,$message );
+                break;
+            case ConstantService::$chat_cmd_ping:
+                //EventsDispatch::addChatHistory( $client_id,$message );
+                break;
+        }
     }
 }

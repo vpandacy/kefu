@@ -31,4 +31,29 @@ class GuestChatService extends BaseService
         }
         return true;
     }
+
+    /**
+     * 更新信息.
+     * @param array $params
+     * @return bool
+     */
+    public static function updateGuest($params = [])
+    {
+        $guest_log = GuestHistoryLog::find()
+            ->where(["status" => ConstantService::$default_status_neg_1])
+            ->andWhere([ "merchant_id" => $params['merchant_id'],"uuid" => $params['uuid'] ])
+            ->orderBy([ "id" => SORT_DESC ]
+            )->limit(1)
+            ->one();
+
+        if(!$guest_log) {
+            return false;
+        }
+
+        $guest_log->setAttributes([
+            'cs_id' =>  $params['cs_id'], // 更换为新对的客服.
+        ]);
+
+        return $guest_log->save();
+    }
 }

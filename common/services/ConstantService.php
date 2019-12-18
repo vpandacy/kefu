@@ -45,8 +45,10 @@ class ConstantService extends BaseService
     public static $chat_cmd_guest_in = 'guest_in';
     // 游客关闭聊天动作.
     public static $chat_cmd_guest_close = 'guest_close';
-    //　客服分配成功
+    // 客服分配成功.
     public static $chat_cmd_assign_kf = "assign_kf";
+    // 客服更换.
+    public static $chat_cmd_change_kf = "change_kf";
     // 游客连接成功
     public static $chat_cmd_guest_connect = "guest_connect";
     // 游客欢迎消息.

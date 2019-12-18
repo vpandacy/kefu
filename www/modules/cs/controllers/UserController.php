@@ -190,4 +190,22 @@ class UserController extends BaseController
 
         return $this->renderJSON([],'发送成功');
     }
+
+    /**
+     * 获取当前在线的所有的客服.
+     */
+    public function actionOnline()
+    {
+        $cs = Staff::find()
+            ->where([
+                'merchant_id'   =>  $this->getMerchantId(),
+                'status'        =>  ConstantService::$default_status_true,
+                'is_online'     =>  ConstantService::$default_status_true
+            ])
+            ->asArray()
+            ->select(['id','sn','name'])
+            ->all();
+
+        return $this->renderJSON($cs,'获取成功');
+    }
 }

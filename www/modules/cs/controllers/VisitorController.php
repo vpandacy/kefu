@@ -4,9 +4,12 @@ namespace www\modules\cs\controllers;
 use common\components\helper\DateHelper;
 use common\components\helper\ValidateHelper;
 use common\models\kefu\chat\GuestHistoryLog;
+use common\models\uc\Staff;
 use common\services\chat\BlackListService;
+use common\services\chat\GuestChatService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
+use common\services\GlobalUrlService;
 use common\services\QueueListService;
 use www\modules\cs\controllers\common\BaseController;
 
@@ -130,5 +133,64 @@ class VisitorController extends BaseController
 
         // 这里要处理保存的逻辑.
         return $this->renderJSON('保存成功');
+    }
+
+    public function actionTransfer()
+    {
+        $cs_id = $this->post('cs_id',0);
+
+        if(!$cs_id) {
+            return $this->renderErrJSON('请选择正确的客服');
+        }
+
+        $uuid = $this->post('uuid','');
+
+        $cs = Staff::find()
+            ->where([
+                'merchant_id'   =>  $this->getMerchantId(),
+                'status'        =>  ConstantService::$default_status_true,
+                'is_online'     =>  ConstantService::$default_status_true,
+                'id'            =>  $cs_id
+            ])
+            ->asArray()
+            ->select(['id','sn','name','avatar'])
+            ->one();
+
+        if(!$cs) {
+            return $this->renderErrJSON('该客服已经下线了');
+        }
+
+        $cs['avatar'] = GlobalUrlService::buildPicStaticUrl('hsh',$cs['avatar']);
+
+        if(!GuestChatService::updateGuest([
+            'uuid'  =>  $uuid,
+            'merchant_id'   =>  $this->getMerchantId(),
+            'cs_id' =>  $cs['id']
+        ])) {
+            return $this->renderErrJSON('请输入正确的游客信息');
+        }
+
+        // 开始处理信息.
+        QueueListService::push2Guest(QueueConstant::$queue_guest_chat, [
+            'cmd'   =>  ConstantService::$chat_cmd_change_kf,
+            'data'  =>  [
+                'f_id'  =>  $this->current_user['sn'],
+                't_id'  =>  $uuid,
+                'cs'    =>  $cs,
+            ]
+        ]);
+
+        // 通知登录.
+        QueueListService::push2CS(QueueConstant::$queue_cs_chat, [
+            'cmd'   =>  ConstantService::$chat_cmd_guest_connect,
+            'data'  =>  [
+                'f_id'  =>  $uuid,
+                't_id'  =>  $cs['sn'],
+                'nickname'  =>  'Guest-' . substr($uuid, strlen($uuid) - 12),
+                'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
+            ],
+        ]);
+
+        return $this->renderJSON([],'分配成功');
     }
 }
