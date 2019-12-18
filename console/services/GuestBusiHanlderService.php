@@ -115,7 +115,7 @@ class GuestBusiHanlderService extends BaseService
                     break;
                 case ConstantService::$chat_cmd_guest_connect://客户链接,要分配客服
                     $code = $data['code'] ?? '';
-                    $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code);
+                    $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code, $message['REMOTE_ADDR']);
                     if( $kf_info ){
                         $params = [
                             "sn" => $kf_info['sn'],

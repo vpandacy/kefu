@@ -1,6 +1,7 @@
 <?php
 namespace common\services\chat;
 
+use common\components\helper\DateHelper;
 use common\services\BaseService;
 use common\services\redis\CacheService;
 use common\models\merchant\BlackList;
@@ -44,7 +45,7 @@ class BlackListService extends BaseService
             'ip'            =>  $client_ip,
             'merchant_id'   =>  $merchant_id,
             'uuid'          =>  $uuid,
-            'staff_id'      =>  $staff_id,
+            'cs_id'         =>  $staff_id,
             'status'        =>  ConstantService::$default_status_true,
             'expired_time'  =>  DateHelper::getFormatDateTime('Y-m-d H:i:s', strtotime('+10 year')),
         ];
