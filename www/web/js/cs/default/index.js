@@ -1,16 +1,22 @@
 ;
-var socket = null,
-    online_users = [], // 在线游客列表.
-    current_uuid = '';  // 当前游客. 这里是需要处理信息的. 如果不是当前游客的窗口.
-// 关于前台聊天的基本功能.
-var kf_ws_service = {
-    ws: null,
-    connect:function( host ){
-        this.ws = new WebSocket('ws://' + host);
+var online_users = [], // 在线游客列表.
+    context_menu = new Contextmenu('#menu', '.tab-content .online');
+
+var client = {
+    init: function () {
+        this.eventBind();
+        this.initSocket();
+    },
+    // 初始化websocket
+    initSocket:function(){
+        this.config = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
+
+        this.ws = new WebSocket('ws://' + this.config.ws);
         //这个事件应该标注 状态 已连接（绿色）
         this.ws.addEventListener('open', function () {
             client.handlerMessage( { "cmd":"ws_connect" } );
         });
+
         // 接收websocket返回的信息.
         this.ws.addEventListener('message', function (event) {
             var data = JSON.parse(event.data);
@@ -27,22 +33,16 @@ var kf_ws_service = {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
         });
     },
+    // 发送消息.
     socketSend: function (msg) {
         this.ws.send(JSON.stringify(msg));
-    }
-};
-
-var client = {
-    init: function () {
-        this.eventBind();
-        this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
-        this.initSocket();
     },
     // 事件绑定信息.
     eventBind: function() {
         var that = this;
         // 输入框的回车事件.
         $('.sumbit-input').on('keydown', function (event) {
+            var current_uuid = $('.content-message-active').attr('data-uuid');
             if(event.keyCode == 13 && event.shiftKey || event.keyCode != 13) {
                 return true;
             }
@@ -60,11 +60,12 @@ var client = {
                 return $.msg('请选择游客进行聊天');
             }
 
-            that.send(msg);
+            that.send(current_uuid,msg);
         });
         // 点击发送按钮.
         $('.sumbit').on('click', function () {
-            var msg = $('.sumbit-input').html();
+            var msg = $('.sumbit-input').html(),
+                current_uuid = $('.content-message-active').attr('data-uuid')
 
             if(!msg) {
                 return false;
@@ -75,27 +76,7 @@ var client = {
                 return $.msg('请选择游客进行聊天');
             }
 
-            that.send(msg);
-        });
-
-        // 这里删除 鼠标右键的效果.
-        $(document).on('click', function () {
-            $('#menu').css({
-                display: 'none'
-            });
-        });
-        // 监听鼠标右键.
-        $('.tab-content .online').on('contextmenu', '.tab-content-list', function (event) {
-            // 阻止事件发生.
-            event.preventDefault();
-
-            if($(this).hasClass('content-no-message')) {
-                return true;
-            }
-
-            var uuid = $(this).attr('data-uuid');
-
-            page.showMenu(uuid, event);
+            that.send(current_uuid, msg);
         });
 
         // 选择聊天对象.
@@ -114,7 +95,6 @@ var client = {
             $(this).removeClass('content-new-message');
             $(this).find('.content-new-message').removeClass('content-new-message');
             $(this).addClass('content-message-active').siblings().removeClass('content-message-active');
-            current_uuid = uuid;
             ChatStorage.setItem(uuid, user);
 
             // 要开始渲染聊天窗口了.
@@ -134,16 +114,19 @@ var client = {
         });
     },
     // 发送消息函数.
-    send: function(msg) {
+    send: function(current_uuid, msg) {
         var user = ChatStorage.getItem(current_uuid, []),
             time_str = page.getCurrentTimeStr();
+
         // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
-        kf_ws_service.ws.send(JSON.stringify(client.buildMsg('reply', {
+        this.socketSend(client.buildMsg('reply', {
             content: msg
-        })));
+        }));
+
         if(!user.messages) {
             user.messages = [];
         }
+
         // 消息信息.
         user.messages.push({
             f_id: $('[name=cs_sn]').val(),
@@ -153,7 +136,6 @@ var client = {
         });
 
         user.messages = user.messages.slice(0,20);
-
         ChatStorage.setItem(current_uuid, user);
 
         // 清空掉.然后在将这个展示到对应的消息上去.
@@ -161,10 +143,6 @@ var client = {
 
         $('.exe-content-history').append(page.renderCsMsg('我',msg, time_str));
         page.scrollToBottom();
-    },
-    // 初始化websocket
-    initSocket: function () {
-        kf_ws_service.connect( this.data['ws'] );
     },
     // 分配客服处理.
     assignKf:function(data) {
@@ -182,36 +160,39 @@ var client = {
             user.messages = [];
         }
 
+        if(online_users.length == 1) {
+            user.messages = 0;
+        }
+
+        ChatStorage.setItem(user.uuid, user);
+
         // 如果当前会话的列表中有  就不用去渲染处理了.
         if(online_users.indexOf(user.uuid) < 0) {
             // 插入到第一个.然后在渲染到对应的视图中去.
             online_users.unshift(user.uuid);
         }
 
+        page.renderOnlineList();
         if(online_users.length == 1) {
-            current_uuid = online_users[0];
-            user.new_message = 0;
-            ChatStorage.setItem(user.uuid, user);
+            $('.online [data-uuid="' +online_users[0]+  '"]').addClass('content-message-active');
             page.renderChat(user.uuid);
             page.scrollToBottom();
         }
-
-        ChatStorage.setItem(user.uuid, user);
-        page.renderOnlineList();
     },
     // 被动聊天处理.
     chat: function(data) {
-        // 这里要组装数据.
+        var current_uuid = $('.content-message-active').attr('data-uuid');
         // 获取游客的信息.
         var uuid = data.data.f_id,
             user = ChatStorage.getItem(uuid),
-            messages = user.messages,
+            messages = user.messages ? user.messages : [],
             time_str = page.getCurrentTimeStr();
 
         if(uuid != current_uuid) {
             // 有新消息了.
             user.new_message = 1;
         }
+
         // 这里是判断消息长度
         if(messages.length >= 20) {
             messages.shift();
@@ -237,32 +218,33 @@ var client = {
     },
     // 得到游客的信息.
     buildMsg: function (cmd, data) {
-        data['f_id'] = this.data['sn'];
-        data['t_id'] = current_uuid;
-        data['msn'] = this.data['msn'];
-        var params = {
+        var current_uuid = $('.content-message-active').attr('data-uuid');
+
+        data.f_id = this.config.sn;
+        data.t_id = current_uuid;
+        data.msn  = this.config.msn;
+        return {
             cmd:cmd,
             data:data
         };
-        return params;
     },
+    // 处理消息.
     handlerMessage:function( data ) {
-        var that = this;
-        switch (data['cmd']) {
+        switch (data.cmd) {
             case "ping":
-                kf_ws_service.socketSend({"cmd": "pong"});
+                this.socketSend({"cmd": "pong"});
                 break;
             case "ws_connect":
-                kf_ws_service.socketSend(that.buildMsg('kf_in', {}));
+                this.socketSend(this.buildMsg('kf_in', {}));
                 break;
             case "guest_close":
                 console.dir(data);
                 break;
             case "guest_connect":
-                that.assignKf(data);
+                this.assignKf(data);
                 break;
             case "chat":
-                that.chat(data);
+                this.chat(data);
                 break;
         }
     }
@@ -279,7 +261,6 @@ var page = {
             $('#chatExe .flex1').css({'display': 'none'});
 
             $('.content-message-active').removeClass('content-message-active');
-            current_uuid = '';
         });
     },
     // 初始化表情
@@ -294,7 +275,7 @@ var page = {
     renderChat: function (uuid) {
         var user = ChatStorage.getItem(uuid),
             that = this;
-        console.dir(user);
+
         $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
         // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
         if(!user.messages || user.messages.length < 1) {
@@ -318,106 +299,6 @@ var page = {
         $('#chatExe .flex1').css({'display': 'flex'});
         this.eventBind();
     },
-    // 展示对应的右键菜单.
-    showMenu:function (uuid, event) {
-        var x = ((parseInt(event.clientX) + 100) <= window.innerWidth) ? event.clientX : event.clientX - 98,
-            y = ((parseInt(event.clientY) + 140) <= window.innerHeight) ? event.clientY : event.clientY - 138,
-            user = ChatStorage.getItem(uuid);
-
-        // 展示出来.并将uuid存成局部变量.
-        $('#menu').css({
-            left: x + 'px',
-            top : y + 'px',
-            display: 'block'
-        });
-
-        // 先取消并注册事件.
-        $('#menu a').off('click').on('click', function () {
-            var event = $(this).attr('data-event');
-
-            switch (event) {
-                case 'edit':
-                    alert('您点击了编辑,uuid:' + uuid);
-                    break;
-                // 关闭聊天操作.
-                case 'close':
-                    $.confirm('您确认要关闭与游客:' + user.nickname + '的聊天吗?是否继续?',function(){
-                        var index = $.loading(1, {shade: .5});
-                        $.ajax({
-                            type: 'POST',
-                            url: cs_common_ops.buildKFCSurl('/visitor/close'),
-                            data: {
-                                uuid: uuid
-                            },
-                            dataType: 'json',
-                            success:function (res) {
-                                $.close(index);
-                                if(res.code != 200) {
-                                    return $.msg(res.msg);
-                                }
-
-                                // 这里要删除游客信息,并缩小减少online_users.
-                                if(uuid == current_uuid) {
-                                    $('#chatExe .flex1').css({'display': 'none'});
-                                    current_uuid = '';
-                                }
-
-                                index = online_users.indexOf(uuid)
-
-                                online_users = online_users.filter(function (curr, curr_index) {
-                                    return index != curr_index;
-                                });
-
-                                page.renderOnlineList();
-                            },
-                            error: function () {
-                                $.close(index)
-                            }
-                        });
-                    });
-                    break;
-                case 'black':
-                    $.confirm('您确认要将该游客拉入黑名单吗？凡在黑名单中的游客将无法发起聊天.是否继续?', function () {
-                        var index = $.loading(1, {shade: .5});
-                        $.ajax({
-                            type: 'POST',
-                            url: cs_common_ops.buildKFCSurl('/visitor/blacklist'),
-                            data: {
-                                uuid: uuid
-                            },
-                            dataType: 'json',
-                            success:function (res) {
-                                $.close(index);
-                                if(res.code != 200) {
-                                    return $.msg(res.msg);
-                                }
-
-                                // 这里要删除游客信息,并缩小减少online_users.
-                                if(uuid == current_uuid) {
-                                    $('#chatExe .flex1').css({'display': 'none'});
-                                }
-
-                                index = online_users.indexOf(uuid)
-
-                                online_users = online_users.filter(function (curr, curr_index) {
-                                    return index != curr_index;
-                                });
-
-                                page.renderOnlineList();
-                            },
-                            error: function () {
-                                $.close(index)
-                            }
-                        });
-                    });
-                    break;
-                case 'transfer':
-                    page.transferCS(user);
-                    break;
-            }
-            return false;
-        });
-    },
     // 滚动到页面最底部.
     scrollToBottom: function () {
         var height = $('.exe-content-history')[0].scrollHeight;
@@ -426,6 +307,7 @@ var page = {
     },
     // 渲染在线列表.
     renderOnlineList: function (source_uuid) {
+        var current_uuid = $('.content-message-active').attr('data-uuid');
         $('.keep-census .online').text(online_users.length);
 
         if(online_users.length < 1) {
@@ -441,8 +323,8 @@ var page = {
         }
 
         var html = online_users.map(function (uuid) {
-            var user = ChatStorage.getItem(uuid),
-                class_name = user.new_message >　0 ? 'content-new-message ' : '';
+            var user = ChatStorage.getItem(uuid);
+            var class_name = user.new_message >　0 ? 'content-new-message ' : '';
 
             if(uuid == current_uuid) {
                 class_name = class_name + 'content-message-active';
@@ -503,78 +385,13 @@ var page = {
         ].map(function (value) {
             return value < 10 ? '0' + value : value;
         }).join(':');
-    },
-    transferCS: function (user) {
-        // 先获取所有的在线的客服.
-        $.ajax({
-            type: 'GET',
-            url: cs_common_ops.buildKFCSurl('/user/online'),
-            data: null,
-            dataType: 'json',
-            success:function (res) {
-                if(res.code != 200) {
-                    return $.msg(res.msg);
-                }
-
-                var html = res.data.map(function (ele,index) {
-                    return '<option value="' + ele.id +'">' + ele.name +'</option>';
-                });
-
-                var index = $.open({
-                    content:'<select name="cs">' + html.join('') +'</select>',
-                    title: '请选择客服',
-                    btn: ['确定','取消'],
-                    yes: function () {
-                        $.close(index);
-                        var cs_id = $('[name=cs]').val();
-                        index = $.loading(1, {shade: .5});
-
-                        $.ajax({
-                            type: 'POST',
-                            dataType: 'json',
-                            url: cs_common_ops.buildKFCSurl('/visitor/transfer'),
-                            data: {
-                                uuid: user.uuid,
-                                cs_id: cs_id
-                            },
-                            success: function (res) {
-                                $.close(index);
-                                if(res.code != 200) {
-                                    return $.msg(res.msg);
-                                }
-
-                                $.msg(res.msg,true, function () {
-                                    if(user.uuid == current_uuid) {
-                                        $('#chatExe .flex1').css({'display': 'none'});
-                                        current_uuid = '';
-                                    }
-
-                                    online_users = online_users.filter(function (curr) {
-                                        return curr != user.uuid;
-                                    });
-
-                                    page.renderOnlineList();
-                                });
-                            },
-                            error: function () {
-                                $.close(index);
-                            }
-                        })
-
-                    },
-                    btn2: function () {
-                        $.close(index);
-                    }
-                });
-            }
-        })
     }
 };
-
 
 $(document).ready(function () {
     client.init();
     page.init();
+    context_menu.init();
 
     // 菜单栏切换.
     $(".tab .tab-switch .tab-one").click(function() {
