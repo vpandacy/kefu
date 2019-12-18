@@ -92,6 +92,9 @@ class CSBusiHanlderService extends BaseService
                     if ($f_id) {
                         //建立绑定关系，后面就可以根据f_id找到这个人了
                         Gateway::bindUid($client_id, $f_id);
+                        ChatEventService::setCSBindCache($client_id, [
+                            'f_id'    =>  $f_id,
+                        ]);
                     }
                     break;
                 case ConstantService::$chat_cmd_pong:
@@ -107,11 +110,25 @@ class CSBusiHanlderService extends BaseService
     }
 
     /**
-     * 当游客端用户断开连接时触发
-     * @param int $client_id 连接id
+     * 当客服端用户断开连接时触发
      * 这里的问题是不知道这个client id 对应的客服，所以也要编辑好，不然到时候无法关闭了
+     * @param int $client_id 连接id
+     * @return false
      */
     public static function onClose( $client_id ){
-        // 向所有人发送,发消息给对应的kf，然后客服工作台在设置
+        $cache_params = ChatEventService::getCSBindCache($client_id);
+        if(!$cache_params) {
+            return false;
+        }
+
+        // 向所有人发送,发消息给对应的游客，然后客服工作台在设置
+        QueueListService::push2Guest(QueueConstant::$queue_guest_chat, [
+            'cmd'   =>  ConstantService::$chat_cmd_kf_logout,
+            'data'  =>  [
+                'f_id'  =>  $cache_params['f_id']
+            ]
+        ]);
+
+        ChatEventService::clearCSBindCache($client_id);
     }
 }

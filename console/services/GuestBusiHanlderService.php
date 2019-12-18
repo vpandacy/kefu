@@ -47,6 +47,19 @@ class GuestBusiHanlderService extends BaseService
                             $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
                             // 关闭信息.
                             $tmp_client && Gateway::closeClient( $tmp_client[0] );
+                            // 退出组信息.
+                            $tmp_client && Gateway::leaveGroup( $tmp_client[0] ,$message['data']['f_id'] );
+                        }
+
+                        // 给组内进行广播.
+                        if(ConstantService::$chat_cmd_kf_logout == $message['cmd']) {
+                            // 给组内进行广播.
+                            Gateway::sendToGroup($message['data']['f_id'], json_encode([
+                                'cmd'   =>  ConstantService::$chat_cmd_kf_logout,
+                                'data'  =>  [
+                                    'f_id'  =>  $message['data']['f_id'],
+                                ]
+                            ]));
                         }
 
                         return $connection->send( "success" );
@@ -139,6 +152,8 @@ class GuestBusiHanlderService extends BaseService
                         $cache_params = ChatEventService::getGuestBindCache( $client_id);
                         $cache_params['kf_id'] = $kf_info['id'];
                         $cache_params['kf_sn'] = $kf_info['sn'];
+                        // 将client_id加入到这个组中.
+                        Gateway::joinGroup($client_id, $kf_info['sn']);
                         ChatEventService::setGuestBindCache( $client_id ,$cache_params);
                     }else{
                         $params = [
@@ -183,5 +198,10 @@ class GuestBusiHanlderService extends BaseService
         $close_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_close,$close_params );
         Worker::log( $close_data );
         QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($close_data,true) );
+
+        // 这里要退出组的信息.
+        if(isset($close_params['kf_sn'])) {
+            Gateway::leaveGroup($client_id,$close_params['kf_sn']);
+        }
     }
 }

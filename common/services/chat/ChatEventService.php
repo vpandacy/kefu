@@ -104,6 +104,39 @@ class ChatEventService extends BaseService
         return CacheService::delete( $cache_key );
     }
 
+    /**
+     * 设置客服和client_id的绑定关系
+     * @param $client_id
+     * @return mixed
+     */
+    public static function setCSBindCache($client_id, $params = []) {
+        $cache_key = 'cs_' . $client_id;
+        $data = json_encode($params);
+        return CacheService::set($cache_key, $data, 86400 * 30);
+    }
+
+    /**
+     * 获取客服和client_id的绑定关系
+     * @param $client_id
+     * @return mixed
+     */
+    public static function getCSBindCache($client_id) {
+        $cache_key = 'cs_' . $client_id;
+        $data = CacheService::get($cache_key);
+        return @json_decode($data, true);
+    }
+
+    /**
+     * 清除客服和client_id的绑定关系
+     * @param $client_id
+     * @return mixed
+     */
+    public static function clearCSBindCache($client_id)
+    {
+        $cache_key = 'cs_' . $client_id;
+        return CacheService::delete($cache_key);
+    }
+
 
     public static function handlerError( $error_msg = "" ){
         self::consoleLog( $error_msg );

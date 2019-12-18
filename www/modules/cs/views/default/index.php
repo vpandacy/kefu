@@ -17,10 +17,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
     <!-- 右键菜单 -->
     <div id="menu" style="z-index: 1">
         <a data-event="edit">编辑</a>
+        <a data-event="transfer">游客转让</a>
         <a data-event="close">关闭聊天</a>
         <a data-event="black">拉入黑名单</a>
     </div>
-
 
     <!-- 最右侧菜单栏-->
     <div class="exe-menu">

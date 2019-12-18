@@ -308,6 +308,11 @@
                 }
                 $(this.system).text(data.data.content);
                 break;
+            case 'kf_logout':
+                this.ws.close();
+                this.renderCloseChat();
+                $(this.system).text('客服已下线,请开始新对话或留言');
+                break;
         }
 
         //  交给自定义处理.
