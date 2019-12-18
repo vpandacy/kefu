@@ -40,6 +40,7 @@ var ws_config = new socket({
     input:'#content',
     emoji:'content',
     submit:'.submit-button',
+    system:'.content-tip span',
     handle: function (data) {
         switch (data.cmd) {
             case 'ws_connect'||'hello':
@@ -51,7 +52,6 @@ var ws_config = new socket({
             case 'close_guest':
                 // 主动关闭聊天.
                 $('.chat-close').show();
-                $('.message span').text('由于您长时间没有对话，系统已经关闭您的会话');
                 $('.ws_flag').text('连接关闭')
                 break;
             default:

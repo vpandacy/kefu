@@ -33,26 +33,6 @@ var chat_logic = {
             setTimeout(function () {
                 $('.icon-jiazaizhong').fadeOut();
             },3000);//afterbegin
-            // 显示聊天记录
-            setTimeout(function () {
-                var html  = ' <div class="content-message">\n' +
-                    '             <div class="message-img">\n' +
-                    '             <img class="logo" src="/images/www/code/test.png">\n' +
-                    '         </div>\n' +
-                    '               <div class="message-info">\n' +
-                    '               <div class="message-name-date"><span>楠楠</span><span class="date">10:57:56</span></div>\n' +
-                    '               <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>\n' +
-                    '           </div>\n' +
-                    '        </div>'
-                for (let i = 0 ; i< 2; i ++)  {
-                    document.getElementsByClassName('online-content')[0].insertAdjacentHTML('afterbegin',html)
-                }
-            },3000);
-            // 滚动条回到顶部
-            setTimeout(function () {
-                document.getElementsByClassName('online-content')[0].scrollTop = 0;
-            },3500);
-            // document.documentElement.scrollTop= window.pageYOffset = document.body.scrollTop = 0;
         });
         $('.icon-jianqie').click(function () {
             $('.online-cover').show();
@@ -86,6 +66,7 @@ var ws_config = new socket({
     input:'#content',
     emoji:'content',
     submit:'.submit-button',
+    system:'.content-tip .line',
     handle: function (data) {
         switch (data.cmd) {
             case 'ws_connect'||'hello':
@@ -95,7 +76,6 @@ var ws_config = new socket({
                 $('.ws_flag').text('连接成功')
                 break;
             case 'close_guest':
-                $('.content-tip .line').text('由于您长时间没有对话，系统已经关闭您的会话');
                 $('.chat-close').show();
                 // 新会话
                 $('.online_new_message').click(()=> {
