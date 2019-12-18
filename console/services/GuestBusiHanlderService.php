@@ -41,27 +41,29 @@ class GuestBusiHanlderService extends BaseService
                             $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
                         }
 
-                        // 主动断开链接. 客服关闭后.
-                        if(ConstantService::$chat_cmd_close_guest == $message['cmd']) {
-                            // 发送给对应的人
-                            $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
-                            // 关闭信息.
-                            $tmp_client && Gateway::closeClient( $tmp_client[0] );
-                            // 退出组信息.
-                            $tmp_client && Gateway::leaveGroup( $tmp_client[0] ,$message['data']['f_id'] );
-                        }
-
-                        // 给组内进行广播.
-                        if(ConstantService::$chat_cmd_kf_logout == $message['cmd']) {
+                        switch ($message['cmd'])
+                        {
+                            // 主动断开链接. 客服关闭后.
+                            case ConstantService::$chat_cmd_close_guest:
+                                // 发送给对应的人
+                                $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+                                // 关闭信息.
+                                $tmp_client && Gateway::closeClient( $tmp_client[0] );
+                                // 退出组信息.
+                                $tmp_client && Gateway::leaveGroup( $tmp_client[0] ,$message['data']['f_id'] );
+                                break;
                             // 给组内进行广播.
-                            Gateway::sendToGroup($message['data']['f_id'], json_encode([
-                                'cmd'   =>  ConstantService::$chat_cmd_kf_logout,
-                                'data'  =>  [
-                                    'f_id'  =>  $message['data']['f_id'],
-                                ]
-                            ]));
+                            case ConstantService::$chat_cmd_kf_logout:
+                                // 给组内进行广播.
+                                Gateway::sendToGroup($message['data']['f_id'], json_encode([
+                                    'cmd'   =>  ConstantService::$chat_cmd_kf_logout,
+                                    'data'  =>  [
+                                        'f_id'  =>  $message['data']['f_id'],
+                                    ]
+                                ]));
 
-                            Gateway::ungroup($message['data']['f_id']);
+                                Gateway::ungroup($message['data']['f_id']);
+                                break;
                         }
 
                         return $connection->send( "success" );
