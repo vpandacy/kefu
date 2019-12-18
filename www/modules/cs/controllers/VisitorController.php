@@ -3,7 +3,8 @@ namespace www\modules\cs\controllers;
 
 use common\components\helper\DateHelper;
 use common\components\helper\ValidateHelper;
-use common\models\merchant\BlackList;
+use common\models\kefu\chat\GuestHistoryLog;
+use common\services\chat\BlackListService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
 use common\services\QueueListService;
@@ -56,20 +57,17 @@ class VisitorController extends BaseController
             return $this->renderErrJSON('非法的游客信息');
         }
 
-        // 这里要查询一次.得到游客的ID.
-        $black = new BlackList();
+        $guest = GuestHistoryLog::find()
+            ->where(['uuid'=>$uuid,'merchant_id'=>$this->getMerchantId()])
+            ->orderBy([ "id" => SORT_DESC ])->limit(1)
+            ->one();
 
-        $black->setAttributes([
-            'ip'            =>  '',
-            'merchant_id'   =>  $this->merchant_info['id'],
-            'visitor_id'    =>  $uuid,
-            'staff_id'      =>  $this->getStaffId(),
-            'status'        =>  1,
-            'expired_time'  =>  DateHelper::getFormatDateTime('Y-m-d H:i:s', strtotime('+10 year')),
-        ],0);
+        if(!$guest) {
+            return $this->renderErrJSON('暂未找到该游客');
+        }
 
-        if(!$black->save(0)) {
-            return $this->renderErrJSON('黑名单信息保存失败');
+        if(!BlackListService::addBlackList($guest['client_ip'],$this->getMerchantId(), $uuid, $this->getStaffId())) {
+            return $this->renderErrJSON(BlackListService::getLastErrorMsg());
         }
 
         QueueListService::push2Guest(QueueConstant::$queue_guest_chat, [
@@ -79,6 +77,23 @@ class VisitorController extends BaseController
                 't_id'  =>  $uuid
             ],
         ]);
+
+        // 主动关闭.
+        QueueListService::push2ChatDB(QueueConstant::$queue_chat_log, [
+            'cmd'   =>  ConstantService::$chat_cmd_close_guest,
+            'data'  =>  [
+                'f_id'  =>  $this->current_user['sn'],
+                't_id'  =>  $uuid,
+                'msn'   =>  $this->merchant_info['sn'],
+                'cs_id' =>  $this->getStaffId(),
+                'close_time'    =>  DateHelper::getFormatDateTime(),
+            ],
+        ]);
+
+        // 主动关闭事件.
+        if(!$guest->save()) {
+            return $this->renderErrJSON('数据保存失败，请联系管理员');
+        }
 
         return $this->renderJSON('操作成功');
     }

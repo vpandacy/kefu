@@ -2,6 +2,7 @@
 namespace common\services\uc;
 
 use common\components\helper\DateHelper;
+use common\models\merchant\BlackList;
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
 use common\models\uc\Staff;
@@ -223,5 +224,4 @@ class MerchantService extends BaseService
         CacheService::set($cache_key, json_encode($setting->toArray()),86400 * 30);
         return true;
     }
-
 }

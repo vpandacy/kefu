@@ -130,3 +130,9 @@ CREATE TABLE `guest_history_log` (
   KEY `idx_client_id` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='游客历史记录表（游客进入）';
 ```
+### 20191218
+```
+ALTER TABLE `black_list`
+    CHANGE `visitor_id` `uuid` varchar(255) NOT NULL DEFAULT '0' COMMENT '访客ID' AFTER `ip`,
+    CHANGE `staff_id` `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '客服ID' AFTER `merchant_id`;
+```

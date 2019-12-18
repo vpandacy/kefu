@@ -16,7 +16,7 @@ var merchant_black_index_ops = {
                 ,cols: [[
                     {field:'id', width:80, title: '序号'}
                     ,{field:'ip',  title: 'IP地址'}
-                    ,{field:'visitor_id',  title: '访客编号'}
+                    ,{field:'uuid',  title: '访客编号'}
                     ,{field:'staff_name', title: '客服'}
                     ,{field:'expired_time', title: '失效时间'}
                     ,{field:'created_time', title: '添加时间'}

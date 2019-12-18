@@ -5,6 +5,7 @@ use common\components\DataHelper;
 use common\components\helper\ValidateHelper;
 use common\models\merchant\BlackList;
 use common\models\uc\Staff;
+use common\services\chat\BlackListService;
 use common\services\ConstantService;
 use www\modules\merchant\controllers\common\BaseController;
 
@@ -36,11 +37,11 @@ class IndexController extends BaseController
             ->all();
 
         if($lists) {
-            $staffs = DataHelper::getDicByRelateID($lists, Staff::className(), 'staff_id', 'id');
+            $staffs = DataHelper::getDicByRelateID($lists, Staff::className(), 'cs_id', 'id');
 
             foreach($lists as $key=>$blacklist) {
-                $blacklist['staff_name'] = isset($staffs[$blacklist['staff_id']])
-                    ? $staffs[$blacklist['staff_id']]['name']
+                $blacklist['staff_name'] = isset($staffs[$blacklist['cs_id']])
+                    ? $staffs[$blacklist['cs_id']]['name']
                     : '暂无人员';
 
                 $lists[$key] = $blacklist;
@@ -74,7 +75,7 @@ class IndexController extends BaseController
     public function actionSave()
     {
         $ip = $this->post('ip','');
-        $visitor_id = $this->post('visitor_id','');
+        $uuid = $this->post('uuid','');
         $staff_id = $this->post('staff_id',0);
         $expired_time = $this->post('expired_time','');
 
@@ -82,7 +83,7 @@ class IndexController extends BaseController
             return $this->renderErrJSON( '请输入正确的IP地址~~' );
         }
 
-        if(ValidateHelper::validIsEmpty($visitor_id)) {
+        if(ValidateHelper::validIsEmpty($uuid)) {
             return $this->renderErrJSON( '请输入正确的游客编号~~' );
         }
 
@@ -97,7 +98,7 @@ class IndexController extends BaseController
         // 开始保存信息.
         $blacklist = new BlackList();
         $blacklist->setAttributes([
-            'visitor_id'    =>  $visitor_id,
+            'uuid'          =>  $uuid,
             'staff_id'      =>  $staff_id,
             'expired_time'  =>  $expired_time,
             'merchant_id'   =>  $this->getMerchantId(),
@@ -132,6 +133,9 @@ class IndexController extends BaseController
         if(!$blacklist->save(0)) {
             return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
+
+        // 这里需要重新去设置一次黑名单
+        BlackListService::updateBlackListCache($this->getMerchantId());
 
         return $this->renderJSON([],'操作成功');
     }

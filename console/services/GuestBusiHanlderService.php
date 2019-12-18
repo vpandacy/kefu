@@ -20,7 +20,7 @@ class GuestBusiHanlderService extends BaseService
      */
     public static function onWorkerStart($worker)
     {
-//如果不特殊处理，就会启动多次，而一个端口被占用，在此启动就会报错
+        //如果不特殊处理，就会启动多次，而一个端口被占用，在此启动就会报错
         if( $worker->id != 0 ){
             return;
         }
