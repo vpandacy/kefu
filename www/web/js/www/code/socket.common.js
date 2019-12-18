@@ -1,43 +1,154 @@
-;
-// 关于前台聊天的基本功能.
-window.ws= null;
-var kf_ws_service = {
-    connect:function( host ){
-        window.ws = new WebSocket('ws://' + host);
-        //链接websocket
-        window.ws.addEventListener('open', function () {
-            chat_ops.handlerMessage( { "cmd":"ws_connect" } );
+;// 所有聊天框.
+(function(window){
+    var config = JSON.parse( $(".hidden_wrapper input[name=params]").val() ),
+        interval = null;
+
+    if(!config) {
+        console.log('未找到初始化配置信息.');
+        return false;
+    }
+
+    function getCurrentDateTime() {
+        var date = new Date();
+
+        return [
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds()
+        ].map(function (value) {
+            return value < 10 ? '0' + value : value;
+        }).join(':');
+    }
+
+    var socket = function (base_config) {
+        // 注意.这里的所有都是以ID作为选择器来使用的
+        // 获取原始输入框对象.
+        this.input = base_config.hasOwnProperty('input')
+            ? base_config.input
+            : '#content';
+        this.emoji = base_config.hasOwnProperty('emoji')
+            ? base_config.emoji
+            : 'content';
+        // 获取原始的发送按钮.
+        this.submit = base_config.hasOwnProperty('submit')
+            ? base_config.submit
+            : '.submit-button';
+
+        // 这里是自定义的事件.
+        this.handle = base_config.hasOwnProperty('handle')
+            ? base_config.handle
+            : function () {};
+
+        // 这里是需要输出的信息框.
+        this.output = base_config.hasOwnProperty('output')
+            ? base_config.output
+            : '.message';
+
+        // 自定义渲染.
+        this._renderCsMsg = base_config.hasOwnProperty('renderCsMsg')
+            ? base_config.renderCsMsg
+            : null;
+
+        // 自定义消息.
+        this._renderMsg = base_config.hasOwnProperty('renderMsg')
+            ? base_config.renderMsg
+            : null;
+
+        // 定义系统消息的展示区域.
+        this.system = base_config.hasOwnProperty('system')
+            ? base_config.system
+            : null;
+
+        this._renderCloseChat = base_config.hasOwnProperty('renderCloseChat')
+            ? base_config.renderCloseChat
+            : null;
+        // 保存socket信息.
+        this.ws = null;
+        // 表情初始化
+        sdEditorEmoj.Init(emojiconfig);
+        sdEditorEmoj.setEmoji({type:'div',id: this.emoji});
+    };
+
+    // 将聊天框滚动到页面下面.
+    socket.prototype.scrollToBottom = function(){
+        var ele = $(this.output);
+        ele.scrollTop(ele[0].scrollHeight);
+    };
+
+    // 初始化整个的页面聊天.
+    socket.prototype.init = function() {
+        this.initSocket();
+        // 绑定界面事件.
+        this.eventBind();
+    };
+
+    // 初始化ws.
+    socket.prototype.initSocket = function() {
+        var that = this;
+        this.ws = new WebSocket('ws://' + config['ws']);
+
+        // ws打开事件.
+        this.ws.addEventListener('open', function () {
+            that.handleMessage({ "cmd" : "ws_connect" } );
         });
-        // 接收websocket返回的信息.
-        window.ws.addEventListener('message', function (event) {
+
+        // ws的回复事件.
+        this.ws.addEventListener('message', function (event) {
             var data = JSON.parse(event.data);
-            chat_ops.handlerMessage( data );
+            that.handleMessage( data );
         });
-        // 关闭websocket发送的信息.
-        window.ws.addEventListener('close', function () {
+
+        // ws关闭事件.
+        this.ws.addEventListener('close', function () {
         });
+
         // 这里是websocket发生错误的.信息.
-        window.ws.addEventListener('error', function () {
+        this.ws.addEventListener('error', function () {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
         });
-    },
-    socketSend: function (msg) {
-        window.ws.send( JSON.stringify(msg) );
-    }
-};
-window.chat_ops = {
-    // 这里要保存用户的信息.和收集用户的一些数据.
-    init: function () {
-        this.data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
-        localStorage.setItem('serverInfo',JSON.stringify(this.data))
-        this.eventBind();
-        this.initSocket();
-    },
-    // 監聽發送消息鍵盤事件
-    eventBind: function () {
+    };
+
+    // 自动断开聊天信息.
+    socket.prototype.autoClose = function() {
+        var that = this;
+        if(interval) {
+            clearInterval(interval);
+        }
+
+        if(config.auto_disconnect <= 0) {
+            return false;
+        }
+
+        var auto_disconnect = parseInt(config.auto_disconnect);
+        // auto_disconnect = 1000;
+        interval = setInterval(function () {
+            auto_disconnect -= 1;
+            if(auto_disconnect <= 0) {
+                clearInterval(interval);
+                // 主动关闭聊天.
+                that.ws.close();
+                $(that.system).text('由于您长时间没有对话，系统已经关闭您的会话');
+                // 这里要触发自定义渲染
+                that.renderCloseChat();
+            }
+        }, 1000);
+    };
+
+    // 自动渲染关闭图形界面.
+    socket.prototype.renderCloseChat = function() {
+        if(this._renderCloseChat) {
+            return this._renderCloseChat();
+        }
+
+        // 这里是默认的信息.
+        return $('.chat-close').show();
+    };
+
+    // 绑定界面的消息信息.
+    socket.prototype.eventBind = function() {
         var that = this;
         // 鍵盤事件.
-        $('#content').on('keydown', function (event) {
+        $(this.input).on('keydown', function (event) {
             // 不等于回车的时候.
             if(event.keyCode == 13 && event.shiftKey || event.keyCode != 13) {
                 return true;
@@ -47,105 +158,109 @@ window.chat_ops = {
             that.send();
             return false;
         });
-        $('.submit-button').on('click', function (event) {
+
+        // 发送按钮事件.
+        $(this.submit).on('click', function (event) {
             event.preventDefault();
             that.send();
         });
-    },
-    // 發送消息
-    send: function () {
-        var msg = $('#content').html();
+
+        $(this.closeButton).on('click', function () {
+
+        });
+    };
+
+    // 页面发送消息．
+    socket.prototype.send = function() {
+        var msg = $(this.input).html();
         if(msg.length <= 0) {
             return false;
         }
         // 发送动作为chat.
-        kf_ws_service.socketSend( this.buildMsg('chat',{
+        this.socketSend( this.buildMsg('chat',{
             'content': msg
         }));
 
-        var date = new Date();
-        var time_str = [
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-        ].map(function (value) {
-            return value < 10 ? '0' + value : value;
-        }).join(':');
+        var div = this.renderMsg(msg, getCurrentDateTime());
 
-        var div = document.createElement('div');
-        div.style.textAlign = "right";
-        div.innerHTML = [
-            '<div class="content-message online-my-message">\n' +
-            '     <div class="message-info">\n' +
-            '     <div class="message-name-date"><span class="date">',time_str,'</span><span>我</span></div>\n' +
-            '   <div class="message-message">',msg,'</div>\n' +
-            '  </div>\n' +
-            '</div>'
-        ].join("")
-
-        $('.message').append(div);
-
-        $('#content').html('');
+        $(this.output).append(div);
+        $(this.input).html('');
         this.scrollToBottom();
-    },
-    // 初始化webScoket
-    initSocket: function () {
-        kf_ws_service.connect( this.data['ws'] );
-    },
-    // 封裝客戶端消息數據
-    buildMsg: function (cmd, data) {
-        data['f_id'] = this.data['uuid'];
-        data['msn'] = this.data['msn'];
-        data['code'] = this.data['code'];
-        if( this.data.hasOwnProperty("t_id") ){
-            data['t_id'] = this.data['t_id'];
+        this.autoClose();
+    };
+
+    // ws发送消息.
+    socket.prototype.socketSend = function(msg){
+        this.ws.send(JSON.stringify(msg));
+    };
+
+    // 组装消息信息.
+    socket.prototype.buildMsg = function (cmd, data) {
+        data.f_id = config.uuid;
+        data.msn = config.msn;
+        data.code = config.code;
+
+        if( config.hasOwnProperty("cs") ){
+            data.t_id = config.cs.t_id;
         }
-        var params = {
+
+        return {
             cmd:cmd,
             data:data
         };
-        return params;
-    },
-    // 封裝服務端消息數據
-    buildCsMsg: function (nickname, avatar, msg) {
-        var date = new Date();
+    };
 
-        var time_str = [
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-        ].map(function (value) {
-            return value < 10 ? '0' + value : value;
-        }).join(':');
+    // 渲染游客的聊天信息.
+    socket.prototype.renderMsg = function (msg, time) {
+        var div = '';
+        if(this._renderMsg) {
+            div = this._renderMsg(msg, time);
+        }else{
+            // 这里是默认的数据信息.
+            div = document.createElement('div');
+            div.style.textAlign = "right";
+            div.innerHTML = [
+                '<div class="content-message online-my-message">\n' +
+                '     <div class="message-info">\n' +
+                '     <div class="message-name-date"><span class="date">',time,'</span><span>我</span></div>\n' +
+                '   <div class="message-message">',msg,'</div>\n' +
+                '  </div>\n' +
+                '</div>'
+            ].join("")
+        }
 
-        return [
-            '<div class="content-message">\n' +
-            '        <div class="message-img">\n' +
-            '           <img class="logo" src="', avatar, '">',
-            '        </div>\n' +
-            '        <div class="message-info">\n' +
-            '           <div class="message-name-date"><span>', nickname, '</span><span class="date">', time_str, '</span></div>\n' +
-            '        <div class="message-message">', msg, '</div>\n' +
-            '   </div>\n' +
-            ' </div>'
-        ].join("");
-    },
-    // 發送消息默認滾動條到底部
-    scrollToBottom: function () {
-        var total_height = $('.message')[0].scrollHeight;
-        $('.message').scrollTop(total_height);
-    },
-    // socket的分配狀態
-    // ws_connect代表链接过来了
-    // hello 代表初次链接成功了.系统返回的返回消息.
-    // assign_kf 这个是链接成功过后  系统分配了客服.
-    // change_kf 代表是更换客服.
-    // reply 代表客服回复消息过来了．
-    handlerMessage:function( data ){
-        var that = this;
-        switch (data['cmd']) {
+        return div;
+    };
+
+    // 渲染客服的聊天数据.
+    socket.prototype.renderCsMsg = function(nickname, avatar, msg) {
+        var div = '',
+            time = getCurrentDateTime();
+
+        if(this._renderCsMsg) {
+            div = this._renderCsMsg(nickname, avatar, msg, time);
+        }else{
+            div = [
+                '<div class="content-message">\n' +
+                '        <div class="message-img">\n' +
+                '           <img class="logo" src="', avatar, '">',
+                '        </div>\n' +
+                '        <div class="message-info">\n' +
+                '           <div class="message-name-date"><span>', nickname, '</span><span class="date">', time, '</span></div>\n' +
+                '        <div class="message-message">', msg, '</div>\n' +
+                '   </div>\n' +
+                ' </div>'
+            ].join("")
+        }
+
+        return div;
+    };
+
+    // 处理消息回复.
+    socket.prototype.handleMessage = function(data) {
+        switch (data.cmd) {
             case "ping":
-                kf_ws_service.socketSend({ "cmd":"pong" });
+                this.socketSend({ "cmd":"pong" });
                 break;
             case "ws_connect":
                 var params = {
@@ -153,34 +268,53 @@ window.chat_ops = {
                     land: parent.location.href,
                     rf: parent.document.referrer,
                 };
-                kf_ws_service.socketSend( that.buildMsg('guest_in',params ));
+                this.socketSend( this.buildMsg('guest_in',params ));
                 break;
             case "hello":
-                kf_ws_service.socketSend( that.buildMsg('guest_connect',{} ));
+                this.socketSend( this.buildMsg('guest_connect',{} ));
                 break;
             case "assign_kf":
-                that.data['t_id'] = data.data['sn'];
-                that.data['t_name'] = data.data['name'];
-                that.data['t_avatar'] = data.data['avatar'];
+                config.cs = {
+                    t_id: data.data.sn,
+                    t_name: data.data.name,
+                    avatar: data.data.avatar
+                };
+                // 开始开启自动回复.
+                this.autoClose();
                 //显示一些系统文字提醒，例如已分配哪个客服
                 break;
             case "change_kf":
-                that.data['t_id'] = data.data['sn'];
-                that.data['t_name'] = data.data['name'];
-                that.data['t_avatar'] = data.data['avatar'];
+                config.cs = {
+                    t_id: data.data.sn,
+                    t_name: data.data.name,
+                    avatar: data.data.avatar
+                };
+                this.autoClose();
                 break;
             case "reply":
-                $('.message').append( that.buildCsMsg(that.data['t_name'], that.data['t_avatar'], data.data.content) );
-                that.scrollToBottom();
+                $(this.output).append( this.renderCsMsg(config.cs.t_name, config.cs.avatar, data.data.content) );
+                this.scrollToBottom();
+                this.autoClose();
                 break;
             case 'close_guest':
-                console.dir('您已经被客服关闭聊天了');
-                // 主动调用.
-                // kf_ws_service.ws.close();
+                this.renderCloseChat();
+                this.ws.close();
+                clearInterval(interval);
+                break;
+            case 'system':
+                if(data.data.code != 0) {
+                    this.ws.close();
+                    this.renderCloseChat();
+                }
+                $(this.system).text(data.data.content);
                 break;
         }
-    }
-}
-$(document).ready(function () {
-    window.chat_ops.init();
-});
+
+        //  交给自定义处理.
+        if(this.handle && (typeof this.handle) == 'function') {
+            this.handle(data);
+        }
+    };
+
+    window.socket = socket;
+})(window);

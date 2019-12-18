@@ -26,7 +26,7 @@ StaticPluginHelper::includeJsPlugins([
     // 公共的socket聊天JS
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     // 这里先分开业务.后期在合并js.
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/core.js'), // 核心.比方说动画.上传动作.
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/chat.js'), // 核心.比方说动画.上传动作.
 ]);
 
 ?>

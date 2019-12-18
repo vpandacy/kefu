@@ -59,7 +59,7 @@ StaticPluginHelper::includeJsPlugins([
                 <span class="submit-button">发送</span>
             </div>
         </div>
-        <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;overflow: auto;">
+        <div class="faceDivBox" style="display:none;height: 137px; bottom: 3rem;width: 88%;overflow: auto; position: absolute;background: white;">
             <div class="faceDiv">
                 <section class="emoji-box"></section>
             </div>

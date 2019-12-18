@@ -1,98 +1,66 @@
 ;
-var online_ops = {
-    // 表情初始化
-    emojInit:()=> {
-        sdEditorEmoj.Init(emojiconfig);
-        sdEditorEmoj.setEmoji({type: 'div', id: "content"});
-    },
+var online_logic = {
     // 菜單TAB切換
-    tabSwitch:()=> {
+    logic:function (){
         $(".online-right .right-tab .tab-one").click(function() {
             // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
             $(this).addClass("right-tab-active").siblings().removeClass("right-tab-active");
             // parent 父元素 next 下一个兄弟节点  children 子节点
             $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
+            $('.online_new_message').click(()=> {
+                $('#online-from').hide();
+                $('.chat-close').hide();
+                chat_ops_min.init();
+            });
+            $('.from-button-message').click(()=>{
+                let fromData = ['name','mobile','wechat','message']
+                let param = {}
+                fromData.forEach((value, index, array) => {
+                    param[value] = $("#online-from [name="+value+"]").val()
+                })
+                param['msn'] = JSON.parse(localStorage.getItem("serverInfo")).msn
+                param['code'] = JSON.parse(localStorage.getItem("serverInfo")).code
+                $.ajax({
+                    url:'/code/leave',
+                    type:'post',
+                    data:param,
+                    dataType: 'json',
+                    success: res => {
+                        res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
+                    }
+                })
+            });
+            $('.online_from_message').click(()=> {
+                $('#online-from').show();
+            });
         });
     },
-    // 监听ws关闭
-    wsClose:()=> {
-        // 服务端的close_guest关闭客服 则触发
-        window.ws.addEventListener('message', event =>{
-            var data = JSON.parse(event.data);
-            switch (data.cmd) {
-                case 'close_guest' :
-                    $('.chat-close').show();
-                    // 打开留言
-                    online_ops.messageOpen();
-                    // 提交留言
-                    online_ops.messageSubmit();
-                    // 开始新对话
-                    online_ops.messageInit();
-                    break;
-            }});
-    },
-    messageOpen:()=> {
-        $('.online_from_message').click(()=> {
-            $('#online-from').show();
-        })
-    },
-    messageSubmit:() => {
-        $('.from-button-message').click(()=>{
-            let fromData = ['name','mobile','wechat','message']
-            let param = {}
-            fromData.forEach((value, index, array) => {
-                param[value] = $("#online-from [name="+value+"]").val()
-            })
-            param['msn'] = JSON.parse(localStorage.getItem("serverInfo")).msn
-            param['code'] = JSON.parse(localStorage.getItem("serverInfo")).code
-            $.ajax({
-                url:'/code/leave',
-                type:'post',
-                data:param,
-                dataType: 'json',
-                success: res => {
-                    res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
-                }
-            })
-        });
-    },
-    messageInit:()=> {
-        $('.online_new_message').click(()=> {
-            $('#online-from').hide();
-            $('.chat-close').hide();
-            window.chat_ops.init();
-            online_ops.autoClose();
-        })
-    },
-    autoClose: function () {
-        var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
-        // 不主动断开.
-        if(data.auto_disconnect == 0) {
-            return;
-        }
-
-        var auto_disconnect = parseInt(data.auto_disconnect);
-        var interval = setInterval(function () {
-            auto_disconnect -= 1;
-            if(auto_disconnect <= 0) {
-                clearInterval(interval);
-                $('.message span').text('由于您长时间没有对话，系统已经关闭您的会话');
-                window.ws.close();
+}
+var ws_config = new socket({
+    input:'#content',
+    emoji:'content',
+    submit:'.submit-button',
+    handle: function (data) {
+        switch (data.cmd) {
+            case 'ws_connect'||'hello':
+                $('.ws_flag').text('正在连接客服...')
+                break;
+            case 'assign_kf'||'change_kf'||'reply' || 'system':
+                $('.ws_flag').text('连接成功')
+                break;
+            case 'close_guest':
                 // 主动关闭聊天.
                 $('.chat-close').show();
-                // 打开留言
-                online_ops.messageOpen();
-                // 提交留言
-                online_ops.messageSubmit();
-                // 开始新对话
-                online_ops.messageInit();
-            }
-        }, 1000);
+                $('.message span').text('由于您长时间没有对话，系统已经关闭您的会话');
+                $('.ws_flag').text('连接关闭')
+                break;
+            default:
+                $('.ws_flag').text('连接成功')
+                break;
+        }
     }
-}
-$(document).ready(function () {
-    online_ops.emojInit();
-    online_ops.tabSwitch();
-    online_ops.wsClose();
-    online_ops.autoClose();
+})
+$(document).ready(function(){
+    online_logic.logic();
+    ws_config.init();
 });
