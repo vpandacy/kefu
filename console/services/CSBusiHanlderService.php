@@ -36,7 +36,7 @@ class CSBusiHanlderService extends BaseService
                         }
 
                         // 这种方式通知不好.
-                        if($message['cmd'] == ConstantService::$chat_cmd_guest_close) {
+                        if($message['cmd'] == ConstantService::$chat_cmd_guest_close && isset($message['data']['kf_sn'])) {
                             //发送给对应的人
                             $tmp_client = Gateway::getClientIdByUid( $message['data']['kf_sn'] );
                             $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );

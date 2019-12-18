@@ -142,7 +142,8 @@ class GuestBusiHanlderService extends BaseService
                         ChatEventService::setGuestBindCache( $client_id ,$cache_params);
                     }else{
                         $params = [
-                            "content" => ChatEventService::getLastErrorMsg()
+                            'content'   => ChatEventService::getLastErrorMsg(),
+                            'code'      =>  ConstantService::$response_code_fail
                         ];
                         $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_system,$params );
                     }
