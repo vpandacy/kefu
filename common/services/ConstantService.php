@@ -29,6 +29,11 @@ class ConstantService extends BaseService
         2   =>  'admin',
     ];
 
+    public static $app_mapping_str = [
+        'www'   =>  '商户平台',
+        'admin' =>  'Admin管理后台'
+    ];
+
     // 定义一些常量ID.
     public static $merchant_app_id = 1;
     public static $admin_app_id = 2;

@@ -1,3 +1,12 @@
+<?php
+use common\services\ConstantService;
+use common\services\GlobalUrlService;
+
+$uris = [
+    'www'   =>  GlobalUrlService::buildKFMerchantUrl('/'),
+    'admin' =>  GlobalUrlService::buildKFAdminUrl('/')
+];
+?>
 <style>
     body {
         margin: 0;
@@ -50,18 +59,13 @@
     <div class="application_content">
         <div class="application_title">选择应用</div>
         <ul class="application_ul">
+            <?php foreach(ConstantService::$app_mapping_str as $key=> $title):?>
             <li class="application_li">
-                <div class="application_name">UC平台</div>
+                <a href="<?=$uris[$key]?>" style="color: black;text-decoration: none;">
+                    <div class="application_name"><?=$title?></div>
+                </a>
             </li>
-            <li class="application_li">
-                <div class="application_name">联展平台</div>
-            </li>
-            <li class="application_li">
-                <div class="application_name">联展平台</div>
-            </li>
-            <li class="application_li">
-                <div class="application_name">联展平台</div>
-            </li>
+            <?php endforeach;?>
         </ul>
     </div>
 </div>

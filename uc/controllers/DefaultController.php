@@ -25,7 +25,8 @@ class DefaultController extends BaseController
                 return $this->redirect(GlobalUrlService::buildKFAdminUrl("/default/index"));
             }
         }
-        return $this->render("application");
+        $this->layout = false;
+        return $this->render("application", $own_appids);
     }
 
     public function actionForbidden()
