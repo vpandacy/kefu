@@ -90,18 +90,20 @@ $(function () {
     // reply 代表客服回复消息过来了．
     // 服务端的close_guest关闭客服 则触发
     window.ws.addEventListener('message', event => {
-        console.log(event.data);
         var data = JSON.parse(event.data);
         switch (data.cmd) {
             case 'ws_connect'||'hello':
                 $('.ws_flag').text('正在连接客服...')
                 break;
-            case 'assign_kf'||'change_kf'||'reply':
+            case 'assign_kf'||'change_kf'||'reply' || 'system':
                 $('.ws_flag').text('连接成功')
                 break;
             case 'close_guest':
                 $('#online-from').show()
                 $('.ws_flag').text('连接关闭')
+                break;
+            default:
+                $('.ws_flag').text('连接成功')
                 break;
         }
     });
