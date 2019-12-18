@@ -60,6 +60,8 @@ class GuestBusiHanlderService extends BaseService
                                     'f_id'  =>  $message['data']['f_id'],
                                 ]
                             ]));
+
+                            Gateway::ungroup($message['data']['f_id']);
                         }
 
                         return $connection->send( "success" );
