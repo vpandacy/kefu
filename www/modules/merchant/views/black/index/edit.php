@@ -25,7 +25,7 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildKFStaticUrl('/js/
                 <div class="layui-form-item">
                     <label class="layui-form-label">游客编号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="visitor_id" required="" lay-verify="required" placeholder="请输入游客编号" autocomplete="off" class="layui-input">
+                        <input type="text" name="uuid" required="" lay-verify="required" placeholder="请输入游客编号" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 

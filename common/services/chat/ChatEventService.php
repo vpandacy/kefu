@@ -17,9 +17,10 @@ class ChatEventService extends BaseService
      * 智能分配客服
      * @param string $sn
      * @param string $code
+     * @param string $client_ip
      * @return array|false
      */
-    public static function getKFByRoute( $sn = null , $code = ''){
+    public static function getKFByRoute( $sn = null , $code = '', $client_ip = ''){
         if( !$sn ){
             return self::_err("商户信息异常-1~~");
         }
@@ -27,6 +28,13 @@ class ChatEventService extends BaseService
         $merchant_info = MerchantService::getInfoBySn( $sn );
         if( !$merchant_info ){
             return self::_err("商户信息异常-2~~");
+        }
+
+        // 这里要先根据黑名单来处理一下.
+        $black_list = BlackListService::getBlackListByMerchantId($merchant_info['id']);
+
+        if(in_array($client_ip, $black_list)) {
+            return self::_err('黑名单游客，请联系管理进行解绑操作');
         }
 
         $query = Staff::find()->where([

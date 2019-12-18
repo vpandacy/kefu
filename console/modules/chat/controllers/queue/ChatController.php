@@ -35,9 +35,10 @@ class ChatController extends QueueBaseController
         $this->echoLog( var_export( $data ,true) );
         $cmd = $data['cmd'];
         $params_data = $data['data'];
-        $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
+        // 这里有其他的处理消息.
         switch ($cmd){
             case ConstantService::$chat_cmd_guest_in:
+                $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
                 //游客进入
                 $params = [
                     "merchant_id" => $merchant_info['id'],
@@ -52,7 +53,8 @@ class ChatController extends QueueBaseController
                 ];
                 GuestChatService::addGuest( $params );
                 break;
-            case ConstantService::$chat_cmd_guest_close://客户关闭了ws
+            case ConstantService::$chat_cmd_guest_close://　游客关闭了ws
+                $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
                 $params = [
                     "client_id" => $params_data['client_id'],
                     "closed_time" => $params_data['closed_time'],
@@ -61,6 +63,17 @@ class ChatController extends QueueBaseController
                     "uuid" => $params_data['uuid']
                 ];
                 GuestChatService::closeGuest( $params );
+                break;
+            case ConstantService::$chat_cmd_close_guest:// 客服主动关闭了．或者将游客信息给拉入黑名单中了.
+                $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
+                $params = [
+                    'closed_time'   =>  $params_data['closed_time'],
+                    'status'        =>  ConstantService::$default_status_true,
+                    'merchant_id'   =>  $merchant_info['id'],
+                    'cs_id'         =>  $params_data['cs_id'],
+                    'uuid'          =>  $params_data['uuid'],
+                ];
+                GuestChatService::closeGuest($params);
                 break;
         }
         return $this->echoLog( "ok~~" );

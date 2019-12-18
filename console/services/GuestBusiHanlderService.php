@@ -20,7 +20,7 @@ class GuestBusiHanlderService extends BaseService
      */
     public static function onWorkerStart($worker)
     {
-//如果不特殊处理，就会启动多次，而一个端口被占用，在此启动就会报错
+        //如果不特殊处理，就会启动多次，而一个端口被占用，在此启动就会报错
         if( $worker->id != 0 ){
             return;
         }
@@ -115,7 +115,7 @@ class GuestBusiHanlderService extends BaseService
                     break;
                 case ConstantService::$chat_cmd_guest_connect://客户链接,要分配客服
                     $code = $data['code'] ?? '';
-                    $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code);
+                    $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code, $message['REMOTE_ADDR']);
                     if( $kf_info ){
                         $params = [
                             "sn" => $kf_info['sn'],
