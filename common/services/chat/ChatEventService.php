@@ -14,13 +14,14 @@ use yii\db\Expression;
 class ChatEventService extends BaseService
 {
     /**
-     * 智能分配客服
+     * 智能分配客服.
+     * @param string $uuid
      * @param string $sn
      * @param string $code
      * @param string $client_ip
      * @return array|false
      */
-    public static function getKFByRoute( $sn = null , $code = '', $client_ip = ''){
+    public static function getKFByRoute( $uuid ,$sn = null , $code = '', $client_ip = ''){
         if( !$sn ){
             return self::_err("商户信息异常-1~~");
         }
@@ -68,16 +69,74 @@ class ChatEventService extends BaseService
             $query->andWhere(['id'=>$staff_ids]);
         }
 
-        $staff_info = $query->limit(1)
+        $staffs = $query->limit(1)
             ->asArray()
-            ->one();
+            ->all();
 
-        if( !$staff_info ){
+        if( !$staffs ){
             return self::_err("暂无客服~~");
         }
 
-        return $staff_info;
+        return self::assignCustomerService($uuid, $staffs);
     }
+
+    /**
+     * 分配客服.按照最少接待处理.
+     * @param $uuid
+     * @param $staffs
+     * @return array
+     */
+    private static function assignCustomerService($uuid, $staffs)
+    {
+        $source = [];
+        foreach($staffs as $key=>$staff) {
+            $source[$staff['sn']] = $staff;
+        }
+
+        $mapping = [];
+        foreach($staffs as $key=> $staff) {
+            $online_users = ChatGroupService::getGroupAllUsers($staff['sn']);
+
+            // 在客服的在线区域.就直接返回这个客服.
+            if(in_array($uuid,$online_users)) {
+                $staff['act'] = 'success';
+                return $staff;
+            }
+
+            // 如果在客服的等待区域,还是直接返回该客服.
+            $wait_users = ChatGroupService::getGroupAllUsers('wait_' . $staff['sn'] );
+            if(in_array($uuid, $wait_users)) {
+                $staff['act'] = 'wait';
+                return $staff;
+            }
+
+            $num = count($online_users);
+            // 过滤掉已经满的客服
+            if($staff['listen_nums'] <= $num) {
+                unset($staffs[$key]);
+                continue;
+            }
+
+            $mapping[$staff['sn']] = $num;
+        }
+
+        // 随机返回一个. 如果所有人都满了. 那就随机分配了. 不算等待区.
+        if(!$staffs) {
+            $staff = $source[array_rand($source)];
+            $staff['act'] = 'wait';
+            return $staff;
+        }
+        $nums = array_values($mapping);
+        sort($nums);
+
+        $min = array_search($nums[0], $mapping);
+
+        $staff = $source[$min];
+        // 标记分配成功.可以直接开始聊天.
+        $staff['act'] = 'success';
+        return $staff;
+    }
+
 
     public static function buildMsg( $cmd ,$data ){
         $params = [

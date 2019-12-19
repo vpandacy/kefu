@@ -15,6 +15,21 @@ class ChatGroupService extends BaseService
 
     private static $group_prefix = 'group_';
 
+    private static $wait_group_prefix = 'wait_';
+
+    /**
+     * 检查用户是否在聊天组中.
+     * @param $group_name
+     * @param $uuid
+     * @return bool
+     */
+    public static function checkUserInGroup($group_name, $uuid)
+    {
+        $all_users = self::getGroupAllUsers($group_name);
+
+        return in_array($uuid, $all_users);
+    }
+
     /**
      * 游客加入组.
      * @param $group_name
@@ -104,6 +119,22 @@ class ChatGroupService extends BaseService
     }
 
     /**
+     * 获取组内所有成员
+     * @param $group_name
+     * @return array
+     */
+    public static function getGroupAllUsers($group_name)
+    {
+        $cache_key = self::$group_prefix . $group_name;
+
+        $group_data = CacheService::get($cache_key);
+
+        $group = @json_decode($group_data, true);
+
+        return !$group ? [] : $group;
+    }
+
+    /**
      * 移除组信息.
      * @param $group_name
      * @return bool
@@ -112,5 +143,91 @@ class ChatGroupService extends BaseService
     {
         $cache_key = self::$group_prefix . $group_name;
         return CacheService::delete($cache_key);
+    }
+
+    /**
+     * 检查用户是否在聊天组中.
+     * @param $group_name
+     * @param $uuid
+     * @return bool
+     */
+    public static function checkUserInWaitGroup($group_name, $uuid)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+
+        return self::checkUserInGroup($group_name, $uuid);
+    }
+
+    /**
+     * 加入等待组.
+     * @param $group_name
+     * @param $uuid
+     * @return bool
+     */
+    public static function joinWaitGroup($group_name, $uuid)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+
+        return self::joinGroup($group_name, $uuid);
+    }
+
+    /**
+     * 离开等待组
+     * @param $group_name
+     * @param $uuid
+     * @return bool
+     */
+    public static function leaveWaitGroup($group_name, $uuid)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+
+        return self::leaveGroup($group_name, $uuid);
+    }
+
+
+    /**
+     * 统计等待组内有多少成员.获取游客的信息.
+     * @param $group_name
+     * @return int
+     */
+    public static function countUserInWaitGroup($group_name)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+
+        return self::countUserInGroup($group_name);
+    }
+
+    /**
+     * 移除等待组信息.
+     * @param $group_name
+     * @return bool
+     */
+    public static function removeWaitGroup($group_name)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+        return self::removeGroup($group_name);
+    }
+
+    /**
+     * 通知等待组内所有成员.
+     * @param $group_name
+     * @param $msg
+     * @return bool
+     */
+    public static function notifyWaitGroupUserByGroupName($group_name, $msg)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+        return self::notifyGroupUserByGroupName($group_name, $msg);
+    }
+
+    /**
+     * 获取等待组内所有成员
+     * @param $group_name
+     * @return array
+     */
+    public static function getWaitGroupAllUsers($group_name)
+    {
+        $group_name = self::$wait_group_prefix . $group_name;
+        return self::getGroupAllUsers($group_name);
     }
 }

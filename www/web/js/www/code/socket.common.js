@@ -313,6 +313,13 @@
                 this.renderCloseChat();
                 $(this.system).text('客服已下线,请开始新对话或留言');
                 break;
+            case 'guest_connect_wait':
+                clearInterval(interval);    // 这里要展示在第几位
+                break;
+            case 'guest_close':
+                this.ws.close();
+                this.renderCloseChat();
+                break;
         }
 
         //  交给自定义处理.

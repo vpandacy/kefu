@@ -100,25 +100,23 @@ class GuestBusiHanlderService extends BaseService
     {
         $cache_params = ChatEventService::getGuestBindCache( $client_id);
         ChatEventService::clearGuestBindCache( $client_id );
+        $uuid = Gateway::getUidByClientId($client_id);
 
         // 加上转发消息.
         $close_params = [
-            "client_id"     => $client_id,
-            "closed_time"   => DateHelper::getFormatDateTime(),
+            'client_id'     => $client_id,
+            'closed_time'   => DateHelper::getFormatDateTime(),
             't_id'          => isset($cache_params['kf_sn']) ? $cache_params['kf_sn'] : '',
+            'f_id'          => $uuid
         ];
 
-        $close_params = array_merge( $close_params,$cache_params );
-        $close_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_close,$close_params );
+        $close_params = array_merge( $close_params, $cache_params );
+        $close_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_close, $close_params );
         Worker::log( $close_data );
-        QueueListService::push2ChatDB(QueueConstant::$queue_chat_log, json_decode($close_data, true));
-        QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($close_data,true) );
-
-        // 这里要退出组的信息.
-        if(isset($close_params['kf_sn'])) {
-            $uuid = Gateway::getUidByClientId($client_id);
-            ChatGroupService::leaveGroup($close_params['kf_sn'],$uuid);
-        }
+        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, json_decode($close_data, true) );
+        QueueListService::push2CS( QueueConstant::$queue_cs_chat, json_decode($close_data,true) );
+        // 解绑.
+        Gateway::unbindUid($client_id, $uuid);
     }
 
     /**
@@ -138,8 +136,14 @@ class GuestBusiHanlderService extends BaseService
                 self::handleGuestConnect($client_id,$message);
                 break;
             case ConstantService::$chat_cmd_chat: // 游客聊天动作.
-                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
-                QueueListService::push2CS(QueueConstant::$queue_cs_chat, $message);
+                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运.如果在聊天的队列中.就允许发送.
+                if(ChatGroupService::checkUserInGroup($message['data']['f_id'], $message['data']['t_id'])) {
+                    return QueueListService::push2CS(QueueConstant::$queue_cs_chat, $message);
+                }
+
+                Gateway::sendToClient($client_id,ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
+                    'content'   =>  '请稍等，客服正在到来中...',
+                ]));
                 break;
             case ConstantService::$chat_cmd_pong:
                 break;
@@ -190,7 +194,7 @@ class GuestBusiHanlderService extends BaseService
         $data = $message['data'] ?? [];
         $code = $data['code'] ?? '';
         $f_id = $data['f_id'] ?? 0;
-        $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code, $message['REMOTE_ADDR']);
+        $kf_info = ChatEventService::getKFByRoute($f_id,$data['msn'] , $code, $message['REMOTE_ADDR']);
 
         if( !$kf_info ){
             $params = [
@@ -201,11 +205,26 @@ class GuestBusiHanlderService extends BaseService
             Gateway::sendToClient( $client_id, $data );
             return;
         }
+        // 这里是分配成功.
+        if($kf_info['act'] == 'success') {
+            self::assignCustomerServiceSuccess($f_id, $client_id, $kf_info);
+        }else{
+            self::assignCustomerServiceWait($f_id,$client_id,$kf_info);
+        }
+    }
 
+    /**
+     * 成功分配客服.
+     * @param int $f_id
+     * @param string $client_id
+     * @param array $kf_info
+     */
+    public static function assignCustomerServiceSuccess($f_id, $client_id, $kf_info)
+    {
         $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_assign_kf,[
             "sn" => $kf_info['sn'],
             "name" => $kf_info['name'],
-            "avatar" => GlobalUrlService::buildPicStaticUrl("hsh",$kf_info['avatar'])
+            "avatar" => GlobalUrlService::buildPicStaticUrl('hsh', $kf_info['avatar'] )
         ]);
 
         //转发消息给对应的客服，做好接待准备
@@ -227,6 +246,49 @@ class GuestBusiHanlderService extends BaseService
         $cache_params['kf_sn'] = $kf_info['sn'];
         // 将client_id加入到这个组中.
         ChatGroupService::joinGroup($kf_info['sn'], $f_id);
+        ChatEventService::setGuestBindCache( $client_id ,$cache_params);
+        Gateway::sendToClient( $client_id, $data );
+    }
+
+    /**
+     * 已经分配客服.但还需等待.
+     * @param int $f_id
+     * @param string $client_id
+     * @param array $kf_info
+     */
+    public static function assignCustomerServiceWait($f_id, $client_id, $kf_info)
+    {
+        $num = ChatGroupService::countUserInWaitGroup($kf_info['sn']);
+
+        // 通知客户.
+        $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_assign_kf_wait, [
+            "sn" => $kf_info['sn'],
+            "name" => $kf_info['name'],
+            "avatar" => GlobalUrlService::buildPicStaticUrl("hsh",$kf_info['avatar']),
+            "wait_num" => $num
+        ]);
+
+        //转发消息给对应的客服，做好接待准备
+        $transfer_params = [
+            "f_id" => $f_id,
+            "t_id" => $kf_info['sn'],
+            // 随机生成一个昵称.
+            'nickname'  =>  'Guest-' . substr($f_id, strlen($f_id) - 12),
+            'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
+            'allocation_time'   =>  date('H:i:s'),
+        ];
+
+        $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_wait_connect,$transfer_params );
+
+        //同时换成起来对应的客服信息
+        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+        $cache_params['kf_id'] = $kf_info['id'];
+        $cache_params['kf_sn'] = $kf_info['sn'];
+        QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true));
+        if(!in_array($f_id, ChatGroupService::getWaitGroupAllUsers($kf_info['sn']))) {
+            // 将client_id加入到这个组中.
+            ChatGroupService::joinWaitGroup($kf_info['sn'], $f_id);
+        }
         ChatEventService::setGuestBindCache( $client_id ,$cache_params);
         Gateway::sendToClient( $client_id, $data );
     }

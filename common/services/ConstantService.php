@@ -52,9 +52,11 @@ class ConstantService extends BaseService
     public static $chat_cmd_guest_close = 'guest_close';
     // 客服分配成功.
     public static $chat_cmd_assign_kf = "assign_kf";
+    // 已经分配给客服，但是客服的接待区已经满了.
+    public static $chat_cmd_assign_kf_wait = "assign_kf_wait";
     // 客服更换.
     public static $chat_cmd_change_kf = "change_kf";
-    // 游客连接成功
+    // 游客连接成功.
     public static $chat_cmd_guest_connect = "guest_connect";
     // 游客欢迎消息.
     public static $chat_cmd_hello = "hello";
@@ -64,7 +66,9 @@ class ConstantService extends BaseService
 
 
     //------- 客服动作  start ------//
-    // 系统消息
+    // 游客已经进入等待区.
+    public static $chat_cmd_guest_wait_connect = "guest_connect_wait";
+    // 系统消息.
     public static $chat_cmd_system = "system";
     // 客服回复消息.
     public static $chat_cmd_reply = 'reply';

@@ -95,7 +95,7 @@
         var user = ChatStorage.getItem(current_uuid, []),
             time_str = this.page.getCurrentTimeStr();
 
-        if(user.is_online) {
+        if(!user.is_online) {
             return $.msg('该游客已经下线了');
         }
 
