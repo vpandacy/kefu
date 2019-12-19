@@ -94,6 +94,13 @@ return [
         ],
         'push' => [
             'host' => '127.0.0.1:9220'
-        ]
+        ],
+        "sysconfig" => [
+            "admin"=>[
+                "footer" => "Admin系统",
+                "menu_title" => "Admin系统"
+            ]
+
+        ],
     ]
 ];

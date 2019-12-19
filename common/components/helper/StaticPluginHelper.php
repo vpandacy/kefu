@@ -94,4 +94,16 @@ class StaticPluginHelper
             self::getDepend());
     }
 
+    public static function select2()
+    {
+        StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl("/plugins/select2/select2.min.css"),
+            self::getDepend());
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/plugins/select2/select2.pinyin.js"),
+            self::getDepend());
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/plugins/select2/zh-CN.js"),
+            self::getDepend());
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/plugins/select2/pinyin.core.js"),
+            self::getDepend());
+    }
+
 }

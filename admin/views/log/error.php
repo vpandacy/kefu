@@ -4,7 +4,6 @@ use common\components\helper\StaticAssetsHelper;
 use common\components\helper\StaticPluginHelper;
 use common\components\helper\UtilHelper;
 use common\services\GlobalUrlService;
-use uc\services\ConstantService;
 
 StaticPluginHelper::setDepend(\admin\assets\Asset::className());
 StaticPluginHelper::daterangepicker();

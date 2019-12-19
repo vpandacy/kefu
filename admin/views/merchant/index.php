@@ -1,3 +1,10 @@
+<?php
+use common\components\helper\StaticPluginHelper;
+use common\components\helper\UtilHelper;
+
+StaticPluginHelper::setDepend(\admin\assets\Asset::className());
+StaticPluginHelper::select2();
+?>
 <section class="content">
     <div class="page-header">
         <h3>商户列表</h3>
@@ -5,6 +12,22 @@
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="box">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <form class="form-inline wrap_search">
+                                <div class="form-group" <?php if (UtilHelper::isPC()): ?> style="width: 13%;" <?php endif; ?> >
+                                    <input type="text" class="form-control" name="kw" placeholder="请输入名称或者联系方式~~"
+                                           value="<?= $search_conditions['kw']; ?>" style="width: 100%;">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">搜索</button>
+                                </div>
+                                <a class="btn btn-link" href="/merchant/index">清空搜索</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-bordered table-striped">
                         <thead>
