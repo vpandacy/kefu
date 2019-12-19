@@ -136,3 +136,38 @@ ALTER TABLE `black_list`
     CHANGE `visitor_id` `uuid` varchar(255) NOT NULL DEFAULT '0' COMMENT '访客ID' AFTER `ip`,
     CHANGE `staff_id` `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '客服ID' AFTER `merchant_id`;
 ```
+### 20191219
+```
+CREATE TABLE `chat_message` (
+  `id` bigint(20) NOT NULL COMMENT '主键' AUTO_INCREMENT PRIMARY KEY,
+  `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户id',
+  `chat_style_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格分组id',
+  `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '客服ID',
+  `from_id` varchar(255) NOT NULL DEFAULT '' COMMENT '发送方 ID',
+  `to_id` varchar(255) NOT NULL DEFAULT '' COMMENT '接收方 ID',
+  `message` varchar(255) NOT NULL DEFAULT '' COMMENT '消息内容',
+  `post_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '消息发送时间',
+  `arrive_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '消息到达时间',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) COMMENT='聊天内容表' ENGINE='InnoDB' CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `member` (
+  `id` bigint(20) NOT NULL COMMENT '会员id' AUTO_INCREMENT PRIMARY KEY,
+  `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户id',
+  `chat_style_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格分组id',
+  `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工id',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
+  `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机号',
+  `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `qq` varchar(255) NOT NULL DEFAULT '' COMMENT 'QQ号码',
+  `wechat` varchar(255) NOT NULL DEFAULT '' COMMENT '微信号码',
+  `reg_ip` varchar(255) NOT NULL DEFAULT '' COMMENT '注册时的ip',
+  `province_id` int NOT NULL DEFAULT '0' COMMENT '省份',
+  `city_id` int NOT NULL DEFAULT '0' COMMENT '城市',
+  `source` tinyint(4) NOT NULL DEFAULT '0' COMMENT '注册时的来源',
+  `desc` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) COMMENT='会员表' ENGINE='InnoDB' CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
