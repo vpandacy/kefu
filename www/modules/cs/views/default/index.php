@@ -11,7 +11,11 @@ StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/
 StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'), CsAsset::className());
 
+// 注意  这里最后要整合在一起的.
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/contextmenu.js'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/page.js'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/socket.js'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/chat.js'), CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/index.js'), CsAsset::className());
 ?>
 <script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
@@ -40,12 +44,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
         <div class="tab fg1" >
             <div class="tab-switch"  >
                 <div class="tab-one">
-<!--                    <i class="iconfont icon-xiaoxi fsize25"></i>-->
-                    游客区
+                    <i class="iconfont icon-xiaoxi fsize25"></i>
+<!--                    游客区-->
                 </div>
-<!--                <div class="tab-one">-->
-<!--                    <i class="iconfont icon-dingshi fsize25"></i>-->
-<!--                </div>-->
+                <div class="tab-one">
+                    <i class="iconfont icon-dingshi fsize25"></i>
+<!--                    等待区-->
+                </div>
             </div>
             <div class="tab-content">
                 <div class="content-one online">
@@ -67,9 +72,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
             </div>
         </div>
         <div class="keep-census">
-            <a>对话:<span class="online">0</span> </a>
-            <a>等待:<span class="wait">0</span></a>
-            <a>访客:<span class="guest">0</span></a>
+            <a>对话人数:<span class="online">0</span> </a>
+            <a>等待人数:<span class="wait">0</span></a>
         </div>
     </div>
 

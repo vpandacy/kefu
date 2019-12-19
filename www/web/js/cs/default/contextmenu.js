@@ -1,10 +1,13 @@
 // 管理右键菜单的事件.
 (function(window){
     // 这里是右键菜单.
-    var Contextmenu = function (elem, container) {
+    var Contextmenu = function (elem, container, page) {
+        // 隐藏的右键菜单.
         this.ele = $(elem);
-
+        // 容器
         this.container = $(container);
+        // 页面操作.
+        this.page = page;
     };
 
     Contextmenu.prototype.init = function() {
@@ -78,7 +81,8 @@
 
     // 聊天关闭事件.
     Contextmenu.prototype.close = function (user) {
-        var current_uuid = $('.content-message-active').attr('data-uuid');
+        var current_uuid = $('.content-message-active').attr('data-uuid'),
+            that = this;
 
         $.confirm('您确认要关闭与游客:' + user.nickname + '的聊天吗?是否继续?',function(){
             var index = $.loading(1, {shade: .5});
@@ -106,7 +110,7 @@
 
                     // 重新渲染.
                     ChatStorage.removeItem(user.uuid);
-                    page.renderOnlineList();
+                    that.page.renderOnlineList();
                 },
                 error: function () {
                     $.close(index)
@@ -118,6 +122,7 @@
     // 加入黑名单.
     Contextmenu.prototype.joinBlackList = function (user) {
         var current_uuid = $('.content-message-active').attr('data-uuid');
+        var that = this;
         $.confirm('您确认要将该游客拉入黑名单吗？凡在黑名单中的游客将无法发起聊天.是否继续?', function () {
             var index = $.loading(1, {shade: .5});
             $.ajax({
@@ -142,7 +147,7 @@
                         return curr != current_uuid;
                     });
 
-                    page.renderOnlineList();
+                    that.page.renderOnlineList();
                 },
                 error: function () {
                     $.close(index)
@@ -175,6 +180,7 @@
     
     Contextmenu.prototype.renderSelectCsMenuAndBindEvent = function (customer_services, user) {
         var current_uuid = $('.content-message-active').attr('data-uuid'),
+            that = this,
             html = customer_services.map(function (ele) {
             return '<option value="' + ele.id +'">' + ele.name +'</option>';
         });
@@ -212,7 +218,7 @@
                             });
 
                             ChatStorage.removeItem(user.uuid);
-                            page.renderOnlineList();
+                            that.page.renderOnlineList();
                         });
                     },
                     error: function () {
