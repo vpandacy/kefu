@@ -1,9 +1,9 @@
 <?php
-
 namespace common\services\chat;
 
-
 use common\models\kefu\chat\GuestHistoryLog;
+use common\models\merchant\GuestChatLog;
+use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\ConstantService;
 
@@ -43,8 +43,8 @@ class GuestChatService extends BaseService
         $guest_log = GuestHistoryLog::find()
             ->where(["status" => ConstantService::$default_status_neg_1])
             ->andWhere([ "merchant_id" => $params['merchant_id'],"uuid" => $params['uuid'] ])
-            ->orderBy([ "id" => SORT_DESC ]
-            )->limit(1)
+            ->orderBy([ "id" => SORT_DESC ])
+            ->limit(1)
             ->one();
 
         if(!$guest_log) {
@@ -56,5 +56,32 @@ class GuestChatService extends BaseService
         ]);
 
         return $guest_log->save();
+    }
+
+    /**
+     * 添加日志记录.
+     * @param array $params
+     * @return bool
+     */
+    public static function addChatLog($params = [])
+    {
+        $staff = Staff::findOne(['sn'=>$params['cs_sn']]);
+
+        $guest_log = GuestHistoryLog::find()
+            ->where(["status" => ConstantService::$default_status_neg_1])
+            ->andWhere([ "merchant_id" => $staff['merchant_id'],"uuid" => $params['uuid'] ])
+            ->orderBy([ "id" => SORT_DESC ])
+            ->limit(1)
+            ->one();
+
+        unset($params['cs_sn']);
+        $params['merchant_id']  = $staff['merchant_id'];
+        $params['cs_id']        = $staff['id'];
+        $params['guest_log_id'] = $guest_log['id'];
+        $params['member_id']    = $guest_log['member_id'];
+
+        $model = new GuestChatLog();
+        $model->setAttributes($params);
+        return $model->save(0);
     }
 }

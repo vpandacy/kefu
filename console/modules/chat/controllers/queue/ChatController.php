@@ -76,6 +76,24 @@ class ChatController extends QueueBaseController
                 ];
                 GuestChatService::closeGuest($params);
                 break;
+            case ConstantService::$chat_cmd_chat:
+                $params = [
+                    'cs_sn' =>  $params_data['t_id'],
+                    'uuid'  =>  $params_data['f_id'],
+                    'from_id'   =>  $params_data['f_id'],
+                    'content'   =>  $params_data['content'],
+                ];
+                GuestChatService::addChatLog($params);
+                break;
+            case ConstantService::$chat_cmd_reply:
+                $params = [
+                    'cs_sn' =>  $params_data['f_id'],
+                    'uuid'  =>  $params_data['t_id'],
+                    'from_id'   =>  $params_data['f_id'],
+                    'content'   =>  $params_data['content'],
+                ];
+                GuestChatService::addChatLog($params);
+                break;
         }
         return $this->echoLog( "ok~~" );
     }
