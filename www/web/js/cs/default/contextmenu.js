@@ -45,7 +45,7 @@
             that = this;
 
         // 展示出来.并将uuid存成局部变量.
-        $('#menu').css({
+        this.ele.css({
             left: x + 'px',
             top : y + 'px',
             display: 'block'
@@ -63,9 +63,11 @@
                 case 'close':
                     that.close(user);
                     break;
+                // 加入黑名单.
                 case 'black':
                     that.joinBlackList(user);
                     break;
+                // 转让游客.
                 case 'transfer':
                     that.transfer(user);
                     break;
