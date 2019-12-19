@@ -45,8 +45,8 @@ class TrackController extends BaseController
                     ? $member[$history['member_id']]['name']
                     : '暂无';
 
-                $history['style_title']= isset($member[$history['chat_stype_id']])
-                    ? $member[$history['chat_stype_id']]['title']
+                $history['style_title']= isset($style[$history['chat_stype_id']])
+                    ? $style[$history['chat_stype_id']]['title']
                     : '普通风格';
 
                 $lists[$key] = $history;
