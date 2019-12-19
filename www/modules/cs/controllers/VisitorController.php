@@ -15,7 +15,6 @@ use common\services\QueueListService;
 use www\modules\cs\controllers\common\BaseController;
 
 /**
- * @todo 先暂时把坑给占着.后续需要将这些全部完善好.
  * Class VisitorController
  * @package www\modules\cs\controllers
  */
@@ -33,7 +32,6 @@ class VisitorController extends BaseController
         }
 
         // 如果是正确的.这里就要关闭游客和游客对应的链接.
-        // @todo 先直接关闭吧.
         $ret = QueueListService::push2Guest(QueueConstant::$queue_guest_chat,[
             'cmd'   =>  ConstantService::$chat_cmd_close_guest,
             'data'  =>  [
@@ -106,6 +104,7 @@ class VisitorController extends BaseController
     }
 
     /**
+     * @todo 还需要继续完善
      * 保存游客数据.
      */
     public function actionSave()
@@ -220,7 +219,7 @@ class VisitorController extends BaseController
             ->asArray()
             // 倒序排.
             ->orderBy(['id'=>SORT_DESC])
-            ->select(['id','cs_id','referer_url','referer_media','land_url','client_ip','province_id','city_id','source','chat_duration'])
+            ->select(['id','cs_id','referer_url','referer_media','land_url','client_ip','source','chat_duration','created_time'])
             ->all();
 
         if($history) {

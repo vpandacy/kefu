@@ -170,7 +170,7 @@
                             '<div>落地页：', history.land_url ? history.land_url : '暂无','　</div>',
                             '<div>来源：', history.referer_url ? history.referer_url : '暂无' ,'　</div>',
                             '<div>接待人：',history.staff_name,'</div>',
-                            '<div>时长：',history.chat_duration,'秒</div>',
+                            '<div>来访时间：',history.created_time,'秒</div>',
                         '</div>'
                     ].join('');
                 });
