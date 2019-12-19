@@ -138,13 +138,14 @@ ALTER TABLE `black_list`
 ```
 ### 20191219
 ```
-CREATE TABLE `chat_message` (
+CREATE TABLE `guest_chat_log` (
   `id` bigint(20) NOT NULL COMMENT '主键' AUTO_INCREMENT PRIMARY KEY,
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户id',
-  `chat_style_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格分组id',
+  `member_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '会员ID',
   `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '客服ID',
-  `from_id` varchar(255) NOT NULL DEFAULT '' COMMENT '发送方 ID',
-  `to_id` varchar(255) NOT NULL DEFAULT '' COMMENT '接收方 ID',
+  `guest_log_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '日志表ID,表明是哪次聊天.',
+  `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '客户ID',
+  `form_id` varchar(255) NOT NULL DEFAULT '' COMMENT '发送方ID,用来回显聊天记录',
   `message` varchar(255) NOT NULL DEFAULT '' COMMENT '消息内容',
   `post_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '消息发送时间',
   `arrive_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '消息到达时间',
@@ -155,8 +156,8 @@ CREATE TABLE `chat_message` (
 CREATE TABLE `member` (
   `id` bigint(20) NOT NULL COMMENT '会员id' AUTO_INCREMENT PRIMARY KEY,
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户id',
-  `chat_style_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格分组id',
   `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工id',
+  `chat_style_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '风格分组id',
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '姓名',
   `mobile` varchar(255) NOT NULL DEFAULT '' COMMENT '手机号',
   `email` varchar(255) NOT NULL DEFAULT '' COMMENT '邮箱',
