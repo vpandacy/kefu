@@ -211,7 +211,9 @@ class UserController extends BaseController
      */
     public function actionCenter()
     {
-        $content = $this->renderPartial('center');
+        $content = $this->renderPartial('center',[
+            'app_ids'   =>  $this->current_user->getAppIds(),
+        ]);
 
         return $this->renderJSON([
             'html'  =>  $content,

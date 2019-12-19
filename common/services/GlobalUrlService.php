@@ -264,6 +264,7 @@ class GlobalUrlService extends BaseService {
         $url .= "/interlace/1";
         return $url;
     }
+
     public static function buildKFAdminUrl($uri, $params = [])
     {
         $path = $uri ? Url::toRoute(array_merge([ $uri ], $params)) : '';

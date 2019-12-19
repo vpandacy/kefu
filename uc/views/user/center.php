@@ -24,6 +24,14 @@ use common\services\GlobalUrlService;
             <a href="<?=GlobalUrlService::buildUcUrl('/company/index',['staff_id'=>$this->params['current_user']['id']])?>">编辑</a>
         </div>
     </div>
+    <?php if(count($app_ids) > 1):?>
+        <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildUcUrl('/default/application');?>">
+            <div>
+                <i class="iconfont icon-diannao"></i>
+            </div>
+            <div>切换应用</div>
+        </a>
+    <?php endif;?>
     <a class="info_edit_two backFFF logout" href="<?=GlobalUrlService::buildKFCSUrl('/');?>">
         <div>
             <i class="iconfont icon-diannao"></i>
