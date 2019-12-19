@@ -145,10 +145,8 @@ CREATE TABLE `guest_chat_log` (
   `cs_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '客服ID',
   `guest_log_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '日志表ID,标识哪次聊天.',
   `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '游客ID',
-  `form_id` varchar(255) NOT NULL DEFAULT '' COMMENT '发送方ID,用来回显聊天记录',
-  `message` varchar(255) NOT NULL DEFAULT '' COMMENT '消息内容',
-  `post_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '消息发送时间',
-  `arrive_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '消息到达时间',
+  `from_id` varchar(255) NOT NULL DEFAULT '' COMMENT '发送方ID,用来回显聊天记录',
+  `content` varchar(255) NOT NULL DEFAULT '' COMMENT '消息内容',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) COMMENT='聊天内容表' ENGINE='InnoDB' CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
