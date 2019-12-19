@@ -22,10 +22,6 @@ class MessageController extends BaseController
             return $this->render('index');
         }
 
-        if($this->isGet()) {
-            return $this->render('index');
-        }
-
         $page = intval($this->post('page',1));
 
         $query = GuestChatLog::find()->where([

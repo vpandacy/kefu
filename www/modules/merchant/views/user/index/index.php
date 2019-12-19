@@ -11,6 +11,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         'current_menu'  =>  'member'
     ])?>
     <div class="tab_staff_content">
-        <table class="layui-hide" id="groupChat" lay-filter="groupChat"></table>
+        <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
     </div>
 </div>
