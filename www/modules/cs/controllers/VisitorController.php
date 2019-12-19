@@ -214,6 +214,8 @@ class VisitorController extends BaseController
             ])
             ->andWhere(['>','created_time',DateHelper::getFormatDateTime('Y-m-d 00:00:00', strtotime('-3 day'))])
             ->asArray()
+            // 倒序排.
+            ->orderBy(['id'=>SORT_DESC])
             ->select(['id','cs_id','referer_url','referer_media','land_url','client_ip','province_id','city_id','source'])
             ->all();
 

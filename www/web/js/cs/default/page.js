@@ -9,7 +9,6 @@
             type: 'div',
             id: "content"
         });
-
         // 菜单栏切换.
         $(".tab .tab-switch .tab-one").click(function() {
             // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
@@ -17,9 +16,16 @@
             // parent 父元素 next 下一个兄弟节点  children 子节点
             $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
         });
+
+        // 关闭聊天框.
+        $('.icon-guanbi').on('click', function () {
+            $('#chatExe .flex1').css({'display': 'none'});
+
+            $('.content-message-active').removeClass('content-message-active');
+        });
     };
 
-    // 渲染聊天框.
+    // 渲染聊天框. 这里要同时去获取游客的轨迹.
     Page.prototype.renderChat = function (uuid) {
         var user = ChatStorage.getItem(uuid),
             that = this;
@@ -44,6 +50,10 @@
 
         $('.flex1 .exe-content-history').html(html.join(''));
         $('#chatExe .flex1').css({'display': 'flex'});
+
+        if(uuid) {
+            this.renderAccessTrack(uuid);
+        }
     };
 
     // 渲染在线列表.
@@ -137,6 +147,26 @@
         ].map(function (value) {
             return value < 10 ? '0' + value : value;
         }).join(':');
+    };
+
+    // 页面访问轨迹.
+    Page.prototype.renderAccessTrack = function(uuid) {
+        $.ajax({
+            type: 'POST',
+            url: cs_common_ops.buildKFCSurl('/visitor/history'),
+            data: {
+                uuid: uuid
+            },
+            dataType: 'json',
+            success:function (res) {
+                if(res.code != 200) {
+                    return $.msg(res.msg);
+                }
+
+                // 获取聊天轨迹.
+                console.dir(res.data);
+            }
+        })
     };
 
     window.Page = Page;

@@ -13,9 +13,11 @@
     Chat.prototype.init = function() {
         // 初始化ws socket.
         this.socket.init(this);
-
+        // 右键菜单初始化.
         this.contextmenu.init();
-
+        // 界面初始化　
+        this.page.init();
+        // 初始化聊天事件.
         this.eventBind();
     };
 
@@ -84,6 +86,8 @@
             that.page.renderChat(uuid);
             that.page.scrollToBottom();
         });
+
+
     };
 
     // 绑定发送事件.
