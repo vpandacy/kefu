@@ -2,7 +2,7 @@
 
 namespace www\modules\merchant\controllers\style;
 
-use common\components\DataHelper;
+use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GroupChatStaff;
@@ -204,7 +204,7 @@ class IndexController extends BaseController
             ->all();
 
         if($staff) {
-            $departments = DataHelper::getDicByRelateID($staff, Department::className(), 'department_id', 'id');
+            $departments = ModelHelper::getDicByRelateID($staff, Department::className(), 'department_id', 'id',['name']);
 
             foreach($staff as $key=>$employee) {
                 $employee['department'] = isset($departments[$employee['department_id']])

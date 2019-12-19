@@ -2,6 +2,7 @@
 namespace www\modules\cs\controllers;
 
 use common\components\helper\DateHelper;
+use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\kefu\chat\GuestHistoryLog;
 use common\models\uc\Staff;
@@ -192,5 +193,42 @@ class VisitorController extends BaseController
         ]);
 
         return $this->renderJSON([],'分配成功');
+    }
+
+    /**
+     * 获取游客的轨迹.
+     */
+    public function actionHistory()
+    {
+        $uuid = $this->post('uuid','');
+
+        if(!$uuid) {
+            return $this->renderErrJSON('请选择正确的游客信息');
+        }
+
+        // 开始查询. 这个查询有点伤.
+        $history = GuestHistoryLog::find()
+            ->where([
+                'merchant_id'   =>  $this->getMerchantId(),
+                'uuid'          =>  $uuid
+            ])
+            ->andWhere(['>','created_time',DateHelper::getFormatDateTime('Y-m-d 00:00:00', strtotime('-3 day'))])
+            ->asArray()
+            ->select(['id','cs_id','referer_url','referer_media','land_url','client_ip','province_id','city_id','source'])
+            ->all();
+
+        if($history) {
+            $staffs = ModelHelper::getDicByRelateID($history,Staff::className(), 'cs_id','id',['name']);
+
+            foreach($history as $key => $h) {
+                $h['staff_name'] = isset($staffs[$h['cs_id']])
+                    ? $staffs[$h['cs_id']]['name']
+                    : '暂无接待员工';
+
+                $history[$key] = $h;
+            }
+        }
+
+        return $this->renderJSON($history,'获取成功');
     }
 }

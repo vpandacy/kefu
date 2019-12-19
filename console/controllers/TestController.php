@@ -31,6 +31,7 @@ class TestController extends BaseController
         while(true) {
             system('php ' . $path . ' cs/queue/push/start');
             system('php ' . $path . ' guest/queue/push/start');
+            system('php ' . $path . ' chat/queue/chat/start');
         }
     }
 }

@@ -2,6 +2,7 @@
 namespace www\modules\merchant\controllers\black;
 
 use common\components\DataHelper;
+use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\merchant\BlackList;
 use common\models\uc\Staff;
@@ -37,7 +38,7 @@ class IndexController extends BaseController
             ->all();
 
         if($lists) {
-            $staffs = DataHelper::getDicByRelateID($lists, Staff::className(), 'cs_id', 'id');
+            $staffs = ModelHelper::getDicByRelateID($lists, Staff::className(), 'cs_id', 'id',['name']);
 
             foreach($lists as $key=>$blacklist) {
                 $blacklist['staff_name'] = isset($staffs[$blacklist['cs_id']])

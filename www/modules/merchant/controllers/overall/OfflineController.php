@@ -2,6 +2,7 @@
 namespace www\modules\merchant\controllers\overall;
 
 use common\components\DataHelper;
+use common\components\helper\ModelHelper;
 use common\models\merchant\GroupChat;
 use common\models\merchant\LeaveMessage;
 use common\services\ConstantService;
@@ -45,7 +46,7 @@ class OfflineController extends BaseController
             ->all();
 
         if($lists) {
-            $groups = DataHelper::getDicByRelateID($lists, GroupChat::className(), 'group_chat_id','id');
+            $groups = ModelHelper::getDicByRelateID($lists, GroupChat::className(), 'group_chat_id','id',['title']);
 
             foreach($lists as $key => $message) {
                 $message['group_chat'] = isset($groups[$message['group_chat_id']])

@@ -2,7 +2,7 @@
 
 namespace uc\controllers;
 
-use common\components\DataHelper;
+use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\uc\Role;
 use common\models\uc\StaffRole;
@@ -77,8 +77,7 @@ class StaffController extends BaseController
             ->all();
 
         if($employees) {
-            $departments = DataHelper::getDicByRelateID($employees, Department::className(), 'department_id', 'id');
-
+            $departments = ModelHelper::getDicByRelateID($employees, Department::className(), 'department_id', 'id',['name']);
             foreach($employees as $key=>$employee) {
                 $employee['department'] = isset($departments[$employee['department_id']])
                     ? $departments[$employee['department_id']]['name']
