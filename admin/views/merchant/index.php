@@ -32,11 +32,11 @@ StaticPluginHelper::select2();
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th width="6%">ID</th>
-                            <th width="12%">编号</th>
-                            <th width="12%">名称</th>
+                            <th width="3%">ID</th>
+                            <th width="8%">编号</th>
+                            <th width="14%">名称</th>
                             <th>简介</th>
-                            <th width="10%">联系方式</th>
+                            <th width="8%">联系方式</th>
                             <th width="10%">创建时间</th>
                         </tr>
                         </thead>
