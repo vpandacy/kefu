@@ -160,10 +160,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                             <div>微信：</div>
                             <div>备注：</div>
                         </div>
-                        <div class="content-one" style="display: none;">
-                            <div>+添加标签</div>
-                            <div>姓名：</div>
-                            <div>电话：</div>
+                        <div class="content-one access-track" style="display: none;max-height: 380px;overflow-y: auto;">
+                            <div style="text-align: center;color: rgb(179, 181, 185) !important;">暂无</div>
                         </div>
                     </div>
                 </div>

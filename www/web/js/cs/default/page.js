@@ -36,20 +36,19 @@
             // 置空.就是没有聊天记录.
             $('.flex1 .exe-content-history').html('');
             $('#chatExe .flex1').css({'display': 'flex'});
-            return false;
+        }else{
+            // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
+            var html = user.messages.map(function (message) {
+                if(message.f_id == uuid){
+                    return that.renderCustomerMsg(user.nickname, user.avatar, message.content, message.time);
+                }
+
+                return that.renderCsMsg('我',  message.content, message.time);
+            });
+
+            $('.flex1 .exe-content-history').html(html.join(''));
+            $('#chatExe .flex1').css({'display': 'flex'});
         }
-
-        // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
-        var html = user.messages.map(function (message) {
-            if(message.f_id == uuid){
-                return that.renderCustomerMsg(user.nickname, user.avatar, message.content, message.time);
-            }
-
-            return that.renderCsMsg('我',  message.content, message.time);
-        });
-
-        $('.flex1 .exe-content-history').html(html.join(''));
-        $('#chatExe .flex1').css({'display': 'flex'});
 
         if(uuid) {
             this.renderAccessTrack(uuid);
@@ -164,7 +163,18 @@
                 }
 
                 // 获取聊天轨迹.
-                console.dir(res.data);
+                var html = res.data.map(function (history) {
+                    return [
+                        '<div style="background-color: #ffffff;padding: 5px">',
+                            '<div>落地页：', history.land_url ,'　</div>',
+                            '<div>来源：', history.referer_url ,'　</div>',
+                            '<div>接待人：',history.staff_name,'</div>',
+                            '<div>时长：',history.chat_duration,'秒</div>',
+                        '</div>'
+                    ].join('');
+                });
+                console.dir(res);
+                $('.access-track').html(html.join(''));
             }
         })
     };

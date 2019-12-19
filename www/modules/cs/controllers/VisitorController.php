@@ -216,7 +216,7 @@ class VisitorController extends BaseController
             ->asArray()
             // 倒序排.
             ->orderBy(['id'=>SORT_DESC])
-            ->select(['id','cs_id','referer_url','referer_media','land_url','client_ip','province_id','city_id','source'])
+            ->select(['id','cs_id','referer_url','referer_media','land_url','client_ip','province_id','city_id','source','chat_duration'])
             ->all();
 
         if($history) {
