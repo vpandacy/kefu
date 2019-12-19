@@ -72,6 +72,7 @@
             });
         }
 
+        // @todo 这里要特殊处理一下.
         var html = online_users.map(function (uuid) {
             var user = ChatStorage.getItem(uuid);
             var class_name = user.new_message >　0 ? 'content-new-message ' : '';

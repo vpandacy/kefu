@@ -95,6 +95,10 @@
         var user = ChatStorage.getItem(current_uuid, []),
             time_str = this.page.getCurrentTimeStr();
 
+        if(user.is_online) {
+            return $.msg('该游客已经下线了');
+        }
+
         // 这里要给current_uuid的用户存储信息.不然到时候都不知道给谁了.
         this.socket.socketSend(this.socket.buildMsg('reply', {
             content: msg
@@ -132,7 +136,8 @@
                 this.socket.socketSend(this.socket.buildMsg('kf_in', {}));
                 break;
             case "guest_close":
-                console.dir(data);
+                // 先获取用户的信息
+                this.guestClose(data.data);
                 break;
             case "guest_connect":
                 this.assignKf(data);
@@ -143,12 +148,14 @@
         }
     };
 
+    // 这里是游客登录进来了.已经分配给该客户的动作.
     Chat.prototype.assignKf = function(data) {
         var user = {
-            uuid: data.data.f_id,
-            avatar: data.data.avatar,
-            nickname: data.data.nickname,
-            allocationTime: data.data.allocation_time
+            uuid: data.data.f_id,                       // 用户ID
+            avatar: data.data.avatar,                   // 用户头像
+            nickname: data.data.nickname,               // 用户昵称
+            allocationTime: data.data.allocation_time,  // 用户的发起时间
+            is_online: 1                                // 是否在线,1在线.0下线.
         };
 
         var old_user = ChatStorage.getItem(user.uuid, {});
@@ -214,6 +221,23 @@
         ChatStorage.setItem(uuid, user);
         // 重新将uuid给置顶.
         this.page.renderOnlineList(uuid);
+    };
+
+    /**
+     * 游客主动关闭.
+     * @param data
+     * @returns {boolean}
+     */
+    Chat.prototype.guestClose = function(data) {
+        var user = ChatStorage.getItem(data.uuid);
+
+        if(!user) {
+            return false;
+        }
+
+        user.is_online = 1;
+        // 存储进去.
+        ChatStorage.setItem(data.uuid, user);
     };
 
     window.Chat = Chat;

@@ -84,6 +84,23 @@
         var current_uuid = $('.content-message-active').attr('data-uuid'),
             that = this;
 
+        // 游客已经下线了.直接删除就可以了.
+        if(!user.is_online) {
+            // 这里要删除游客信息,并缩小减少online_users.
+            if(user.uuid == current_uuid) {
+                $('#chatExe .flex1').css({'display': 'none'});
+            }
+
+            online_users = online_users.filter(function (curr, curr_index) {
+                return current_uuid != curr;
+            });
+
+            // 重新渲染.
+            ChatStorage.removeItem(user.uuid);
+            that.page.renderOnlineList();
+            return false;
+        }
+
         $.confirm('您确认要关闭与游客:' + user.nickname + '的聊天吗?是否继续?',function(){
             var index = $.loading(1, {shade: .5});
             $.ajax({
