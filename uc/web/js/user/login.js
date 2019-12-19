@@ -6,10 +6,7 @@ function loginActive() {
     arguments[0] === 'login' ? loginDom.classList.add('right-panel-active') : loginDom.classList.remove('right-panel-active');
     arguments[0] === 'password' ? loginDom.classList.add('right-panel-password-active') : loginDom.classList.remove('right-panel-password-active');
 }
-function login(account,password) {
-
-}
-var merchant_user_login_ops = {
+var uc_user_login_ops = {
     init: function () {
         this.eventBind();
     },
@@ -95,9 +92,6 @@ var merchant_user_login_ops = {
             });
         });
     },
-    captchaImg: function () {
-        $('.cupointer').on('click',function () {});
-    },
     captchatAjax: function () {
         var index = $.loading(1,{shade: .5});
         var iphoneDom = $(".iphone_code");
@@ -113,7 +107,7 @@ var merchant_user_login_ops = {
                 $.close(index);
                 var callback  = null;
                 if (res.code == 200) {
-                    merchant_user_login_ops.captcha(iphoneDom);
+                    uc_user_login_ops.captcha(iphoneDom);
                 }else  {
 
                 }
@@ -141,10 +135,10 @@ var merchant_user_login_ops = {
             countdown--;
         }
         setTimeout(function() {
-            merchant_user_login_ops.captcha(obj);
+            uc_user_login_ops.captcha(obj);
          },1000);
     }
 };
 $(document).ready(function () {
-    merchant_user_login_ops.init();
+    uc_user_login_ops.init();
 });
