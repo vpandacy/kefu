@@ -38,7 +38,10 @@ class VisitorController extends BaseController
             'cmd'   =>  ConstantService::$chat_cmd_close_guest,
             'data'  =>  [
                 'f_id'  =>  $this->current_user['sn'],
-                't_id'  =>  $uuid
+                't_id'  =>  $uuid,
+                'kf_id' =>  $this->current_user['id'],
+                'msn'   =>  $this->merchant_info['sn'],
+                'kf_sn' =>  $this->current_user['sn'],
             ],
         ]);
 
@@ -210,7 +213,8 @@ class VisitorController extends BaseController
         $history = GuestHistoryLog::find()
             ->where([
                 'merchant_id'   =>  $this->getMerchantId(),
-                'uuid'          =>  $uuid
+                'uuid'          =>  $uuid,
+                'status'        =>  ConstantService::$default_status_true,
             ])
             ->andWhere(['>','created_time',DateHelper::getFormatDateTime('Y-m-d 00:00:00', strtotime('-3 day'))])
             ->asArray()

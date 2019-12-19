@@ -60,7 +60,8 @@ class ChatController extends QueueBaseController
                     "closed_time" => $params_data['closed_time'],
                     "status" => ConstantService::$default_status_true,
                     "merchant_id" => $merchant_info['id'],
-                    "uuid" => $params_data['uuid']
+                    "uuid" => $params_data['uuid'],
+                    "cs_id" =>  $params_data['kf_id'],
                 ];
                 GuestChatService::closeGuest( $params );
                 break;
@@ -70,7 +71,7 @@ class ChatController extends QueueBaseController
                     'closed_time'   =>  $params_data['closed_time'],
                     'status'        =>  ConstantService::$default_status_true,
                     'merchant_id'   =>  $merchant_info['id'],
-                    'cs_id'         =>  $params_data['cs_id'],
+                    'cs_id'         =>  $params_data['kf_id'],
                     'uuid'          =>  $params_data['uuid'],
                 ];
                 GuestChatService::closeGuest($params);

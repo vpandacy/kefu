@@ -25,6 +25,7 @@ class GuestChatService extends BaseService
             ->orderBy([ "id" => SORT_DESC ])->limit(1)->one();
         if( $guest_log ){
             $guest_log->closed_time = $params['closed_time'];
+            $guest_log->cs_id = $params['cs_id'];
             $guest_log->chat_duration = strtotime( $guest_log->closed_time ) - strtotime( $guest_log->created_time );
             $guest_log->status = $params['status'];
             $guest_log->save(0);

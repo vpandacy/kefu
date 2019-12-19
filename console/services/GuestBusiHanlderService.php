@@ -110,6 +110,7 @@ class GuestBusiHanlderService extends BaseService
         $close_params = array_merge( $close_params,$cache_params );
         $close_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_close,$close_params );
         Worker::log( $close_data );
+        QueueListService::push2ChatDB(QueueConstant::$queue_chat_log, json_decode($close_data, true));
         QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($close_data,true) );
 
         // 这里要退出组的信息.

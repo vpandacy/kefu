@@ -166,8 +166,8 @@
                 var html = res.data.map(function (history) {
                     return [
                         '<div style="background-color: #ffffff;padding: 5px">',
-                            '<div>落地页：', history.land_url ,'　</div>',
-                            '<div>来源：', history.referer_url ,'　</div>',
+                            '<div>落地页：', history.land_url ? history.land_url : '暂无','　</div>',
+                            '<div>来源：', history.referer_url ? history.referer_url : '暂无' ,'　</div>',
                             '<div>接待人：',history.staff_name,'</div>',
                             '<div>时长：',history.chat_duration,'秒</div>',
                         '</div>'
