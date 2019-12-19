@@ -58,19 +58,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 </form>
             </div>
         </div>
-        <!-- 遮掩层（选择应用） -->
-        <div class="login_cover disnone" onclick="document.getElementsByClassName('login_cover')[0].classList.add('disnone');document.getElementsByClassName('login_cover_content')[0].classList.add('disnone');">
-        </div>
-        <div class="login_cover_content disnone" >
-            <img onclick="document.getElementsByClassName('login_cover')[0].classList.add('disnone');document.getElementsByClassName('login_cover_content')[0].classList.add('disnone');" class="login_cover_close cupointer" src="images/close.png">
-            <div class="login_cover_title">选择应用</div>
-            <div class="login_cover_button dflex cupointer">
-                <div class="login_applications">客服系统</div>
-                <div>客服系统</div>
-                <div>客服系统</div>
-                <div>客服系统</div>
-            </div>
-        </div>
     </div>
 </div>
 

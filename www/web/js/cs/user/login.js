@@ -41,10 +41,7 @@ var merchant_user_login_ops = {
                     var callback = null;
                     if (res.code == 200) {
                         callback = function(){
-                            // 弹出选择应用
-                            document.getElementsByClassName('login_cover')[0].classList.remove('disnone');
-                            document.getElementsByClassName('login_cover_content')[0].classList.remove('disnone');
-                            url = res.data.url;
+                            location.href = res.data.url;
                         };
                     }
                     $.msg(res.msg,res.code == 200, callback);
