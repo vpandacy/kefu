@@ -11,7 +11,7 @@ var uc_common_ops = {
         var pathname = window.location.pathname,
             nav_name = null,
             uris = {
-            'yonghuguanli'  : [
+            'kefu'  : [
                 '/staff/',
                 '/action/',
                 '/role/',

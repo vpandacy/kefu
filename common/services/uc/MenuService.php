@@ -39,8 +39,8 @@ class MenuService extends BaseService
             'left_menu' =>  self::getLeftMenu(),
             'bar_menu'  =>  self::getBarMenu()
         ];
-        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company'];
 
+        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company'];
         // 开始过滤菜单.
         foreach($all_menu['left_menu'] as $key=>$action) {
             if(!in_array($action['url'], $urls)) {
@@ -87,11 +87,16 @@ class MenuService extends BaseService
 //                'title' =>  '聊天管理',
 //                'icon'  =>  'icon-liaotian'
 //            ],
+            'member'    =>  [
+                'url'   =>  'merchant/user/index/index',
+                'title' =>  '会员管理',
+                'icon'  =>  'icon-yonghuguanli',
+            ],
             // 用户管理.
             'user'  =>  [
                 'url'   =>  'staff/index',
                 'title' =>  '员工管理',
-                'icon'  =>  'icon-yonghuguanli'
+                'icon'  =>  'icon-kefu'
             ],
             'message'   =>  [
                 'title' =>  '留言管理',
@@ -127,6 +132,20 @@ class MenuService extends BaseService
     private static function getBarMenu()
     {
         return [
+            'member'    =>  [
+                'member'=>  [
+                    'title' =>  '会员管理',
+                    'url'   =>  'merchant/user/index/index',
+                ],
+                'track' =>  [
+                    'title' =>  '轨迹查看',
+                    'url'   =>  'merchant/user/track/index',
+                ],
+                'message'   =>  [
+                    'title' =>  '聊天内容',
+                    'url'   =>  'merchant/user/message/index',
+                ],
+            ],
             'chat'  =>  [
                 'chat'  =>  [
                     'title' =>  '聊天管理',

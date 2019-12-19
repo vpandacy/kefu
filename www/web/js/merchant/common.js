@@ -11,6 +11,9 @@ var merchant_common_ops = {
         var pathname = window.location.pathname,
             nav_name = null,
             uris = {
+                'yonghuguanli'  : [
+                    '/merchant/user',
+                ],
                 'liaotian'      : [
                     '/merchant/chat/index',
                     '/merchant/chat/download',
