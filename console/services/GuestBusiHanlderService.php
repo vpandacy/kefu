@@ -5,6 +5,7 @@ namespace console\services;
 use common\components\helper\DateHelper;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
+use common\services\chat\ChatGroupService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
@@ -115,7 +116,8 @@ class GuestBusiHanlderService extends BaseService
 
         // 这里要退出组的信息.
         if(isset($close_params['kf_sn'])) {
-            Gateway::leaveGroup($client_id,$close_params['kf_sn']);
+            $uuid = Gateway::getUidByClientId($client_id);
+            ChatGroupService::leaveGroup($close_params['kf_sn'],$uuid);
         }
     }
 
@@ -150,6 +152,34 @@ class GuestBusiHanlderService extends BaseService
     }
 
     /**
+     * 游客guest_in事件.
+     * @param $client_id
+     * @param $message
+     */
+    public static function handleGuestIn($client_id, $message)
+    {
+        $data = $message['data'] ?? [];
+        $f_id = $data['f_id'] ?? 0;
+
+        if ($f_id) {
+            //建立绑定关系，后面就可以根据f_id找到这个人了
+            Gateway::bindUid($client_id, $f_id);
+            $cache_params = [
+                "uuid" => $f_id,
+                "msn" => $data['msn'] ?? ''
+            ];
+            ChatEventService::setGuestBindCache( $client_id ,$cache_params);
+        }
+
+        $ws_data = ChatEventService::buildMsg(ConstantService::$chat_cmd_hello, [
+            'content' => time()
+        ]);
+        //需要同时将消息转发一份到对话队列，然后存储起来
+        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$message );
+        Gateway::sendToClient( $client_id,$ws_data );
+    }
+
+    /**
      * 游客guest_connect事件.
      * @param $client_id
      * @param $message
@@ -161,6 +191,7 @@ class GuestBusiHanlderService extends BaseService
         $code = $data['code'] ?? '';
         $f_id = $data['f_id'] ?? 0;
         $kf_info = ChatEventService::getKFByRoute( $data['msn'] , $code, $message['REMOTE_ADDR']);
+
         if( !$kf_info ){
             $params = [
                 'content'   => ChatEventService::getLastErrorMsg(),
@@ -195,37 +226,9 @@ class GuestBusiHanlderService extends BaseService
         $cache_params['kf_id'] = $kf_info['id'];
         $cache_params['kf_sn'] = $kf_info['sn'];
         // 将client_id加入到这个组中.
-        Gateway::joinGroup($client_id, $kf_info['sn']);
+        ChatGroupService::joinGroup($kf_info['sn'], $f_id);
         ChatEventService::setGuestBindCache( $client_id ,$cache_params);
         Gateway::sendToClient( $client_id, $data );
-    }
-
-    /**
-     * 游客guest_in事件.
-     * @param $client_id
-     * @param $message
-     */
-    public static function handleGuestIn($client_id, $message)
-    {
-        $data = $message['data'] ?? [];
-        $f_id = $data['f_id'] ?? 0;
-
-        if ($f_id) {
-            //建立绑定关系，后面就可以根据f_id找到这个人了
-            Gateway::bindUid($client_id, $f_id);
-            $cache_params = [
-                "uuid" => $f_id,
-                "msn" => $data['msn'] ?? ''
-            ];
-            ChatEventService::setGuestBindCache( $client_id ,$cache_params);
-        }
-
-        $ws_data = ChatEventService::buildMsg(ConstantService::$chat_cmd_hello, [
-            'content' => time()
-        ]);
-        //需要同时将消息转发一份到对话队列，然后存储起来
-        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$message );
-        Gateway::sendToClient( $client_id,$ws_data );
     }
 
     /**
@@ -242,23 +245,25 @@ class GuestBusiHanlderService extends BaseService
                 // 关闭信息.
                 $tmp_client && Gateway::closeClient( $tmp_client[0] );
                 // 退出组信息.
-                $tmp_client && Gateway::leaveGroup( $tmp_client[0] ,$message['data']['f_id'] );
+                ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
                 break;
             // 给组内进行广播.
             case ConstantService::$chat_cmd_kf_logout:
-                // 给组内进行广播.
-                Gateway::sendToGroup($message['data']['f_id'], ChatEventService::buildMsg(ConstantService::$chat_cmd_kf_logout,[
+                $mess = ChatEventService::buildMsg(ConstantService::$chat_cmd_kf_logout,[
                     'f_id'  =>  $message['data']['f_id'],
-                ]));
+                ]);
 
-                Gateway::ungroup($message['data']['f_id']);
+                // 给组内进行广播.
+                ChatGroupService::notifyGroupUserByGroupName($message['data']['f_id'], $mess);
+                ChatGroupService::removeGroup($message['data']['f_id']);
                 break;
             case ConstantService::$chat_cmd_change_kf:
                 // 发送给对应的人
                 $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
                 if($tmp_client) {
-                    Gateway::leaveGroup($tmp_client[0], $message['data']['f_id']);
-                    Gateway::joinGroup($tmp_client[0], $message['data']['cs']['sn']);
+                    //　传递给新的组.
+                    ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
+                    ChatGroupService::joinGroup( $message['data']['cs']['sn'], $message['data']['t_id']);
 
                     //同时换成起来对应的客服信息
                     $cache_params = ChatEventService::getGuestBindCache( $tmp_client[0]);
