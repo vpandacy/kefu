@@ -174,4 +174,7 @@ CREATE TABLE `member` (
 ```
 ALTER TABLE `member`
     ADD `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '用户id' AFTER `chat_style_id`;
+    
+ALTER TABLE `guest_chat_log`
+    ADD `cs_name` varchar(255) NOT NULL DEFAULT '' COMMENT '客服昵称' AFTER `cs_id`;
 ```

@@ -6,6 +6,7 @@ use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\kefu\chat\GuestHistoryLog;
 use common\models\merchant\GroupChat;
+use common\models\merchant\GuestChatLog;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
 use common\services\chat\BlackListService;
@@ -276,5 +277,25 @@ class VisitorController extends BaseController
         }
 
         return $this->renderJSON($history,'获取成功');
+    }
+
+    /**
+     * 获取游客跟自己的聊天记录.
+     */
+    public function actionMessage()
+    {
+        // 最后一次聊天的时间.
+        $last_time = $this->post('last_time',date('Y-m-d H:i:s'));
+
+        $guest_chat_log = GuestChatLog::find()
+            ->where(['<','created_time', $last_time])
+            ->andWhere(['merchant_id'=>$this->getMerchantId(),'cs_id'=> $this->getStaffId()])
+            ->orderBy(['id'=>SORT_DESC])
+            ->limit($this->page_size)
+            ->asArray()
+            ->select(['id','cs_id','uuid','from_id','content','created_time'])
+            ->all();
+
+        return $this->renderJSON($guest_chat_log,'获取成功');
     }
 }

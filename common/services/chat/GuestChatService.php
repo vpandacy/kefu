@@ -76,6 +76,7 @@ class GuestChatService extends BaseService
 
         unset($params['cs_sn']);
         $params['merchant_id']  = $staff['merchant_id'];
+        $params['cs_name']      = $staff['nickname'];
         $params['cs_id']        = $staff['id'];
         $params['guest_log_id'] = $guest_log['id'];
         $params['member_id']    = $guest_log['member_id'];

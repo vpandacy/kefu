@@ -11,6 +11,7 @@ use Yii;
  * @property int $merchant_id 商户id
  * @property int $member_id 会员ID
  * @property int $cs_id 客服ID
+ * @property string $cs_name 客服昵称
  * @property int $guest_log_id 日志表ID,标识哪次聊天.
  * @property string $uuid 游客ID
  * @property string $from_id 发送方ID,用来回显聊天记录
@@ -44,7 +45,7 @@ class GuestChatLog extends \yii\db\ActiveRecord
         return [
             [['merchant_id', 'member_id', 'cs_id', 'guest_log_id'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['uuid', 'from_id', 'content'], 'string', 'max' => 255],
+            [['cs_name', 'uuid', 'from_id', 'content'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,6 +59,7 @@ class GuestChatLog extends \yii\db\ActiveRecord
             'merchant_id' => 'Merchant ID',
             'member_id' => 'Member ID',
             'cs_id' => 'Cs ID',
+            'cs_name' => 'Cs Name',
             'guest_log_id' => 'Guest Log ID',
             'uuid' => 'Uuid',
             'from_id' => 'From ID',

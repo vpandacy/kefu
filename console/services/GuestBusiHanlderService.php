@@ -100,7 +100,8 @@ class GuestBusiHanlderService extends BaseService
     {
         $cache_params = ChatEventService::getGuestBindCache( $client_id);
         ChatEventService::clearGuestBindCache( $client_id );
-        $uuid = Gateway::getUidByClientId($client_id);
+
+        $uuid = isset($cache_params['uuid']) ? $cache_params['uuid'] : '';
 
         // 加上转发消息.
         $close_params = [
@@ -172,6 +173,9 @@ class GuestBusiHanlderService extends BaseService
 
         if ($f_id) {
             //建立绑定关系，后面就可以根据f_id找到这个人了
+            $old_client_id = Gateway::getClientIdByUid($f_id);
+            // 解除绑定信息.
+            $old_client_id && Gateway::unbindUid($old_client_id[0], $f_id);
             Gateway::bindUid($client_id, $f_id);
             $cache_params = [
                 "uuid" => $f_id,
