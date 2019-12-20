@@ -313,8 +313,9 @@
                 this.renderCloseChat();
                 $(this.system).text('客服已下线,请开始新对话或留言');
                 break;
+            // 这里要展示在第几位. 这里是等待聊天的队列.
             case 'guest_connect_wait':
-                clearInterval(interval);    // 这里要展示在第几位
+                clearInterval(interval);
                 break;
             case 'guest_close':
                 this.ws.close();

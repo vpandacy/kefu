@@ -147,6 +147,10 @@
             case "chat":
                 this.chat(data);
                 break;
+            // 这里要存入一份.然后在进行渲染. 这里是等待聊天的数据.
+            case 'guest_connect_wait':
+
+                break;
         }
     };
 
