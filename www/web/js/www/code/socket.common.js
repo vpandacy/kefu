@@ -302,7 +302,7 @@
                 clearInterval(interval);
                 break;
             case 'system':
-                if(data.data.code != 0) {
+                if(data.data.hasOwnProperty('code')) {
                     this.ws.close();
                     this.renderCloseChat();
                 }
