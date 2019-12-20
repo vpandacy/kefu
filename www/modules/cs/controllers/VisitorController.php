@@ -5,6 +5,8 @@ use common\components\helper\DateHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\kefu\chat\GuestHistoryLog;
+use common\models\merchant\GroupChat;
+use common\models\merchant\Member;
 use common\models\uc\Staff;
 use common\services\chat\BlackListService;
 use common\services\chat\GuestChatService;
@@ -104,40 +106,79 @@ class VisitorController extends BaseController
     }
 
     /**
-     * @todo 还需要继续完善
      * 保存游客数据.
      */
     public function actionSave()
     {
-        $data = $this->post(null);
+        $name = $this->post('name',''); // 姓名.
+        $mobile = $this->post('mobile',''); // 手机号.
+        $email = $this->post('email',''); // 邮件.
+        $qq = $this->post('qq',''); // QQ号码.
+        $wechat = $this->post('wechat',''); // 微信号.
+        $uuid = $this->post('uuid',''); // uuid.
+        $desc = $this->post('desc',''); // 描述.
+        $code = $this->post('code',0);
 
-        $request_r = ['name','mobile','email','qq','wechat'];
-
-        if(count(array_intersect($request_r,array_keys($data))) != count($request_r)) {
-            return $this->renderErrJSON('参数非法');
-        }
-
-        if($data['name'] && !ValidateHelper::validLength($data['name'],1,255)) {
+        if($name && !ValidateHelper::validLength($name,1,255)) {
             return $this->renderErrJSON('请输入正确长度的名称');
         }
 
-        if($data['qq'] && !ValidateHelper::validLength($data['qq'],1,13)) {
+        if($qq && !ValidateHelper::validLength($qq,1,13)) {
             return $this->renderErrJSON('请输入正确长度的ＱＱ号');
         }
 
-        if($data['mobile'] && !ValidateHelper::validMobile($data['mobile'])) {
+        if($mobile && !ValidateHelper::validMobile($mobile)) {
             return $this->renderErrJSON('请输入正确的手机号');
         }
 
-        if($data['email'] && !ValidateHelper::validEmail($data['email'])) {
+        if($email && !ValidateHelper::validEmail($email)) {
             return $this->renderErrJSON('请输入正确格式的邮箱');
         }
-        // 开始保存信息.
 
-        // 这里要处理保存的逻辑.
+        if($wechat && !ValidateHelper::validLength($wechat,1,255)) {
+            return $this->renderErrJSON('请填写正确的微信号长度');
+        }
+
+        if($code) {
+            $group_chat = GroupChat::findOne(['id'=>$code,'merchant_id'=>$this->getMerchantId()]);
+            if(!$group_chat) {
+                return $this->renderErrJSON('请选择正确的风格');
+            }
+        }
+
+        if(!$uuid) {
+            return $this->renderErrJSON('非法请求');
+        }
+        // 开始保存信息.
+        $member = Member::findOne(['uuid'=>$uuid]);
+        if(!$member) {
+            $member = new Member();
+        }
+
+        $member->setAttributes([
+            'merchant_id'   => $this->getMerchantId(),
+            'cs_id'         => $this->getStaffId(),
+            'chat_style_id' => $code,   // 风格分组id.
+            'name'  => $name,
+            'mobile'=> $mobile,
+            'email' => $email,
+            'qq'    => $qq,
+            'wechat'=> $wechat,
+            'uuid'  => $uuid,
+            'desc'  => $desc
+        ]);
+
+        if(!$member->save(0)) {
+            return $this->renderErrJSON('数据保存失败，请联系管理员');
+        }
+
         return $this->renderJSON('保存成功');
     }
 
+    /**
+     * 游客转让.
+     * @return \yii\console\Response|\yii\web\Response
+     */
     public function actionTransfer()
     {
         $cs_id = $this->post('cs_id',0);

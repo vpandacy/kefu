@@ -6,6 +6,7 @@ use common\components\ValidateCode;
 use common\models\uc\Merchant;
 use common\models\uc\Staff;
 use common\services\CaptchaService;
+use common\services\uc\CustomerService;
 use www\modules\cs\controllers\common\BaseController;
 use common\services\CommonService;
 use common\services\ConstantService;
@@ -207,5 +208,15 @@ class UserController extends BaseController
             ->all();
 
         return $this->renderJSON($cs,'获取成功');
+    }
+
+    /**
+     * 客服下线操作.
+     */
+    public function actionOffline()
+    {
+        CustomerService::offlineByCSSN($this->current_user['sn']);
+
+        return $this->renderJSON([],'操作成功');
     }
 }

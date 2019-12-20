@@ -170,3 +170,8 @@ CREATE TABLE `member` (
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
 ) COMMENT='会员表' ENGINE='InnoDB' CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 ```
+## 20191220
+```
+ALTER TABLE `member`
+    ADD `uuid` varchar(255) NOT NULL DEFAULT '' COMMENT '用户id' AFTER `chat_style_id`;
+```

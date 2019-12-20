@@ -1,13 +1,10 @@
 <?php
-
 namespace console\modules\chat\controllers\queue;
 
 
-use common\services\chat\ChatSocketService;
 use common\services\chat\GuestChatService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
-use common\services\QueueListService;
 use common\services\uc\MerchantService;
 use console\controllers\QueueBaseController;
 

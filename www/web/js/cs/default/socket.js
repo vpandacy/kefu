@@ -25,6 +25,7 @@
         // 关闭websocket发送的信息.
         this.ws.addEventListener('close', function () {
             //关闭
+            console.dir(arguments);
         });
 
         // 这里是websocket发生错误的.信息.

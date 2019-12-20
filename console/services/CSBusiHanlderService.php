@@ -85,6 +85,7 @@ class CSBusiHanlderService extends BaseService
     /**
      * 当客服端用户断开连接时触发
      * 这里的问题是不知道这个client id 对应的客服，所以也要编辑好，不然到时候无法关闭了
+     * 注意.这里会存在一个问题.用户每次刷新时.
      * @param int $client_id 连接id
      * @return false
      */
@@ -94,16 +95,16 @@ class CSBusiHanlderService extends BaseService
             return false;
         }
 
-        // 向所有人发送,发消息给对应的游客，然后客服工作台在设置
-        QueueListService::push2Guest(QueueConstant::$queue_guest_chat, [
-            'cmd'   =>  ConstantService::$chat_cmd_kf_logout,
-            'data'  =>  [
-                'f_id'  =>  $cache_params['f_id']
-            ]
-        ]);
-
-        // 下线客服.
-        CustomerService::offlineByCSSN($cache_params['f_id']);
+//        // 向所有人发送,发消息给对应的游客，然后客服工作台在设置
+//        QueueListService::push2Guest(QueueConstant::$queue_guest_chat, [
+//            'cmd'   =>  ConstantService::$chat_cmd_kf_logout,
+//            'data'  =>  [
+//                'f_id'  =>  $cache_params['f_id']
+//            ]
+//        ]);
+//
+//         // 下线客服.
+//        CustomerService::offlineByCSSN($cache_params['f_id']);
         ChatEventService::clearCSBindCache($client_id);
     }
 
@@ -116,7 +117,6 @@ class CSBusiHanlderService extends BaseService
     {
         $data = $message['data'] ?? [];
         $f_id = $data['f_id'] ?? 0;
-
         switch ($message['cmd']) {
             case ConstantService::$chat_cmd_reply://聊天
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
@@ -130,6 +130,9 @@ class CSBusiHanlderService extends BaseService
                         'f_id'    =>  $f_id,
                     ]);
                 }
+                Gateway::sendToClient($client_id, ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
+                    'content'   =>  '登录成功',
+                ]));
                 break;
             case ConstantService::$chat_cmd_pong:
                 //EventsDispatch::addChatHistory( $client_id,$message );

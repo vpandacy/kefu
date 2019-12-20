@@ -11,6 +11,7 @@ use Yii;
  * @property int $merchant_id 商户id
  * @property int $cs_id 员工id
  * @property int $chat_style_id 风格分组id
+ * @property string $uuid 用户id
  * @property string $name 姓名
  * @property string $mobile 手机号
  * @property string $email 邮箱
@@ -50,7 +51,7 @@ class Member extends \yii\db\ActiveRecord
         return [
             [['merchant_id', 'cs_id', 'chat_style_id', 'province_id', 'city_id', 'source'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['name', 'mobile', 'email', 'qq', 'wechat', 'reg_ip', 'desc'], 'string', 'max' => 255],
+            [['uuid', 'name', 'mobile', 'email', 'qq', 'wechat', 'reg_ip', 'desc'], 'string', 'max' => 255],
         ];
     }
 
@@ -64,6 +65,7 @@ class Member extends \yii\db\ActiveRecord
             'merchant_id' => 'Merchant ID',
             'cs_id' => 'Cs ID',
             'chat_style_id' => 'Chat Style ID',
+            'uuid' => 'Uuid',
             'name' => 'Name',
             'mobile' => 'Mobile',
             'email' => 'Email',
