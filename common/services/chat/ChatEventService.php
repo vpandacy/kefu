@@ -102,7 +102,7 @@ class ChatEventService extends BaseService
             }
 
             // 如果在客服的等待区域,还是直接返回该客服.
-            $wait_users = ChatGroupService::getGroupAllUsers('wait_' . $staff['sn'] );
+            $wait_users = ChatGroupService::getWaitGroupAllUsers( $staff['sn'] );
             if(in_array($uuid, $wait_users)) {
                 $staff['act'] = 'wait';
                 return $staff;
