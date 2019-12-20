@@ -142,7 +142,7 @@ class VisitorController extends BaseController
         }
 
         if($code) {
-            $group_chat = GroupChat::findOne(['id'=>$code,'merchant_id'=>$this->getMerchantId()]);
+            $group_chat = GroupChat::findOne(['sn'=>$code,'merchant_id'=>$this->getMerchantId()]);
             if(!$group_chat) {
                 return $this->renderErrJSON('请选择正确的风格');
             }
@@ -153,14 +153,23 @@ class VisitorController extends BaseController
         }
         // 开始保存信息.
         $member = Member::findOne(['uuid'=>$uuid]);
+        // 如果是第一次就要存储ip信息.
         if(!$member) {
             $member = new Member();
+            $guest_log = GuestChatService::getLastGuestChatLog($uuid);
+
+            $member->setAttributes([
+                'reg_ip'    =>  $guest_log['client_ip'],
+                'province_id'   =>  $guest_log['province_id'],
+                'city_id'   =>  $guest_log['city_id'],
+                'source'    =>  $guest_log['source'],
+            ]);
         }
 
-        $member->setAttributes([
+        $params = [
             'merchant_id'   => $this->getMerchantId(),
             'cs_id'         => $this->getStaffId(),
-            'chat_style_id' => $code,   // 风格分组id.
+            'chat_style_id' => $code ? $group_chat['id'] : 0,   // 风格分组id.
             'name'  => $name,
             'mobile'=> $mobile,
             'email' => $email,
@@ -168,7 +177,15 @@ class VisitorController extends BaseController
             'wechat'=> $wechat,
             'uuid'  => $uuid,
             'desc'  => $desc
-        ]);
+        ];
+
+        foreach($params as $key=>$value) {
+            if($value === '') {
+                unset($params[$key]);
+            }
+        }
+
+        $member->setAttributes($params);
 
         if(!$member->save(0)) {
             return $this->renderErrJSON('数据保存失败，请联系管理员');
@@ -196,10 +213,9 @@ class VisitorController extends BaseController
         // 获取IP地址.获取来源.获取咨询界面.
         $history = GuestHistoryLog::find()
             ->where([
-                "status" => ConstantService::$default_status_neg_1,
+//                "status" => ConstantService::$default_status_neg_1,
                 "merchant_id" => $this->getMerchantId(),
                 "uuid" => $uuid,
-                "closed_time" => ConstantService::$default_datetime
             ])
             ->orderBy([ "id" => SORT_DESC ])
             ->asArray()

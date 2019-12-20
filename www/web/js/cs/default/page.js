@@ -238,12 +238,12 @@
                 var member = res.data.member,
                     history= res.data.history;
                 // 批量渲染.
-                elem.find('.exe-info .name').text(member ? member.name : '暂无');
-                elem.find('.exe-info .mobile').text(member ? member.mobile : '暂无');
-                elem.find('.exe-info .email').text(member ? member.email : '暂无');
-                elem.find('.exe-info .qq').text(member ? member.qq : '暂无');
-                elem.find('.exe-info .wechat').text(member ? member.wechat : '暂无');
-                elem.find('.exe-info .desc').text(member ? member.desc : '暂无');
+                elem.find('.exe-info .name').text(member && member.name ? member.name : '暂无');
+                elem.find('.exe-info .mobile').text(member && member.mobile ?  member.mobile : '暂无');
+                elem.find('.exe-info .email').text(member && member.email ? member.email : '暂无');
+                elem.find('.exe-info .qq').text(member && member.qq ? member.qq : '暂无');
+                elem.find('.exe-info .wechat').text(member && member.wechat ? member.wechat : '暂无');
+                elem.find('.exe-info .desc').text(member && member.desc ? member.desc : '暂无');
                 // elem.find('.keyword span:last-child').text(history.)
                 elem.find('.exe-header-info-left span:last-child').text(history.province + ' ('+ history.client_ip +')');
                 elem.find('.land-url span:last-child').text(history.land_url ? history.land_url : '暂无');

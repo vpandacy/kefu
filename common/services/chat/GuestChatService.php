@@ -85,4 +85,21 @@ class GuestChatService extends BaseService
         $model->setAttributes($params);
         return $model->save(0);
     }
+
+    /**
+     * 获取最后一次的聊天信息.
+     * @param $uuid
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public static function getLastGuestChatLog($uuid)
+    {
+        $guest_log = GuestHistoryLog::find()
+            ->where([
+                'uuid'  =>  $uuid
+            ])
+            ->orderBy(['id'=>SORT_DESC])
+            ->one();
+
+        return $guest_log;
+    }
 }

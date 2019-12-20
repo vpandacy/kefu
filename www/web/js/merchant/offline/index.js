@@ -62,7 +62,7 @@ var merchant_overall_offline_index_ops = {
                         error: function () {
                             $.close(index);
                         }
-                    })
+                    });
                     return true;
                 });
             });

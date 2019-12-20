@@ -91,7 +91,211 @@
             that.page.scrollToBottom();
         });
 
+        // 选择姓名.
+        $('.flex1 .name').on('click', function () {
+            var text = $(this).text(),
+                current_uid = $('.flex1').attr('data-uuid'),
+                elem = $(this);
 
+            var val = text == '暂无' ? '' : text;
+
+            elem.html('<input name="name" value="'+ val +'" placeholder="请输入姓名">');
+            elem.find('input').focus();
+
+            $(this).find('input').on('blur', function () {
+                var value = $(this).val();
+                if(!value) {
+                    return elem.text(text);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        uuid: current_uid,
+                        name: value,
+                    },
+                    dataType: 'json',
+                    url: cs_common_ops.buildKFCSurl('/visitor/save'),
+                    success: function (res) {
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
+                        }
+
+                        elem.text(value);
+                    }
+                })
+            });
+        });
+
+        // 填写手机号.
+        $('.flex1 .mobile').on('click', function () {
+            var text = $(this).text(),
+                current_uid = $('.flex1').attr('data-uuid'),
+                elem = $(this);
+
+            elem.html('<input name="mobile" value="'+ text +'" placeholder="请输入手机号">');
+            elem.find('input').focus();
+
+            $(this).find('input').on('blur', function () {
+                var value = $(this).val();
+                if(!value) {
+                    return elem.text(text);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        uuid: current_uid,
+                        mobile: value,
+                    },
+                    dataType: 'json',
+                    url: cs_common_ops.buildKFCSurl('/visitor/save'),
+                    success: function (res) {
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
+                        }
+
+                        elem.text(value);
+                    }
+                })
+            });
+        });
+
+        // 填写邮箱.
+        $('.flex1 .email').on('click', function () {
+            var text = $(this).text(),
+                current_uid = $('.flex1').attr('data-uuid'),
+                elem = $(this);
+
+            elem.html('<input name="email" value="'+ text +'" placeholder="请输入邮件">');
+            elem.find('input').focus();
+
+            $(this).find('input').on('blur', function () {
+                var value = $(this).val();
+                if(!value) {
+                    return elem.text(text);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        uuid: current_uid,
+                        email: value
+                    },
+                    dataType: 'json',
+                    url: cs_common_ops.buildKFCSurl('/visitor/save'),
+                    success: function (res) {
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
+                        }
+
+                        elem.text(value);
+                    }
+                })
+            });
+        });
+
+        // 填写ＱＱ.
+        $('.flex1 .qq').on('click', function () {
+            var text = $(this).text(),
+                current_uid = $('.flex1').attr('data-uuid'),
+                elem = $(this);
+
+            elem.html('<input name="qq" value="'+ text +'" placeholder="请输入邮件">');
+            elem.find('input').focus();
+
+            $(this).find('input').on('blur', function () {
+                var value = $(this).val();
+                if(!value) {
+                    return elem.text(text);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        uuid: current_uid,
+                        qq: value
+                    },
+                    dataType: 'json',
+                    url: cs_common_ops.buildKFCSurl('/visitor/save'),
+                    success: function (res) {
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
+                        }
+
+                        elem.text(value);
+                    }
+                })
+            });
+        });
+
+        // 填写wechat.
+        $('.flex1 .wechat').on('click', function () {
+            var text = $(this).text(),
+                current_uid = $('.flex1').attr('data-uuid'),
+                elem = $(this);
+
+            elem.html('<input name="wechat" value="'+ text +'" placeholder="请输入邮件">');
+            elem.find('input').focus();
+
+            $(this).find('input').on('blur', function () {
+                var value = $(this).val();
+                if(!value) {
+                    return elem.text(text);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        uuid: current_uid,
+                        wechat: value
+                    },
+                    dataType: 'json',
+                    url: cs_common_ops.buildKFCSurl('/visitor/save'),
+                    success: function (res) {
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
+                        }
+
+                        elem.text(value);
+                    }
+                })
+            });
+        });
+
+        // 填写desc.
+        $('.flex1 .desc').on('click', function () {
+            var text = $(this).text(),
+                current_uid = $('.flex1').attr('data-uuid'),
+                elem = $(this);
+
+            elem.html('<textarea name="desc">'+text+'</textarea>');
+            elem.find('input').focus();
+
+            $(this).find('input').on('blur', function () {
+                var value = $(this).val();
+                if(!value) {
+                    return elem.text(text);
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        uuid: current_uid,
+                        desc: value
+                    },
+                    dataType: 'json',
+                    url: cs_common_ops.buildKFCSurl('/visitor/save'),
+                    success: function (res) {
+                        if(res.code != 200) {
+                            return $.msg(res.msg);
+                        }
+
+                        elem.text(value);
+                    }
+                })
+            });
+        });
     };
 
     // 绑定发送事件.
@@ -158,6 +362,7 @@
         }
     };
 
+    // 等待链接.
     Chat.prototype.guestConnectWait = function(data) {
         var user = {
             uuid: data.data.f_id,                       // 用户ID
