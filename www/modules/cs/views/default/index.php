@@ -30,11 +30,17 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 
     <!-- 最右侧菜单栏-->
     <div class="exe-menu">
-        <div>
+        <div class="menu">
             <img class="menu-head" src="<?=GlobalUrlService::buildKFStaticUrl("/images/merchant/logo.png");?>">
             <div class="menu-online"></div>
-            <div class="menu-icon-top">
-                <i class="iconfont icon-xiaoxi icon icon-action fsize32"></i>
+            <div class="menu-icon-top-bottom">
+                <div class="menu-icon-top">
+                    <i class="iconfont icon-xiaoxi icon icon-action fsize32"></i>
+                </div>
+                <div class="menu-icon-bottom">
+                    <i class="iconfont icon-zaixian icon icon-action fsize32 exe-off-online" title="在线"></i>
+                    <i class="iconfont icon-tuichu icon icon-action fsize32" title="退出"></i>
+                </div>
             </div>
         </div>
     </div>
@@ -85,12 +91,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <span>暂无 (117.152.175.202)</span>
             </div>
             <div class="exe-header-info-right">
-<!--                <span>广点通c1</span>-->
-<!--                <span><i class="iconfont icon-anjianfengexian"></i></span>-->
-<!--                <span><i class="iconfont icon-kefu"></i></span>-->
-<!--                <span><i class="iconfont icon-icon_notice"></i></span>-->
-<!--                <span><i class="iconfont icon-zuixiaohua"></i></span>-->
-<!--                <span><i class="iconfont icon-zuidahua"></i></span>-->
                 <span><i class="iconfont icon-guanbi"></i></span>
             </div>
         </div>
@@ -113,19 +113,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <div class="exe-content-sumbit" style="position: relative;">
                     <div>
                         <span>
-<!--                            <i class="iconfont icon-ai247"></i>-->
                             <i class="iconfont icon-biaoqing" id="openFace"></i>
-<!--                            <i class="iconfont icon-tupian"></i>-->
-<!--                            <i class="iconfont icon-wenjian"></i>-->
-<!--                            <i class="iconfont icon-jietu"></i>-->
-<!--                            <i class="iconfont icon-biaoqing"></i>-->
-<!--                            <i class="iconfont icon-xingbiao"></i>-->
-<!--                            <i class="iconfont icon-fenxiang"></i>-->
                         </span>
-<!--                        <span>-->
-<!--                            <label>功能扩展</label>-->
-<!--                            <label>消息记录</label>-->
-<!--                        </span>-->
                     </div>
 
                     <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;">
@@ -168,11 +157,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <div class="tab fGrow1 two">
                     <div class="tab-switch height10 height50" >
                         <div class="tab-one" ><a>常用语</a></div>
-<!--                        <div class="tab-one"><a>常用文件</a></div>-->
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
-<!--                        <input type="text" placeholder="关键词搜索">-->
                             <div class="words-content">
                                 <?php foreach($words as $word):?>
                                     <div class="content-select">
