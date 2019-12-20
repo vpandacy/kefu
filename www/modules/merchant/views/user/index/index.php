@@ -14,3 +14,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
     </div>
 </div>
+
+<script type="text/html" id="userBar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
