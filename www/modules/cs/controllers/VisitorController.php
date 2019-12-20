@@ -177,6 +177,25 @@ class VisitorController extends BaseController
     }
 
     /**
+     * 获取游客数据.
+     */
+    public function actionInfo()
+    {
+        $uuid = $this->post('uuid','');
+
+        if(!$uuid) {
+            return $this->renderErrJSON('非法请求');
+        }
+        // 开始保存信息.
+        $member = Member::findOne(['uuid'=>$uuid]);
+        if(!$member) {
+            return $this->renderErrJSON('没有找到会员信息');
+        }
+
+        return $this->renderJSON($member,'保存成功');
+    }
+
+    /**
      * 游客转让.
      * @return \yii\console\Response|\yii\web\Response
      */
