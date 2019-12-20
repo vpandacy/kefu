@@ -136,8 +136,13 @@ class GuestBusiHanlderService extends BaseService
                 self::handleGuestConnect($client_id,$message);
                 break;
             case ConstantService::$chat_cmd_chat: // 游客聊天动作.
-                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运.如果在聊天的队列中.就允许发送.
-                if(ChatGroupService::checkUserInGroup($message['data']['f_id'], $message['data']['t_id'])) {
+                //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运.如果在聊天的队列中.就允许发送
+                if(!isset($message['data']['t_id'])) {
+                    return Gateway::sendToClient($client_id,ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
+                        'content'   =>  '请稍等，客服正在到来中...',
+                    ]));
+                }
+                if(ChatGroupService::checkUserInGroup($message['data']['t_id'],$message['data']['f_id'])) {
                     return QueueListService::push2CS(QueueConstant::$queue_cs_chat, $message);
                 }
 
@@ -205,6 +210,7 @@ class GuestBusiHanlderService extends BaseService
             Gateway::sendToClient( $client_id, $data );
             return;
         }
+        var_dump($kf_info);
         // 这里是分配成功.
         if($kf_info['act'] == 'success') {
             self::assignCustomerServiceSuccess($f_id, $client_id, $kf_info);

@@ -32,7 +32,7 @@ class DefaultController extends BaseController
         $staff = Staff::findOne(['id'=>$this->current_user['id']]);
         $staff['is_online'] = 1;
 
-        if($staff->save(0) === false) {
+        if($staff->save() === false) {
             return $this->redirect(GlobalUrlService::buildUcUrl('/default/forbidden'));
         }
 
