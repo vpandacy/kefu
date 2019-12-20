@@ -17,6 +17,12 @@ body {
     -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
     /* border: 1px solid red; */
 }
+select[name='cs'] {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #b6b6b6;
+}
 /*菜单样式*/
 #chatExe #menu{
     /* width: 100px; */
@@ -230,6 +236,9 @@ body {
     background: #d6d6d6;
     color: white;
     cursor: pointer;
+    align-items: center;
+    height: 50px;
+    font-size: 18px;
 }
 #chatExe .exe-keep .tab .tab-content-list div{
     pointer-events:none;
