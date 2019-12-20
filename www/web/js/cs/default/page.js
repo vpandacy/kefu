@@ -90,7 +90,9 @@
                 '       <span>',user.nickname,'</span>',
                 '   </div>',
                 '   <div>',
-                '       <span class="content-list-time">',user.allocationTime,'</span>',
+                '       <span class="content-list-time">',user.allocationTime,'</span>' +
+                    '<span class="list-flag-online">在线</span>',
+                    '<span class="list-flag-off-line">离线</span>',
                 '   </div>',
                 '</div>'
             ].join("");
