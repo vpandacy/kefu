@@ -525,9 +525,9 @@ select[name='cs'] {
     margin: 5% 0;
 }
 
-#chatExe .exe-info .one .tab-content div:nth-child(1) {
-    color: rgb(48, 146, 251) !important
-}
+/*#chatExe .exe-info .one .tab-content div:nth-child(1) {*/
+    /*color: rgb(48, 146, 251) !important*/
+/*}*/
 
 #chatExe .fGrow1 {
     flex: 1;

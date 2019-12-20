@@ -34,6 +34,7 @@
         var user = ChatStorage.getItem(uuid),
             that = this;
 
+        $('#chatExe .flex1').attr('data-uuid', uuid);
         $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
         // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
         if(!user.messages || user.messages.length < 1) {
@@ -54,9 +55,12 @@
             $('#chatExe .flex1').css({'display': 'flex'});
         }
 
-        if(uuid) {
-            this.renderAccessTrack(uuid);
+        if(!uuid) {
+            return true;
         }
+
+        this.renderAccessTrack(uuid);
+        this.renderGuestInfo(uuid);
     };
 
     // 渲染在线列表.
@@ -211,6 +215,40 @@
                 });
 
                 $('.access-track').html(html.join(''));
+            }
+        })
+    };
+
+    // 获取用户的基本信息.
+    Page.prototype.renderGuestInfo = function(uuid) {
+        var elem = $('#chatExe .flex1[data-uuid="'+ uuid +'"]');
+
+        $.ajax({
+            type: 'POST',
+            url:  cs_common_ops.buildKFCSurl('/visitor/info'),
+            data: {
+                uuid: uuid
+            },
+            dataType: 'json',
+            success:function (res) {
+                if(res.code != 200) {
+                    return $.msg(res.msg);
+                }
+
+                var member = res.data.member,
+                    history= res.data.history;
+                // 批量渲染.
+                elem.find('.exe-info .name').text(member ? member.name : '暂无');
+                elem.find('.exe-info .mobile').text(member ? member.mobile : '暂无');
+                elem.find('.exe-info .email').text(member ? member.email : '暂无');
+                elem.find('.exe-info .qq').text(member ? member.qq : '暂无');
+                elem.find('.exe-info .wechat').text(member ? member.wechat : '暂无');
+                elem.find('.exe-info .desc').text(member ? member.desc : '暂无');
+                // elem.find('.keyword span:last-child').text(history.)
+                elem.find('.exe-header-info-left span:last-child').text(history.province + ' ('+ history.client_ip +')');
+                elem.find('.land-url span:last-child').text(history.land_url ? history.land_url : '暂无');
+                elem.find('.source span:last-child').text(history.source ? history.source : '暂无');
+                elem.find('.referer-url span:last-child').text(history.referer_url ? history.referer_url : '暂无');
             }
         })
     };

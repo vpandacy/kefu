@@ -95,7 +95,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
         <div class="exe-header">
             <div class="exe-header-info-left">
                 <span>暂无</span>
-                <span>暂无 (117.152.175.202)</span>
+                <span>暂无 (暂无)</span>
             </div>
             <div class="exe-header-info-right">
                 <span><i class="iconfont icon-guanbi"></i></span>
@@ -105,12 +105,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
             <div class="exe-content">
                 <div class="exe-content-top">
                     <div class="content-top-info">
-                        <div class="info"><span>关键词：</span><span>-</span></div>
-                        <div class="info"><span>咨询页面：</span><span>-</span></div>
+<!--                        <div class="info keyword"><span>关键词：</span><span>-</span></div>-->
+                        <div class="info land-url"><span>咨询界面：</span><span>-</span></div>
+                        <div class="info source"><span>终端：</span><span>-</span></div>
                     </div>
                     <div class="content-top-info">
-                        <div class="info"><span>来源：</span><span>-</span></div>
-                        <div class="info"><span>渠道：</span><span>-</span></div>
+                        <div class="info referer-url"><span>来源：</span><span>-</span></div>
                     </div>
                 </div>
                 <div class="exe-content-history">
@@ -128,7 +128,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                         <div class="faceDiv">
                             <section class="emoji-box"></section>
                         </div>
-                                    <a class="closeFaceBox" href="javascript:void(0)">×</a>
+                        <a class="closeFaceBox" href="javascript:void(0)">×</a>
                     </div>
 
                     <div class="sumbit-input" id="content" contenteditable="true" ></div>
@@ -148,13 +148,24 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
-                            <div>+添加标签</div>
-                            <div>姓名：</div>
-                            <div>电话：</div>
-                            <div>邮箱：</div>
-                            <div>QQ：</div>
-                            <div>微信：</div>
-                            <div>备注：</div>
+                            <div>
+                                姓名：<span class="name"></span>
+                            </div>
+                            <div>
+                                电话：<span class="mobile"></span>
+                            </div>
+                            <div>
+                                邮箱：<span class="email"></span>
+                            </div>
+                            <div>
+                                QQ：<span class="qq"></span>
+                            </div>
+                            <div>
+                                微信：<span class="wechat"></span>
+                            </div>
+                            <div>
+                                备注：<span class="desc"></span>
+                            </div>
                         </div>
                         <div class="content-one access-track" style="display: none;max-height: 380px;overflow-y: auto;">
                             <div style="text-align: center;color: rgb(179, 181, 185) !important;">暂无</div>

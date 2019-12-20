@@ -4,6 +4,7 @@ namespace www\modules\cs\controllers;
 use common\components\helper\DateHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
+use common\components\ip\IPDBQuery;
 use common\models\kefu\chat\GuestHistoryLog;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GuestChatLog;
@@ -187,12 +188,33 @@ class VisitorController extends BaseController
             return $this->renderErrJSON('非法请求');
         }
         // 开始保存信息.
-        $member = Member::findOne(['uuid'=>$uuid]);
-        if(!$member) {
-            return $this->renderErrJSON('没有找到会员信息');
-        }
+        $member = Member::find()
+            ->asArray()
+            ->where(['uuid'=>$uuid])
+            ->one();
 
-        return $this->renderJSON($member,'保存成功');
+        // 获取IP地址.获取来源.获取咨询界面.
+        $history = GuestHistoryLog::find()
+            ->where([
+                "status" => ConstantService::$default_status_neg_1,
+                "merchant_id" => $this->getMerchantId(),
+                "uuid" => $uuid,
+                "closed_time" => ConstantService::$default_datetime
+            ])
+            ->orderBy([ "id" => SORT_DESC ])
+            ->asArray()
+            ->limit(1)
+            ->one();
+
+        $history['source'] = isset(ConstantService::$guest_source[$history['source']])
+            ? ConstantService::$guest_source[$history['source']]
+            : '暂无';
+
+        $history['province'] = IPDBQuery::find($history['client_ip']);
+        return $this->renderJSON([
+            'member'    =>  $member,
+            'history'   =>  $history
+        ],'保存成功');
     }
 
     /**
@@ -299,7 +321,7 @@ class VisitorController extends BaseController
     }
 
     /**
-     * 获取游客跟自己的聊天记录.
+     * 获取游客跟客服的聊天记录.
      */
     public function actionMessage()
     {
