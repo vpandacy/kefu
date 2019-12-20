@@ -138,6 +138,8 @@
             case "guest_close":
                 // 先获取用户的信息
                 this.guestClose(data.data);
+                // 刷新界面.
+                this.page.renderOnlineList();
                 break;
             case "guest_connect":
                 this.assignKf(data);
@@ -235,7 +237,7 @@
             return false;
         }
 
-        user.is_online = 1;
+        user.is_online = 0;
         // 存储进去.
         ChatStorage.setItem(data.uuid, user);
     };
