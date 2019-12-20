@@ -23,6 +23,10 @@
 
             $('.content-message-active').removeClass('content-message-active');
         });
+        // 渲染在线列表.
+        this.renderOnlineList();
+        // 渲染等待区.
+        this.renderOfflineList();
     };
 
     // 渲染聊天框. 这里要同时去获取游客的轨迹.
@@ -91,13 +95,42 @@
                 '   </div>',
                 '   <div>',
                 '       <span class="content-list-time">',user.allocationTime,'</span>',
-                    user.is_online == 1 ? '<span class="list-flag-online">在线</span>' : '<span class="list-flag-off-line">离线</span>',
+                    user.is_online == 1 ? '<span class="list-flag-online"></span>' : '<span class="list-flag-off-line"></span>',
                 '   </div>',
                 '</div>'
             ].join("");
         });
 
         $('.tab-content .online').html(html.join(''));
+    };
+
+    // 渲染等待区.
+    Page.prototype.renderOfflineList = function() {
+        $('.keep-census .wait').text(offline_users.length);
+
+        if(offline_users.length <= 0) {
+            $('.tab-content .offline').html('<div class="tab-content-list content-no-message">暂无消息</div>');
+            return;
+        }
+
+        var html = offline_users.map(function (wait_uuid) {
+            var user = ChatStorage.getItem(wait_uuid);
+
+            return [
+                '<div class="tab-content-list" data-uuid="',wait_uuid,'">',
+                '   <div>',
+                '       <i class="iconfont icon-shouji"></i>',
+                '       <span>',user.nickname,'</span>',
+                '   </div>',
+                '   <div>',
+                '       <span class="content-list-time">',user.allocationTime,'</span>',
+                '   </div>',
+                '</div>'
+            ].join('');
+        });
+
+        // 添加下线列表.
+        $('.tab-content .offline').html(html.join(''));
     };
 
     // 将聊天框滚动到底部.

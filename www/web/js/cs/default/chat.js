@@ -153,9 +153,28 @@
                 break;
             // 这里要存入一份.然后在进行渲染. 这里是等待聊天的数据.
             case 'guest_connect_wait':
-
+                this.guestConnectWait(data);
                 break;
         }
+    };
+
+    Chat.prototype.guestConnectWait = function(data) {
+        var user = {
+            uuid: data.data.f_id,                       // 用户ID
+            avatar: data.data.avatar,                   // 用户头像
+            nickname: data.data.nickname,               // 用户昵称
+            allocationTime: data.data.allocation_time,  // 用户的发起时间
+            is_online: 1                                // 是否在线,1在线.0下线.
+        };
+
+        var old_user = ChatStorage.getItem(user.uuid, {});
+        user = Object.assign({}, old_user,user);
+
+        user.messages = 0;
+
+        ChatStorage.setItem(user.uuid, user);
+        offline_users.push(user.uuid);
+        this.page.renderOfflineList();
     };
 
     // 这里是游客登录进来了.已经分配给该客户的动作.
@@ -169,7 +188,7 @@
         };
 
         var old_user = ChatStorage.getItem(user.uuid, {});
-        user = Object.assign({}, old_user,user);
+        user = Object.assign({}, old_user, user);
 
         if(!user.messages) {
             user.messages = [];
@@ -180,6 +199,15 @@
         }
 
         ChatStorage.setItem(user.uuid, user);
+
+        // 如果在等待区中.
+        if(offline_users.indexOf(user.uuid) >= 0) {
+            offline_users = offline_users.filter(function (uuid) {
+                return uuid != user.uuid;
+            });
+
+            this.page.renderOfflineList();
+        }
 
         // 如果当前会话的列表中有  就不用去渲染处理了.
         if(online_users.indexOf(user.uuid) < 0) {
@@ -274,9 +302,16 @@
             return false;
         }
 
-        user.is_online = 0;
-        // 存储进去.
-        ChatStorage.setItem(data.uuid, user);
+        // 如果在等待区.就直接删除.
+        if(offline_users.indexOf(data.uuid) >= 0) {
+            ChatStorage.removeItem(data.uuid);
+            this.page.renderOfflineList();
+        }else{
+            user.is_online = 0;
+            // 存储进去.
+            ChatStorage.setItem(data.uuid, user);
+            this.page.renderOnlineList();
+        }
     };
 
     window.Chat = Chat;

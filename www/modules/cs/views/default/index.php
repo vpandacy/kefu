@@ -18,7 +18,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/chat.js'), CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/index.js'), CsAsset::className());
 ?>
-<script>WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'</script>
+<script>
+    WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
+    online_users = <?=json_encode($online_users)?>;
+    offline_users= <?=json_encode($offline_users)?>;
+</script>
 <div id='chatExe'>
     <!-- 右键菜单 -->
     <div id="menu" style="z-index: 1">
@@ -64,8 +68,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                         暂无消息
                     </div>
                 </div>
-                <div class="content-one" style="display: none;">
-                    <div oncontextmenu="tab.list(event)" class="tab-content-list">
+                <div class="content-one offline" style="display: none;">
+                    <div class="tab-content-list">
                         <div>
                             <i class="iconfont icon-shouji"></i>
                             <span>莆田4</span>
@@ -73,6 +77,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                         <div>
                             <span class="content-list-time">09:45</span>
                         </div>
+                    </div>
+                    <div class="tab-content-list">
+
                     </div>
                 </div>
             </div>
