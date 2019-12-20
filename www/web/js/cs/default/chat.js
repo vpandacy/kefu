@@ -92,10 +92,12 @@
         });
 
         // 选择姓名.
-        $('.flex1 .name').on('click', function () {
+        $('.flex1 .name').on('click', function (e) {
             var text = $(this).text(),
                 current_uid = $('.flex1').attr('data-uuid'),
                 elem = $(this);
+
+            e.preventDefault();
 
             var val = text == '暂无' ? '' : text;
 
@@ -128,11 +130,12 @@
         });
 
         // 填写手机号.
-        $('.flex1 .mobile').on('click', function () {
+        $('.flex1 .mobile').on('click', function (e) {
             var text = $(this).text(),
                 current_uid = $('.flex1').attr('data-uuid'),
                 elem = $(this);
 
+            e.preventDefault();
             elem.html('<input name="mobile" value="'+ text +'" placeholder="请输入手机号">');
             elem.find('input').focus();
 
@@ -162,11 +165,12 @@
         });
 
         // 填写邮箱.
-        $('.flex1 .email').on('click', function () {
+        $('.flex1 .email').on('click', function (e) {
             var text = $(this).text(),
                 current_uid = $('.flex1').attr('data-uuid'),
                 elem = $(this);
 
+            e.preventDefault();
             elem.html('<input name="email" value="'+ text +'" placeholder="请输入邮件">');
             elem.find('input').focus();
 
@@ -196,10 +200,12 @@
         });
 
         // 填写ＱＱ.
-        $('.flex1 .qq').on('click', function () {
+        $('.flex1 .qq').on('click', function (e) {
             var text = $(this).text(),
                 current_uid = $('.flex1').attr('data-uuid'),
                 elem = $(this);
+
+            e.preventDefault();
 
             elem.html('<input name="qq" value="'+ text +'" placeholder="请输入邮件">');
             elem.find('input').focus();
@@ -230,10 +236,12 @@
         });
 
         // 填写wechat.
-        $('.flex1 .wechat').on('click', function () {
+        $('.flex1 .wechat').on('click', function (e) {
             var text = $(this).text(),
                 current_uid = $('.flex1').attr('data-uuid'),
                 elem = $(this);
+
+            e.preventDefault();
 
             elem.html('<input name="wechat" value="'+ text +'" placeholder="请输入邮件">');
             elem.find('input').focus();
@@ -264,15 +272,20 @@
         });
 
         // 填写desc.
-        $('.flex1 .desc').on('click', function () {
+        $('.flex1 .desc').on('click', function (e) {
             var text = $(this).text(),
                 current_uid = $('.flex1').attr('data-uuid'),
                 elem = $(this);
 
-            elem.html('<textarea name="desc">'+text+'</textarea>');
-            elem.find('input').focus();
+            e.preventDefault();
+            e.stopPropagation();
 
-            $(this).find('input').on('blur', function () {
+            elem.html('<textarea name="desc">'+text+'</textarea>');
+            elem.find('textarea').focus();
+
+            $(this).find('textarea').on('blur', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 var value = $(this).val();
                 if(!value) {
                     return elem.text(text);
