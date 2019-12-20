@@ -19,6 +19,10 @@
         this.page.init();
         // 初始化聊天事件.
         this.eventBind();
+        //客服下线操作
+        this.offOnline();
+        //客服退出操作
+        this.signOut();
     };
 
     // 事件绑定.
@@ -229,6 +233,35 @@
         this.page.renderOnlineList(uuid);
     };
 
+    // 客服下线操作
+    // 信息框-例2
+    //
+    // layer.msg('你确定你很帅么？', {
+    //   time: 0 //不自动关闭
+    //   ,btn: ['必须啊', '丑到爆']
+    //   ,yes: function(index){
+    //     layer.close(index);
+    //     layer.msg('雅蠛蝶 O.o', {
+    //       icon: 6
+    //       ,btn: ['嗷','嗷','嗷']
+    //     });
+    //   }
+    // });
+    Chat.prototype.offOnline = function () {
+        $('.exe-off-online').click(function () {
+            $.post('/cs/user/offline',{},function () {
+               $('.icon-zaixian').replaceWith('<i class="iconfont icon-lixian icon icon-action fsize32" title="离线"></i>');
+            });
+        });
+    };
+    Chat.prototype.signOut = function () {
+      $('.icon-tuichu').click(function () {
+            if(online_users.length != 0){
+                $.msg('请先将游客对话处理完成!');
+                return;
+            }
+      });
+    };
     /**
      * 游客主动关闭.
      * @param data

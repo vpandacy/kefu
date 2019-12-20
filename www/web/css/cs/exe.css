@@ -142,7 +142,12 @@ select[name='cs'] {
     flex-direction: column;
     justify-content: space-between;
 }
-
+#chatExe .exe-menu .menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 #chatExe .exe-menu .menu-head {
     width: 60%;
     border-radius: 50%;
@@ -154,8 +159,8 @@ select[name='cs'] {
 }
 
 #chatExe .exe-menu .menu-icon-bottom {
-    position: relative;
-    bottom: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 #chatExe .exe-menu .icon {
@@ -182,7 +187,12 @@ select[name='cs'] {
     background: rgb(86, 216, 59);
     margin: 0 auto;
 }
-
+ #chatExe .exe-menu .menu-icon-top-bottom {
+     flex: 1;
+     justify-content: space-between;
+     display: flex;
+     flex-direction: column;
+ }
 #chatExe .exe-keep {
     /*width: 22%;*/
     min-width: 400px;
@@ -268,6 +278,9 @@ select[name='cs'] {
     padding: 4px;
     font-size: 14px;
 }
+#chatExe .exe-keep .tab .tab-content-list .list-flag-online:before {
+    content: "在线";
+}
  #chatExe .exe-keep .tab .tab-content-list .list-flag-off-line {
      background: rgb(129, 129, 129);
      color: white;
@@ -275,6 +288,9 @@ select[name='cs'] {
      padding: 4px;
      font-size: 14px;
  }
+#chatExe .exe-keep .tab .tab-content-list .list-flag-off-line:before {
+    content: "离线";
+}
 
 #chatExe .exe-header {
     width: 100%;
@@ -305,7 +321,6 @@ select[name='cs'] {
     margin-right: 10px;
     color: rgb(98, 119, 140);
 }
-
 #chatExe .exe-header .exe-header-info-right i {
     margin: 0 10px 0 0;
 }
