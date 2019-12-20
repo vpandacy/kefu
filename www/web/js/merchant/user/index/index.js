@@ -31,10 +31,21 @@ var merchant_user_index_ops = {
                         return sources_map[row.source];
                     }}
                     ,{field:'desc', title: '备注'}
-                    ,{field:'created_time', title: '创建时间'}
+                    ,{field:'created_time', title: '添加时间'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#userBar'}
                 ]]
                 ,id: 'userTable'
             }));
+
+            table.on('tool(userTable)',function (event) {
+                if(event.event != 'edit') {
+                    return false;
+                }
+
+                location.href = merchant_common_ops.buildMerchantUrl('/user/index/edit',{
+                    member_id: event.data.id,
+                });
+            })
         });
     }
 };
