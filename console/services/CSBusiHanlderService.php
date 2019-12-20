@@ -5,6 +5,7 @@ use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
 use common\services\QueueListService;
+use common\services\uc\CustomerService;
 use GatewayWorker\Lib\Gateway;
 use Workerman\Worker;
 
@@ -101,6 +102,8 @@ class CSBusiHanlderService extends BaseService
             ]
         ]);
 
+        // 下线客服.
+        CustomerService::offlineByCSSN($cache_params['f_id']);
         ChatEventService::clearCSBindCache($client_id);
     }
 

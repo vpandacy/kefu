@@ -41,7 +41,7 @@ class ChatEventService extends BaseService
         $query = Staff::find()->where([
             'status' => ConstantService::$default_status_true,
             'merchant_id' => $merchant_info['id'],
-            'is_online' =>  1,
+            'is_online' =>  ConstantService::$default_status_true,
         ]);
 
         // 先简单查询风格信息.
@@ -69,9 +69,7 @@ class ChatEventService extends BaseService
             $query->andWhere(['id'=>$staff_ids]);
         }
 
-        $staffs = $query->limit(1)
-            ->asArray()
-            ->all();
+        $staffs = $query->asArray()->all();
 
         if( !$staffs ){
             return self::_err("暂无客服~~");

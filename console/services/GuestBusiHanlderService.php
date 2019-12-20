@@ -245,7 +245,9 @@ class GuestBusiHanlderService extends BaseService
         $cache_params['kf_id'] = $kf_info['id'];
         $cache_params['kf_sn'] = $kf_info['sn'];
         // 将client_id加入到这个组中.
-        ChatGroupService::joinGroup($kf_info['sn'], $f_id);
+        if(!ChatGroupService::checkUserInGroup($kf_info['sn'], $f_id)) {
+            ChatGroupService::joinGroup($kf_info['sn'], $f_id);
+        }
         ChatEventService::setGuestBindCache( $client_id ,$cache_params);
         Gateway::sendToClient( $client_id, $data );
     }
@@ -317,6 +319,8 @@ class GuestBusiHanlderService extends BaseService
 
                 // 给组内进行广播.
                 ChatGroupService::notifyGroupUserByGroupName($message['data']['f_id'], $mess);
+                ChatGroupService::notifyWaitGroupUserByGroupName($message['data']['f_id'], $mess);
+                ChatGroupService::removeWaitGroup($message['data']['f_id']);
                 ChatGroupService::removeGroup($message['data']['f_id']);
                 break;
             case ConstantService::$chat_cmd_change_kf:

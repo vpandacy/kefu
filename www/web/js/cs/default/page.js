@@ -151,6 +151,7 @@
 
     // 页面访问轨迹.
     Page.prototype.renderAccessTrack = function(uuid) {
+        $('.access-track').html('<div style="text-align: center;color: rgb(179, 181, 185) !important;">暂无</div>');
         $.ajax({
             type: 'POST',
             url: cs_common_ops.buildKFCSurl('/visitor/history'),
@@ -174,7 +175,7 @@
                         '</div>'
                     ].join('');
                 });
-                console.dir(res);
+
                 $('.access-track').html(html.join(''));
             }
         })
