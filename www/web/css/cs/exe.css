@@ -252,7 +252,29 @@ select[name='cs'] {
 
 #chatExe .exe-keep .tab .tab-content-list .content-list-time {
     color: rgb(190, 190, 192);
+    padding: 10px;
 }
+#chatExe .exe-keep .tab .tab-content-list .list-flag-online {
+    background: rgb(86, 216, 59);
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 14px;
+}
+#chatExe .exe-keep .tab .tab-content-list .list-flag-online {
+    background: rgb(86, 216, 59);
+    color: white;
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 14px;
+}
+ #chatExe .exe-keep .tab .tab-content-list .list-flag-off-line {
+     background: rgb(129, 129, 129);
+     color: white;
+     border-radius: 5px;
+     padding: 4px;
+     font-size: 14px;
+ }
 
 #chatExe .exe-header {
     width: 100%;
