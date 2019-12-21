@@ -33,6 +33,13 @@ var ws_config = new socket({
                 $('.ws_flag').text('连接成功')
                 break;
         }
+    },
+    renderSystemMessage: function (msg) {
+        return  [
+            '<div class="tip">',
+            '   <span>',msg,'</span>',
+            '</div>'
+        ].join('');
     }
 })
 $(document).ready(function () {

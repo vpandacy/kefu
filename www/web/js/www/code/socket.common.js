@@ -189,7 +189,9 @@
          * 定时加载图标显示隐藏
          */
         $('.show-message .line').click(function () {
-            $('.icon-jiazaizhong').fadeIn();
+            var elem = $(this);
+            $('.icon-jiazaizhong').show();
+            elem.css({display: 'none'});
             $.ajax({
                 type: 'POST',
                 data: {
@@ -200,7 +202,8 @@
                 url: '/' + config.msn + '/visitor/history',
                 dataType: 'json',
                 success:function (res) {
-                    $('.icon-jiazaizhong').fadeOut();
+                    $('.icon-jiazaizhong').hide();
+                    elem.css({display: 'inline-block'});
                     if(res.code != 200) {
                         return false;
                     }
@@ -210,11 +213,11 @@
                     }
 
                     // 这里就开始渲染了.
-                    console.dir(that.renderHistory(res.data));
                     $('.show-message').parents('.tip-div').after(that.renderHistory(res.data));
                 },
                 error: function () {
-                    $('.icon-jiazaizhong').fadeOut();
+                    $('.icon-jiazaizhong').hide();
+                    elem.css({display: 'inline-block'});
                 }
             })
         });
@@ -406,19 +409,19 @@
         // 先排序.
         var that = this;
 
-        // 重定义消息时间.
-        config.last_time = messages[0].created_time;
-
         messages = messages.sort(function (prev,next) {
             return prev.id - next.id;
         });
+
+        // 重定义消息时间.
+        config.last_time = messages[0].created_time;
 
         var contents = messages.map(function (message) {
             var date_info = message.created_time.split(' ');
             var html = '';
             if(date_info[0] != config.last_day) {
-                config.last_day = date_info[0];
                 html += that.renderSystemMessage(date_info[0]);
+                config.last_day = date_info[0];
             }
 
             if(message.from_id != config.uuid) {

@@ -21,7 +21,7 @@ StaticPluginHelper::includeJsPlugins([
 ]);
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
-<div id='wapOnline' data-sn="<?=$merchant['sn']?>" data-code="<?=$code?>">
+<div id='wapOnline'>
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
     <div class="waponline-max dis_none">
         <div class="top">
@@ -33,18 +33,21 @@ StaticPluginHelper::includeJsPlugins([
             <div></div>
         </div>
         <div class="message">
-            <div class="tip">
-                <span>欢迎您的咨询，期待为您服务！</span>
-            </div>
-            <div class="date">
-                <span>15:34</span>
+            <div class="tip tip-div">
+                <div class="show-message">
+                    <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
+                    <span class="line">显示上次聊天记录</span>
+                </div>
             </div>
             <div class="content-message">
                 <div class="message-img">
-                    <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
+                    <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
                 </div>
                 <div class="message-info">
-                    <div class="message-message">您好，请问您的电话或微信是多少呢？稍后把详细资料、优化政策、产品图册，利润分析等发到您手机上，以便您更好的了解！</div>
+                    <div class="message-name-date"><span>客服</span><span class="date"><?=date('H:i:s')?></span></div>
+                    <div class="message-message">
+                        <?=$js_params['greetings']?>
+                    </div>
                 </div>
             </div>
         </div>

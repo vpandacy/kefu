@@ -149,9 +149,8 @@ class CodeController extends BaseController
         $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
         $this->layout = 'mobile';
         return $this->render('mobile', [
-            'merchant'  =>  $merchant,
+            'merchant_info'  =>  $merchant,
             'setting'   =>  $setting,
-            'code'      =>  $code,
             "js_params" => [
                 'uuid'              => $uuid,
                 "ws"                => WSCenterService::getGuestWSByRoute( $msn ),
