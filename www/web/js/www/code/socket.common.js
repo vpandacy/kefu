@@ -276,9 +276,9 @@
                 break;
             case "assign_kf":
                 config.cs = {
-                    t_id: data.data.sn,
-                    t_name: data.data.name,
-                    avatar: data.data.avatar
+                    t_id: data.data.sn ? data.data.sn : config.cs.t_id,
+                    t_name: data.data.name ? data.data.name : config.cs.t_name,
+                    avatar: data.data.avatar ? data.data.avatar : config.cs.avatar
                 };
                 // 开始开启自动回复.
                 this.autoClose();
@@ -316,7 +316,13 @@
                 $(this.output).append(this.renderSystemMessage(data.msg));
                 break;
             // 这里要展示在第几位. 这里是等待聊天的队列.
-            case 'guest_connect_wait':
+            case 'assign_kf_wait':
+                config.cs = {
+                    t_id: data.data.sn,
+                    t_name: data.data.name,
+                    avatar: data.data.avatar,
+                    wait_num: parseInt(data.data.wait_num) + 1
+                };
                 clearInterval(interval);
                 break;
             case 'guest_close':
