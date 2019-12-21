@@ -208,13 +208,12 @@ class GuestBusiHanlderService extends BaseService
         if( !$kf_info ){
             $params = [
                 'content'   => ChatEventService::getLastErrorMsg(),
-                'code'      =>  ConstantService::$response_code_fail
+                'code'      => ConstantService::$response_code_fail
             ];
             $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_system,$params );
             Gateway::sendToClient( $client_id, $data );
             return;
         }
-        var_dump($kf_info);
         // 这里是分配成功.
         if($kf_info['act'] == 'success') {
             self::assignCustomerServiceSuccess($f_id, $client_id, $kf_info);

@@ -56,12 +56,13 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
             </div>
             <div class="message">
-                <div class="tip-div">
-                    <span class="content-tip">
-                    <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
-                    <span class="line">显示上次聊天记录</span>
-                    <span></span>
-                </span>
+                <!-- 系统消息格式. 直接追加出来.而不是一定要在最上方. -->
+                <div class="tip-div system">
+                    <span class="content-tip show-message">
+                        <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
+                        <span class="line">显示上次聊天记录</span>
+                        <span></span>
+                    </span>
                 </div>
                 <div class="content-message">
                     <div class="message-img">

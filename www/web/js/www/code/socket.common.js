@@ -26,6 +26,7 @@
         this.input = base_config.hasOwnProperty('input')
             ? base_config.input
             : '#content';
+
         this.emoji = base_config.hasOwnProperty('emoji')
             ? base_config.emoji
             : 'content';
@@ -55,8 +56,8 @@
             : null;
 
         // 定义系统消息的展示区域.
-        this.system = base_config.hasOwnProperty('system')
-            ? base_config.system
+        this._renderSystemMessage = base_config.hasOwnProperty('renderSystemMessage')
+            ? base_config.renderSystemMessage
             : null;
 
         this._renderCloseChat = base_config.hasOwnProperty('renderCloseChat')
@@ -282,6 +283,7 @@
                 // 开始开启自动回复.
                 this.autoClose();
                 //显示一些系统文字提醒，例如已分配哪个客服
+                $(this.output).append(this.renderSystemMessage('客服:' + config.cs.t_name + ',为您服务...'));
                 break;
             case "change_kf":
                 config.cs = {
@@ -306,12 +308,12 @@
                     this.ws.close();
                     this.renderCloseChat();
                 }
-                $(this.system).text(data.data.content);
+                $(this.output).append(this.renderSystemMessage(data.data.content));
                 break;
             case 'kf_logout':
                 this.ws.close();
                 this.renderCloseChat();
-                $(this.system).text('客服已下线,请开始新对话或留言');
+                $(this.output).append(this.renderSystemMessage(data.msg));
                 break;
             // 这里要展示在第几位. 这里是等待聊天的队列.
             case 'guest_connect_wait':
@@ -327,6 +329,22 @@
         if(this.handle && (typeof this.handle) == 'function') {
             this.handle(data);
         }
+    };
+
+    // 自定义显然系统消息.
+    socket.prototype.renderSystemMessage = function(msg) {
+        if(!this._renderSystemMessage || (typeof this._renderSystemMessage != 'function')) {
+            return [
+                '<div class="tip-div system">',
+                '   <span class="content-tip">',
+                '       <span class="line">',msg,'</span>',
+                '       <span></span>',
+                '   </span>',
+                '</div>'
+            ].join("");
+        }
+
+        return this._renderSystemMessage(msg);
     };
 
     window.socket = socket;
