@@ -20,6 +20,16 @@ var mobile_logic = {
         $('.online_from_message').on('click', function () {
             $('#online-from').show();
             $('.chat-close').hide();
+            $('.overflow-message').hide();
+            ws_config.close();
+        });
+
+        // 去留言.
+        $('.leave-message span').on('click',function () {
+            $('#online-from').show();
+            $('.chat-close').hide();
+            $('.overflow-message').hide();
+            ws_config.close();
         });
 
         $('.from-button-message').click(function() {

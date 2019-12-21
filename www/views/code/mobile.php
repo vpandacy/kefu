@@ -68,6 +68,17 @@ StaticPluginHelper::includeJsPlugins([
         <div class="chat-close dis_none">
             当前对话已结束，您可以开始 <span class="online_new_message">新对话</span> 或 <span class="online_from_message">留言</span>
         </div>
+
+        <div class="overflow-message dis_none">
+            <p>当前客服接待能力已达上限，请耐心等候！</p>
+            <div class="operation">
+                <div>当前等待人数：<span class="num">0</span></div>
+                <div class="leave-message">
+                    <span>转留言</span>
+                </div>
+            </div>
+        </div>
+
         <div class="faceDivBox" style="display:none;height: 137px; bottom: 3rem;width: 88%;overflow: auto; position: absolute;background: white;">
             <div class="faceDiv">
                 <section class="emoji-box"></section>
