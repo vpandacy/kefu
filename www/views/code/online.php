@@ -67,7 +67,9 @@ StaticPluginHelper::includeJsPlugins([
                 <div class="bottom">
                     <div class="submit-button">发送</div>
                 </div>
-                <div class="chat-close">当前对话已结束，您可以开始 <span class="online_new_message">新对话</span> 或 <span class="online_from_message">留言</span></div>
+                <div class="chat-close">
+                    当前对话已结束，您可以开始 <span class="online_new_message">新对话</span> 或 <span class="online_from_message">留言</span>
+                </div>
             </div>
             <div class="faceDivBox" style="display:none;width: 500px;height: 150px;bottom: 155px;">
                 <div class="faceDiv">

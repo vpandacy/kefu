@@ -9,6 +9,42 @@ var mobile_logic = {
             $('.waponline-max').addClass('dis_none');
             $('.icon-zaixianzixun').removeClass('dis_none');
         })
+
+        // 点击新对话.
+        $('.online_new_message').on('click', function () {
+            ws_config.init();
+            $('.chat-close').hide();
+        });
+
+        // 点击留言
+        $('.online_from_message').on('click', function () {
+            $('#online-from').show();
+            $('.chat-close').hide();
+        });
+
+        $('.from-button-message').click(function() {
+            var fromData = ['name','mobile','wechat','message']
+            var param = {};
+            fromData.forEach(function(value, index, array){
+                param[value] = $("#online-from [name="+value+"]").val()
+            });
+            var config = JSON.parse($('[name="params"]').val());
+            param['msn'] = config.msn;
+            param['code'] = config.code;
+
+            $.ajax({
+                url:'/code/leave',
+                type:'post',
+                data:param,
+                dataType: 'json',
+                success: function(res) {
+                    if(res.code == 200) {
+                        $('.from-button-message').hide();
+                    }
+                    alert(res.msg);
+                }
+            })
+        });
     }
 }
 var ws_config = new socket({
@@ -19,18 +55,17 @@ var ws_config = new socket({
     handle: function (data) {
         switch (data.cmd) {
             case 'ws_connect'||'hello':
-                $('.ws_flag').text('正在连接客服...')
+                $('.ws_flag').text('正在连接客服...');
                 break;
             case 'assign_kf'||'change_kf'||'reply' || 'system':
-                $('.ws_flag').text('连接成功')
+                $('.ws_flag').text('连接成功');
                 break;
             case 'close_guest':
                 // 主动关闭聊天.
-                ws_config.autoClose();
-                $('.ws_flag').text('连接中止')
+                $('.ws_flag').text('连接中止');
                 break;
             default:
-                $('.ws_flag').text('连接成功')
+                $('.ws_flag').text('连接成功');
                 break;
         }
     },

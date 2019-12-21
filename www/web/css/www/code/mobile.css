@@ -23,13 +23,13 @@ body {
     top: 60%;
 }
 #wapOnline .dis_none {
-    display: none !important;
+    display: none;
 }
 #wapOnline .waponline-max {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
     position: relative;
 }
 
@@ -197,4 +197,63 @@ body {
     padding: 0.5rem;
     font-size: 0.8rem;
     display: inline-block;
+}
+
+
+.chat-close {
+    position: fixed;
+    bottom: 0;
+    height: 3rem;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    background-color: white;
+    text-align: center;
+    line-height: 3rem;
+}
+
+.online_new_message,.online_from_message {
+    color:rgb(31, 140, 235);
+}
+
+#online-from {
+    background: white;
+    position: absolute;
+    top: 3rem;
+    max-width: 100%;
+    height: 100%;
+    padding: 5px 20px;
+    font-size: 14px;
+    display: none;
+    bottom: 0;
+}
+#online-from .from-list {
+    width: 100%;
+}
+#online-from .from-list .from-button-message {
+    width: 102%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: rgb(0, 118, 220);
+    cursor: pointer;
+    color: white;
+}
+#online-from .from-list input {
+    width: 100%;
+    height: 25px;
+    padding:0 5px;
+    border: 1px solid #bbb5b5;
+}
+#online-from .from-list textarea {
+    width: 100%;
+    height: 50px;
+    resize:none;
+}
+#online-from .from-list .from-title {
+    margin: 10px 0;
+}
+#online-from .from-list .from-title >span:last-child{
+
 }

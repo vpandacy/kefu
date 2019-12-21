@@ -36,20 +36,27 @@ var chat_logic = {
             $('.capture-dialog').hide();
         });
 
-        $('.from-button-message').click(()=>{
-            let fromData = ['name','mobile','wechat','message']
-            let param = {}
-            fromData.forEach((value, index, array) => {
+        $('.from-button-message').click(function(){
+            var fromData = ['name','mobile','wechat','message'];
+            var param = {};
+
+            fromData.forEach(function (value, index, array) {
                 param[value] = $("#online-from [name="+value+"]").val()
-            })
-            param['msn'] = JSON.parse(localStorage.getItem("serverInfo")).msn
-            param['code'] = JSON.parse(localStorage.getItem("serverInfo")).code
+            });
+
+            var config = JSON.parse($('[name="params"]').val());
+            param['msn'] = config.msn;
+            param['code'] = config.code;
+
             $.ajax({
                 url:'/code/leave',
                 type:'post',
                 data:param,
                 dataType: 'json',
-                success: res => {
+                success: function (res) {
+                    if(res.code == 200) {
+                        $('.from-button-message').hide();
+                    }
                     res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
                 }
             });

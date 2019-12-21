@@ -22,7 +22,7 @@ var online_logic = {
         $('.from-button-message').click(function() {
             var fromData = ['name','mobile','wechat','message']
             var param = {};
-            fromData.forEach((value, index, array) => {
+            fromData.forEach(function(value, index, array){
                 param[value] = $("#online-from [name="+value+"]").val()
             });
             var config = JSON.parse($('[name="params"]').val());
@@ -35,6 +35,9 @@ var online_logic = {
                 data:param,
                 dataType: 'json',
                 success: function(res) {
+                    if(res.code == 200) {
+                        $('.from-button-message').hide();
+                    }
                     res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
                 }
             })
