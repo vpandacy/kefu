@@ -128,7 +128,7 @@
                 clearInterval(interval);
                 // 主动关闭聊天.
                 that.ws.close();
-                $(that.system).text('由于您长时间没有对话，系统已经关闭您的会话');
+                $(that.output).append(that.renderSystemMessage('由于您长时间没有对话，系统已经关闭您的会话'));
                 // 这里要触发自定义渲染
                 that.renderCloseChat();
             }
