@@ -21,27 +21,21 @@ var chat_logic = {
             var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
             // 主动关闭聊天框.
             ws_config.autoClose();
-            window.open(data['tab_url'], 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no')
+            window.open(data['tab_url'], 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
             $('.show-hide-min').css({display:'block'});
             $('.show-hide').css({display:'none'});
         });
-        /**
-         * 定时加载图标显示隐藏
-         */
-        $('.line').click(function () {
-            $('.icon-jiazaizhong').fadeIn();
-            setTimeout(function () {
-                $('.icon-jiazaizhong').fadeOut();
-            },3000);//afterbegin
-        });
+
         $('.icon-jianqie').click(function () {
             $('.online-cover').show();
             $('.capture-dialog').show();
         });
+
         $('.icon-guanbi').click(function () {
             $('.online-cover').hide();
             $('.capture-dialog').hide();
         });
+
         $('.from-button-message').click(()=>{
             let fromData = ['name','mobile','wechat','message']
             let param = {}

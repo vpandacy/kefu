@@ -232,7 +232,7 @@ class GuestBusiHanlderService extends BaseService
     {
         $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_assign_kf,[
             "sn" => $kf_info['sn'],
-            "name" => $kf_info['name'],
+            "name" => $kf_info['nickname'],
             "avatar" => GlobalUrlService::buildPicStaticUrl('hsh', $kf_info['avatar'] )
         ]);
 
@@ -274,7 +274,7 @@ class GuestBusiHanlderService extends BaseService
         // 通知客户.
         $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_assign_kf_wait, [
             "sn" => $kf_info['sn'],
-            "name" => $kf_info['name'],
+            "name" => $kf_info['nickname'],
             "avatar" => GlobalUrlService::buildPicStaticUrl("hsh",$kf_info['avatar']),
             "wait_num" => $num
         ]);

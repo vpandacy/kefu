@@ -3,21 +3,40 @@
     var config = JSON.parse( $(".hidden_wrapper input[name=params]").val() ),
         interval = null;
 
+    // 这里还要在细分.
+    // 这里要初始化第一次的时间. 用来查询历史记录.
+    config.last_time = getCurrentDateTime(true);
+    config.last_day  = config.last_time.split(" ")[0];
+
     if(!config) {
         console.log('未找到初始化配置信息.');
         return false;
     }
-
-    function getCurrentDateTime() {
+    // 获取当前时间 或者包含年月日的当前时间
+    function getCurrentDateTime(is_all) {
         var date = new Date();
 
-        return [
+        var times = [
             date.getHours(),
             date.getMinutes(),
             date.getSeconds()
         ].map(function (value) {
             return value < 10 ? '0' + value : value;
         }).join(':');
+
+        if(!is_all) {
+            return times;
+        }
+
+        var full_date = [
+            date.getFullYear(),
+            parseInt(date.getMonth()) + 1,
+            date.getDate()
+        ].map(function (value) {
+            return value < 10 ? '0' + value : value;
+        }).join('-');
+
+        return full_date + ' ' + times;
     }
 
     var socket = function (base_config) {
@@ -166,8 +185,38 @@
             that.send();
         });
 
-        $(this.closeButton).on('click', function () {
+        /**
+         * 定时加载图标显示隐藏
+         */
+        $('.show-message .line').click(function () {
+            $('.icon-jiazaizhong').fadeIn();
+            $.ajax({
+                type: 'POST',
+                data: {
+                    uuid: config.uuid,
+                    last_time: config.last_time,
+                    code: config.code
+                },
+                url: '/' + config.msn + '/visitor/history',
+                dataType: 'json',
+                success:function (res) {
+                    $('.icon-jiazaizhong').fadeOut();
+                    if(res.code != 200) {
+                        return false;
+                    }
 
+                    if(res.data.length <= 0) {
+                        return false;
+                    }
+
+                    // 这里就开始渲染了.
+                    console.dir(that.renderHistory(res.data));
+                    $('.show-message').parents('.tip-div').after(that.renderHistory(res.data));
+                },
+                error: function () {
+                    $('.icon-jiazaizhong').fadeOut();
+                }
+            })
         });
     };
 
@@ -218,14 +267,14 @@
             div = this._renderMsg(msg, time);
         }else{
             // 这里是默认的数据信息.
-            div = document.createElement('div');
-            div.style.textAlign = "right";
-            div.innerHTML = [
+            div  = [
+                '<div style="text-align: right">',
                 '<div class="content-message online-my-message">\n' +
                 '     <div class="message-info">\n' +
                 '     <div class="message-name-date"><span class="date">',time,'</span><span>我</span></div>\n' +
                 '   <div class="message-message">',msg,'</div>\n' +
                 '  </div>\n' +
+                '</div>',
                 '</div>'
             ].join("")
         }
@@ -234,9 +283,8 @@
     };
 
     // 渲染客服的聊天数据.
-    socket.prototype.renderCsMsg = function(nickname, avatar, msg) {
-        var div = '',
-            time = getCurrentDateTime();
+    socket.prototype.renderCsMsg = function(nickname, avatar, msg, time) {
+        var div = ''
 
         if(this._renderCsMsg) {
             div = this._renderCsMsg(nickname, avatar, msg, time);
@@ -294,7 +342,7 @@
                 this.autoClose();
                 break;
             case "reply":
-                $(this.output).append( this.renderCsMsg(config.cs.t_name, config.cs.avatar, data.data.content) );
+                $(this.output).append( this.renderCsMsg(config.cs.t_name, config.cs.avatar, data.data.content, getCurrentDateTime()) );
                 this.scrollToBottom();
                 this.autoClose();
                 break;
@@ -351,6 +399,38 @@
         }
 
         return this._renderSystemMessage(msg);
+    };
+
+    // 渲染历史记录.
+    socket.prototype.renderHistory = function(messages) {
+        // 先排序.
+        var that = this;
+
+        // 重定义消息时间.
+        config.last_time = messages[0].created_time;
+
+        messages = messages.sort(function (prev,next) {
+            return prev.id - next.id;
+        });
+
+        var contents = messages.map(function (message) {
+            var date_info = message.created_time.split(' ');
+            var html = '';
+            if(date_info[0] != config.last_day) {
+                config.last_day = date_info[0];
+                html += that.renderSystemMessage(date_info[0]);
+            }
+
+            if(message.from_id != config.uuid) {
+                html += that.renderCsMsg(message.staff_name, message.cs_avatar, message.content, date_info[1]);
+            }else{
+                html += that.renderMsg(message.content, date_info[1]);
+            }
+
+            return html;
+        });
+
+        return contents.join('');
     };
 
     window.socket = socket;

@@ -7,7 +7,8 @@ return [
         '/<controller:\w+>/<action:\w+>' => '<controller>/<action>',
         '/' => '/default/index',
         '/<module:(cs|merchant)>/<controller:\w+>/<action:\w+>/<id:\d+>' =>'<module>/<controller>/<action>',
-        '/<msn:\w+>/<controller:(code)>/<action:\w+>'  =>  '<controller>/<action>',
-        '/<msn:\w+>/<controller:(code)>/'  =>  '<controller>/<action>'
+        '/<module:(cs|merchant)>/<controller:\w+>/<action:\w+>' =>'<module>/<controller>/<action>',
+        '/<msn:\w+>/<controller:(code|visitor)>/<action:\w+>'  =>  '<controller>/<action>',
+        '/<msn:\w+>/<controller:(code|visitor)>/'  =>  '<controller>/<action>'
     ],
 ];
