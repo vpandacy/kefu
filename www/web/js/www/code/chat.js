@@ -36,6 +36,28 @@ var chat_logic = {
             $('.capture-dialog').hide();
         });
 
+        // 新会话
+        $('.online_new_message').click(function(){
+            ws_config.init();
+            $('#online-from').hide();
+            $('.chat-close').hide();
+            $('.content-tip .line').text('显示上次聊天记录');
+        });
+
+        // 留言. 留言都要关闭ws链接.
+        $('.online_from_message').click(function(){
+            $('#online-from').show();
+            $('.chat-close').hide();
+            ws_config.close();
+        });
+
+        // 转留言.留言都要关闭ws链接.
+        $('.leave-message span').on('click',function () {
+            $('#online-from').show();
+            $('.chat-close').hide();
+            ws_config.close();
+        });
+
         $('.from-button-message').click(function(){
             var fromData = ['name','mobile','wechat','message'];
             var param = {};
@@ -78,18 +100,6 @@ var ws_config = new socket({
                 break;
             case 'close_guest':
                 $('.chat-close').show();
-                // 新会话
-                $('.online_new_message').click(()=> {
-                    ws_config.init();
-                    $('#online-from').hide();
-                    $('.chat-close').hide();
-                    $('.content-tip .line').text('显示上次聊天记录');
-                });
-                // 留言
-                $('.online_from_message').click(()=> {
-                    $('#online-from').show();
-                    $('.chat-close').hide();
-                });
                 $('.ws_flag').text('连接关闭')
                 break;
             default:

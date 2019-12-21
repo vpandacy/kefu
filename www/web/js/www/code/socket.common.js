@@ -89,12 +89,6 @@
         sdEditorEmoj.setEmoji({type:'div',id: this.emoji});
     };
 
-    // 将聊天框滚动到页面下面.
-    socket.prototype.scrollToBottom = function(){
-        var ele = $(this.output);
-        ele.scrollTop(ele[0].scrollHeight);
-    };
-
     // 初始化整个的页面聊天.
     socket.prototype.init = function() {
         this.initSocket();
@@ -128,40 +122,9 @@
         });
     };
 
-    // 自动断开聊天信息.
-    socket.prototype.autoClose = function() {
-        var that = this;
-        if(interval) {
-            clearInterval(interval);
-        }
-
-        if(config.auto_disconnect <= 0) {
-            return false;
-        }
-
-        var auto_disconnect = parseInt(config.auto_disconnect);
-        // auto_disconnect = 1000;
-        interval = setInterval(function () {
-            auto_disconnect -= 1;
-            if(auto_disconnect <= 0) {
-                clearInterval(interval);
-                // 主动关闭聊天.
-                that.ws.close();
-                $(that.output).append(that.renderSystemMessage('由于您长时间没有对话，系统已经关闭您的会话'));
-                // 这里要触发自定义渲染
-                that.renderCloseChat();
-            }
-        }, 1000);
-    };
-
-    // 自动渲染关闭图形界面.
-    socket.prototype.renderCloseChat = function() {
-        if(this._renderCloseChat) {
-            return this._renderCloseChat();
-        }
-
-        // 这里是默认的信息.
-        return $('.chat-close').show();
+    // 关闭ws链接.
+    socket.prototype.close = function() {
+        this.ws.close();
     };
 
     // 绑定界面的消息信息.
@@ -223,12 +186,53 @@
         });
     };
 
+    // 自动断开聊天信息.
+    socket.prototype.autoClose = function() {
+        var that = this;
+        if(interval) {
+            clearInterval(interval);
+        }
+
+        if(config.auto_disconnect <= 0) {
+            return false;
+        }
+
+        var auto_disconnect = parseInt(config.auto_disconnect);
+        // auto_disconnect = 1000;
+        interval = setInterval(function () {
+            auto_disconnect -= 1;
+            if(auto_disconnect <= 0) {
+                clearInterval(interval);
+                // 主动关闭聊天.
+                that.ws.close();
+                $(that.output).append(that.renderSystemMessage('由于您长时间没有对话，系统已经关闭您的会话'));
+                // 这里要触发自定义渲染
+                that.renderCloseChat();
+            }
+        }, 1000);
+    };
+
+    // 自动渲染关闭图形界面.
+    socket.prototype.renderCloseChat = function() {
+        if(this._renderCloseChat) {
+            return this._renderCloseChat();
+        }
+
+        // 这里是默认的信息.
+        return $('.chat-close').show();
+    };
+
     // 页面发送消息．
     socket.prototype.send = function() {
         var msg = $(this.input).html();
         if(msg.length <= 0) {
             return false;
         }
+
+        if(config.cs && config.cs.wait_num >= 1) {
+            return false;
+        }
+
         // 发送动作为chat.
         this.socketSend( this.buildMsg('chat',{
             'content': msg
@@ -261,6 +265,12 @@
             cmd:cmd,
             data:data
         };
+    };
+
+    // 将聊天框滚动到页面下面.
+    socket.prototype.scrollToBottom = function(){
+        var ele = $(this.output);
+        ele.scrollTop(ele[0].scrollHeight);
     };
 
     // 渲染游客的聊天信息.
@@ -329,10 +339,13 @@
                 config.cs = {
                     t_id: data.data.sn ? data.data.sn : config.cs.t_id,
                     t_name: data.data.name ? data.data.name : config.cs.t_name,
-                    avatar: data.data.avatar ? data.data.avatar : config.cs.avatar
+                    avatar: data.data.avatar ? data.data.avatar : config.cs.avatar,
+                    wait_num: 0
                 };
                 // 开始开启自动回复.
                 this.autoClose();
+                // 关闭等待区.
+                $('.overflow-message').hide();
                 //显示一些系统文字提醒，例如已分配哪个客服
                 $(this.output).append(this.renderSystemMessage('客服:' + config.cs.t_name + ',为您服务...'));
                 break;
@@ -375,6 +388,8 @@
                     wait_num: parseInt(data.data.wait_num) + 1
                 };
                 clearInterval(interval);
+                // 渲染等待区.
+                this.renderWaitMessage(config.cs.wait_num);
                 break;
             case 'guest_close':
                 this.ws.close();
@@ -434,6 +449,12 @@
         });
 
         return contents.join('');
+    };
+
+    // 显示等待区.
+    socket.prototype.renderWaitMessage = function(num) {
+        $('.overflow-message .num').text(num);
+        $('.overflow-message').show();
     };
 
     window.socket = socket;
