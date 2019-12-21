@@ -190,6 +190,7 @@
     flex-direction: column;
     -ms-flex-direction: column;
     border-radius: 4px;
+    position: relative;
 }
 
 #pc-online .online-header {
@@ -418,6 +419,41 @@
 #online-from .from-list .from-title {
     margin: 10px 0;
 }
-#online-from .from-list .from-title >span:last-child{
 
+
+.overflow-message {
+    position: absolute;
+    top: 36px;
+    left: 0;
+    right: 0;
+    background-color: #FCFFDF;
+    border-bottom: 1px solid rgb(228, 234, 240);
+    padding: 10px;
+    font-size: 12px;
+}
+
+.overflow-message .operation{
+    display: flex;
+    font-size: 14px;
+}
+
+.operation div{
+    flex: 1;
+}
+
+.operation .leave-message{
+    text-align: right;
+}
+
+.operation .num {
+    color: #4D73E7;
+    font-weight: 600;
+}
+
+.operation .leave-message span{
+    border: 1px solid rgb(228,234,240);
+    display: inline-block;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+    color: #66748B;
 }

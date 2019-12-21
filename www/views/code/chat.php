@@ -101,6 +101,15 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <a class="closeFaceBox" href="javascript:void(0)">×</a>
             </div>
+            <div class="overflow-message dis_none">
+                <p>当前客服接待能力已达上限，请耐心等候！</p>
+                <div class="operation">
+                    <div>当前等待人数：<span class="num">7</span></div>
+                    <div class="leave-message">
+                        <span>转留言</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="online-from">
             <div>您好, 我们的服务时间：8:00-24:00，现在客服不在线，请留言. 如果没有留下您的联系方式，客服将无法和您联系！</div>

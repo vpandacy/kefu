@@ -8,6 +8,7 @@ StaticPluginHelper::socketPlugin();
 // css
 StaticPluginHelper::includeCssPlugins([
     GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),
+    GlobalUrlService::buildStaticUrl('/jqMsg/message.css'),
     GlobalUrlService::buildUcStaticUrl('/css/component/iconfont/iconfont.css'),
     GlobalUrlService::buildKFStaticUrl('/css/www/code/mobile.css'),
 ]);
