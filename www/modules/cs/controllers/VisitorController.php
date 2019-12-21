@@ -245,6 +245,10 @@ class VisitorController extends BaseController
             return $this->renderErrJSON('请选择正确的客服');
         }
 
+        if($cs_id == $this->getStaffId()) {
+            return $this->renderErrJSON('游客无法转给自己');
+        }
+
         $uuid = $this->post('uuid','');
 
         $cs = Staff::find()
