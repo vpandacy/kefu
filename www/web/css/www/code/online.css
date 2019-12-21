@@ -165,8 +165,9 @@ body {
     position: absolute;
     top: 0;
     max-width: 100%;
-    height: 77%;
-    padding: 5px 20px;
+    height: 100%;
+    padding: 0 20px;
+    bottom: 0;
     font-size: 14px;
     display: none;
 }
@@ -288,4 +289,43 @@ body {
     width: 90%;
     border-top: 1px solid #DDE5ED;
     margin: 0 auto;
+}
+
+
+.overflow-message {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #FCFFDF;
+    border-bottom: 1px solid rgb(228, 234, 240);
+    padding: 10px;
+    font-size: 12px;
+}
+
+.overflow-message .operation{
+    display: flex;
+    font-size: 14px;
+}
+
+.operation div{
+    flex: 1;
+}
+
+.operation .leave-message{
+    text-align: right;
+}
+
+.operation .num {
+    color: #4D73E7;
+    font-weight: 600;
+}
+
+.operation .leave-message span {
+    border: 1px solid rgb(228, 234, 240);
+    display: inline-block;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+    color: #66748B;
+    border-radius: 4px;
 }

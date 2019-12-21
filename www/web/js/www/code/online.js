@@ -9,14 +9,25 @@ var online_logic = {
             $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
         });
 
-        $('.online_from_message').click(function(){
-            $('#online-from').show();
-        });
-
         $('.online_new_message').click(function(){
             $('#online-from').hide();
             $('.chat-close').hide();
             ws_config.init();
+        });
+
+        // 转留言.
+        $('.online_from_message').click(function(){
+            $('#online-from').show();
+            ws_config.close();
+            $('.chat-close').hide();
+        });
+
+        // 转留言.留言都要关闭ws链接.
+        $('.leave-message span').on('click',function () {
+            $('#online-from').show();
+            $('.chat-close').hide();
+            $('.overflow-message').hide();
+            ws_config.close();
         });
 
         $('.from-button-message').click(function() {

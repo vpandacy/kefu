@@ -119,6 +119,16 @@ StaticPluginHelper::includeJsPlugins([
             </div>
         </div>
     </div>
+
+    <div class="overflow-message dis_none">
+        <p>当前客服接待能力已达上限，请耐心等候！</p>
+        <div class="operation">
+            <div>当前等待人数：<span class="num">0</span></div>
+            <div class="leave-message">
+                <span>转留言</span>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="hidden_wrapper">
     <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>

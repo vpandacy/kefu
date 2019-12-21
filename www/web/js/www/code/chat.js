@@ -55,6 +55,7 @@ var chat_logic = {
         $('.leave-message span').on('click',function () {
             $('#online-from').show();
             $('.chat-close').hide();
+            $('.overflow-message').hide();
             ws_config.close();
         });
 
