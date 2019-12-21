@@ -113,7 +113,7 @@ class CodeController extends BaseController
         $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
 
         return $this->render('online',[
-            'merchant'  =>  $merchant,
+            'merchant_info'  =>  $merchant,
             'setting'   =>  $setting,
             "js_params" => [
                 'uuid'              => $uuid,

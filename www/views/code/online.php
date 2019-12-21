@@ -22,7 +22,7 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/chat/jquery.md5.js'),
     GlobalUrlService::buildStaticUrl('/chat/jquery.json-2.3.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
-    GlobalUrlService::buildKFStaticUrl('/chat/capturewrapper.js'),
+//    GlobalUrlService::buildKFStaticUrl('/chat/capturewrapper.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
     // 公共的socket聊天JS
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
@@ -33,7 +33,7 @@ StaticPluginHelper::includeJsPlugins([
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
 <div id='online'>
     <div class="online-header">
-        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant['logo'])?>">
+        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
         <div class="info">
             <span class="title">金牌客服</span>
             <span class="tip">为您在线解答售前(5*8)/售后咨询(7*24)服务</span>
@@ -43,8 +43,19 @@ StaticPluginHelper::includeJsPlugins([
         <div class="info-message">
             <div class="message">
                 <div class="tip-div">
-                    <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
-                    <span class="message-tip"><?=$setting['greetings'] ?? '欢迎您的咨询，期待为您服务！'?></span>
+                    <div class="show-message">
+                        <span class="iconfont icon-jiazaizhong" style="display: none;"></span>
+                        <span class="message-tip line">显示上次聊天记录</span>
+                    </div>
+                </div>
+                <div class="content-message">
+                    <div class="message-img">
+                        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
+                    </div>
+                    <div class="message-info">
+                        <div class="message-name-date"><span>客服</span><span class="date"><?=date('Y-m-d H:i:s')?></span></div>
+                        <div class="message-message"><?=$js_params['greetings']?></div>
+                    </div>
                 </div>
             </div>
             <div class="submit">
@@ -96,7 +107,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
             <div class="right-tab-info">
                 <div style="padding: 20px;">
-                    <?=$merchant['desc'] ?? '暂无公司简介'?>
+                    <?=$merchant_info['desc'] ?? '暂无公司简介'?>
                 </div>
             </div>
             <div class="right-guanggao">
