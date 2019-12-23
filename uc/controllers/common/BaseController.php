@@ -18,7 +18,6 @@ class BaseController extends StaffBaseController {
         'user/login',
         'user/sign-in',
         'user/register',
-        'user/logout',
         'user/captcha',
         'user/get-captcha',
         'default/forbidden',
@@ -27,7 +26,8 @@ class BaseController extends StaffBaseController {
     //这些URL不需要检验权限
     public $ignore_url = [
         'default/application',
-        'upload/qiniu-token'
+        'upload/qiniu-token',
+        'user/logout',
     ];
 
     public function __construct($id, $module, $config = [])  {
