@@ -216,7 +216,7 @@ class MerchantService extends BaseService
             'merchant_id'       =>  $merchant_id
         ],0);
 
-        if(!$setting->save(0)) {
+        if($setting->save(0) === false) {
             return self::_err( '数据保存失败,请联系管理员' );
         }
 
