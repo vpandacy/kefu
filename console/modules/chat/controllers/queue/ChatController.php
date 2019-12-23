@@ -2,6 +2,7 @@
 namespace console\modules\chat\controllers\queue;
 
 
+use common\components\helper\DateHelper;
 use common\services\chat\GuestChatService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
@@ -65,7 +66,7 @@ class ChatController extends QueueBaseController
             case ConstantService::$chat_cmd_close_guest:// 客服主动关闭了．或者将游客信息给拉入黑名单中了.
                 $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
                 $params = [
-                    'closed_time'   =>  $params_data['closed_time'],
+                    'closed_time'   =>  isset($params_data['closed_time']) ? $params_data['closed_time'] : DateHelper::getFormatDateTime(),
                     'status'        =>  ConstantService::$default_status_true,
                     'merchant_id'   =>  $merchant_info['id'],
                     'cs_id'         =>  $params_data['kf_id'],
