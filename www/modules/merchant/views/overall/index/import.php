@@ -14,21 +14,25 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
     <div class="tab_staff_content">
         <div class="site-text">
             <div class="layui-form-item">
-                <label class="layui-form-label">请选择文件</label>
-                <div class="layui-input-inline" style="width: auto">
-                    <button type="button" class="layui-btn" id="upload">
-                        <i class="layui-icon">&#xe67c;</i>上传文件
-                    </button>
-                </div>
-                <div class="layui-form-mid layui-word-aux">
-                    <a href="<?=GlobalUrlService::buildKFStaticUrl('/other/import.xlsx')?>">导入示例下载</a>
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
+                    <div type="button" class="layui-btn">
+                        <a class="layui-icon" href="<?=GlobalUrlService::buildKFStaticUrl('/other/import.xlsx')?>">&#xe601;</a>导入示例下载
+                    </div>
+                    <div class="layui-upload-list">
+                        <table class="layui-table">
+                            <thead>
+                            <tr><th>文件名</th>
+                                <th>大小</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr></thead>
+                            <tbody id="demoList"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
             <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" id="upload-button" lay-submit="" lay-filter="commonWords">上传</button>
-                </div>
             </div>
         </div>
     </div>
