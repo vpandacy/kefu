@@ -61,6 +61,10 @@ class UserController extends BaseController
             return $this->renderErrJSON('登录失败，请检查邮箱或手机号和密码~~');
         }
 
+        if($staff_info['is_login']) {
+            return $this->renderErrJSON('当前帐号已经登录了，请勿重复登录');
+        }
+
         if($staff_info['password'] != $this->genPassword($staff_info['merchant_id'], $password, $staff_info['salt'])) {
             return $this->renderErrJSON('请输入正确的密码');
         }
@@ -73,11 +77,13 @@ class UserController extends BaseController
         if( $merchant_info['status'] == -2 ){
             return $this->renderErrJSON('商户信息审核中，请联系管理员加快审核~~');
         }
+
         // 开始创建登录的信息.
         $this->createLoginStatus( $staff_info );
 
         // 登录成功则认为可以接待游客.
         $staff_info['is_online'] = ConstantService::$default_status_true;
+        $staff_info['is_login']  = ConstantService::$default_status_true;
 
         if(!$staff_info->save(0)) {
             return $this->renderErrJSON('数据保存失败，请联系管理员');

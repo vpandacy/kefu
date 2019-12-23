@@ -166,4 +166,7 @@ CREATE TABLE `monitor_kf_ws` (
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='客服系统 websocket 监控中心';
+
+ALTER TABLE `staff`
+    ADD `is_login` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否登录,0未登录,1已登录' AFTER `is_online`;
 ```

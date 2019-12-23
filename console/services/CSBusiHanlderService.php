@@ -1,5 +1,6 @@
 <?php
 namespace console\services;
+use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
@@ -94,6 +95,13 @@ class CSBusiHanlderService extends BaseService
         if(!$cache_params) {
             return false;
         }
+
+        $cs_sn = $cache_params['f_id'];
+
+        // 更新状态.如果是退出登录了.
+        Staff::updateAll([
+            'is_online'=>ConstantService::$default_status_false,
+            'is_login'=>ConstantService::$default_status_false],['sn'=>$cs_sn]);
 
 //        // 向所有人发送,发消息给对应的游客，然后客服工作台在设置
 //        QueueListService::push2Guest(QueueConstant::$queue_guest_chat, [

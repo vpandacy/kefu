@@ -9,4 +9,10 @@ class DefaultController extends Controller
         $this->layout = 'main';
         return $this->render('index');
     }
+
+    public function actionTest()
+    {
+        $this->layout = 'main';
+        return $this->render('index2');
+    }
 }
