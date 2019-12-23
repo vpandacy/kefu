@@ -21,7 +21,6 @@ class CustomerService extends BaseService
         }
 
         $staff['is_online'] = $status;
-
         return $staff->save() === false;
     }
 }

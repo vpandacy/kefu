@@ -416,7 +416,7 @@
                 ? 'icon-zaixian'
                 : 'icon-lixian';
 
-            var url = class_name == 'icon-zaixian' ? '/user/online' : '/user/offline',
+            var url = class_name == 'icon-zaixian' ? '/user/do-online' : '/user/offline',
                 elem = $(this);
                 elemFlag = $('.menu-online');
 

@@ -25,6 +25,7 @@ class MonitorController extends BaseController
                 $cs_config[ $_key ] = $_item['register'];
             }
         }
+
         //获取register地址
         foreach ( $guest_config as $_key => $_item ){
             $tmp_params = $_item;
@@ -37,6 +38,7 @@ class MonitorController extends BaseController
             $tmp_params['type'] = UCConstantService::$ws_register;
             WSCenterService::setKFWS( $tmp_params );
         }
+
         return $this->echoLog( "ok" );
     }
 }
