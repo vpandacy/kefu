@@ -113,9 +113,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                         <div class="info referer-url"><span>来源：</span><span>-</span></div>
                     </div>
                 </div>
+                <div class="exe-content-history-load"></div>
                 <div class="exe-content-history">
-                    <!-- 这里是提示信息 -->
-<!--                    <div class="history-close">关闭页面</div>-->
+                    <div class="exe-content-history-load">
+                        <div class="iconfont icon-jiazaizhong dis_none"></div>
+                        <div class="history-look">查看更多消息</div>
+                    </div>
+                    <div class="exe-content-history-content"></div>
                 </div>
                 <div class="exe-content-sumbit" style="position: relative;">
                     <div>

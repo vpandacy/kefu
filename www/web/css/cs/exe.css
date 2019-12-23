@@ -383,7 +383,6 @@ select[name='cs'] {
     white-space: nowrap;
     display: inline-block;
 }
-
 #chatExe .exe-content .exe-content-history {
     flex-grow: 1;
     max-height: 573px;
@@ -552,10 +551,9 @@ select[name='cs'] {
 }
 
 #chatExe .exe-info .one .tab-content div {
-    color: rgb(0, 0, 0);
+    color: rgb(125, 128, 136);
     margin: 5% 0;
     border-radius: 5px;
-    padding-left: 15px;
 }
 
 /*#chatExe .exe-info .one .tab-content div:nth-child(1) {*/
