@@ -95,7 +95,7 @@ class VisitorController extends BaseController
                 't_id'  =>  $uuid,
                 'msn'   =>  $this->merchant_info['sn'],
                 'cs_id' =>  $this->getStaffId(),
-                'close_time'    =>  DateHelper::getFormatDateTime(),
+                'closed_time'    =>  DateHelper::getFormatDateTime(),
             ],
         ]);
 
@@ -378,6 +378,10 @@ class VisitorController extends BaseController
                 $guest_chat_log[$key] = $log;
             }
         }
+
+        usort($guest_chat_log, function($prev, $next){
+            return $prev['id'] - $next['id'];
+        });
 
         return $this->renderJSON($guest_chat_log,'获取成功');
     }

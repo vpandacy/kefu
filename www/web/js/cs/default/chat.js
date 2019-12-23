@@ -11,6 +11,8 @@
 
     // 初始化Chat.
     Chat.prototype.init = function() {
+        // 初始化游客.
+        this.initUser();
         // 初始化ws socket.
         this.socket.init(this);
         // 右键菜单初始化.
@@ -24,6 +26,29 @@
         //客服退出操作
         this.signOut();
         this.lookHistory();
+    };
+
+    // 初始化所有的用户.
+    Chat.prototype.initUser = function() {
+        // 默认清除掉所有的信息.
+        // ChatStorage.clearAll();
+        var uuids = [];
+
+        for(var i in all_users) {
+            uuids.push(all_users[i].uuid);
+            if(ChatStorage.getItem(all_users[i].uuid)) {
+                continue;
+            }
+            // 设置信息即可.
+            ChatStorage.setItem(all_users[i].uuid, all_users[i]);
+        }
+
+        for(var key in localStorage) {
+            if(uuids.indexOf(localStorage[key]) <= -1) {
+                // 就直接来删除对应的列了.
+                ChatStorage.removeItem(localStorage[key]);
+            }
+        }
     };
 
     // 事件绑定.

@@ -152,3 +152,18 @@ ALTER TABLE `merchant` ADD INDEX `sn` (`sn`);
 ALTER TABLE `staff` ADD INDEX `sn` (`sn`);
 ALTER TABLE `staff_role` ADD INDEX `staff_id` (`staff_id`);
 ```
+### 20191223
+```
+CREATE TABLE `monitor_kf_ws` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '类型 1:register 2:gateway 3:busiworker',
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '名称',
+  `ip` varchar(20) NOT NULL DEFAULT '' COMMENT 'ip',
+  `port` int(11) NOT NULL DEFAULT '0' COMMENT '端口',
+  `start_port` int(11) NOT NULL DEFAULT '0' COMMENT 'gateway 起始端口',
+  `count` tinyint(3) NOT NULL DEFAULT '0' COMMENT '进程数量',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后一次更新时间',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='客服系统 websocket 监控中心';
+```

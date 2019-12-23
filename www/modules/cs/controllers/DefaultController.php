@@ -5,6 +5,7 @@ namespace www\modules\cs\controllers;
 use common\models\merchant\CommonWord;
 use common\models\uc\Staff;
 use common\services\chat\ChatGroupService;
+use common\services\chat\GuestChatService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use common\services\monitor\WSCenterService;
@@ -40,13 +41,14 @@ class DefaultController extends BaseController
         // 要获取当前在线的用户数量和等待数量.
         $online_users = ChatGroupService::getGroupAllUsers($this->current_user['sn']);
         // 这里是游客等待区.
-        $offline_users = ChatGroupService::getWaitGroupAllUsers($this->current_user['sn']);
+        $wait_users = ChatGroupService::getWaitGroupAllUsers($this->current_user['sn']);
 
         return $this->render('index', [
             'staff' => $this->current_user,
             'words' =>  $words,
             'online_users'  =>  $online_users,
-            'offline_users' =>  $offline_users,
+            'offline_users' =>  $wait_users,
+            'all_users' =>  GuestChatService::getAllUsersInfo($online_users, $wait_users),
             'js_params' => [
                 'ws' => WSCenterService::getCSWSByRoute( $current_info['id'] ),
                 'sn' => $current_info['sn'],
