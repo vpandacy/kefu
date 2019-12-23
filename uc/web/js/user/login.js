@@ -125,18 +125,21 @@ var uc_user_login_ops = {
         });
     },
     sendemail: function (){
+        if($('.iphone_code').attr('flag') != 0){
+          return;
+        }
         let email = $(".sign-up-container [name='account']").val();
         let img_captcha = $(".sign-up-container [name='img_captcha']").val();
         this.captchatAjax(email,img_captcha);
     },
     captcha: function (obj) {
         if (countdown == 0) {
-            obj.attr('disabled',false);
+            obj.attr('flag',0);
             obj.text("获取验证码");
             countdown = 60;
             return;
         } else {
-            obj.attr('disabled',true);
+            obj.attr('flag',1);
             obj.text(countdown + 's')
             countdown--;
         }
