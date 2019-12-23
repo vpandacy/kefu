@@ -39,7 +39,7 @@
         // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
         if(!user.messages || user.messages.length < 1) {
             // 置空.就是没有聊天记录.
-            $('.flex1 .exe-content-history').html('');
+            $('.flex1 .exe-content-history .exe-content-history-content').html('');
             $('#chatExe .flex1').css({'display': 'flex'});
         }else{
             // 开始处理剩下的. 循环去处理就可以了. 要定义对应的信息.
@@ -205,7 +205,7 @@
                 // 获取聊天轨迹.
                 var html = res.data.map(function (history) {
                     return [
-                        '<div style="background-color: #ffffff;padding: 5px">',
+                        '<div style="background-color: #ffffff;padding: 5px 25px;">',
                             '<div>落地页：', history.land_url ? history.land_url : '暂无','　</div>',
                             '<div>来源：', history.referer_url ? history.referer_url : '暂无' ,'　</div>',
                             '<div>接待人：',history.staff_name,'</div>',
