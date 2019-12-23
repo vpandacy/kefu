@@ -431,6 +431,9 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 .tab_staff_content{
     /*margin: 0 30px;*/
 }
+.tab_staff_content a {
+    color: white;
+}
 .staff_tab .tab_list {
     /*width: 100px;*/
     height: 50px;
