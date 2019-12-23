@@ -348,8 +348,8 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-top {
     height: 50px;
     border-bottom: 1px solid rgb(225, 229, 236);
-    display: flex;
-    display:-webkit-flex;
+    /*display: flex;*/
+    /*display:-webkit-flex;*/
     justify-content: center;
     align-items: center;
     font-size: 13px;
@@ -357,8 +357,18 @@ select[name='cs'] {
 }
 
 #chatExe .exe-content .exe-content-top .content-top-info {
-    flex: 1;
+    display: flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    /*flex: 1;*/
     color: rgb(125, 128, 136);
+}
+#chatExe .exe-content .exe-content-top .content-top-info .source{
+    flex: 1;
+}
+#chatExe .exe-content .exe-content-top .content-top-info .referer-url{
+    flex: 1;
 }
 
 #chatExe .exe-content .exe-content-top .content-top-info .info {
@@ -371,6 +381,7 @@ select[name='cs'] {
     width: 300px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: inline-block;
 }
 
 #chatExe .exe-content .exe-content-history {
@@ -573,7 +584,8 @@ select[name='cs'] {
 
 #chatExe .exe-content-history .content-message .logo {
     width: 35px;
-    border-radius: 50%;
+    background: white;
+    /*border-radius: 50%;*/
 }
 
 #chatExe .exe-content-history .content-message .message-info {
