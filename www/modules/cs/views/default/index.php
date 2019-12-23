@@ -105,11 +105,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
             <div class="exe-content">
                 <div class="exe-content-top">
                     <div class="content-top-info">
-<!--                        <div class="info keyword"><span>关键词：</span><span>-</span></div>-->
+                    <!-- <div class="info keyword"><span>关键词：</span><span>-</span></div>-->
                         <div class="info land-url"><span>咨询界面：</span><span>-</span></div>
-                        <div class="info source"><span>终端：</span><span>-</span></div>
                     </div>
                     <div class="content-top-info">
+                        <div class="info source"><span>终端：</span><span>-</span></div>
                         <div class="info referer-url"><span>来源：</span><span>-</span></div>
                     </div>
                 </div>
