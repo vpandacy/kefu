@@ -71,15 +71,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 </div>
                 <div class="content-one offline" style="display: none;">
                     <div class="tab-content-list">
-                        <div>
-                            <i class="iconfont icon-shouji"></i>
-                            <span>莆田4</span>
-                        </div>
-                        <div>
-                            <span class="content-list-time">09:45</span>
-                        </div>
-                    </div>
-                    <div class="tab-content-list">
 
                     </div>
                 </div>

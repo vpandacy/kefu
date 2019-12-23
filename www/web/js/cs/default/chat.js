@@ -17,14 +17,15 @@
         this.socket.init(this);
         // 右键菜单初始化.
         this.contextmenu.init();
-        // 界面初始化　
+        // 界面初始化.
         this.page.init();
         // 初始化聊天事件.
         this.eventBind();
-        //客服下线操作
-        this.offOnline();
-        //客服退出操作
+        //客服下线操作.
+        this.bindOnlineEvent();
+        //客服退出操作.
         this.signOut();
+        // 显示历史记录.
         this.lookHistory();
     };
 
@@ -408,10 +409,22 @@
     //     });
     //   }
     // });
-    Chat.prototype.offOnline = function () {
-        $('.exe-off-online').click(function () {
-            $.post('/cs/user/offline',{},function () {
-               $('.icon-zaixian').replaceWith('<i class="iconfont icon-lixian icon icon-action fsize32" title="离线"></i>');
+    Chat.prototype.bindOnlineEvent = function () {
+        
+        $('.exe-off-online').on('click', function () {
+            var class_name = $(this).hasClass('icon-lixian')
+                ? 'icon-zaixian'
+                : 'icon-lixian';
+
+            var url = class_name == 'icon-zaixian' ? '/user/online' : '/user/offline',
+                elem = $(this);
+
+            $.post(cs_common_ops.buildKFCSurl(url),{} ,function () {
+                if(class_name == 'icon-zaixian') {
+                    elem.removeClass('icon-lixian').addClass('icon-zaixian');
+                }else{
+                    elem.removeClass('icon-zaixian').addClass('icon-lixian');
+                }
             });
         });
     };

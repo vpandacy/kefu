@@ -3,16 +3,16 @@ namespace common\services\uc;
 
 use common\models\uc\Staff;
 use common\services\BaseService;
-use common\services\ConstantService;
 
 class CustomerService extends BaseService
 {
     /**
      * 客服下线.
      * @param $sn
+     * @param $status
      * @return bool
      */
-    public static function offlineByCSSN($sn)
+    public static function updateOnlineStatus($sn, $status = 0)
     {
         $staff = Staff::findOne(['sn'=>$sn]);
 
@@ -20,7 +20,7 @@ class CustomerService extends BaseService
             return true;
         }
 
-        $staff['is_online'] = ConstantService::$default_status_false;
+        $staff['is_online'] = $status;
 
         return $staff->save() === false;
     }
