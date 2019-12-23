@@ -95,7 +95,7 @@ class VisitorController extends BaseController
                 't_id'  =>  $uuid,
                 'msn'   =>  $this->merchant_info['sn'],
                 'cs_id' =>  $this->getStaffId(),
-                'close_time'    =>  DateHelper::getFormatDateTime(),
+                'closed_time'    =>  DateHelper::getFormatDateTime(),
             ],
         ]);
 
