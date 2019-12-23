@@ -84,6 +84,12 @@ var uc_user_login_ops = {
                 success: function ( res ) {
                     $.close(index);
                     var callback  = null;
+                    if(res.code == 200) {
+                        callback = function () {
+                            // 刷新界面.
+                            location.href = location.href;
+                        }
+                    }
                     $.msg(res.msg,res.code == 200, callback);
                 },
                 error:function () {
