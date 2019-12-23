@@ -327,7 +327,7 @@
         }
 
         if(online_users.length == 1) {
-            user.messages = 0;
+            user.messages = [];
         }
 
         ChatStorage.setItem(user.uuid, user);
@@ -361,7 +361,7 @@
         // 获取游客的信息.
         var uuid = data.data.f_id,
             user = ChatStorage.getItem(uuid),
-            messages = user.messages ? user.messages : [],
+            messages = user && user.messages ? user.messages : [],
             time_str = this.page.getCurrentTimeStr();
 
         if(uuid != current_uuid) {
