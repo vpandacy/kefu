@@ -31,6 +31,10 @@ return [
             "name" => "guest",
             'domain' => '.kefu.dev.hsh568.cn',
         ],
+        'validate_code' =>  [
+            'name'      =>  'validate_code',
+            'domain'    =>  '.kefu.dev.hsh568.cn'
+        ],
     ],
     'guest_1' => [
         "register" => [
@@ -100,7 +104,6 @@ return [
                 "footer" => "Admin系统",
                 "menu_title" => "Admin系统"
             ]
-
         ],
     ]
 ];

@@ -6,6 +6,7 @@ return [
         'cs' => 'http://www.kefu.test.hsh568.cn/cs',
         'static' => 'http://static.kefu.test.hsh568.cn',
         'uc' => 'http://uc.kefu.test.hsh568.cn',
+        'admin'     => 'http://admin.kefu.dev.hsh568.cn',
     ],
     'websocket' => 'ws://www.kefu.test.hsh568.cn/ws/',
     'cdn' => [
@@ -29,7 +30,11 @@ return [
         "guest" => [
             "name" => "guest",
             'domain' => '.kefu.test.hsh568.cn',
-        ]
+        ],
+        'validate_code' =>  [
+            'name'      =>  'validate_code',
+            'domain'    =>  '.kefu.test.hsh568.cn'
+        ],
     ],
     'guest' => [
         "register" => [
@@ -119,5 +124,11 @@ return [
         'push' => [
             'host' => '127.0.0.1:9220'
         ]
-    ]
+    ],
+    "sysconfig" => [
+        "admin"=>[
+            "footer" => "Admin系统",
+            "menu_title" => "Admin系统"
+        ]
+    ],
 ];
