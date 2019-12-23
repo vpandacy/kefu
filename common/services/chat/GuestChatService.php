@@ -6,6 +6,7 @@ use common\models\merchant\GuestChatLog;
 use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\ConstantService;
+use common\services\GlobalUrlService;
 
 class GuestChatService extends BaseService
 {
@@ -101,5 +102,47 @@ class GuestChatService extends BaseService
             ->one();
 
         return $guest_log;
+    }
+
+    /**
+     * 获取所有的在线和离线的用户信息.
+     * @param array $online_users 在线聊的游客
+     * @param array $wait_users 在等待中的游客
+     * @return array
+     */
+    public static function getAllUsersInfo($online_users, $wait_users)
+    {
+        $all_users = [];
+
+        if($online_users) {
+            foreach($online_users as $uuid) {
+                $all_users[] = self::genGuestInfo($uuid);
+            }
+        }
+
+        if($wait_users) {
+            foreach($wait_users as $uuid) {
+                $all_users[] = self::genGuestInfo($uuid);
+            }
+        }
+
+        return $all_users;
+    }
+
+    /**
+     * 根据uuid生成一个临时游客.
+     * @param $uuid
+     * @return array
+     */
+    public static function genGuestInfo($uuid)
+    {
+        return [
+            // 随机生成一个昵称.
+            'nickname'  =>  'Guest-' . substr($uuid, strlen($uuid) - 12),
+            'uuid'      =>  $uuid,
+            'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
+            'allocation_time'   =>  date('H:i:s'),
+            'is_online' =>  ConstantService::$default_status_true
+        ];
     }
 }

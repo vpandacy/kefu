@@ -67,7 +67,6 @@
     Page.prototype.renderOnlineList = function (source_uuid) {
         var current_uuid = $('.content-message-active').attr('data-uuid');
         $('.keep-census .online').text(online_users.length);
-
         if(online_users.length < 1) {
             $('.tab-content .online').html('<div class="tab-content-list content-no-message">暂无消息</div>');
             return false;

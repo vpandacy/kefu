@@ -379,6 +379,10 @@ class VisitorController extends BaseController
             }
         }
 
+        usort($guest_chat_log, function($prev, $next){
+            return $prev['id'] - $next['id'];
+        });
+
         return $this->renderJSON($guest_chat_log,'获取成功');
     }
 }
