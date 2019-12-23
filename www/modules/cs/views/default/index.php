@@ -163,8 +163,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                             <div>
                                 微信：<span class="wechat"></span>
                             </div>
-                            <div>
-                                备注：<span class="desc"></span>
+                            <div class="dflex
+">
+                                <span>备注：</span>
+                                <span class="desc">
+                                </span>
                             </div>
                         </div>
                         <div class="content-one access-track" style="display: none;max-height: 380px;overflow-y: auto;">
