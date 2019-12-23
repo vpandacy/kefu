@@ -220,7 +220,7 @@ class MerchantService extends BaseService
             return self::_err( '数据保存失败,请联系管理员' );
         }
 
-        $cache_key = 'merchant_config_' . $setting['id'];
+        $cache_key = 'merchant_config_' . $setting['merchant_id'];
         CacheService::set($cache_key, json_encode($setting->toArray()),86400 * 30);
         return true;
     }
