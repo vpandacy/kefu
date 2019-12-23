@@ -58,7 +58,7 @@ class ChatController extends QueueBaseController
                     "status" => ConstantService::$default_status_true,
                     "merchant_id" => $merchant_info['id'],
                     "uuid" => $params_data['uuid'],
-                    "cs_id" =>  $params_data['kf_id'],
+                    "cs_id" =>  isset($params_data['kf_id']) ? $params_data['kf_id'] : 0,
                 ];
                 GuestChatService::closeGuest( $params );
                 break;
