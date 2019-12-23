@@ -27,4 +27,20 @@ class ErrorController extends BaseController
     {
         return $this->render('error');
     }
+
+    /**
+     * 收集消息错误信息.
+     */
+    public function actionCaptcha()
+    {
+        $message = $this->post('message','');
+        $source = $this->post('source','');
+        $stack  = $this->post('stack','');
+        $lineno = $this->post('lineno','');
+        $referer = $this->post('referer','');
+        $request_uri = $this->post('request_uri','');
+        $ua = $this->post('ua','');
+        $content = "[file: $source][line: $lineno][url: $request_uri][referer: $referer][ua:$ua][stack: $stack][message: $message]";
+        AppLogService::addErrLog('app-js', $content);
+    }
 }
