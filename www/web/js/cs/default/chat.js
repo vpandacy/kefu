@@ -136,7 +136,10 @@
                 elem = $(this);
 
             e.preventDefault();
-            elem.html('<input name="mobile" value="'+ text +'" placeholder="请输入手机号">');
+
+            var val = text == '暂无' ? '' : text;
+
+            elem.html('<input name="mobile" value="'+ val +'" placeholder="请输入手机号">');
             elem.find('input').focus();
 
             $(this).find('input').on('blur', function () {
@@ -171,7 +174,10 @@
                 elem = $(this);
 
             e.preventDefault();
-            elem.html('<input name="email" value="'+ text +'" placeholder="请输入邮件">');
+
+            var val = text == '暂无' ? '' : text;
+
+            elem.html('<input name="email" value="'+ val +'" placeholder="请输入邮件">');
             elem.find('input').focus();
 
             $(this).find('input').on('blur', function () {
@@ -207,7 +213,9 @@
 
             e.preventDefault();
 
-            elem.html('<input name="qq" value="'+ text +'" placeholder="请输入邮件">');
+            var val = text == '暂无' ? '' : text;
+
+            elem.html('<input name="qq" value="'+ val +'" placeholder="请输入邮件">');
             elem.find('input').focus();
 
             $(this).find('input').on('blur', function () {
@@ -243,7 +251,9 @@
 
             e.preventDefault();
 
-            elem.html('<input name="wechat" value="'+ text +'" placeholder="请输入邮件">');
+            var val = text == '暂无' ? '' : text;
+
+            elem.html('<input name="wechat" value="'+ val +'" placeholder="请输入邮件">');
             elem.find('input').focus();
 
             $(this).find('input').on('blur', function () {
@@ -280,7 +290,9 @@
             e.preventDefault();
             e.stopPropagation();
 
-            elem.html('<textarea name="desc">'+text+'</textarea>');
+            var val = text == '暂无' ? '' : text;
+
+            elem.html('<textarea name="desc">'+val+'</textarea>');
             elem.find('textarea').focus();
 
             $(this).find('textarea').on('blur', function (e) {
@@ -501,12 +513,14 @@
         });
     };
     Chat.prototype.signOut = function () {
-      $('.icon-tuichu').click(function () {
+        $('.icon-tuichu').click(function () {
             if(online_users.length != 0){
                 $.msg('请先将游客对话处理完成!');
                 return;
             }
-      });
+            // 退出.
+            location.href = cs_common_ops.buildUCUrl('/user/logout');
+        });
     };
     /**
      * 游客主动关闭.
