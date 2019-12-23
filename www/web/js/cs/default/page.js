@@ -23,6 +23,12 @@
 
             $('.content-message-active').removeClass('content-message-active');
         });
+        
+        $('.content-select').on('click', function () {
+            var text = $(this).find('span').text();
+            $('#content').text(text);
+        });
+        
         // 渲染在线列表.
         this.renderOnlineList();
         // 渲染等待区.

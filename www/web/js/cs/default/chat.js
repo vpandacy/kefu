@@ -415,6 +415,7 @@
             });
         });
     };
+
     // 退出.
     Chat.prototype.signOut = function () {
         $('.icon-tuichu').click(function () {
@@ -496,6 +497,7 @@
             });
         });
     };
+
     /**
      * 游客主动关闭.
      * @param data
