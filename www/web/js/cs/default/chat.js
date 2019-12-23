@@ -23,6 +23,7 @@
         this.offOnline();
         //客服退出操作
         this.signOut();
+        this.lookHistory();
     };
 
     // 事件绑定.
@@ -232,7 +233,7 @@
         // 清空掉.然后在将这个展示到对应的消息上去.
         $('.sumbit-input').text('');
 
-        $('.exe-content-history').append(this.page.renderCsMsg('我',msg, time_str));
+        $('.exe-content-history .exe-content-history-content').append(this.page.renderCsMsg('我',msg, time_str));
         this.page.scrollToBottom();
     };
 
@@ -359,7 +360,7 @@
         user.messages = messages;
 
         if(uuid == current_uuid) {
-            $('.exe-content-history').append(this.page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
+            $('.exe-content-history .exe-content-history-content').append(this.page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
         }
 
         this.page.scrollToBottom();
@@ -398,6 +399,76 @@
             }
             // 退出.
             location.href = cs_common_ops.buildUCUrl('/user/logout');
+        });
+    };
+
+    // 时间格式化
+    Chat.prototype.getNowFormatDate = function (){
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    };
+
+    // 查看历史消息
+    Chat.prototype.lookHistory = function () {
+        let data = [];
+        let date = this.getNowFormatDate();
+        $('.history-look').click(function () {
+            let formatDate =data.length != 0 ? data[0].created_time : date;
+            let uuid = $('.content-message-active').attr('data-uuid');
+            let name = $('.content-message-active').attr('data-name');
+            $.post('/cs/visitor/message',{last_time:formatDate,uuid:uuid},function (res) {
+                data = res.data;
+                for (let i=0; i<data.length; i++) {
+                    if(data[i].from_id == uuid){
+                        $('.exe-content-history-load').append('<div class="content-message">\n' +
+                            '<div class="message-img">\n' +
+                            '   <img class="logo" src='+ data[i].cs_avatar +'>\n' +
+                            '</div>\n' +
+                            '<div class="message-info">\n' +
+                            '   <div class="message-name-date"><span>'+ name + '</span><span class="date">'+data[i].created_time + '</span></div>\n' +
+                            '   <div class="message-message">'+ data[i].content +'</div>\n' +
+                            '  </div>\n' +
+                            '</div>\t');
+                    }else  {
+                        $('.exe-content-history-load').append(
+                            '<div class="content-message message-my">\n' +
+                            '   <div class="message-info">\n' +
+                            '      <div class="message-name-date name-date-my">\n' +
+                            '          <span class="date">'+ data[i].created_time + '</span>\n' +
+                            '          <span class="message-name">我</span>\n' +
+                            '      </div>\n' +
+                            '      <div class="message-message message-message-my">'+ data[i].content +'</div>\n' +
+                            '   </div>\n' +
+                            '</div>');
+                    }
+                }
+                if(data.length === 0){
+                    $('.exe-content-history-title').html('' +
+                        '<fieldset>\n' +
+                        '  <legend>暂无消息</legend>\n' +
+                        '</fieldset>');
+                    $('.icon-jiazaizhong').hide();
+                }else {
+                    $('.exe-content-history-title').html('' +
+                        '<fieldset>\n' +
+                        '  <legend>以上是历史消息</legend>\n' +
+                        '</fieldset>');
+                    $('.icon-jiazaizhong').hide();
+                }
+            });
         });
     };
     /**
