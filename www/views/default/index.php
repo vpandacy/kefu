@@ -1,10 +1,10 @@
 <div><h1>测试聊天</h1></div>
 <script>
     (function() {
-        var _ht_kf_code = document.createElement("script"),
+        var _hshcode = document.createElement("script"),
             s = document.getElementsByTagName("script")[0];
 
-        _ht_kf_code.src = "http://www.kefu.dev.hsh568.cn/falkspyx/code/index";
-        s.parentNode.insertBefore(_ht_kf_code, s);
+        _hshcode.src = "http://www.kefu.dev.hsh568.cn/falkspyx/code/index";
+        s.parentNode.insertBefore(_hshcode, s);
     })();
 </script>

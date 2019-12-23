@@ -378,7 +378,7 @@ select[name='cs'] {
 
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
     color: rgb(0, 0, 0);
-    width: 300px;
+    /*width: 300px;*/
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
@@ -567,7 +567,12 @@ select[name='cs'] {
 #chatExe .height10 {
     height: 10% !important;
 }
-
+#chatExe .exe-content-history fieldset {
+    border: none;
+    border-top: 1px solid #7a7a7a;
+    text-align: center;
+    color: #7a7a7a;
+}
 #chatExe .exe-content-history .content-message {
     padding-left: 10px;
     margin-top: 15px;

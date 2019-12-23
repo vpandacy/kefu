@@ -51,7 +51,7 @@
                 return that.renderCsMsg('我',  message.content, message.time);
             });
 
-            $('.flex1 .exe-content-history').html(html.join(''));
+            $('.flex1 .exe-content-history .exe-content-history-content').html(html.join(''));
             $('#chatExe .flex1').css({'display': 'flex'});
         }
 
@@ -91,7 +91,7 @@
             // 这里有图标展示. 这里要注意一下.
             var icon_types = ['shoji','diannao', 'baidu1'];
             return  [
-                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'">',
+                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'" data-name="',user.nickname,'">',
                 '   <div class="', user && user.new_message <= 0 ? '' : 'content-new-message','">',
                 '       <i class="iconfont icon-shouji"></i>',
                 '       <span>',user.nickname,'</span>',
@@ -120,7 +120,7 @@
             var user = ChatStorage.getItem(wait_uuid);
 
             return [
-                '<div class="tab-content-list" data-uuid="',wait_uuid,'">',
+                '<div class="tab-content-list" data-uuid="',wait_uuid,'"  data-name="',user.nickname,'">',
                 '   <div>',
                 '       <i class="iconfont icon-shouji"></i>',
                 '       <span>',user.nickname,'</span>',
@@ -215,7 +215,7 @@
 
                 $('.access-track').html(html.join(''));
             }
-        })
+        });
     };
 
     // 获取用户的基本信息.
