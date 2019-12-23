@@ -43,7 +43,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/u
                     </div>
                     <div class="po-relative">
                         <input class="login_inp_name" style="margin-top: 0;" type="text" name="captcha" placeholder="请输入手机验证码">
-                        <div onclick="uc_user_login_ops.sendemail(event)" flag="0" class="iphone_code cupointer">获取验证码</div>
+                        <div onclick="uc_user_login_ops.sendemail()" flag="0" class="iphone_code cupointer">获取验证码</div>
                     </div>
                     <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
                     <span class="web-font welcome_password_hand cupointer"></span>

@@ -124,7 +124,7 @@ var uc_user_login_ops = {
             }
         });
     },
-    sendemail: function (event){
+    sendemail: function (){
         if($('.iphone_code').attr('flag') != 0){
           return;
         }
