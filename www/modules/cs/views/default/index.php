@@ -20,8 +20,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 ?>
 <script>
     WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
-    online_users = <?=json_encode($online_users)?>;
-    offline_users= <?=json_encode($offline_users)?>;
+    online_users = Object.values(<?=json_encode($online_users)?>);
+    offline_users= Object.values(<?=json_encode($offline_users)?>);
 </script>
 <div id='chatExe'>
     <!-- 右键菜单 -->
