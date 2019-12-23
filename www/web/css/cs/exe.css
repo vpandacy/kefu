@@ -56,7 +56,9 @@ select[name='cs'] {
     border: 1px black;
 }
 #chatExe #menu a:hover{  background-color: #87939a;  }
-
+#chatExe .dis_none {
+    display: none;
+}
 #chatExe .tab .tab-switch {
     display: flex;
     display:-webkit-flex;
@@ -223,13 +225,17 @@ select[name='cs'] {
 #chatExe .exe-keep .fsize25 {
     font-size: 25px;
 }
-
+#chatExe textarea{
+    resize: none;
+}
 #chatExe .exe-keep .tab .tab-content-list {
     display: flex;
     display:-webkit-flex;
     justify-content: space-between;
     padding: 5px 10px;
     font-size: 14px;
+    height: 50px;
+    align-items: center;
 }
 #chatExe .exe-keep .tab .tab-content-list .content-new-message:before {
     content: "●";
@@ -336,7 +342,9 @@ select[name='cs'] {
     flex: 3;
     background: rgb(247, 248, 250);
 }
-
+#chatExe .exe-content .icon-jiazaizhong {
+    text-align: center;
+}
 #chatExe .exe-content .exe-content-top {
     height: 50px;
     border-bottom: 1px solid rgb(225, 229, 236);
@@ -370,7 +378,19 @@ select[name='cs'] {
     max-height: 573px;
     overflow-y: auto;
 }
-
+#chatExe .exe-content .exe-content-history .history-look {
+    /*background: rgb(230, 233, 239);*/
+    color: rgb(0, 3, 166);
+    display: table;
+    padding: 0 5px;
+    font-size: 14px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 5px;
+    border-radius: 4px;
+    margin: 10px auto;
+    cursor: pointer;
+}
 #chatExe .exe-content .exe-content-history .history-close {
     background: rgb(230, 233, 239);
     color: rgb(112, 130, 166);
@@ -521,8 +541,10 @@ select[name='cs'] {
 }
 
 #chatExe .exe-info .one .tab-content div {
-    color: rgb(125, 128, 136);
+    color: rgb(0, 0, 0);
     margin: 5% 0;
+    border-radius: 5px;
+    padding-left: 15px;
 }
 
 /*#chatExe .exe-info .one .tab-content div:nth-child(1) {*/
