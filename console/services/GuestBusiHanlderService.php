@@ -106,8 +106,8 @@ class GuestBusiHanlderService extends BaseService
 
         $old_client_ids = Gateway::getClientIdByUid($uuid);
 
-        // 不需要处理.
-        if(!in_array($client_id, $old_client_ids)) {
+        // 不需要处理. 如果存在.就证明有其他的客户端在使用.
+        if($old_client_ids) {
             return false;
         }
 
