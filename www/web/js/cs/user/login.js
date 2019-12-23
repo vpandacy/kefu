@@ -51,7 +51,7 @@ var merchant_user_login_ops = {
         $('.login_applications').on('click',function () {
             window.location.href = url;
 
-        })
+        });
         // 注册.
         $('.register').on('click',function () {
             let fromData = ['merchant_name','account','img_captcha','captcha','password']
@@ -83,6 +83,12 @@ var merchant_user_login_ops = {
                 success: function ( res ) {
                     $.close(index);
                     var callback  = null;
+                    if(res.code == 200) {
+                        callback = function () {
+                            // 刷新界面.
+                            location.href = location.href;
+                        }
+                    }
                     $.msg(res.msg,res.code == 200, callback);
                 },
                 error:function () {
