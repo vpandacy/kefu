@@ -174,6 +174,11 @@ class GuestBusiHanlderService extends BaseService
         if ($f_id) {
             //建立绑定关系，后面就可以根据f_id找到这个人了
             $old_client_id = Gateway::getClientIdByUid($f_id);
+            if($old_client_id) {
+                Gateway::unbindUid($old_client_id[0],$f_id);
+                // 关闭信息
+                Gateway::closeClient($old_client_id[0]);
+            }
             // 解除绑定信息.
             $old_client_id && Gateway::unbindUid($old_client_id[0], $f_id);
             Gateway::bindUid($client_id, $f_id);
