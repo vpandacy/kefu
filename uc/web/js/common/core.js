@@ -156,23 +156,38 @@ $(document).ready( function(){
     user_center.init();
 } );
 
-// 管理注册界面.
-window.onerror = function(message, url, lineNumber,columnNo,error) {
-    var data = {
-        'message':message,
-        'url':url,
-        'error':error.stack
-    };
-    $.ajax({
-        url:"/error/capture",
-        type:'post',
-        data:data,
-        success:function(){
+if(window.location.hostname.indexOf('.kefu.dev.hsh568.cn') <= -1) {
+    /**
+     * 监听js错误并上报.
+     * @param message 消息信息
+     * @param source  来源
+     * @param lineno  行号
+     * @param colno   列号
+     * @param error   错误信息
+     */
+    window.onerror = function (message, source, lineno, colno, error) {
+        // 收集错误数据.
+        var data = {
+            message: message,
+            source : source,
+            stack: error.stack,
+            lineno: lineno,
+            referer: document.referrer,
+            request_uri: location.href,
+            ua: navigator.userAgent
+        };
 
-        }
-    });
-    return true;
-};
+        $.ajax({
+            type: 'POST',
+            url: common_ops_url.buildUrl('/error/captcha'),
+            data: data,
+            dataType: 'json',
+            success: function () {}
+        });
+
+        return true;
+    }
+}
 
 
 var EleResize = {
