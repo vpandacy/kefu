@@ -53,7 +53,7 @@ StaticPluginHelper::includeJsPlugins([
                         <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
                     </div>
                     <div class="message-info">
-                        <div class="message-name-date"><span>客服</span><span class="date"><?=date('Y-m-d H:i:s')?></span></div>
+                        <div class="message-name-date"><span>客服</span><span class="date"><?=date('H:i:s')?></span></div>
                         <div class="message-message"><?=$js_params['greetings']?></div>
                     </div>
                 </div>
