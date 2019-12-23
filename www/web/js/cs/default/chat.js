@@ -418,12 +418,17 @@
 
             var url = class_name == 'icon-zaixian' ? '/user/online' : '/user/offline',
                 elem = $(this);
+                elemFlag = $('.menu-online');
 
             $.post(cs_common_ops.buildKFCSurl(url),{} ,function () {
                 if(class_name == 'icon-zaixian') {
                     elem.removeClass('icon-lixian').addClass('icon-zaixian');
+                    elem.attr('title','在线');
+                    elemFlag.attr('style','background:rgb(86, 216, 59)');
                 }else{
                     elem.removeClass('icon-zaixian').addClass('icon-lixian');
+                    elem.attr('title','离线');
+                    elemFlag.attr('style','background:rgb(216, 69, 59)');
                 }
             });
         });
