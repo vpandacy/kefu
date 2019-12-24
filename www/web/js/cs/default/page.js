@@ -40,7 +40,6 @@
         var user = ChatStorage.getItem(uuid),
             that = this;
 
-        console.dir(user);
         $('#chatExe .flex1').attr('data-uuid', uuid);
         $('#chatExe .flex1 .exe-header-info-left>span:first-child').text(user.nickname);
         // 只保存最新的20条,超过了就不保存了.因为localStorage空间有限制.到时在处理成其他的.
@@ -91,6 +90,9 @@
             var user = ChatStorage.getItem(uuid);
             var class_name =　user && user.new_message >　0 ? 'content-new-message ' : '';
 
+            if(!user) {
+                return '';
+            }
             if(uuid == current_uuid) {
                 class_name = class_name + 'content-message-active';
             }
@@ -125,7 +127,9 @@
 
         var html = offline_users.map(function (wait_uuid) {
             var user = ChatStorage.getItem(wait_uuid);
-
+            if(!user) {
+                return '';
+            }
             return [
                 '<div class="tab-content-list" data-uuid="',wait_uuid,'"  data-name="',user.nickname,'">',
                 '   <div>',

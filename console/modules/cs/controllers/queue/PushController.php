@@ -111,9 +111,12 @@ class PushController extends QueueBaseController
                 'sn'    =>  $params['t_id'],
                 'wait_num'  =>  $key + 1,   // 当前等待第几位.
             ];
-            
+
             // 批量通知等待组内所有人当前所在的位置.
-            QueueListService::push2Guest(QueueConstant::$queue_guest_chat,ChatEventService::buildMsg(ConstantService::$chat_cmd_assign_kf_wait, $params));
+            QueueListService::push2Guest(QueueConstant::$queue_guest_chat,[
+                'cmd'   =>  ConstantService::$chat_cmd_assign_kf_wait,
+                'data'  =>  $params
+            ]);
         }
     }
 

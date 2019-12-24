@@ -306,8 +306,10 @@
 
         user.messages = 0;
 
-        ChatStorage.setItem(user.uuid, user);
-        offline_users.push(user.uuid);
+        if(offline_users.indexOf(user.uuid) <= -1) {
+            offline_users.push(user.uuid);
+            ChatStorage.setItem(user.uuid, user);
+        }
         this.page.renderOfflineList();
     };
 

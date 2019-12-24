@@ -294,7 +294,7 @@ class GuestBusiHanlderService extends BaseService
             "sn" => $kf_info['sn'],
             "name" => $kf_info['nickname'],
             "avatar" => GlobalUrlService::buildPicStaticUrl("hsh",$kf_info['avatar']),
-            "wait_num" => $num
+            "wait_num" => $num + 1
         ]);
 
         //转发消息给对应的客服，做好接待准备
@@ -313,10 +313,10 @@ class GuestBusiHanlderService extends BaseService
         $cache_params = ChatEventService::getGuestBindCache( $client_id);
         $cache_params['kf_id'] = $kf_info['id'];
         $cache_params['kf_sn'] = $kf_info['sn'];
-        QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true));
         if(!in_array($f_id, ChatGroupService::getWaitGroupAllUsers($kf_info['sn']))) {
             // 将client_id加入到这个组中.
             ChatGroupService::joinWaitGroup($kf_info['sn'], $f_id);
+            QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true));
         }
         ChatEventService::setGuestBindCache( $client_id ,$cache_params);
         Gateway::sendToClient( $client_id, $data );

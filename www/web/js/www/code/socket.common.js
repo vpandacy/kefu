@@ -385,7 +385,7 @@
                     t_id: data.data.sn,
                     t_name: data.data.name,
                     avatar: data.data.avatar,
-                    wait_num: parseInt(data.data.wait_num) + 1
+                    wait_num: parseInt(data.data.wait_num)
                 };
                 clearInterval(interval);
                 // 渲染等待区.
