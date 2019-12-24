@@ -253,8 +253,11 @@
                 // elem.find('.keyword span:last-child').text(history.)
                 elem.find('.exe-header-info-left span:last-child').text(history.province + ' ('+ history.client_ip +')');
                 elem.find('.land-url span:last-child').text(history.land_url ? history.land_url : '暂无');
+                elem.find('.land-url span:last-child').attr('title',history.land_url);
                 elem.find('.source span:last-child').text(history.source ? history.source : '暂无');
+                elem.find('.source span:last-child').attr('title',history.source);
                 elem.find('.referer-url span:last-child').text(history.referer_url ? history.referer_url : '暂无');
+                elem.find('.referer-url span:last-child').attr('title',history.referer_url);
             }
         })
     };
