@@ -17,7 +17,7 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
     GlobalUrlService::buildStaticUrl('/jqMsg/message.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
-    GlobalUrlService::buildStaticUrl('/vConsole/vconsole.min.js'),
+//    GlobalUrlService::buildStaticUrl('/vConsole/vconsole.min.js'),
     GlobalUrlService::buildUcUrl('/js/common/core.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
@@ -26,9 +26,6 @@ StaticPluginHelper::includeJsPlugins([
 ?>
 <script>
     WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
-    window.onload = function () {
-        var vConsole = new VConsole();
-    }
 </script>
 <div id='wapOnline'>
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
