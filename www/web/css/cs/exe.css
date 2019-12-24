@@ -285,7 +285,7 @@ select[name='cs'] {
     font-size: 14px;
 }
 #chatExe .exe-keep .tab .tab-content-list .list-flag-online:before {
-    content: "在线";
+    /*content: "在线";*/
 }
  #chatExe .exe-keep .tab .tab-content-list .list-flag-off-line {
      background: rgb(129, 129, 129);
