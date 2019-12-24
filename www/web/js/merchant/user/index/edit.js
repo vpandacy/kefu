@@ -1,5 +1,5 @@
 ;
-var merchant_style_index_edit_ops = {
+var merchant_user_index_edit_ops = {
     init: function () {
         this.eventBind();
     },
@@ -73,5 +73,5 @@ var merchant_style_index_edit_ops = {
 
 
 $(document).ready(function () {
-    merchant_style_index_edit_ops.init();
+    merchant_user_index_edit_ops.init();
 });

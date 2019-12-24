@@ -288,6 +288,7 @@ class StaffController extends BaseController
         if($data['password']) {
             $data['password'] = $this->genPassword($this->getMerchantId(), $data['password'], $staff['salt']);
             $data['is_login'] = ConstantService::$default_status_false;
+            $data['is_online'] = ConstantService::$default_status_false;
         }else{
             unset($data['password']);
         }
@@ -300,6 +301,12 @@ class StaffController extends BaseController
 
         if(array_key_exists('role_ids', $data) && !RoleService::createRoleMapping($staff['id'], $this->getAppId(),$data['role_ids'])) {
             return $this->renderErrJSON( RoleService::getLastErrorMsg() );
+        }
+
+        if($data['password']) {
+            $cookie = \Yii::$app->params['cookies']['staff'];
+            // 删除cookie
+            $this->removeCookie($cookie['name'], $cookie['domain']);
         }
 
         return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);

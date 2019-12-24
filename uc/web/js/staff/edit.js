@@ -65,7 +65,13 @@ var uc_staff_edit_ops = {
             data: data,
             success:function (res) {
                 $.close(index);
-                return $.msg(res.msg, res.code == 200 );
+                var callback = null;
+                if(res.code == 200 && data.password) {
+                    callback = function () {
+                        location.href = common_ops_url.buildUrl('/user/login');
+                    }
+                }
+                return $.msg(res.msg, res.code == 200, callback);
             },
             error: function () {
                 $.close(index);
