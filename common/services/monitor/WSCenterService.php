@@ -8,6 +8,7 @@
 
 namespace common\services\monitor;
 
+use common\models\uc\MonitorKfWs;
 use common\services\BaseService;
 
 class WSCenterService extends BaseService
@@ -54,7 +55,22 @@ class WSCenterService extends BaseService
         return $config['ip'].":".$config['port'];
     }
 
-    public static function setKFWS($client) {
-        var_dump($client);
+    /**
+     * 保存ws信息.
+     * @param array $client
+     * @return bool
+     */
+    public static function setKFWS($client)
+    {
+        // 这里要先查询一次.
+        $ws = new MonitorKfWs();
+
+        $ws->setAttributes($client,0);
+
+        if(!$ws->save(0)) {
+            return self::_err('保存信息失败');
+        }
+
+        return $ws->primaryKey;
     }
 }

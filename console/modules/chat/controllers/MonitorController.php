@@ -3,6 +3,7 @@
 namespace console\modules\chat\controllers;
 
 use common\services\monitor\WSCenterService;
+use common\services\worker\WorkerService;
 use console\controllers\BaseController;
 use uc\services\UCConstantService;
 
@@ -17,28 +18,145 @@ class MonitorController extends BaseController
         $params = \Yii::$app->params;
         $guest_config = [];
         $cs_config = [];
-        foreach ($params as $_key => $_item ){
-            if( mb_stripos( $_key,"guest_" ) !== false ){
-                $guest_config[ $_key ] = $_item['register'];
+
+        // 获取所有的注册中心.
+        $all_register = [];
+
+        foreach ($params as $_key => $_item ) {
+            if (mb_stripos($_key, "guest_") !== false) {
+                $guest_config[str_replace("guest_", '', $_key)] = $_item;
             }
-            if( mb_stripos( $_key,"cs_" ) !== false ){
-                $cs_config[ $_key ] = $_item['register'];
+
+            if (mb_stripos($_key, "cs_") !== false) {
+                $cs_config[str_replace("cs_", '', $_key)] = $_item;
+            }
+
+            if(isset($_item['register'])) {
+                $all_register[$_item['register']['ip'] . ':' .$_item['register']['port']] = 0;
             }
         }
 
-        //获取register地址
-        foreach ( $guest_config as $_key => $_item ){
-            $tmp_params = $_item;
-            $tmp_params['type'] = UCConstantService::$ws_register;
-            WSCenterService::setKFWS( $tmp_params );
+
+        // 根据注册中心获取所有的节点信息.
+        if(!count($all_register)) {
+            return $this->stdout('暂无注册中心信息');
         }
 
-        foreach ( $cs_config as $_key => $_item ){
-            $tmp_params = $_item;
-            $tmp_params['type'] = UCConstantService::$ws_register;
-            WSCenterService::setKFWS( $tmp_params );
+        foreach($all_register as $key => $value) {
+            $all_register[$key] = WorkerService::getGatewayClientByRegister($key);
         }
+        var_dump($all_register);exit;
+        $register_mapping = [];
+        // 获取所有的guest_ws数据中心. 一组服务.根据一组服务来得到对应的地址和通讯端口.
+        foreach ( $guest_config as $_key => $_item ) {
+            // 删除内部监听端口.
+            unset($_item['push']);
+
+            if(isset($_item['register'])) {
+                // 这里去添加注册中心信息.
+                $params = [
+                    'type'  =>  UCConstantService::$ws_register,
+                    'name'  =>  $_item['register']['name'],
+                    'ip'    =>  $_item['register']['ip'],
+                    'port'  =>  $_item['register']['port'],
+                    'start_port'    =>  $_item['register']['port'],
+                    'count' =>  1,
+                ];
+
+                $register_id = WSCenterService::setKFWS( $params );
+
+                $register_mapping[$_item['register']['ip'] . ':' . $_item['register']['port']] = $register_id;
+
+                unset($_item['register']);
+            }
+
+            $this->handleWorker($_item, $all_register, $register_mapping);
+        }
+
+        foreach ( $cs_config as $_key => $_item ) {
+            // 删除内部监听端口.
+            unset($_item['push']);
+
+            if(isset($_item['register'])) {
+                // 这里去添加注册中心信息.
+                $params = [
+                    'type'  =>  UCConstantService::$ws_register,
+                    'name'  =>  $_item['register']['name'],
+                    'ip'    =>  $_item['register']['ip'],
+                    'port'  =>  $_item['register']['port'],
+                    'start_port'    =>  $_item['register']['port'],
+                    'count' =>  1,
+                ];
+
+                $register_id = WSCenterService::setKFWS( $params );
+
+                $register_mapping[$_item['register']['ip'] . ':' . $_item['register']['port']] = $register_id;
+
+                unset($_item['register']);
+            }
+
+            $this->handleWorker($_item, $all_register, $register_mapping);
+        }
+
 
         return $this->echoLog( "ok" );
+    }
+
+    public function handleWorker($config, $all_register, $register_mapping) {
+        // 开始保存gateway信息.
+        $gateway_info = [];
+
+        foreach($config as $key=>$service) {
+            if(strpos($key,'gateway') !== false) {
+                array_push($gateway_info, $service);
+            }
+        }
+
+        // gateway 管理.
+        foreach($gateway_info as $gateway) {
+            $gateway_process = array_filter($all_register[$gateway['register_host']], function ($ip) use ($gateway) {
+                $port = explode(':',$ip)[1];
+
+                return $port >= $gateway['start_port'] && $gateway['start_port'] + 4 <= $port;
+            });
+
+            $params = [
+                'type'  =>  UCConstantService::$ws_gateway,
+                'name'  =>  $gateway['name'],
+                'ip'    =>  $gateway['ip'],
+                'port'  =>  $gateway['port'],
+                'start_port'    =>  $gateway['start_port'],
+                'owner_reg'     =>  isset($register_mapping[$gateway['register_host']])
+                    ? $register_mapping[$gateway['register_host']]
+                    : 0,
+                'count' =>  count($gateway_process),
+            ];
+
+            WSCenterService::setKFWS( $params );
+        }
+
+        $business_worker = [];
+
+        foreach($config as $key=>$service) {
+            if(strpos($key,'busi_worker') !== false) {
+                array_push($business_worker, $service);
+            }
+        }
+
+        // 开始保存.
+        foreach($business_worker as $bs) {
+            $params = [
+                'type'  =>  UCConstantService::$ws_busiworker,
+                'name'  =>  $bs['name'],
+                'port'  =>  0,
+                'start_port'    =>  0,
+                'owner_reg'     =>  isset($register_mapping[$bs['register_host']])
+                    ? $register_mapping[$bs['register_host']]
+                    : 0,
+                'count' =>  0,
+            ];
+
+            WSCenterService::setKFWS( $params );
+        }
     }
 }
