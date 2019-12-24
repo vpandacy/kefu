@@ -37,6 +37,8 @@ return [
             'www/web/assets',
             'uc/runtime',
             'uc/web/assets',
+            'admin/runtime',
+            'admin/web/assets',
         ],
         'setExecutable' => [
             'yii',
@@ -53,6 +55,8 @@ return [
             'www/web/assets',
             'uc/runtime',
             'uc/web/assets',
+            'admin/runtime',
+            'admin/web/assets',
         ],
         'setExecutable' => [
             'yii',
