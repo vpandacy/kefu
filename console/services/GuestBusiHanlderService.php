@@ -95,13 +95,21 @@ class GuestBusiHanlderService extends BaseService
      * @param int $client_id 连接id
      * 客户端关闭了，需要通知客服，但是client_id 对应的客服是谁，我们不知道，
      * 所以需要通过client_id 找到 对应的客服（可以去表中查下）
+     * @return bool
      */
     public static function onClose($client_id)
     {
-        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+        $cache_params = ChatEventService::getGuestBindCache( $client_id );
         ChatEventService::clearGuestBindCache( $client_id );
 
         $uuid = isset($cache_params['uuid']) ? $cache_params['uuid'] : '';
+
+        $old_client_ids = Gateway::getClientIdByUid($uuid);
+
+        // 不需要处理. 如果存在.就证明有其他的客户端在使用.
+        if($old_client_ids) {
+            return false;
+        }
 
         // 加上转发消息.
         $close_params = [
@@ -117,7 +125,7 @@ class GuestBusiHanlderService extends BaseService
         QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, json_decode($close_data, true) );
         QueueListService::push2CS( QueueConstant::$queue_cs_chat, json_decode($close_data,true) );
         // 解绑.
-        Gateway::unbindUid($client_id, $uuid);
+        return Gateway::unbindUid($client_id, $uuid);
     }
 
     /**
@@ -174,6 +182,16 @@ class GuestBusiHanlderService extends BaseService
         if ($f_id) {
             //建立绑定关系，后面就可以根据f_id找到这个人了
             $old_client_id = Gateway::getClientIdByUid($f_id);
+            if($old_client_id) {
+                Gateway::unbindUid($old_client_id[0],$f_id);
+                // 关闭信息
+                Gateway::sendToClient($old_client_id[0], ChatEventService::buildMsg(ConstantService::$chat_cmd_close_guest,[
+                    't_id'  =>  $f_id,
+                    'content'   =>  '您使用了新的窗口，已关闭'
+                ]));
+
+                Gateway::closeClient($old_client_id[0]);
+            }
             // 解除绑定信息.
             $old_client_id && Gateway::unbindUid($old_client_id[0], $f_id);
             Gateway::bindUid($client_id, $f_id);

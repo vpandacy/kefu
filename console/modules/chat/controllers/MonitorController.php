@@ -30,13 +30,13 @@ class MonitorController extends BaseController
         foreach ( $guest_config as $_key => $_item ){
             $tmp_params = $_item;
             $tmp_params['type'] = UCConstantService::$ws_register;
-            WSCenterService::setKFWS( $tmp_params );
+//            WSCenterService::setKFWS( $tmp_params );
         }
 
         foreach ( $cs_config as $_key => $_item ){
             $tmp_params = $_item;
             $tmp_params['type'] = UCConstantService::$ws_register;
-            WSCenterService::setKFWS( $tmp_params );
+//            WSCenterService::setKFWS( $tmp_params );
         }
 
         return $this->echoLog( "ok" );

@@ -17,7 +17,7 @@ class BaseController extends StaffBaseController {
     private $allow_actions = [
         'user/login',
         'user/sign-in',
-        'user/register',
+        'user/reg',
         'user/captcha',
         'user/get-captcha',
         'default/forbidden',
