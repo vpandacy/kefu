@@ -3,6 +3,7 @@ namespace www\modules\merchant\controllers\style;
 
 use common\models\merchant\GroupChat;
 use common\models\merchant\ReceptionRule;
+use common\services\uc\MerchantService;
 use www\modules\merchant\controllers\common\BaseController;
 use www\services\MerchantConstantService;
 
@@ -36,6 +37,10 @@ class ReceptionController extends BaseController
             ])
             ->asArray()
             ->one();
+
+        if(!$rule) {
+            $rule = MerchantService::genDefaultReceptionRuleConfig();
+        }
 
         return $this->renderJSON($rule, '获取成功');
     }

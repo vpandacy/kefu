@@ -312,4 +312,18 @@ class MerchantService extends BaseService
         CacheService::set($cache_key, json_encode($setting->toArray()), 86400 * 30);
         return true;
     }
+
+    /**
+     * 生成默认的配置信息.
+     * @return array
+     */
+    public static function genDefaultReceptionRuleConfig()
+    {
+        return [
+            'reception_rule'    =>  0,
+            'reception_strategy'=>  0,
+            'shunt_mode'        =>  0,
+            'distribution_mode' =>  0
+        ];
+    }
 }
