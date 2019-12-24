@@ -179,7 +179,7 @@ if(window.location.hostname.indexOf('.kefu.dev.qwer.cn') <= -1) {
 
         $.ajax({
             type: 'POST',
-            url: '/uc/error/captcha',
+            url: common_ops_url.buildUrl('/error/captcha'),
             data: data,
             dataType: 'json',
             success: function () {}
