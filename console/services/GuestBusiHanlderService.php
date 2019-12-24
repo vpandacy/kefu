@@ -221,7 +221,7 @@ class GuestBusiHanlderService extends BaseService
         $data = $message['data'] ?? [];
         $code = $data['code'] ?? '';
         $f_id = $data['f_id'] ?? 0;
-        $kf_info = ChatEventService::getKFByRoute($f_id,$data['msn'] , $code, $message['REMOTE_ADDR']);
+        $kf_info = ChatEventService::getKFByRoute($f_id, $data['msn'] , $code, $message['REMOTE_ADDR']);
 
         if( !$kf_info ){
             $params = [

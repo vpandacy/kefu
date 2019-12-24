@@ -89,7 +89,7 @@ class ChatGroupService extends BaseService
 
         $group = @json_decode($group_data, true);
 
-        return count($group);
+        return $group ? count($group) : 0;
     }
 
     /**
