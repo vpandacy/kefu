@@ -23,7 +23,7 @@ var merchant_user_track_ops = {
                         return row.referer_url == '' ? '暂无' : row.referer_url;
                     }}
                     ,{field:'land_url', title: '落地页'}
-                    ,{field: 'source', title: '来源', templet:function (row) {
+                    ,{field: 'source', title: '终端来源', templet:function (row) {
                         var sources_map = {
                             0: '暂无',
                             1: 'PC',
