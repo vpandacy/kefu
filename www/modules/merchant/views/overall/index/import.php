@@ -17,7 +17,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                 <div class="layui-upload">
                     <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button>
                     <div type="button" class="layui-btn">
-                        <a class="layui-icon" href="<?=GlobalUrlService::buildKFStaticUrl('/other/import.xlsx')?>">&#xe601;</a>导入示例下载
+                        <a class="layui-icon layui-icon-dows" href="<?=GlobalUrlService::buildKFStaticUrl('/other/import.xlsx')?>">&#xe601;</a>导入示例下载
                     </div>
                     <div class="layui-upload-list">
                         <table class="layui-table">

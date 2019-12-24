@@ -1,4 +1,5 @@
 ;
+var params = {};
 var chat_logic = {
     logic: function() {
         /**
@@ -92,6 +93,22 @@ var chat_logic = {
                 }
             });
         });
+
+        // params
+        params = JSON.parse($('input[name="params"]').val()).style;
+        console.log(params)
+        // history: 是否展示消息记录, 0展示,1不展示
+        // winstatus: 浮动窗口展示状态, 0最小化,1展示
+        // force: 新消息是否强制弹窗, 0强制,1不强制
+        let isHistory = params.is_history;
+        let winStatus = params.windows_status;
+        if(Number(isHistory)){
+            $('.line').hide();
+        }
+        if (Number(winStatus)) {
+            $('.show-hide-min').css({display:'none'});
+            $('.show-hide').css({display:'block'});
+        }
     }
 }
 var ws_config = new socket({
@@ -103,6 +120,14 @@ var ws_config = new socket({
         switch (data.cmd) {
             case 'ws_connect'||'hello':
                 $('.ws_flag').text('正在连接客服...')
+                break;
+            case 'reply':
+                // force: 新消息是否强制弹窗, 0强制,1不强制
+                let isForce = params.is_force;
+                if(!Number(isForce)) {
+                    $('.show-hide-min').css({display:'none'});
+                    $('.show-hide').css({display:'block'});
+                }
                 break;
             case 'assign_kf'||'change_kf'||'reply' || 'system':
                 $('.ws_flag').text('连接成功')
