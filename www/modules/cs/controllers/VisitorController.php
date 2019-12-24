@@ -375,6 +375,8 @@ class VisitorController extends BaseController
                     ? GlobalUrlService::buildPicStaticUrl('hsh',$customers[$log['cs_id']]['avatar'])
                     : GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar);
 
+                $log['guest_avatar'] = GlobalUrlService::buildPicStaticUrl('hsh', ConstantService::$default_avatar);
+
                 $guest_chat_log[$key] = $log;
             }
         }
