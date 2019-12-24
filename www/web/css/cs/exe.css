@@ -295,7 +295,7 @@ select[name='cs'] {
      font-size: 14px;
  }
 #chatExe .exe-keep .tab .tab-content-list .list-flag-off-line:before {
-    content: "离线";
+    /*content: "离线";*/
 }
 
 #chatExe .exe-header {

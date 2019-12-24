@@ -105,7 +105,7 @@
                 '   </div>',
                 '   <div>',
                 '       <span class="content-list-time">',user.allocationTime,'</span>',
-                    user.is_online == 1 ? '<span class="list-flag-online"></span>' : '<span class="list-flag-off-line"></span>',
+                    user.is_online == 1 ? '<span class="list-flag-online">在线</span>' : '<span class="list-flag-off-line">离线</span>',
                 '   </div>',
                 '</div>'
             ].join("");
