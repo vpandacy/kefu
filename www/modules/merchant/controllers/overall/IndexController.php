@@ -22,12 +22,11 @@ class IndexController extends BaseController
 
         $page = intval($this->post('page',1));
 
-        $query = CommonWord::find();
+        $query = CommonWord::find()->where(['merchant_id'=>$this->getMerchantId()]);
 
         $count = $query->count();
 
-        $data = $query->where(['merchant_id'=>$this->getMerchantId()])
-            ->limit($this->page_size)
+        $data = $query->limit($this->page_size)
             ->offset($this->page_size * ($page - 1))
             ->orderBy(['id'=>SORT_DESC])
             ->asArray()
