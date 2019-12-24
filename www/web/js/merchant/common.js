@@ -126,7 +126,7 @@ var merchant_common_ops = {
         return Object.assign({},{
             limit: 15,  // 分页信息.
             page: {     // 分页的模板.
-                layout: ['prev', 'page', 'next', 'first', 'last' ,'skip']
+                layout: ['prev', 'page', 'next', 'first', 'last' ,'skip','count']
             },
             method: 'POST',
             // 规定返回的信息.
