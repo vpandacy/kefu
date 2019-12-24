@@ -431,7 +431,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 .tab_staff_content{
     /*margin: 0 30px;*/
 }
-.tab_staff_content a {
+.tab_staff_content .layui-icon-dows {
     color: white;
 }
 .staff_tab .tab_list {
