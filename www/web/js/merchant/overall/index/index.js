@@ -89,7 +89,7 @@ var merchant_overall_index_ops = {
                     index = $.loading(1,{shade: .5});
                     $.ajax({
                         type: 'POST',
-                        url: common_ops.buildMerchantUrl('/overall/index/disable'),
+                        url: merchant_common_ops.buildMerchantUrl('/overall/index/disable'),
                         dataType: 'json',
                         data: {
                             id: row.data.id
