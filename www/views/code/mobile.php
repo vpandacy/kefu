@@ -25,7 +25,9 @@ StaticPluginHelper::includeJsPlugins([
 ?>
 <script>
     WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
-    var vConsole = new VConsole();
+    window.onload = function () {
+        var vConsole = new VConsole();
+    }
 </script>
 <div id='wapOnline'>
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
