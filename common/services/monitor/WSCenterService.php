@@ -53,4 +53,8 @@ class WSCenterService extends BaseService
         $config = $config[ "gateway_{$gateway_idx}"];
         return $config['ip'].":".$config['port'];
     }
+
+    public static function setKFWS($client) {
+        var_dump($client);
+    }
 }
