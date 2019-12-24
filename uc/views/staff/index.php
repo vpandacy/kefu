@@ -40,27 +40,25 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
     <div class="layui-form-item">
         <label class="layui-form-label">手机号</label>
         <div class="layui-input-block">
-            <input type="text" name="mobile" value="<?=$search_conditions['mobile']?>" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+            <input style="width: 100%;" type="text" name="mobile" value="<?=$search_conditions['mobile']?>" placeholder="请输入手机号" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">邮箱</label>
         <div class="layui-input-block">
-            <input type="text" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            <input style="width: 100%;" type="text" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-form-item">
-            <label class="layui-form-label">所属行业</label>
+            <label class="layui-form-label">所属部门</label>
             <div class="layui-input-block">
                 <select name="department_id">
-                    <option value="0">请选择行业</option>
+                    <option value="0">请选择部门</option>
                     <?php foreach($departments as $department):?>
-                        <option value="<?=$department['id']?>" <?=$department['id'] == $search_conditions['department_id'] ? 'selected' : ''?>>
-                            <?=$department['name']?>
-                        </option>
+                        <option value="<?=$department['id']?>" <?=$department['id'] == $search_conditions['department_id'] ? 'selected' : ''?>><?=$department['name']?></option>
                     <?php endforeach;?>
                 </select>
             </div>
