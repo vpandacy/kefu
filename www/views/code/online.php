@@ -33,7 +33,7 @@ StaticPluginHelper::includeJsPlugins([
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
 <div id='online'>
     <div class="online-header">
-        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
+        <img class="logo" src="<?=isset($js_params['style']['logo']) ? GlobalUrlService::buildPicStaticUrl('hsh',$js_params['style']['logo']) : GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
         <div class="info">
             <span class="title">金牌客服</span>
             <span class="tip">为您在线解答售前(5*8)/售后咨询(7*24)服务</span>
@@ -50,7 +50,7 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <div class="content-message">
                     <div class="message-img">
-                        <img class="logo" src="<?=GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
+                        <img class="logo" src="<?=isset($js_params['style']['logo']) ? GlobalUrlService::buildPicStaticUrl('hsh',$js_params['style']['logo']) : GlobalUrlService::buildPicStaticUrl('hsh',$merchant_info['logo'])?>">
                     </div>
                     <div class="message-info">
                         <div class="message-name-date"><span>客服</span><span class="date"><?=date('H:i:s')?></span></div>
@@ -109,7 +109,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
             <div class="right-tab-info">
                 <div style="padding: 20px;">
-                    <?=$merchant_info['desc'] ?? '暂无公司简介'?>
+                    <?=isset($js_params['style']['company_desc']) ? $js_params['style']['company_desc'] : $merchant_info['desc']?>
                 </div>
             </div>
             <div class="right-guanggao">
