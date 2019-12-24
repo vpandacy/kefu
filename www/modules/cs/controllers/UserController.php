@@ -50,7 +50,7 @@ class UserController extends BaseController
         $query = Staff::find();
 
         if($type == 1) {
-            $query->andWhere(['mobile'=>$account,'is_root'=>1,'status'=>ConstantService::$default_status_true]);
+            $query->andWhere(['mobile'=>$account, 'status'=>ConstantService::$default_status_true]);
         }else{
             $query->andWhere([ 'email' => $account,'status' => ConstantService::$default_status_true ]);
         }

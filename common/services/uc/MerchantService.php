@@ -280,4 +280,36 @@ class MerchantService extends BaseService
             'is_show_num'   =>  1
         ];
     }
+
+    /**
+     * 获取商户风格的设置.
+     * @param int $id
+     * @param int $merchant_id
+     * @param array $params
+     * @return array|false
+     */
+    public static function updateStyleConfig($id, $merchant_id, $params)
+    {
+        // 检查对应的信息.
+        $setting = GroupChatSetting::findOne([
+            'group_chat_id' =>  $id,
+            'merchant_id'   =>  $merchant_id,
+        ]);
+
+        if(!$setting) {
+            $setting = new GroupChatSetting();
+        }
+
+        $params['merchant_id'] = $merchant_id;
+
+        $setting->setAttributes($params,0);
+
+        if(!$setting->save(0)) {
+            return self::_err('数据保存失败');
+        }
+
+        $cache_key = 'merchant_style_config_' . $id;
+        CacheService::set($cache_key, json_encode($setting->toArray()), 86400 * 30);
+        return true;
+    }
 }

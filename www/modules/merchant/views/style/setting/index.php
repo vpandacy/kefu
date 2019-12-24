@@ -72,12 +72,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                     <legend>基本配置</legend>
                     <div class="layui-field-box">
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">延时发起</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="lazy_time" value=""  required="" lay-verify="required" placeholder="请输入公司名/商户名" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
+<!--                        <div class="layui-form-item">-->
+<!--                            <label class="layui-form-label">延时发起</label>-->
+<!--                            <div class="layui-input-block">-->
+<!--                                <input type="text" name="lazy_time" value=""  required="" lay-verify="required" placeholder="请输入公司名/商户名" autocomplete="off" class="layui-input">-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">所在省份</label>
@@ -99,13 +99,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             </div>
                         </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">主动发起对话</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="is_active" value="0" title="是">
-                                <input type="radio" name="is_active" value="1" title="否">
-                            </div>
-                        </div>
+<!--                        <div class="layui-form-item">-->
+<!--                            <label class="layui-form-label">主动发起对话</label>-->
+<!--                            <div class="layui-input-block">-->
+<!--                                <input type="radio" name="is_active" value="0" title="是">-->
+<!--                                <input type="radio" name="is_active" value="1" title="否">-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">浮窗初始状态</label>
@@ -123,13 +123,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             </div>
                         </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">展示消息数量</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="is_show_num" value="0" title="是">
-                                <input type="radio" name="is_show_num" value="1" title="否">
-                            </div>
-                        </div>
+<!--                        <div class="layui-form-item">-->
+<!--                            <label class="layui-form-label">展示消息数量</label>-->
+<!--                            <div class="layui-input-block">-->
+<!--                                <input type="radio" name="is_show_num" value="0" title="是">-->
+<!--                                <input type="radio" name="is_show_num" value="1" title="否">-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div class="layui-form-item">
                             <div class="layui-input-block">

@@ -5,6 +5,7 @@ use common\components\helper\ValidateHelper;
 use common\models\merchant\City;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GroupChatSetting;
+use common\services\uc\MerchantService;
 use www\modules\merchant\controllers\common\BaseController;
 
 class SettingController extends BaseController
@@ -45,6 +46,10 @@ class SettingController extends BaseController
             ->asArray()
             ->one();
 
+        if(!$setting) {
+            $setting = MerchantService::genDefaultStyleConfig();
+        }
+
         return $this->renderJSON($setting, '获取成功');
     }
 
@@ -58,7 +63,7 @@ class SettingController extends BaseController
 
         $request_r = [
             'company_name','company_logo','company_desc','province_id','is_history',
-            'is_active','windows_status','is_force', 'is_show_num', 'group_chat_id'
+            'windows_status','is_force', 'group_chat_id'
         ];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
@@ -81,9 +86,9 @@ class SettingController extends BaseController
             return $this->renderErrJSON( '请选择正确的展示消息记录' );
         }
 
-        if(!in_array($data['is_active'], [0, 1])) {
-            return $this->renderErrJSON( '请选择主动发起对话' );
-        }
+//        if(!in_array($data['is_active'], [0, 1])) {
+//            return $this->renderErrJSON( '请选择主动发起对话' );
+//        }
 
         if(!in_array($data['windows_status'], [0, 1])) {
             return $this->renderErrJSON( '请选择正确的浮窗状态' );
@@ -93,9 +98,9 @@ class SettingController extends BaseController
             return $this->renderErrJSON( '请选择正确的新消息强制弹窗' );
         }
 
-        if(!in_array($data['is_show_num'], [0, 1])) {
-            return $this->renderErrJSON( '请选择正确的消息展示' );
-        }
+//        if(!in_array($data['is_show_num'], [0, 1])) {
+//            return $this->renderErrJSON( '请选择正确的消息展示' );
+//        }
 
         // 检查对应的信息.
         $group_chat_ids = GroupChat::find()
@@ -107,21 +112,8 @@ class SettingController extends BaseController
             return $this->renderErrJSON('暂无此风格信息~~');
         }
 
-        $setting = GroupChatSetting::findOne([
-            'group_chat_id' =>  $data['group_chat_id'],
-            'merchant_id'   =>  $this->getMerchantId(),
-        ]);
-
-        if(!$setting) {
-            $setting = new GroupChatSetting();
-        }
-
-        $data['merchant_id'] = $this->getMerchantId();
-
-        $setting->setAttributes($data,0);
-
-        if(!$setting->save(0)) {
-            return $this->renderErrJSON( '数据保存失败,请联系管理员' );
+        if(!MerchantService::updateStyleConfig($data['group_chat_id'], $this->getMerchantId(), $data)) {
+            return $this->renderErrJSON(MerchantService::getLastErrorMsg());
         }
 
         return $this->renderJSON([],'保存成功');

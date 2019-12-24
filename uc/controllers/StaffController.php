@@ -242,7 +242,6 @@ class StaffController extends BaseController
             return $this->renderErrJSON('您更换的手机号已经被别人所使用了');
         }
 
-
         $other_staff = Staff::find()
             ->where([
                 'email'=>$data['email']
@@ -281,12 +280,14 @@ class StaffController extends BaseController
             $data['status'] = ConstantService::$default_status_true;
             $data['salt'] = CommonService::genUniqueName();
             $data['avatar'] = ConstantService::$default_avatar;
+            $data['is_login'] = ConstantService::$default_status_false;
             // 设置应用ID.
             $data['app_ids'] = ',' . $this->getAppId() . ',';
         }
 
         if($data['password']) {
             $data['password'] = $this->genPassword($this->getMerchantId(), $data['password'], $staff['salt']);
+            $data['is_login'] = ConstantService::$default_status_false;
         }else{
             unset($data['password']);
         }
