@@ -11,7 +11,7 @@ class MerchantConstantService extends BaseService
      */
     public static $group_distribution_modes = [
         0   =>  '自动分配',
-        1   =>  '手动分配'
+//        1   =>  '手动分配'
     ];
 
     /**
@@ -28,7 +28,7 @@ class MerchantConstantService extends BaseService
      */
     public static $group_reception_strategies = [
         0   =>  '风格分组优先',
-        1   =>  '管理员优先'
+//        1   =>  '管理员优先'
     ];
 
     /**
