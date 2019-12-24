@@ -376,7 +376,12 @@ select[name='cs'] {
     display: flex;
     line-height: 26px;
 }
-
+#chatExe .exe-content .exe-content-top .content-top-info .land-url span:first-child {
+    width: 70px !important;
+}
+#chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(1) {
+    width: 40px;
+}
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
     color: rgb(0, 0, 0);
     width: 400px;
