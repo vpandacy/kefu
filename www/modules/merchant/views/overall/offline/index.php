@@ -14,7 +14,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         <form action="" class="layui-form">
             <div class="demoTable" style=" text-align: left;margin:10px 0px;">
                 <div class="layui-inline">
-                    <input class="layui-input" name="keyword" id="demoReload" autocomplete="off" placeholder="请输入手机号">
+                    <input class="layui-input" name="keyword" value="<?=$keyword?>" id="demoReload" autocomplete="off" placeholder="请输入手机号">
                 </div>
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
             </div>
