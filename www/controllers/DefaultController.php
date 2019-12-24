@@ -15,4 +15,10 @@ class DefaultController extends Controller
         $this->layout = 'main';
         return $this->render('index2');
     }
+
+    public function actionStyle()
+    {
+        $this->layout = 'main';
+        return $this->render('style');
+    }
 }
