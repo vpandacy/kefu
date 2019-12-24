@@ -5,6 +5,7 @@ use common\components\helper\DateHelper;
 use common\models\merchant\BlackList;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GroupChatSetting;
+use common\models\merchant\ReceptionRule;
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
 use common\models\uc\Staff;
@@ -282,7 +283,7 @@ class MerchantService extends BaseService
     }
 
     /**
-     * 获取商户风格的设置.
+     * 更新商户风格的设置.
      * @param int $id
      * @param int $merchant_id
      * @param array $params
@@ -325,5 +326,75 @@ class MerchantService extends BaseService
             'shunt_mode'        =>  0,
             'distribution_mode' =>  0
         ];
+    }
+
+    /**
+     * 更新客服分配规则的设置.
+     * @param int $group_chat_id
+     * @param int $merchant_id
+     * @param array $params
+     * @return bool
+     */
+    public static function updateReceptionConfig($group_chat_id, $merchant_id, $params)
+    {
+        // 开始进行保存.
+        $rule = ReceptionRule::findOne([
+            'merchant_id' => $merchant_id,
+            'group_chat_id' => $group_chat_id
+        ]);
+
+        if(!$rule) {
+            $rule = new ReceptionRule();
+        }
+
+        $params['merchant_id'] = $merchant_id;
+        $params['group_chat_id'] = $group_chat_id;
+
+        $rule->setAttributes($params,0);
+
+        if(!$rule->save()) {
+            return self::_err('数据保存失败，请联系管理员');
+        }
+
+        $cache_key = 'merchant_style_reception_' . $group_chat_id;
+        CacheService::set($cache_key, json_encode($rule->toArray()), 86400 * 30);
+        return true;
+    }
+
+    /**
+     * 获取客服分配规则的设置.
+     * @param $code
+     * @param int $merchant_id
+     * @return array|false
+     */
+    public static function getReceptionConfig($code, $merchant_id)
+    {
+        $group_chat_id = 0;
+        if($code) {
+            $group_chat = GroupChat::findOne(['sn'=>$code,'merchant_id'=>$merchant_id]);
+            if(!$group_chat) {
+                return self::_err('未知的风格');
+            }
+            $group_chat_id = $group_chat['id'];
+        }
+        $cache_key = 'merchant_style_reception_' . $group_chat_id;
+        $reception = CacheService::get($cache_key);
+        if(!$reception) {
+            $reception = ReceptionRule::find()
+                ->asArray()
+                ->where(['group_chat_id'=>$group_chat_id,'merchant_id'=>$merchant_id])
+                ->one();
+
+            if(!$reception) {
+                // 生成默认的配置信息.
+                $reception = self::genDefaultReceptionRuleConfig();
+                $reception['group_chat_id'] = 0;
+            }
+
+            $reception = json_encode($reception);
+            CacheService::set($cache_key, $reception, 86400 * 30);
+        }
+
+        return @json_decode($reception, true);
     }
 }

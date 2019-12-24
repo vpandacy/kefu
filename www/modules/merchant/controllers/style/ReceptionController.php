@@ -82,27 +82,13 @@ class ReceptionController extends BaseController
             return $this->renderErrJSON('请选择正确的	分流规则~~');
         }
 
-        // 开始进行保存.
-        $rule = ReceptionRule::findOne([
-            'merchant_id' => $this->getMerchantId(),
-            'group_chat_id' => $group_chat_id
-        ]);
-
-        if(!$rule) {
-            $rule = new ReceptionRule();
-        }
-
-        $rule->setAttributes([
-            'merchant_id'   =>  $this->getMerchantId(),
-            'group_chat_id' =>  $group_chat_id,
+        if(!MerchantService::updateReceptionConfig($group_chat_id, $this->getMerchantId(), [
             'distribution_mode' =>$distribution_mode,
             'reception_rule'    =>  $reception_rule,
             'reception_strategy'=> $reception_strategy,
             'shunt_mode'    =>  $shunt_mode,
-        ],0);
-
-        if(!$rule->save(0)) {
-            return $this->renderErrJSON('数据保存失败, 请联系管理员~~');
+        ])) {
+            return $this->renderErrJSON(MerchantService::getLastErrorMsg());
         }
 
         return $this->renderJSON([], '保存成功');
