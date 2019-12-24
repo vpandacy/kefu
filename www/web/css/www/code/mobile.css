@@ -201,6 +201,7 @@ body {
 
 
 .chat-close {
+    font-size: 14px;
     position: fixed;
     bottom: 0;
     height: 3rem;
@@ -254,7 +255,10 @@ body {
 #online-from .from-list .from-title {
     margin: 10px 0;
 }
-
+#online-from .from-list .from-title span:first-child{
+    color: red;
+    padding-right: 5px;
+}
 .overflow-message {
     position: absolute;
     top: 3rem;

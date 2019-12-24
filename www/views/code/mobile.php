@@ -89,11 +89,11 @@ StaticPluginHelper::includeJsPlugins([
         <div id="online-from">
             <div>您好, 我们的服务时间：8:00-24:00，现在客服不在线，请留言. 如果没有留下您的联系方式，客服将无法和您联系！</div>
             <div class="from-list">
-                <div class="from-title"><span ></span><span>姓名</span></div>
+                <div class="from-title"><span >*</span><span>姓名</span></div>
                 <input name="name">
             </div>
             <div class="from-list">
-                <div class="from-title"><span></span><span>手机号</span></div>
+                <div class="from-title"><span>*</span><span>手机号</span></div>
                 <input name="mobile">
             </div>
             <div class="from-list">

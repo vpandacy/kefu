@@ -216,6 +216,7 @@
 
 #pc-online .online-header .header-left .logo {
     width: 25px;
+    height: 25px;
     border-radius: 3px;
     margin-right: 5px;
 }
@@ -285,6 +286,7 @@
 
 #pc-online .message .content-message .logo {
     width: 35px;
+    height: 35px;
     border-radius: 50%;
 }
 
@@ -419,7 +421,10 @@
 #online-from .from-list .from-title {
     margin: 10px 0;
 }
-
+#online-from .from-list .from-title span:nth-child(1) {
+    color: red;
+    padding-right: 5px;
+}
 
 .overflow-message {
     position: absolute;

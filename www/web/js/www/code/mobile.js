@@ -35,6 +35,14 @@ var mobile_logic = {
         $('.from-button-message').click(function() {
             var fromData = ['name','mobile','wechat','message']
             var param = {};
+            let name = $("#online-from [name='name']").val();
+            let mobile = $("#online-from [name='mobile']").val()
+            if(!name){
+                return $.message({message:'请填写姓名', type:'error'});
+            }
+            if(!mobile || mobile.length != 11){
+                return $.message({message:'请输入正确的手机号', type:'error'});
+            }
             fromData.forEach(function(value, index, array){
                 param[value] = $("#online-from [name="+value+"]").val()
             });
@@ -49,7 +57,8 @@ var mobile_logic = {
                 dataType: 'json',
                 success: function(res) {
                     if(res.code == 200) {
-                        $('.from-button-message').hide();
+                        $('#online-from').hide();
+                        $('.chat-close').show();
                     }
                     alert(res.msg);
                 }

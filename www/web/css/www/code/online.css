@@ -199,8 +199,9 @@ body {
 #online .online-info .info-message  #online-from .from-list .from-title {
     margin: 10px 0;
 }
-#online .online-info .info-message  #online-from .from-list .from-title >span:last-child{
-
+#online .online-info .info-message  #online-from .from-list .from-title >span:first-child{
+    color: red;
+    padding-right: 5px;
 }
 #online .online-info .info-message .submit .chat-close {
     position: absolute;
