@@ -17,12 +17,16 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
     GlobalUrlService::buildStaticUrl('/jqMsg/message.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
+    GlobalUrlService::buildStaticUrl('/vConsole/vconsole.min.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
 ]);
 ?>
-<script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
+<script>
+    WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
+    var vConsole = new VConsole();
+</script>
 <div id='wapOnline'>
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
     <div class="waponline-max dis_none">
