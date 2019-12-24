@@ -6,7 +6,7 @@ return [
         'cs' => 'http://www.kefu.test.hsh568.cn/cs',
         'static' => 'http://static.kefu.test.hsh568.cn',
         'uc' => 'http://uc.kefu.test.hsh568.cn',
-        'admin'     => 'http://admin.kefu.dev.hsh568.cn',
+        'admin'     => 'http://admin.kefu.test.hsh568.cn',
     ],
     'websocket' => 'ws://www.kefu.test.hsh568.cn/ws/',
     'cdn' => [

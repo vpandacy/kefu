@@ -11,6 +11,7 @@ use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use common\services\monitor\WSCenterService;
 use common\services\uc\MerchantService;
+use www\assets\MerchantAsset;
 use www\controllers\common\BaseController;
 
 /**
@@ -71,6 +72,12 @@ class CodeController extends BaseController
         }
 
         $config = MerchantService::getConfig( $merchant_info['id'] );
+        $style = MerchantService::getStyleConfig( $code, $merchant_info['id'] );
+
+        if(!$style) {
+            return '<script>alert("您引入的非法客服软件-3~~");</script>';
+        }
+
         $params = [
             "msn" => $msn,
             "code" => $code,
@@ -89,6 +96,7 @@ class CodeController extends BaseController
                 "msn"               => $msn,
                 "auto_disconnect"   => $config['auto_disconnect'] ?? 0,
                 "greetings"         => $config['greetings'] ?? '您好,欢迎使用好商汇客服系统',
+                "style"             => $style
             ]
         ];
         return $this->render('chat',$data);
@@ -104,10 +112,16 @@ class CodeController extends BaseController
         }
 
         // 这里最好加入到缓存中去.不然到时候会比较麻烦.
-        $merchant = Merchant::findOne(['sn'=>$msn,'status'=>ConstantService::$default_status_true]);
+        $merchant = MerchantService::getInfoBySn($msn);
 
         if(!$merchant) {
             return '<script>alert("您引入的非法客服软件")</script>';
+        }
+
+        $style = MerchantService::getStyleConfig( $code, $merchant['id'] );
+
+        if(!$style) {
+            return '<script>alert("您引入的非法客服软件-3~~");</script>';
         }
 
         $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
@@ -122,6 +136,7 @@ class CodeController extends BaseController
                 "msn"               => $msn,
                 "auto_disconnect"   => $setting['auto_disconnect'] ?? 0,
                 "greetings"         => $setting['greetings'] ?? '您好,欢迎使用好商汇客服系统',
+                "style"             => $style
             ]
         ]);
     }
@@ -146,6 +161,12 @@ class CodeController extends BaseController
             return '<script>alert("您引入的非法客服软件")</script>';
         }
 
+        $style = MerchantService::getStyleConfig( $code, $merchant['id'] );
+
+        if(!$style) {
+            return '<script>alert("您引入的非法客服软件-3~~");</script>';
+        }
+
         $setting = MerchantSetting::findOne(['merchant_id'=>$merchant['id']]);
         $this->layout = 'mobile';
         return $this->render('mobile', [
@@ -158,6 +179,7 @@ class CodeController extends BaseController
                 "msn"               => $msn,
                 "auto_disconnect"   => $setting['auto_disconnect'] ?? 0,
                 "greetings"         => $setting['greetings'] ?? '您好,欢迎使用好商汇客服系统',
+                "style"             => $style
             ]
         ]);
     }

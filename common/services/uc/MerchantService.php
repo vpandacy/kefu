@@ -3,6 +3,8 @@ namespace common\services\uc;
 
 use common\components\helper\DateHelper;
 use common\models\merchant\BlackList;
+use common\models\merchant\GroupChat;
+use common\models\merchant\GroupChatSetting;
 use common\models\uc\Merchant;
 use common\models\uc\MerchantSetting;
 use common\models\uc\Staff;
@@ -223,5 +225,59 @@ class MerchantService extends BaseService
         $cache_key = 'merchant_config_' . $setting['merchant_id'];
         CacheService::set($cache_key, json_encode($setting->toArray()),86400 * 30);
         return true;
+    }
+
+    /**
+     * 获取商户风格的设置.
+     * @param $code
+     * @param int $merchant_id
+     * @return array|false
+     */
+    public static function getStyleConfig($code, $merchant_id)
+    {
+        $group_chat_id = 0;
+        if($code) {
+            $group_chat = GroupChat::findOne(['sn'=>$code,'merchant_id'=>$merchant_id]);
+            if(!$group_chat) {
+                return self::_err('未知的风格');
+            }
+            $group_chat_id = $group_chat['id'];
+        }
+        $cache_key = 'merchant_style_config_' . $group_chat_id;
+        $style = CacheService::get($cache_key);
+        if(!$style) {
+            $setting = GroupChatSetting::find()
+                ->asArray()
+                ->where(['group_chat_id'=>$group_chat_id,'merchant_id'=>$merchant_id])
+                ->one();
+
+            if(!$setting) {
+                // 生成默认的配置信息.
+                $setting = self::genDefaultStyleConfig();
+                $setting['group_chat_id'] = 0;
+            }
+
+            $style = json_encode($setting);
+            CacheService::set($cache_key, $style, 86400 * 30);
+        }
+
+        return @json_decode($style, true);
+    }
+
+    /**
+     * 生成默认的配置信息.
+     * @return array
+     */
+    public static function genDefaultStyleConfig()
+    {
+        return [
+            'is_history'    =>  0,
+            'province_id'   =>  0,
+            'is_active'     =>  1,
+            'windows_status'=>  0,
+            'is_force'      =>  1,
+            'lazy_time'     =>  10,
+            'is_show_num'   =>  1
+        ];
     }
 }
