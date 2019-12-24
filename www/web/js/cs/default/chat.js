@@ -133,7 +133,7 @@
                 elem = $(this);
 
             e.preventDefault();
-            that.saveInformation('email', current_uuid, elem);
+            that.saveInformation('mobile', current_uuid, elem);
         });
 
         // 填写邮箱.
