@@ -79,17 +79,17 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 <!--                            </div>-->
 <!--                        </div>-->
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">所在省份</label>
-                            <div class="layui-input-block">
-                                <select name="province_id">
-                                    <option value="0">所有省份</option>
-                                    <?php foreach($city as $c):?>
-                                        <option value="<?=$c['id']?>"><?=$c['name']?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>
-                        </div>
+<!--                        <div class="layui-form-item">-->
+<!--                            <label class="layui-form-label">所在省份</label>-->
+<!--                            <div class="layui-input-block">-->
+<!--                                <select name="province_id">-->
+<!--                                    <option value="0">所有省份</option>-->
+<!--                                    --><?php //foreach($city as $c):?>
+<!--                                        <option value="--><?//=$c['id']?><!--">--><?//=$c['name']?><!--</option>-->
+<!--                                    --><?php //endforeach;?>
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">展示消息记录</label>

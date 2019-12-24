@@ -62,7 +62,7 @@ class SettingController extends BaseController
         $data = $this->post(null);
 
         $request_r = [
-            'company_name','company_logo','company_desc','province_id','is_history',
+            'company_name','company_logo','company_desc','is_history',
             'windows_status','is_force', 'group_chat_id'
         ];
 

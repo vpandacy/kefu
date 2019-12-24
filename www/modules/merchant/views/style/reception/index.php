@@ -43,7 +43,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                                     <input type="radio" name="distribution_mode" value="<?=$id?>" title="<?=$title?>">
                                 <?php endforeach;?>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">自动分配是由程序自动为游客分配一个客服,手动分配则由游客来选择客服</div>
+                            <div class="layui-form-mid layui-word-aux">自动分配是由程序自动为游客分配一个客服</div>
                         </div>
 
                         <!-- 如果是风格分组优先,则默认以该风格下所有成员为准 -->
@@ -54,7 +54,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                                     <input type="radio" name="reception_strategy" value="<?=$id?>" title="<?=$title?>">
                                 <?php endforeach;?>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">分配方式为手动分配时有效,优先展示管理员或者风格组成员</div>
+<!--                            <div class="layui-form-mid layui-word-aux">分配方式为手动分配时有效,优先展示管理员或者风格组成员</div>-->
                         </div>
 
                         <div class="layui-form-item">
@@ -78,7 +78,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                                     <input type="radio" name="shunt_mode" value="<?=$id?>" title="<?=$title?>">
                                 <?php endforeach;?>
                             </div>
-                            <div class="layui-form-mid layui-word-aux">目前仅支持指定客服,如需设置请前往风格管理->分配客服</div>
+<!--                            <div class="layui-form-mid layui-word-aux">目前仅支持指定客服,如需设置请前往风格管理->分配客服</div>-->
                         </div>
 
                         <div class="layui-form-item">
