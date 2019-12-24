@@ -94,7 +94,6 @@ class ChatEventService extends BaseService
         $mapping = [];
         foreach($staffs as $key=> $staff) {
             $online_users = ChatGroupService::getGroupAllUsers($staff['sn']);
-
             // 在客服的在线区域.就直接返回这个客服.
             if(in_array($uuid,$online_users)) {
                 $staff['act'] = 'success';

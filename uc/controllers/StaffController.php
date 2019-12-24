@@ -303,7 +303,7 @@ class StaffController extends BaseController
             return $this->renderErrJSON( RoleService::getLastErrorMsg() );
         }
 
-        if($data['password']) {
+        if(isset($data['password'])) {
             $cookie = \Yii::$app->params['cookies']['staff'];
             // 删除cookie
             $this->removeCookie($cookie['name'], $cookie['domain']);

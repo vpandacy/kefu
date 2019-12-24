@@ -1,6 +1,7 @@
 <?php
 namespace console\modules\cs\controllers\queue;
 
+use common\models\uc\Staff;
 use common\services\chat\ChatEventService;
 use common\services\chat\ChatGroupService;
 use common\services\chat\ChatSocketService;
@@ -54,42 +55,50 @@ class PushController extends QueueBaseController
      */
     protected function handleGuestClose($params)
     {
-        // 离开组信息.
+        // 离开组和等待组信息.
         ChatGroupService::leaveGroup($params['t_id'], $params['f_id']);
+        ChatGroupService::leaveWaitGroup($params['t_id'], $params['f_id']);
         // 查询对应组的情况.
         $wait_queue = ChatGroupService::getWaitGroupAllUsers($params['t_id']);
         if(count($wait_queue) <= 0) {
             return true;
         }
 
-        $guest_uuid = array_shift($wait_queue);
-        ChatGroupService::leaveWaitGroup($params['t_id'], $guest_uuid);
-        ChatGroupService::joinGroup($params['t_id'], $guest_uuid);
+        $staff = Staff::findOne(['sn'=>$params['t_id']]);
 
-        $cs_params = [
-            "f_id" => $guest_uuid,
-            "t_id" => $params['t_id'],
-            // 随机生成一个昵称.
-            'nickname'  =>  'Guest-' . substr($guest_uuid, strlen($guest_uuid) - 12),
-            'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
-            'allocation_time'   =>  date('H:i:s'),
-        ];
+        $online_users = ChatGroupService::getGroupAllUsers($params['t_id']);
 
-        $cs_params = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$cs_params );
+        if(count($online_users) < $staff['listen_nums']) {
+            $guest_uuid = array_shift($wait_queue);
+            ChatGroupService::leaveWaitGroup($params['t_id'], $guest_uuid);
+            ChatGroupService::joinGroup($params['t_id'], $guest_uuid);
 
-        // 将信息发送给客服.通知游客来了.
-        QueueListService::push2CS(QueueConstant::$queue_cs_chat, json_decode($cs_params, true));
+            $cs_params = [
+                "f_id" => $guest_uuid,
+                "t_id" => $params['t_id'],
+                // 随机生成一个昵称.
+                'nickname'  =>  'Guest-' . substr($guest_uuid, strlen($guest_uuid) - 12),
+                'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
+                'allocation_time'   =>  date('H:i:s'),
+            ];
 
-        // 已经接待成功.
-        $guest_params = ChatEventService::buildMsg(ConstantService::$chat_cmd_assign_kf,[
-            'f_id'      => $params['t_id'],
-            't_id'      => $guest_uuid,
-            'sn'        => $params['t_id'],
-        ]);
+            $cs_params = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$cs_params );
 
-        // 这里是分配客服.
-        QueueListService::push2Guest(QueueConstant::$queue_guest_chat, json_decode($guest_params, true));
-        // 分配完成过后.给组内的所有客服都添加一条系统消息信息.
+            // 将信息发送给客服.通知游客来了.
+            QueueListService::push2CS(QueueConstant::$queue_cs_chat, json_decode($cs_params, true));
+
+            // 已经接待成功.
+            $guest_params = ChatEventService::buildMsg(ConstantService::$chat_cmd_assign_kf,[
+                'f_id'      => $params['t_id'],
+                't_id'      => $guest_uuid,
+                'sn'        => $params['t_id'],
+            ]);
+
+            // 这里是分配客服.
+            QueueListService::push2Guest(QueueConstant::$queue_guest_chat, json_decode($guest_params, true));
+            // 分配完成过后.给组内的所有客服都添加一条系统消息信息.
+
+        }
 
         if(!$wait_queue) {
             return true;
