@@ -63,6 +63,22 @@ var online_logic = {
             })
         });
     },
+    GetRequest: function () {
+        if (typeof urlStr == "undefined") {
+            var url = decodeURI(location.search); //获取url中"?"符后的字符串
+        } else {
+            var url = "?" + urlStr.split("?")[1];
+        }
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
 }
 var ws_config = new socket({
     input:'#content',
@@ -97,5 +113,7 @@ var ws_config = new socket({
 })
 $(document).ready(function(){
     online_logic.logic();
+    var getHistory = online_logic.GetRequest();
+    Number(getHistory.isHistory) != 0 ? $('.line').hide():'';
     ws_config.init();
 });

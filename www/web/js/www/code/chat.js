@@ -22,7 +22,7 @@ var chat_logic = {
             var data = JSON.parse( $(".hidden_wrapper input[name=params]").val() );
             // 主动关闭聊天框.
             ws_config.autoClose();
-            window.open(data['tab_url'], 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
+            window.open(data['tab_url']+'&isHistory=' + params.is_history, 'newindow', 'height=610,width=810,top=150,left=1000,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
             $('.show-hide-min').css({display:'block'});
             $('.show-hide').css({display:'none'});
         });

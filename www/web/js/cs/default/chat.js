@@ -394,21 +394,6 @@
         // 重新将uuid给置顶.
         this.page.renderOnlineList(uuid);
     };
-
-    // 客服下线操作
-    // 信息框-例2
-    //
-    // layer.msg('你确定你很帅么？', {
-    //   time: 0 //不自动关闭
-    //   ,btn: ['必须啊', '丑到爆']
-    //   ,yes: function(index){
-    //     layer.close(index);
-    //     layer.msg('雅蠛蝶 O.o', {
-    //       icon: 6
-    //       ,btn: ['嗷','嗷','嗷']
-    //     });
-    //   }
-    // });
     Chat.prototype.bindOnlineEvent = function () {
         
         $('.exe-off-online').on('click', function () {
