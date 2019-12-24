@@ -18,6 +18,7 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildStaticUrl('/jqMsg/message.min.js'),
     GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'),
     GlobalUrlService::buildStaticUrl('/vConsole/vconsole.min.js'),
+    GlobalUrlService::buildUcUrl('/js/common/core.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
