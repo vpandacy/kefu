@@ -94,7 +94,7 @@
             }
 
             online_users = online_users.filter(function (curr, curr_index) {
-                return current_uuid != curr;
+                return user.uuid != curr;
             });
 
             // 重新渲染.
