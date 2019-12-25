@@ -46,7 +46,7 @@ class MonitorKfWs extends \yii\db\ActiveRecord
             [['type', 'port', 'start_port', 'owner_reg', 'owner_group', 'count'], 'integer'],
             [['updated_time', 'created_time'], 'safe'],
             [['name'], 'string', 'max' => 30],
-            [['ip'], 'string', 'max' => 20],
+            [['ip'], 'string', 'max' => 255],
         ];
     }
 

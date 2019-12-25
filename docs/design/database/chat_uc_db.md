@@ -158,7 +158,7 @@ CREATE TABLE `monitor_kf_ws` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '类型 1:register 2:gateway 3:busiworker',
   `name` varchar(30) NOT NULL DEFAULT '' COMMENT '名称',
-  `ip` varchar(20) NOT NULL DEFAULT '' COMMENT 'ip',
+  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'ip',
   `port` int(11) NOT NULL DEFAULT '0' COMMENT '端口',
   `start_port` int(11) NOT NULL DEFAULT '0' COMMENT 'gateway 起始端口',
   `count` tinyint(3) NOT NULL DEFAULT '0' COMMENT '进程数量',
