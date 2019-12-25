@@ -142,7 +142,16 @@ var ws_config = new socket({
         }
     }
 })
-$(document).ready(function(){
+
+var global_start = 0;
+
+window.addEventListener('message',function (event) {
+    var params = JSON.parse(event.data);
+
+    if(global_start) {
+        return false;
+    }
+
     chat_logic.logic();
-    ws_config.init();
+    ws_config.init(params);
 });

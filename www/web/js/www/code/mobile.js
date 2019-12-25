@@ -1,4 +1,5 @@
 ;
+
 var mobile_logic = {
     logic: function () {
         $('.icon-zaixianzixun').click(function () {
@@ -66,6 +67,7 @@ var mobile_logic = {
         });
     }
 }
+
 var ws_config = new socket({
     input:'#content',
     emoji:'content',
@@ -95,8 +97,17 @@ var ws_config = new socket({
             '</div>'
         ].join('');
     }
-})
-$(document).ready(function () {
+});
+
+var global_start = 0;
+
+window.addEventListener('message',function (event) {
+    var params = JSON.parse(event.data);
+
+    if(global_start) {
+        return false;
+    }
+
     mobile_logic.logic();
-    ws_config.init();
+    ws_config.init(params);
 });

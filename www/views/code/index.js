@@ -2,9 +2,41 @@
     window.onload = function () {
         var dynamicLoading = {
             online: function () {
-                let ifream = "<iframe src='<?=$url;?>' scrolling='no' frameborder='0' style='min-width: 1px; width:100%; height: 100%;min-height: 1px;position: absolute;bottom: 0;right: 0;top: 0;left: 0;'></iframe>";
-                document.getElementsByTagName('body')[0].insertAdjacentHTML("beforeEnd", ifream);
-            },
+                var iframe = document.createElement('iframe');
+
+                iframe.src = '<?=$url?>';
+
+                function load() {
+                    // 传参过去.然后根据参数来获取就可以了.
+                    iframe.contentWindow.postMessage(JSON.stringify({
+                        href : location.href,
+                        rf: document.referrer
+                    }), iframe.src);
+                }
+
+                if (iframe.attachEvent) {
+                    iframe.attachEvent('onload', load);
+                } else {
+                    iframe.onload  = load;
+                }
+
+                iframe.setAttribute('scrolling','no');
+
+                iframe.style['min-height'] = '100%';
+                iframe.style['height'] = '100%';
+                iframe.style['min-width'] = '100%';
+                iframe.style['width'] = '100%';
+                iframe.style['position'] = 'absolute';
+                iframe.style['top'] = '0';
+                iframe.style['bottom'] = '0';
+                iframe.style['right'] = '0';
+                iframe.style['left'] = '0';
+                iframe.style['border'] = 'none';
+
+                var body = document.getElementsByTagName('body')[0];
+
+                body.appendChild(iframe);
+            }
         };
 
         dynamicLoading.online();
@@ -13,14 +45,42 @@
 window.onload = function () {
     var dynamicLoading = {
         online: function () {
-            let ifream = "<iframe src='<?=$url;?>' scrolling='no' frameborder='0' height='450' width='400' style='min-width: 1px;min-height: 1px;position: absolute;bottom: 0;right: 0;'></iframe>";
-            document.getElementsByTagName('body')[0].insertAdjacentHTML("beforeEnd", ifream);
-        },
-        getUUID:function(){
-            //需要设置uuid存储在浏览器中，时间最好不要过期
-            return "<?=$uuid;?>";
+            var iframe = document.createElement('iframe');
+
+            iframe.src = '<?=$url?>';
+
+            function load() {
+                // 传参过去.然后根据参数来获取就可以了.
+                iframe.contentWindow.postMessage(JSON.stringify({
+                    href : location.href,
+                    rf: document.referrer
+                }), iframe.src);
+            }
+
+            if (iframe.attachEvent) {
+                iframe.attachEvent('onload', load);
+            } else {
+                iframe.onload  = load;
+            }
+
+            iframe.setAttribute('scrolling','no');
+
+            iframe.style['min-height'] = '1px';
+            iframe.style['height'] = '450px';
+            iframe.style['min-width'] = '1px';
+            iframe.style['width'] = '400px';
+            iframe.style['position'] = 'absolute';
+            iframe.style['bottom'] = '0';
+            iframe.style['right'] = '0';
+            iframe.style['border'] = 'none';
+            iframe.style['overflow']= 'hidden';
+
+            var body = document.getElementsByTagName('body')[0];
+
+            body.appendChild(iframe);
         }
     };
+
     dynamicLoading.online();
 };
 <?php endif;?>

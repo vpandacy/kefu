@@ -80,6 +80,7 @@ var online_logic = {
         return theRequest;
     }
 }
+
 var ws_config = new socket({
     input:'#content',
     emoji:'content',
@@ -110,10 +111,14 @@ var ws_config = new socket({
             '</div>'
         ].join('');
     }
-})
+});
+
 $(document).ready(function(){
     online_logic.logic();
     var getHistory = online_logic.GetRequest();
     Number(getHistory.isHistory) != 0 ? $('.line').hide():'';
-    ws_config.init();
+    ws_config.init({
+        href: location.href,
+        rf: document.referrer
+    });
 });

@@ -90,10 +90,14 @@
     };
 
     // 初始化整个的页面聊天.
-    socket.prototype.init = function() {
+    socket.prototype.init = function(params) {
         this.initSocket();
         // 绑定界面事件.
         this.eventBind();
+
+        if(params) {
+            this.params = params;
+        }
     };
 
     // 初始化ws.
@@ -327,8 +331,8 @@
             case "ws_connect":
                 var params = {
                     ua: navigator.userAgent,
-                    land: parent.location.href,
-                    rf: parent.document.referrer,
+                    land: this.params.href,
+                    rf: this.params.rf
                 };
                 this.socketSend( this.buildMsg('guest_in',params ));
                 break;

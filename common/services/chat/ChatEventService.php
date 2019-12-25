@@ -149,10 +149,16 @@ class ChatEventService extends BaseService
         return CacheService::set($cache_key,$data,86400 * 30 );
     }
 
+    /**
+     * 兼容.
+     * @param $client_id
+     * @return array
+     */
     public static function getGuestBindCache(  $client_id ){
         $cache_key = "guest_{$client_id}";
         $data = CacheService::get( $cache_key );
-        return @json_decode( $data,true );
+        $data = @json_decode( $data,true );
+        return $data ? $data : [];
     }
 
     public static function clearGuestBindCache( $client_id ){
