@@ -200,6 +200,7 @@ class StaffBaseController extends BaseWebController
             $urls = RoleService::getRoleUrlsByStaffId($this->getAppId(),$staff_id, $this->isRoot() );
             $this->privilege_urls = array_unique($urls);
         }
+
         return $this->privilege_urls;
     }
 

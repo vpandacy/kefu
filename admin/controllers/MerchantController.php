@@ -27,6 +27,7 @@ class MerchantController extends BaseController
         } elseif ($kw) {
             $query->andWhere(['like', 'name', '%' . strtr($kw, ['%' => '\%', '_' => '\_', '\\' => '\\\\']) . '%', false]);
         }
+
         $offset = ($p - 1) * $this->page_size;
         $page = UtilHelper::ipagination([
             'total_count' => $query->count(),
@@ -35,11 +36,10 @@ class MerchantController extends BaseController
             'display' => 10
         ]);
 
-        $list = [];
         $list = $query->offset($offset)->limit($this->page_size)->asArray()->all();
 
         $search_conditions=[
-            'kw' =>$kw,
+            'kw' => $kw,
         ];
 
         return $this->render('index',[

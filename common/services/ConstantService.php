@@ -95,4 +95,10 @@ class ConstantService extends BaseService
         2   =>  '手机H5',
         3   =>  '微信'
     ];
+
+    public static $worker_types = [
+        1   =>  '注册中心',
+        2   =>  '网关',
+        3   =>  '业务'
+    ];
 }

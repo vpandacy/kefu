@@ -3,6 +3,8 @@ namespace common\services\uc;
 
 use common\services\BaseService;
 
+use common\services\ConstantService;
+
 class MenuService extends BaseService
 {
     /**
@@ -11,12 +13,16 @@ class MenuService extends BaseService
      * @param $uris
      * @return array
      */
-    public static function getAllMenu($app_id, $uris)
+    public static function getAllMenu($app_id, $uris = [])
     {
         // 后续增加.
         switch ($app_id) {
-            case 1:
+            case ConstantService::$merchant_app_id:
                 $menus = self::getMerchantUrl($uris);
+                break;
+
+            case ConstantService::$admin_app_id:
+                $menus = self::getAdminMenu();
                 break;
             default:
                 $menus = [
@@ -235,5 +241,40 @@ class MenuService extends BaseService
                 ],
             ],
         ];
+    }
+
+    /**
+     * 后台菜单信息.
+     * @return array
+     */
+    public static function getAdminMenu()
+    {
+        $menus = [
+            "log" => [
+                "title" => "日志管理",
+                "icon" => "desktop",
+                "sub" => [
+                    [ "title" => "访问日志","url" => "/log/index" ],
+                    [ "title" => "错误日志","url" => "/log/error" ],
+                    [ "title" => "短信队列","url" => "/log/sms" ],
+                ]
+            ],
+            "merchant" => [
+                "title" => "商户管理",
+                "icon" => "users",
+                "sub" => [
+                    [ "title" => "商户列表","url" => "/merchant/index" ],
+                ]
+            ],
+            "setting"  => [
+                "title" => "系统配置",
+                "icon"  => "cogs",
+                "sub"   =>  [
+                    ["title" => "WS配置", "url" => "/setting/ws"],
+                ],
+            ],
+
+        ];
+        return $menus;
     }
 }

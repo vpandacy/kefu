@@ -17,18 +17,11 @@ $menus = \Yii::$app->view->params['menus']
                         </a>
                         <ul class="treeview-menu">
                             <?php foreach ($_item['sub'] as $_sub_menu): ?>
-
                                 <?php if (!isset($_sub_menu['hidden']) || !$_sub_menu['hidden']): ?>
                                 <li>
-                                    <?php if(in_array($_key,\common\services\AppMenuService::$uc_keys )):?>
-                                        <a href="<?= GlobalUrlService::buildKFAdminUrl($_sub_menu['url']); ?>">
-                                            <i class="fa fa-circle-o"></i><?= $_sub_menu['title']; ?>
-                                        </a>
-                                    <?php else:?>
                                     <a href="<?= GlobalUrlService::buildKFAdminUrl($_sub_menu['url']); ?>">
                                         <i class="fa fa-circle-o"></i><?= $_sub_menu['title']; ?>
                                     </a>
-                                    <?php endif;?>
                                 </li>
                                 <?php endif; ?>
                             <?php endforeach; ?>

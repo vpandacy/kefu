@@ -2,10 +2,11 @@
 namespace admin\controllers\common;
 
 use common\components\StaffBaseController;
-use common\models\uc\Action;
 use common\services\AppMenuService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
+use common\services\uc\MenuService;
+use yii\base\Action;
 use Yii;
 
 class BaseController extends StaffBaseController
@@ -53,18 +54,21 @@ class BaseController extends StaffBaseController
         \Yii::$app->view->params['menus'] = $this->getMenu();
         return true;
     }
-    private function getMenu(){
 
-        $menus = AppMenuService::getAdminMenu();
+    /**
+     * 获取所有菜单.
+     * @return array
+     */
+    private function getMenu()
+    {
+        $menus = MenuService::getAllMenu($this->getAppId());
         foreach ($menus as $key => &$_menu ){
             //如果强制设置了不显示，那就不要在判断
             if( isset( $_menu['hidden']) ){
                 continue;
             }
-            if(in_array($key,AppMenuService::$uc_keys ))
-            {
-                $prefix= '';
-            }
+
+            $prefix = '';
 
             $tmp_counter = count( $_menu['sub'] );
             foreach ($_menu['sub'] as $_key => &$_menu_sub ){
