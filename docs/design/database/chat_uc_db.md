@@ -169,4 +169,8 @@ CREATE TABLE `monitor_kf_ws` (
 
 ALTER TABLE `staff`
     ADD `is_login` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否登录,0未登录,1已登录' AFTER `is_online`;
+    
+ALTER TABLE `monitor_kf_ws`
+    ADD `owner_reg` tinyint(1) NOT NULL DEFAULT '0' COMMENT '所属注册中心' AFTER `start_port`,
+    ADD `owner_group` tinyint(1) NOT NULL DEFAULT '0' COMMENT '所属组,0为游客组,1为客服组' AFTER `owner_reg`;
 ```

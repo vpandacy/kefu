@@ -47,6 +47,7 @@ class MonitorController extends BaseController
 //        }
 
         $register_mapping = [];
+        $owner_group = 1;
         // 获取所有的guest_ws数据中心. 一组服务.根据一组服务来得到对应的地址和通讯端口.
         foreach ( $guest_config as $_key => $_item ) {
             // 删除内部监听端口.
@@ -60,6 +61,7 @@ class MonitorController extends BaseController
                     'ip'    =>  $_item['register']['ip'],
                     'port'  =>  $_item['register']['port'],
                     'start_port'    =>  $_item['register']['port'],
+                    'owner_group'   =>  $owner_group,
                     'count' =>  1,
                 ];
 
@@ -70,9 +72,10 @@ class MonitorController extends BaseController
                 unset($_item['register']);
             }
 
-            $this->handleWorker($_item, $all_register, $register_mapping);
+            $this->handleWorker($_item, $all_register, $register_mapping, $owner_group);
         }
 
+        $owner_group = 0;
         foreach ( $cs_config as $_key => $_item ) {
             // 删除内部监听端口.
             unset($_item['push']);
@@ -85,6 +88,7 @@ class MonitorController extends BaseController
                     'ip'    =>  $_item['register']['ip'],
                     'port'  =>  $_item['register']['port'],
                     'start_port'    =>  $_item['register']['port'],
+                    'owner_group'   =>  $owner_group,
                     'count' =>  1,
                 ];
 
@@ -102,7 +106,14 @@ class MonitorController extends BaseController
         return $this->echoLog( "ok" );
     }
 
-    public function handleWorker($config, $all_register, $register_mapping) {
+    /**
+     * 配置信息
+     * @param array $config 配置信息
+     * @param array $all_register 注册中心
+     * @param array $register_mapping 所属注册中心
+     * @param int $owner_group  所属组
+     */
+    public function handleWorker($config, $all_register, $register_mapping, $owner_group = 0) {
         // 开始保存gateway信息.
         $gateway_info = [];
 
@@ -129,6 +140,7 @@ class MonitorController extends BaseController
                 'owner_reg'     =>  isset($register_mapping[$gateway['register_host']])
                     ? $register_mapping[$gateway['register_host']]
                     : 0,
+                'owner_group'   =>  $owner_group,
                 'count' =>  4,
             ];
 
@@ -153,6 +165,7 @@ class MonitorController extends BaseController
                 'owner_reg'     =>  isset($register_mapping[$bs['register_host']])
                     ? $register_mapping[$bs['register_host']]
                     : 0,
+                'owner_group'   =>  $owner_group,
                 'count' =>  0,
             ];
 

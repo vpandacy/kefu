@@ -13,6 +13,8 @@ use Yii;
  * @property string $ip ip
  * @property int $port 端口
  * @property int $start_port gateway 起始端口
+ * @property int $owner_reg 所属注册中心
+ * @property int $owner_group 所属组,0为游客组,1为客服组
  * @property int $count 进程数量
  * @property string $updated_time 最后一次更新时间
  * @property string $created_time 创建时间
@@ -41,7 +43,7 @@ class MonitorKfWs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'port', 'start_port', 'count'], 'integer'],
+            [['type', 'port', 'start_port', 'owner_reg', 'owner_group', 'count'], 'integer'],
             [['updated_time', 'created_time'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['ip'], 'string', 'max' => 20],
@@ -60,6 +62,8 @@ class MonitorKfWs extends \yii\db\ActiveRecord
             'ip' => 'Ip',
             'port' => 'Port',
             'start_port' => 'Start Port',
+            'owner_reg' => 'Owner Reg',
+            'owner_group' => 'Owner Group',
             'count' => 'Count',
             'updated_time' => 'Updated Time',
             'created_time' => 'Created Time',

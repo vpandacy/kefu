@@ -17,12 +17,13 @@ StaticPluginHelper::setDepend(Asset::className());
                         <thead>
                         <tr>
                             <th width="3%">ID</th>
+                            <th width="10%">所属组</th>
                             <th width="8%">类型</th>
                             <th width="14%">名称</th>
                             <th>IP</th>
                             <th width="8%">监听端口</th>
                             <th width="10%">起始端口</th>
-                            <th width="10%">所属组</th>
+                            <th width="10%">所属注册中心</th>
                             <th width="10%">进程数</th>
                         </tr>
                         </thead>
@@ -31,6 +32,7 @@ StaticPluginHelper::setDepend(Asset::className());
                             <?php foreach($monitor as $item):?>
                                 <tr>
                                     <td><?=$item['id']?></td>
+                                    <td><?=$item['owner_group'] == 1 ? '游客组' : '客服组'?></td>
                                     <td><?=ConstantService::$worker_types[$item['type']]?></td>
                                     <td><?=$item['name']?></td>
                                     <td><?=$item['ip']?></td>
