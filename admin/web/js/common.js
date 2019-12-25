@@ -27,6 +27,10 @@ var admin_common_ops = {
             nav_name = "merchant";
         }
 
+        if (pathname.indexOf('/setting') > -1) {
+            nav_name = 'setting';
+        }
+
         if (nav_name == null) {
             return;
         }
