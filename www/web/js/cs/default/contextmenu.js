@@ -99,6 +99,8 @@
 
             // 重新渲染.
             ChatStorage.removeItem(user.uuid);
+            // 隐藏.
+            that.ele.css({display: 'none'});
             that.page.renderOnlineList();
             return false;
         }
@@ -126,13 +128,16 @@
                     online_users = online_users.filter(function (curr, curr_index) {
                         return user.uuid != curr;
                     });
-
+                    // 隐藏.
+                    that.ele.css({display: 'none'});
                     // 重新渲染.
                     ChatStorage.removeItem(user.uuid);
                     that.page.renderOnlineList();
                 },
                 error: function () {
                     $.close(index)
+                    // 隐藏.
+                    that.ele.css({display: 'none'});
                 }
             });
         });
