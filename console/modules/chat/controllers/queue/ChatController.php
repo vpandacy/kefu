@@ -70,7 +70,7 @@ class ChatController extends QueueBaseController
                     'status'        =>  ConstantService::$default_status_true,
                     'merchant_id'   =>  $merchant_info['id'],
                     'cs_id'         =>  $params_data['kf_id'],
-                    'uuid'          =>  $params_data['uuid'],
+                    'uuid'          =>  isset($params_data['uuid']) ? $params_data['uuid'] : '',
                 ];
                 GuestChatService::closeGuest($params);
                 break;

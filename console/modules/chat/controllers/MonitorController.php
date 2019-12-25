@@ -42,10 +42,10 @@ class MonitorController extends BaseController
             return $this->stdout('暂无注册中心信息');
         }
 
-        foreach($all_register as $key => $value) {
-            $all_register[$key] = WorkerService::getGatewayClientByRegister($key);
-        }
-        var_dump($all_register);exit;
+//        foreach($all_register as $key => $value) {
+//            $all_register[$key] = WorkerService::getGatewayClientByRegister($key);
+//        }
+
         $register_mapping = [];
         // 获取所有的guest_ws数据中心. 一组服务.根据一组服务来得到对应的地址和通讯端口.
         foreach ( $guest_config as $_key => $_item ) {
@@ -114,11 +114,11 @@ class MonitorController extends BaseController
 
         // gateway 管理.
         foreach($gateway_info as $gateway) {
-            $gateway_process = array_filter($all_register[$gateway['register_host']], function ($ip) use ($gateway) {
-                $port = explode(':',$ip)[1];
-
-                return $port >= $gateway['start_port'] && $gateway['start_port'] + 4 <= $port;
-            });
+//            $gateway_process = array_filter($all_register[$gateway['register_host']], function ($ip) use ($gateway) {
+//                $port = explode(':',$ip)[1];
+//
+//                return $port >= $gateway['start_port'] && $gateway['start_port'] + 4 <= $port;
+//            });
 
             $params = [
                 'type'  =>  UCConstantService::$ws_gateway,
@@ -129,7 +129,7 @@ class MonitorController extends BaseController
                 'owner_reg'     =>  isset($register_mapping[$gateway['register_host']])
                     ? $register_mapping[$gateway['register_host']]
                     : 0,
-                'count' =>  count($gateway_process),
+                'count' =>  4,
             ];
 
             WSCenterService::setKFWS( $params );
