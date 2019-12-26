@@ -5,19 +5,35 @@ use common\models\kefu\chat\GuestHistoryLog;
 use common\models\merchant\GuestChatLog;
 use common\models\uc\Staff;
 use common\services\BaseService;
+use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
 
 class GuestChatService extends BaseService
 {
+    /**
+     * 完善信息.
+     * @param array $params
+     * @return bool
+     */
     public static function addGuest($params = [])
     {
-        //这个地方需要完善判断
+        $params = array_merge($params,GuestService::getProvinceByClientIP($params['client_ip']));
+        $params['source'] = CommonService::getSourceByUa($params['client_ua']);
+        if($params['referer_url']) {
+            $params['referer_media'] = GuestService::getRefererSidByUrl($params['referer_url']);
+        }
+
         $model = new GuestHistoryLog();
         $model->setAttributes($params);
         return $model->save(0);
     }
 
+    /**
+     * 关闭游客时的保存.
+     * @param array $params
+     * @return bool
+     */
     public static function closeGuest( $params = [] ){
         $guest_log = GuestHistoryLog::find()
             ->where([ "client_id" => $params['client_id'],"status" => ConstantService::$default_status_neg_1 ])
