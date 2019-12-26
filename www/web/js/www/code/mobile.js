@@ -8,9 +8,13 @@ var mobile_logic = {
             $('.icon-zaixianzixun').addClass('dis_none');
         });
         $('.icon-zuojiantou').click(function () {
-            $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
-            $('#wapOnline .waponline-max').addClass('dis_none');
-            $('#wapOnline .icon-zaixianzixun').removeClass('dis_none');
+            if($('#online-from').attr('style').trim() == 'display: block;'){
+                $('#online-from').attr('style','display: none;');
+            }else {
+                $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
+                $('#wapOnline .waponline-max').addClass('dis_none');
+                $('#wapOnline .icon-zaixianzixun').removeClass('dis_none');
+            }
         });
         $('.wapOnline-zheyan').click(function () {
             $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
