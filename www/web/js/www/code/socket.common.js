@@ -1,6 +1,8 @@
 ;// 所有聊天框.
 (function(window){
     var config = JSON.parse( $(".hidden_wrapper input[name=params]").val() ),
+        repeatInterval = null,
+        closed = false,
         interval = null;
 
     // 这里还要在细分.
@@ -79,9 +81,15 @@
             ? base_config.renderSystemMessage
             : null;
 
+        // 隐藏聊天输入框.并展示其他信息.
         this._renderCloseChat = base_config.hasOwnProperty('renderCloseChat')
             ? base_config.renderCloseChat
             : null;
+
+        this._showChat = base_config.hasOwnProperty('showChat')
+            ? base_config.showChat
+            : null;
+
         // 保存socket信息.
         this.ws = null;
         // 表情初始化
@@ -129,6 +137,7 @@
     // 关闭ws链接.
     socket.prototype.close = function() {
         this.ws.close();
+        closed = true;
     };
 
     // 绑定界面的消息信息.
@@ -348,6 +357,7 @@
                 };
                 // 开始开启自动回复.
                 this.autoClose();
+                this.bindRepeatEvent();
                 // 关闭等待区.
                 $('.overflow-message').hide();
                 //显示一些系统文字提醒，例如已分配哪个客服
@@ -359,27 +369,29 @@
                     t_name: data.data.name,
                     avatar: data.data.avatar
                 };
+                this.bindRepeatEvent();
                 this.autoClose();
                 break;
             case "reply":
                 $(this.output).append( this.renderCsMsg(config.cs.t_name, config.cs.avatar, data.data.content, getCurrentDateTime()) );
                 this.scrollToBottom();
                 this.autoClose();
+                this.bindRepeatEvent();
                 break;
             case 'close_guest':
                 this.renderCloseChat();
-                this.ws.close();
+                this.close();
                 clearInterval(interval);
                 break;
             case 'system':
                 if(data.data.hasOwnProperty('code')) {
-                    this.ws.close();
+                    this.close();
                     this.renderCloseChat();
                 }
                 $(this.output).append(this.renderSystemMessage(data.data.content));
                 break;
             case 'kf_logout':
-                this.ws.close();
+                this.close();
                 this.renderCloseChat();
                 $(this.output).append(this.renderSystemMessage(data.msg));
                 break;
@@ -396,7 +408,7 @@
                 this.renderWaitMessage(config.cs.wait_num);
                 break;
             case 'guest_close':
-                this.ws.close();
+                this.close();
                 this.renderCloseChat();
                 break;
         }
@@ -407,7 +419,7 @@
         }
     };
 
-    // 自定义显然系统消息.
+    // 自定义显示系统消息.
     socket.prototype.renderSystemMessage = function(msg) {
         if(!this._renderSystemMessage || (typeof this._renderSystemMessage != 'function')) {
             return [
@@ -460,6 +472,54 @@
         $('.overflow-message .num').text(num);
         $('.overflow-message').show();
     };
+
+    // 绑定重复发起事件.
+    socket.prototype.bindRepeatEvent = function() {
+        repeatInterval && clearInterval(repeatInterval);
+
+        // 如果是已经关闭.那就不用管了.
+        if(closed || !config.style.is_repeat) {
+            return false;
+        }
+        var times = config.style.repeat_times,
+            that = this,
+            messages = JSON.stringify(config.style.repeat_setting),
+            time = config.style.repeat_time;
+
+        repeatInterval = setInterval(function () {
+            time--;
+            if(time > 0) {
+                return false;
+            }
+
+            times--;
+            if(times < 0) {
+                clearInterval(repeatInterval);
+                return false;
+            }
+
+            // 这里自动渲染.
+            // 这里就要发送一次.
+            time = config.style.repeat_time;
+            // 开始发送消息.
+
+            // 渲染一条消息
+            if(messages.length > 0) {
+                !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, messages.shift(), getCurrentDateTime()));
+            }
+            // 这里是否要强制展示.
+            that.scrollToBottom();
+            // 这里要强制显示出来.
+            this.showChat();
+        }, 1000);
+    };
+
+    // 展示聊天区域框.
+    socket.prototype.showChat = function() {
+        if(this._showChat) {
+            return this._showChat();
+        }
+    }
 
     window.socket = socket;
 })(window);

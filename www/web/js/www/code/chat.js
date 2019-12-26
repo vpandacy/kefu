@@ -140,6 +140,10 @@ var ws_config = new socket({
                 $('.ws_flag').text('连接成功')
                 break;
         }
+    },
+    showChat: function () {
+        $('.show-hide-min').css({display:'none'});
+        $('.show-hide').css({display:'block'});
     }
 })
 

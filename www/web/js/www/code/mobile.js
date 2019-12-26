@@ -128,7 +128,14 @@ var ws_config = new socket({
             '   <span>',msg,'</span>',
             '</div>'
         ].join('');
+    },
+    // 强制展示.
+    showChat: function () {
+        $('#wapOnline .wapOnline-zheyan').removeClass('dis_none');
+        $('#wapOnline .icon-zaixianzixun').addClass('dis_none')
+        $('#wapOnline .waponline-max').removeClass('dis_none')
     }
+
 });
 var global_start = 0;
 
