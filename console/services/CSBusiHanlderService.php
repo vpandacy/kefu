@@ -132,6 +132,13 @@ class CSBusiHanlderService extends BaseService
                 break;
             case ConstantService::$chat_cmd_kf_in://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
                 if ($f_id) {
+                    // 关闭之前的信息.
+                    $client_ids = Gateway::getClientIdByUid($f_id);
+                    if($client_ids) {
+                        foreach($client_ids as $old_client) {
+                            Gateway::closeClient($old_client);
+                        }
+                    }
                     //建立绑定关系，后面就可以根据f_id找到这个人了
                     Gateway::bindUid($client_id, $f_id);
                     ChatEventService::setCSBindCache($client_id, [
