@@ -99,13 +99,29 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             </div>
                         </div>
 
-<!--                        <div class="layui-form-item">-->
-<!--                            <label class="layui-form-label">主动发起对话</label>-->
-<!--                            <div class="layui-input-block">-->
-<!--                                <input type="radio" name="is_active" value="0" title="是">-->
-<!--                                <input type="radio" name="is_active" value="1" title="否">-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">重复发起</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="is_active" value="0" title="是">
+                                <input type="radio" name="is_active" value="1" title="否">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">发起时间间隔</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="time" value=""  required="" placeholder="请输入发起时间间隔(秒)" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">发起次数</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="times" value=""  required="" placeholder="请输入发起次数" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
 
                         <div class="layui-form-item">
                             <label class="layui-form-label"  style="width: 120px">浮窗初始状态</label>
