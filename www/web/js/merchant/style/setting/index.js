@@ -132,6 +132,7 @@ var merchant_style_setting_index_ops = {
                 $('[name=company_name]').val(data ? data.company_name : '');
                 $('[name=company_desc]').val(data ? data.company_desc : '');
                 $('[name=repeat_time]').val(data ? data.repeat_time : '');
+                $('[name=repeat_times]').val(data ? data.repeat_times : '');
                 $('[name=times]').val(data ? data.times : '');
 
                 if(data && data.company_logo) {

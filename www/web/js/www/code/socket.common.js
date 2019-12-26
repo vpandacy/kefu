@@ -478,14 +478,15 @@
         repeatInterval && clearInterval(repeatInterval);
 
         // 如果是已经关闭.那就不用管了.
-        if(closed || !config.style.is_repeat) {
+        if(closed || !parseInt(config.style.is_repeat)) {
             return false;
         }
+
         var times = config.style.repeat_times,
             that = this,
-            messages = JSON.stringify(config.style.repeat_setting),
+            messages = JSON.parse(config.style.repeat_setting),
             time = config.style.repeat_time;
-
+        console.dir(messages);
         repeatInterval = setInterval(function () {
             time--;
             if(time > 0) {
@@ -505,12 +506,13 @@
 
             // 渲染一条消息
             if(messages.length > 0) {
-                !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, messages.shift(), getCurrentDateTime()));
+                var message = messages.shift();
+                !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
             }
             // 这里是否要强制展示.
             that.scrollToBottom();
             // 这里要强制显示出来.
-            this.showChat();
+            that.showChat();
         }, 1000);
     };
 
