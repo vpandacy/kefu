@@ -115,10 +115,6 @@ class SettingController extends BaseController
             return $this->renderErrJSON('请输入正确的发起语');
         }
 
-//        if(!in_array($data['is_show_num'], [0, 1])) {
-//            return $this->renderErrJSON( '请选择正确的消息展示' );
-//        }
-
         // 检查对应的信息.
         $group_chat_ids = GroupChat::find()
             ->where(['merchant_id'=>$this->getMerchantId()])
