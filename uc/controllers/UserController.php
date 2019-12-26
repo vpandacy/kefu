@@ -206,13 +206,22 @@ class UserController extends BaseController
     {
         $cookie = \Yii::$app->params['cookies']['staff'];
 
-        // 更新在线的状态.如果是退出登录了.
-        Staff::updateAll([
-            'is_online'=>ConstantService::$default_status_false,
-            'is_login'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+        if($this->current_user) {
+            // 更新在线的状态.如果是退出登录了.
+            Staff::updateAll([
+                'is_online'=>ConstantService::$default_status_false,
+                'is_login'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+        }
 
         $this->removeCookie($cookie['name'],$cookie['domain']);
-        return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/'));
+
+        $url = GlobalUrlService::buildKFMerchantUrl('/');
+
+        if($this->isAjax()) {
+            return $this->renderJSON(['redirect'=>$url],'退出成功');
+        }
+
+        return $this->redirect($url);
     }
 
     /**
