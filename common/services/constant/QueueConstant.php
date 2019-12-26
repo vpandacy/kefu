@@ -1,11 +1,4 @@
 <?php
-/**
- * Class QueueConstant
- * Author: Vincent
- * WeChat: apanly
- * CreateTime: 2019/11/18 4:19 PM
- */
-
 namespace common\services\constant;
 
 class QueueConstant

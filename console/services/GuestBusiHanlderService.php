@@ -6,6 +6,8 @@ use common\components\helper\DateHelper;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
 use common\services\chat\ChatGroupService;
+use common\services\chat\GuestService;
+use common\services\CommonService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
@@ -196,15 +198,21 @@ class GuestBusiHanlderService extends BaseService
             $old_client_id && Gateway::unbindUid($old_client_id[0], $f_id);
             Gateway::bindUid($client_id, $f_id);
             $cache_params = [
-                "uuid" => $f_id,
-                "msn" => $data['msn'] ?? ''
+                "uuid"  => $f_id,
+                "msn"   => $data['msn'] ?? '',
+                'source'=> CommonService::getSourceByUa($message['data']['ua']),    // 终端.
+                'media' =>  isset($message['data']['rf'])                           // 渠道.
+                    ? GuestService::getMediaByReferer($data['rf'])
+                    : 0
             ];
+
             ChatEventService::setGuestBindCache( $client_id ,$cache_params);
         }
 
         $ws_data = ChatEventService::buildMsg(ConstantService::$chat_cmd_hello, [
             'content' => time()
         ]);
+
         //需要同时将消息转发一份到对话队列，然后存储起来
         QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$message );
         Gateway::sendToClient( $client_id,$ws_data );
@@ -232,6 +240,7 @@ class GuestBusiHanlderService extends BaseService
             Gateway::sendToClient( $client_id, $data );
             return;
         }
+
         // 这里是分配成功.
         if($kf_info['act'] == 'success') {
             self::assignCustomerServiceSuccess($f_id, $client_id, $kf_info);
@@ -254,21 +263,26 @@ class GuestBusiHanlderService extends BaseService
             "avatar" => GlobalUrlService::buildPicStaticUrl('hsh', $kf_info['avatar'] )
         ]);
 
+        //同时换成起来对应的客服信息
+        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+
+
         //转发消息给对应的客服，做好接待准备
         $transfer_params = [
             "f_id" => $f_id,
             "t_id" => $kf_info['sn'],
             // 随机生成一个昵称.
-            'nickname'  =>  'Guest-' . substr($f_id, strlen($f_id) - 12),
-            'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
-            'allocation_time'   =>  date('H:i:s'),
+            'nickname'  => substr($f_id, strlen($f_id) - 12),
+            'avatar'    => GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
+            'allocation_time'  =>  date('H:i:s'),
+            'source'    =>  $cache_params['source'],
+            'media' =>  $cache_params['media'],
         ];
 
         $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$transfer_params );
         QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true) );
 
-        //同时换成起来对应的客服信息
-        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+
         $cache_params['kf_id'] = $kf_info['id'];
         $cache_params['kf_sn'] = $kf_info['sn'];
         // 将client_id加入到这个组中.

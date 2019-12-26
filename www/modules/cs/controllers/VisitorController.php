@@ -222,6 +222,10 @@ class VisitorController extends BaseController
             ->limit(1)
             ->one();
 
+        if(!$history) {
+            return $this->renderErrJSON([],'没有查找到历史记录');
+        }
+
         $history['source'] = isset(ConstantService::$guest_source[$history['source']])
             ? ConstantService::$guest_source[$history['source']]
             : '暂无';
