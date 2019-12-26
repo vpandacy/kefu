@@ -77,7 +77,7 @@ class PushController extends QueueBaseController
                 "f_id" => $guest_uuid,
                 "t_id" => $params['t_id'],
                 // 随机生成一个昵称.
-                'nickname'  =>  'Guest-' . substr($guest_uuid, strlen($guest_uuid) - 12),
+                'nickname'  =>  substr($guest_uuid, strlen($guest_uuid) - 12),
                 'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
                 'allocation_time'   =>  date('H:i:s'),
             ];
