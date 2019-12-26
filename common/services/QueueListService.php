@@ -67,7 +67,7 @@ class QueueListService extends BaseService
      */
     public static function shift( $instance_name = null,$list_name = null )
     {
-        $return = RedisService::getInstance($instance_name)->rPop($list_name);
+        $return = RedisService::getInstance($instance_name)->lPop($list_name);
         if (!$return) {
             return $return;
         }
