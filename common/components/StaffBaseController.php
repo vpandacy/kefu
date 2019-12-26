@@ -82,10 +82,10 @@ class StaffBaseController extends BaseWebController
      */
     public function createLoginStatus($staff)
     {
-        $token = $staff['id'] . '#' . $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
+        $token = $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
         $cookie = Yii::$app->params['cookies']['staff'];
         // 指定区域.
-        $this->setCookie($cookie['name'], $token,0, $cookie['domain']);
+        $this->setCookie($cookie['name'], $staff['id'] . '#' . $token,0, $cookie['domain']);
         return $token;
     }
 
