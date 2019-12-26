@@ -127,10 +127,11 @@ var ws_config = new socket({
                 if(!Number(isForce)) {
                     $('.show-hide-min').css({display:'none'});
                     $('.show-hide').css({display:'block'});
+                    ws_config.scrollToBottom();
                 }
                 break;
             case 'assign_kf'||'change_kf'||'reply' || 'system':
-                $('.ws_flag').text('连接成功')
+                $('.ws_flag').text('连接成功');
                 break;
             case 'close_guest':
                 $('.chat-close').show();

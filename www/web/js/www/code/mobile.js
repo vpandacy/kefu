@@ -1,5 +1,5 @@
 ;
-
+var params = {};
 var mobile_logic = {
     logic: function () {
         $('.icon-zaixianzixun').click(function () {
@@ -7,16 +7,14 @@ var mobile_logic = {
             $('.icon-zaixianzixun').addClass('dis_none');
         });
         $('.icon-zuojiantou').click(function () {
-            $('.waponline-max').addClass('dis_none');
-            $('.icon-zaixianzixun').removeClass('dis_none');
+            $('#wapOnline .waponline-max').addClass('dis_none');
+            $('#wapOnline .icon-zaixianzixun').removeClass('dis_none');
         })
-
         // 点击新对话.
         $('.online_new_message').on('click', function () {
             ws_config.init();
             $('.chat-close').hide();
         });
-
         // 点击留言
         $('.online_from_message').on('click', function () {
             $('#online-from').show();
@@ -24,7 +22,6 @@ var mobile_logic = {
             $('.overflow-message').hide();
             ws_config.close();
         });
-
         // 去留言.
         $('.leave-message span').on('click',function () {
             $('#online-from').show();
@@ -32,7 +29,6 @@ var mobile_logic = {
             $('.overflow-message').hide();
             ws_config.close();
         });
-
         $('.from-button-message').click(function() {
             var fromData = ['name','mobile','wechat','message']
             var param = {};
@@ -65,6 +61,21 @@ var mobile_logic = {
                 }
             })
         });
+
+        params = JSON.parse($('input[name="params"]').val()).style;
+        console.log(params)
+        // history: 是否展示消息记录, 0展示,1不展示
+        // winstatus: 浮动窗口展示状态, 0最小化,1展示
+        // force: 新消息是否强制弹窗, 0强制,1不强制
+        // let isHistory = params.is_history;
+        let winStatus = params.windows_status;
+        // if(Number(isHistory)){
+        //     $('.line').hide();
+        // }
+        if (Number(winStatus)) {
+            $('#wapOnline .icon-zaixianzixun').addClass('dis_none');
+            $('#wapOnline .waponline-max').removeClass('dis_none');
+        }
     }
 }
 
@@ -77,6 +88,15 @@ var ws_config = new socket({
         switch (data.cmd) {
             case 'ws_connect'||'hello':
                 $('.ws_flag').text('正在连接客服...');
+                break;
+            case 'reply':
+                // force: 新消息是否强制弹窗, 0强制,1不强制
+                let isForce = params.is_force;
+                if(!Number(isForce)) {
+                    $('#wapOnline .icon-zaixianzixun').addClass('dis_none')
+                    $('#wapOnline .waponline-max').removeClass('dis_none')
+                    ws_config.scrollToBottom();
+                }
                 break;
             case 'assign_kf'||'change_kf'||'reply' || 'system':
                 $('.ws_flag').text('连接成功');
