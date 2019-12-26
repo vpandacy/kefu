@@ -63,7 +63,8 @@ class SettingController extends BaseController
 
         $request_r = [
             'company_name','company_logo','company_desc','is_history',
-            'windows_status','is_force', 'group_chat_id'
+            'windows_status','is_force', 'group_chat_id', 'is_repeat',
+            'repeat_time','repeat_times','repeat_setting'
         ];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
@@ -96,6 +97,22 @@ class SettingController extends BaseController
 
         if(!in_array($data['is_force'], [0, 1])) {
             return $this->renderErrJSON( '请选择正确的新消息强制弹窗' );
+        }
+
+        if(!in_array($data['is_repeat'], [0, 1])) {
+            return $this->renderErrJSON( '请选择正确的重复弹层');
+        }
+
+        if($data['repeat_time'] && !preg_match('/^\d+$/', $data['repeat_time'])) {
+            return $this->renderErrJSON('请输入正确的发起时间间隔');
+        }
+
+        if($data['repeat_times'] && !preg_match('/^\d+$/', $data['repeat_times'])) {
+            return $this->renderErrJSON('请输入正确的重复发起次数');
+        }
+
+        if($data['repeat_setting'] && !ValidateHelper::validLength($data['repeat_setting'],1,5000)) {
+            return $this->renderErrJSON('请输入正确的发起语');
         }
 
 //        if(!in_array($data['is_show_num'], [0, 1])) {

@@ -1,6 +1,8 @@
 ;
 
 var merchant_style_setting_index_ops = {
+    data:[],
+    table: null,
     init: function () {
         this.eventBind();
 
@@ -8,8 +10,10 @@ var merchant_style_setting_index_ops = {
     },
     eventBind: function () {
         var that = this;
-        layui.use(['form'], function () {
+        layui.use(['form','table'], function () {
             var form = layui.form;
+
+            that.table = layui.table;
 
             form.on('select(choice)', function (event) {
                 var value = event.value;
@@ -21,12 +25,67 @@ var merchant_style_setting_index_ops = {
                 that.getSettings(form, value);
             });
 
+            that.table.render({
+                elem: '#repeatTable',
+                page: false,
+                data: that.data,
+                defaultToolbar: [],
+                cols: [[
+                    {field: 'content', title: '发起语', fixed: true},
+                    {title: '操作', fixed: true, edit: 'text', toolbar: '#toolbar'}
+                ]],
+                toolbar: '#tool',
+                id: 'repeatTable'
+            });
+            // 添加
+            that.table.on('toolbar(repeatTable)', function (event) {
+                if(event.event != 'add') {
+                    return false;
+                }
+
+                layer.prompt({
+                    formType: 2,
+                    value: '',
+                    maxLength: 400,
+                    title: '请输入发起语'
+                },function (value, index, elem) {
+                    if(value.length <= 0) {
+                        return false;
+                    }
+                    that.data.push({
+                        content: value
+                    });
+
+                    $.close(index);
+                    that.reloadRepeatTable();
+                })
+            });
+
+            // 删除
+            that.table.on('tool(repeatTable)', function (event) {
+                if(event.event != 'delete') {
+                    return false;
+                }
+
+                var index = event.tr[0].getAttribute('data-index')
+
+                that.data = that.data.filter(function (row,cur) {
+                    return cur != index;
+                });
+                // 删除本身.
+                event.del();
+            });
+
             // 初始化.
             that.getSettings(form, 0);
+
             // 监听信息.
             form.on('submit(info)', function (event) {
                 var data = event.field;
                 var index = $.loading(1, {shade: .5});
+
+                // 添加数据保存.
+                data.repeat_setting = JSON.stringify(that.data);
 
                 $.ajax({
                     type: 'POST',
@@ -68,10 +127,12 @@ var merchant_style_setting_index_ops = {
                 that.choiceRadio('is_history', data ? data.is_history : 0);
                 that.choiceRadio('is_show_num', data ? data.is_show_num : 0);
                 that.choiceRadio('windows_status', data ? data.windows_status : 0);
+                that.choiceRadio('is_repeat', data ? data.is_repeat : 0);
+
                 $('[name=company_name]').val(data ? data.company_name : '');
                 $('[name=company_desc]').val(data ? data.company_desc : '');
-                $('[name=lazy_time]').val(data ? data.lazy_time : '');
-                $('[name=province_id]').val(data ? data.province_id : 0);
+                $('[name=repeat_time]').val(data ? data.repeat_time : '');
+                $('[name=times]').val(data ? data.times : '');
 
                 if(data && data.company_logo) {
                     $('#upload_container [name=company_logo]').val(data.company_logo);
@@ -84,6 +145,12 @@ var merchant_style_setting_index_ops = {
                     $('.img-wrapper').html('')
                 }
 
+                if(res.data.repeat_setting) {
+                    that.data = JSON.parse(res.data.repeat_setting);
+                    // 重新渲染.
+                    that.reloadRepeatTable();
+                }
+
                 // 重绘
                 form.render();
             },
@@ -92,6 +159,7 @@ var merchant_style_setting_index_ops = {
             }
         })
     },
+    // 选择按钮.
     choiceRadio: function (name, value) {
         $('[name='+ name +']').each(function (index,ele) {
             ele = $(ele);
@@ -115,6 +183,11 @@ var merchant_style_setting_index_ops = {
     // 七牛上传失败所调用的函数
     uploadError: function (up, err, errTip) {
         $.msg(errTip);
+    },
+    reloadRepeatTable: function () {
+        this.table.reload('repeatTable',{
+            data: this.data
+        });
     }
 };
 

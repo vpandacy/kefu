@@ -92,36 +92,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 <!--                        </div>-->
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label"  style="width: 120px">展示消息记录</label>
+                            <label class="layui-form-label" style="width: 120px">展示消息记录</label>
                             <div class="layui-input-block">
                                 <input type="radio" name="is_history" value="0" title="是">
                                 <input type="radio" name="is_history" value="1" title="否">
                             </div>
                         </div>
-
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">重复发起</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="is_active" value="0" title="是">
-                                <input type="radio" name="is_active" value="1" title="否">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">发起时间间隔</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="time" value=""  required="" placeholder="请输入发起时间间隔(秒)" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">发起次数</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="times" value=""  required="" placeholder="请输入发起次数" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-
 
                         <div class="layui-form-item">
                             <label class="layui-form-label"  style="width: 120px">浮窗初始状态</label>
@@ -146,6 +122,42 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 <!--                                <input type="radio" name="is_show_num" value="1" title="否">-->
 <!--                            </div>-->
 <!--                        </div>-->
+                    </div>
+                </fieldset>
+
+
+                <fieldset class="layui-elem-field">
+                    <legend>发起配置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 120px">重复发起</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="is_repeat" value="0" title="否">
+                                <input type="radio" name="is_repeat" value="1" title="是">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 120px">发起时间间隔</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="repeat_time" value="" placeholder="请输入发起时间间隔(秒)" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 120px">发起次数</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="repeat_times" value="" placeholder="请输入发起次数" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 120px">发起语句设置</label>
+                            <div class="layui-input-block" style="margin-left: 150px;">
+                                <table class="layui-table" id="repeatTable" lay-filter="repeatTable">
+                                </table>
+                            </div>
+                        </div>
 
                         <div class="layui-form-item">
                             <div class="layui-input-block">
@@ -158,3 +170,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         </form>
     </div>
 </div>
+
+<script type="text/html" id="tool">
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">新增</button>
+</script>
+
+<script type="text/html" id="toolbar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+</script>

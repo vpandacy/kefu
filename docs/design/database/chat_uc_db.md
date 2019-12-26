@@ -178,4 +178,11 @@ ALTER TABLE `monitor_kf_ws`
 ```
 ALTER TABLE `staff`
     CHANGE `is_login` `login_token` varchar(50) NOT NULL DEFAULT '0' COMMENT '登录令牌' AFTER `is_online`;
+    
+    
+ALTER TABLE `group_chat_setting`
+    CHANGE `is_active` `is_repeat` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否重复发起,0不重复,1重复' AFTER `province_id`,
+    ADD `repeat_times` int(10) NOT NULL DEFAULT '0' COMMENT '重复发起次数' AFTER `is_repeat`,
+    ADD `repeat_time` int(10) NOT NULL DEFAULT '0' COMMENT '重启发起时间间隔(秒)' AFTER `repeat_times`,
+    ADD `repeat_setting` varchar(1000) NOT NULL DEFAULT '' COMMENT '重复发起配置' AFTER `repeat_time`;
 ```

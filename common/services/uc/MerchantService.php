@@ -278,7 +278,10 @@ class MerchantService extends BaseService
             'windows_status'=>  0,
             'is_force'      =>  1,
             'lazy_time'     =>  10,
-            'is_show_num'   =>  1
+            'is_show_num'   =>  1,
+            'is_repeat'     =>  0,
+            'repeat_time'   =>  0,
+            'repeat_times'  =>  0,
         ];
     }
 

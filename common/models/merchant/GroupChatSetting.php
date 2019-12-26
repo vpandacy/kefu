@@ -15,7 +15,10 @@ use Yii;
  * @property string $company_logo 公司logo
  * @property int $is_history 是否展示消息记录,0展示,1不展示
  * @property int $province_id 所在省份,该省外不能使用客服
- * @property int $is_active 是否主动发起会话,0主动,1不主动
+ * @property int $is_repeat 是否重复发起,0不重复,1重复
+ * @property int $repeat_times 重复发起次数
+ * @property int $repeat_time 重启发起时间间隔(秒)
+ * @property string $repeat_setting 重复发起配置
  * @property int $windows_status 浮动窗口展示状态,0最小化,1展示
  * @property int $is_force 新消息是否强制弹窗,0强制,1不强制
  * @property int $lazy_time 首次发起时间,单位s
@@ -47,9 +50,10 @@ class GroupChatSetting extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['group_chat_id', 'merchant_id', 'is_history', 'province_id', 'is_active', 'windows_status', 'is_force', 'lazy_time', 'is_show_num'], 'integer'],
+            [['group_chat_id', 'merchant_id', 'is_history', 'province_id', 'is_repeat', 'repeat_times', 'repeat_time', 'windows_status', 'is_force', 'lazy_time', 'is_show_num'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['company_name', 'company_desc', 'company_logo'], 'string', 'max' => 255],
+            [['repeat_setting'], 'string', 'max' => 1000],
             [['group_chat_id'], 'unique'],
         ];
     }
@@ -68,7 +72,10 @@ class GroupChatSetting extends \yii\db\ActiveRecord
             'company_logo' => 'Company Logo',
             'is_history' => 'Is History',
             'province_id' => 'Province ID',
-            'is_active' => 'Is Active',
+            'is_repeat' => 'Is Repeat',
+            'repeat_times' => 'Repeat Times',
+            'repeat_time' => 'Repeat Time',
+            'repeat_setting' => 'Repeat Setting',
             'windows_status' => 'Windows Status',
             'is_force' => 'Is Force',
             'lazy_time' => 'Lazy Time',
