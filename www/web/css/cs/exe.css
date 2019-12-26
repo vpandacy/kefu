@@ -254,7 +254,7 @@ select[name='cs'] {
     cursor: pointer;
     align-items: center;
     height: 50px;
-    font-size: 18px;
+    font-size: 12px;
 }
 #chatExe .exe-keep .tab .tab-content-list div{
     pointer-events:none;

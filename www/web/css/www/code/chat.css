@@ -239,7 +239,7 @@
 
 #pc-online .message {
     overflow-y: auto;
-    background: rgb(251, 250, 249);
+    background: rgb(245, 248, 255);
     flex: 1;
 }
 
