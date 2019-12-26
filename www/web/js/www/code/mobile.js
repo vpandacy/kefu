@@ -63,7 +63,6 @@ var mobile_logic = {
         });
 
         params = JSON.parse($('input[name="params"]').val()).style;
-        console.log(params)
         // history: 是否展示消息记录, 0展示,1不展示
         // winstatus: 浮动窗口展示状态, 0最小化,1展示
         // force: 新消息是否强制弹窗, 0强制,1不强制
