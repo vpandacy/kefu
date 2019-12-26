@@ -27,13 +27,14 @@ StaticPluginHelper::includeJsPlugins([
     WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
 </script>
 <div id='wapOnline'>
+    <div class="wapOnline-zheyan dis_none"></div>
     <div class="iconfont icon-zaixianzixun" style="color: rgb(58, 148, 254)"></div>
     <div class="waponline-max dis_none">
         <div class="top">
             <i class="iconfont icon-zuojiantou"></i>
             <div class="title">
                 <span>在线咨询</span>
-                <i class="iconfont icon-jiantou9"></i>
+<!--                <i class="iconfont icon-jiantou9"></i>-->
             </div>
             <div></div>
         </div>

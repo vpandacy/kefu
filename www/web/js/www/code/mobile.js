@@ -3,10 +3,17 @@ var params = {};
 var mobile_logic = {
     logic: function () {
         $('.icon-zaixianzixun').click(function () {
+            $('.wapOnline-zheyan').removeClass('dis_none');
             $('.waponline-max').removeClass('dis_none');
             $('.icon-zaixianzixun').addClass('dis_none');
         });
         $('.icon-zuojiantou').click(function () {
+            $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
+            $('#wapOnline .waponline-max').addClass('dis_none');
+            $('#wapOnline .icon-zaixianzixun').removeClass('dis_none');
+        });
+        $('.wapOnline-zheyan').click(function () {
+            $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
             $('#wapOnline .waponline-max').addClass('dis_none');
             $('#wapOnline .icon-zaixianzixun').removeClass('dis_none');
         })
@@ -72,6 +79,7 @@ var mobile_logic = {
         //     $('.line').hide();
         // }
         if (Number(winStatus)) {
+            $('#wapOnline .wapOnline-zheyan').removeClass('dis_none');
             $('#wapOnline .icon-zaixianzixun').addClass('dis_none');
             $('#wapOnline .waponline-max').removeClass('dis_none');
         }
@@ -92,6 +100,7 @@ var ws_config = new socket({
                 // force: 新消息是否强制弹窗, 0强制,1不强制
                 let isForce = params.is_force;
                 if(!Number(isForce)) {
+                    $('#wapOnline .wapOnline-zheyan').removeClass('dis_none');
                     $('#wapOnline .icon-zaixianzixun').addClass('dis_none')
                     $('#wapOnline .waponline-max').removeClass('dis_none')
                     ws_config.scrollToBottom();
@@ -117,7 +126,6 @@ var ws_config = new socket({
         ].join('');
     }
 });
-
 var global_start = 0;
 
 window.addEventListener('message',function (event) {
