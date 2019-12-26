@@ -24,6 +24,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
     offline_users= Object.values(<?=json_encode($offline_users)?>);
     all_users = Object.values(<?=json_encode($all_users)?>);
 </script>
+<style>
+    .layui-layer-shade {
+        display: none !important;
+    }
+</style>
 <div id='chatExe'>
     <!-- 右键菜单 -->
     <div id="menu" style="z-index: 1">
