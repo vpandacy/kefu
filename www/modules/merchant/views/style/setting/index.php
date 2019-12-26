@@ -24,7 +24,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                     <legend>风格分组</legend>
                     <div class="layui-field-box">
                         <div class="layui-form-item">
-                            <label class="layui-form-label">请选择风格</label>
+                            <label class="layui-form-label"  style="width: 120px">请选择风格</label>
                             <div class="layui-input-block">
                                 <select name="group_chat_id" lay-filter="choice">
                                     <option value="0">普通风格</option>
@@ -41,14 +41,14 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                     <legend>公司信息</legend>
                     <div class="layui-field-box">
                         <div class="layui-form-item">
-                            <label class="layui-form-label">公司名称</label>
+                            <label class="layui-form-label" style="width: 120px">公司名称</label>
                             <div class="layui-input-block">
                                 <input type="text" name="company_name" value=""  required="" lay-verify="required" placeholder="请输入公司名/商户名" autocomplete="off" class="layui-input">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">公司LOGO</label>
+                            <label class="layui-form-label"  style="width: 120px">公司LOGO</label>
                             <div class="layui-input-block" id="upload_container">
                                 <button type="button" class="layui-btn" id="logo">
                                     <i class="layui-icon"></i>上传图片
@@ -60,7 +60,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         </div>
 
                         <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">公司简介</label>
+                            <label class="layui-form-label"  style="width: 120px">公司简介</label>
                             <div class="layui-input-block">
                                 <textarea name="company_desc" placeholder="请输入公司简介" lay-verify="required" class="layui-textarea"></textarea>
                             </div>
@@ -92,7 +92,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 <!--                        </div>-->
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">展示消息记录</label>
+                            <label class="layui-form-label"  style="width: 120px">展示消息记录</label>
                             <div class="layui-input-block">
                                 <input type="radio" name="is_history" value="0" title="是">
                                 <input type="radio" name="is_history" value="1" title="否">
@@ -108,7 +108,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 <!--                        </div>-->
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">浮窗初始状态</label>
+                            <label class="layui-form-label"  style="width: 120px">浮窗初始状态</label>
                             <div class="layui-input-block">
                                 <input type="radio" name="windows_status" value="0" title="最小化">
                                 <input type="radio" name="windows_status" value="1" title="展示">
@@ -116,7 +116,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">新消息强制弹窗</label>
+                            <label class="layui-form-label"  style="width: 120px">新消息强制弹窗</label>
                             <div class="layui-input-block">
                                 <input type="radio" name="is_force" value="0" title="是">
                                 <input type="radio" name="is_force" value="1" title="否">
