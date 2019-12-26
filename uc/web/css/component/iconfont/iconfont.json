@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "379226",
+      "name": "电脑-01",
+      "font_class": "diannao01",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
       "icon_id": "445409",
       "name": "按键分割线",
       "font_class": "anjianfengexian",
@@ -25,6 +32,13 @@
       "font_class": "zuojiantou",
       "unicode": "e64e",
       "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "854678",
+      "name": "微信",
+      "font_class": "z-weixin",
+      "unicode": "e6c9",
+      "unicode_decimal": 59081
     },
     {
       "icon_id": "941658",
