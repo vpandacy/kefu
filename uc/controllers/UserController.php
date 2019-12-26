@@ -64,10 +64,6 @@ class UserController extends BaseController
             return $this->renderErrJSON('登录失败，请检查邮箱或手机号和密码~~');
         }
 
-        if($staff_info['is_login']) {
-            return $this->renderErrJSON('当前帐号已经登录了，请勿重复登录');
-        }
-
         if($staff_info['password'] != $this->genPassword($staff_info['merchant_id'], $password, $staff_info['salt'])) {
             return $this->renderErrJSON('请输入正确的密码');
         }
@@ -81,13 +77,15 @@ class UserController extends BaseController
             return $this->renderErrJSON('商户信息审核中，请联系管理员加快审核~~');
         }
 
-        $staff_info['is_login'] = ConstantService::$default_status_true;
+        // 开始创建登录的信息.
+        $token = $this->createLoginStatus( $staff_info );
+
+        $staff_info['login_token'] = $token;
 
         if(!$staff_info->save()) {
             return $this->renderErrJSON('数据保存失败，请联系管理员');
         }
-        // 开始创建登录的信息.
-        $this->createLoginStatus( $staff_info );
+
         $data = [
             "url" => $url ?? UCUrlService::buildUCUrl("/default/application",$this->app_id)
         ];
@@ -209,8 +207,7 @@ class UserController extends BaseController
         if($this->current_user) {
             // 更新在线的状态.如果是退出登录了.
             Staff::updateAll([
-                'is_online'=>ConstantService::$default_status_false,
-                'is_login'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+                'is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
         }
 
         $this->removeCookie($cookie['name'],$cookie['domain']);

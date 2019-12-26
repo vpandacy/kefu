@@ -174,3 +174,8 @@ ALTER TABLE `monitor_kf_ws`
     ADD `owner_reg` tinyint(1) NOT NULL DEFAULT '0' COMMENT '所属注册中心' AFTER `start_port`,
     ADD `owner_group` tinyint(1) NOT NULL DEFAULT '0' COMMENT '所属组,0为游客组,1为客服组' AFTER `owner_reg`;
 ```
+### 20191226
+```
+ALTER TABLE `staff`
+    CHANGE `is_login` `login_token` varchar(50) NOT NULL DEFAULT '0' COMMENT '登录令牌' AFTER `is_online`;
+```

@@ -60,9 +60,9 @@ class Staff extends BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'department_id', 'status', 'is_root', 'is_online','is_login'], 'integer'],
+            [['merchant_id', 'department_id', 'status', 'is_root', 'is_online'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['sn', 'nickname', 'email', 'name', 'avatar', 'mobile', 'password', 'salt', 'listen_nums', 'app_ids'], 'string', 'max' => 255],
+            [['sn', 'nickname', 'email', 'name', 'avatar', 'mobile', 'password', 'salt', 'listen_nums', 'app_ids','login_token'], 'string', 'max' => 255],
         ];
     }
 
@@ -86,6 +86,7 @@ class Staff extends BaseModel
             'listen_nums' => 'Listen Nums',
             'is_online' => 'Is Online',
             'is_login' => 'Is Login',
+            'login_token'   =>  'Login Token',
             'status' => 'Status',
             'is_root' => 'Is Root',
             'app_ids'   =>  'App Ids',

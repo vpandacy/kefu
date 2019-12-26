@@ -78,6 +78,7 @@ class StaffBaseController extends BaseWebController
     /**
      * 创建登录的状态.
      * @param $staff
+     * @return string
      */
     public function createLoginStatus($staff)
     {
@@ -85,6 +86,7 @@ class StaffBaseController extends BaseWebController
         $cookie = Yii::$app->params['cookies']['staff'];
         // 指定区域.
         $this->setCookie($cookie['name'], $token,0, $cookie['domain']);
+        return $token;
     }
 
     /**
@@ -95,7 +97,7 @@ class StaffBaseController extends BaseWebController
      */
     protected function checkToken($token, $staff)
     {
-        return $token == $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
+        return $token == $staff['login_token'];
     }
 
     /**
@@ -107,7 +109,7 @@ class StaffBaseController extends BaseWebController
      */
     protected function genToken($merchant_id, $staff_salt, $password)
     {
-        return md5($staff_salt . md5($merchant_id . $password));
+        return md5($staff_salt . md5($merchant_id . $password) . time());
     }
 
     /**
