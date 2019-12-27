@@ -16,9 +16,7 @@ class GuestService extends BaseService
     {
         $address_info = IPDBQuery::find($client_ip);
 
-        $address_info = explode(',', $address_info);
-
-        list($province, $city, $address) = $address_info;
+        list($province, $city, $address) = (array) $address_info;
 
         $province_info  = [
             'province_id'   =>  0,
