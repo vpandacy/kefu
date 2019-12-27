@@ -379,7 +379,7 @@ select[name='cs'] {
     line-height: 26px;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .land-url span:first-child {
-    width: 70px !important;
+    width: 55px !important;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(1) {
     width: 40px;
@@ -565,8 +565,15 @@ select[name='cs'] {
     color: rgb(125, 128, 136);
     margin: 5% 0;
     border-radius: 5px;
+    font: small-caption;
 }
-
+#chatExe .exe-info .one .tab-content div .name input{
+    border: 1px;
+    border-radius: 3px;
+    width: 120px;
+    outline: none;
+    font-size: 12px;
+}
 /*#chatExe .exe-info .one .tab-content div:nth-child(1) {*/
     /*color: rgb(48, 146, 251) !important*/
 /*}*/
