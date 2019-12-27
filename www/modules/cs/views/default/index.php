@@ -152,7 +152,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                         <div class="tab-one">记录中心</div>
                     </div>
                     <div class="tab-content">
-                        <div class="content-one">
+                        <div class="content-one content-tab-one">
                             <div>
                                 姓名：<span class="name"></span>
                             </div>
@@ -175,7 +175,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                                 </span>
                             </div>
                         </div>
-                        <div class="content-one access-track" style="display: none;max-height: 380px;overflow-y: auto;">
+                        <div class="content-one content-tab-two access-track" style="display: none;max-height: 270px;">
                             <div style="text-align: center;color: rgb(179, 181, 185) !important;">暂无</div>
                         </div>
                     </div>
