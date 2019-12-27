@@ -1,5 +1,6 @@
 // 这里是实现所有关于聊天的逻辑.
 (function(window){
+    var  historyDate = [];
     var Chat = function () {
         // ws.
         this.socket = new Socket();
@@ -94,9 +95,13 @@
 
             that.handleSend(current_uuid, msg);
         });
-
         // 选择聊天对象.
         $('.tab-content .online').on('click', '.tab-content-list', function () {
+            historyDate = []
+            if($(this).attr('data-uuid') != $('.content-message-active').attr('data-uuid')){
+                $('.exe-content-history-ready').find('.content-message').remove();
+                $('.exe-content-history').find('.exe-content-history-title').html('');
+            }
             var uuid = $(this).attr('data-uuid');
             if(!uuid) {
                 return false;
@@ -320,7 +325,8 @@
             avatar: data.data.avatar,                   // 用户头像
             nickname: data.data.nickname,               // 用户昵称
             allocationTime: data.data.allocation_time,  // 用户的发起时间
-            is_online: 1                                // 是否在线,1在线.0下线.
+            is_online: 1,                                // 是否在线,1在线.0下线.
+
         };
 
         var old_user = ChatStorage.getItem(user.uuid, {});
@@ -454,39 +460,39 @@
 
     // 查看历史消息
     Chat.prototype.lookHistory = function () {
-        let data = [];
         let date = this.getNowFormatDate();
         $('.history-look').click(function () {
-            let formatDate =data.length != 0 ? data[0].created_time : date;
+            let formatDate =historyDate.length != 0 ? historyDate[0].created_time : date;
             let uuid = $('.content-message-active').attr('data-uuid');
             let name = $('.content-message-active').attr('data-name');
             $.post('/cs/visitor/message',{last_time:formatDate,uuid:uuid},function (res) {
-                data = res.data;
-                for (let i=0; i<data.length; i++) {
-                    if(data[i].from_id == uuid){
-                        $('.exe-content-history-load').append('<div class="content-message">\n' +
+                historyDate = res.data;
+               let historyHtml = '';
+                for (let i=0; i<historyDate.length; i++) {
+                    if(historyDate[i].from_id == uuid){
+                        historyHtml += '<div class="content-message">\n' +
                             '<div class="message-img">\n' +
-                            '   <img class="logo" src='+ data[i].cs_avatar +'>\n' +
+                            '   <img class="logo" src='+ historyDate[i].cs_avatar +'>\n' +
                             '</div>\n' +
                             '<div class="message-info">\n' +
-                            '   <div class="message-name-date"><span>'+ name + '</span><span class="date">'+data[i].created_time + '</span></div>\n' +
-                            '   <div class="message-message">'+ data[i].content +'</div>\n' +
+                            '   <div class="message-name-date"><span>'+ name + '</span><span class="date">'+historyDate[i].created_time + '</span></div>\n' +
+                            '   <div class="message-message">'+ historyDate[i].content +'</div>\n' +
                             '  </div>\n' +
-                            '</div>\t');
+                            '</div>\t';
                     }else  {
-                        $('.exe-content-history-load').append(
-                            '<div class="content-message message-my">\n' +
+                        historyHtml +=  '<div class="content-message message-my">\n' +
                             '   <div class="message-info">\n' +
                             '      <div class="message-name-date name-date-my">\n' +
-                            '          <span class="date">'+ data[i].created_time + '</span>\n' +
+                            '          <span class="date">'+ historyDate[i].created_time + '</span>\n' +
                             '          <span class="message-name">我</span>\n' +
                             '      </div>\n' +
-                            '      <div class="message-message message-message-my">'+ data[i].content +'</div>\n' +
+                            '      <div class="message-message message-message-my">'+ historyDate[i].content +'</div>\n' +
                             '   </div>\n' +
-                            '</div>');
+                            '</div>';
                     }
                 }
-                if(data.length === 0){
+                $('.exe-content-history-ready').prepend(historyHtml);
+                if(historyDate.length === 0){
                     $('.exe-content-history-title').html('' +
                         '<fieldset>\n' +
                         '  <legend>暂无消息</legend>\n' +
