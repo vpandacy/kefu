@@ -539,9 +539,21 @@
             ChatStorage.removeItem(data.uuid);
             this.page.renderOfflineList();
         }else{
-            user.is_online = 0;
+            // user.is_online = 0;
             // 存储进去.
-            ChatStorage.setItem(data.uuid, user);
+            // ChatStorage.setItem(data.uuid, user);
+            var current_uuid = $('.content-message-active').attr('data-uuid');
+
+            if(data.uuid == current_uuid) {
+                $('#chatExe .flex1').css({'display': 'none'});
+                $('.content-message-active').removeClass('content-message-active');
+            }
+
+            online_users = online_users.map(function (curr) {
+                return curr != data.uuid;
+            });
+
+            ChatStorage.removeItem(data.uuid);
             this.page.renderOnlineList();
         }
     };
