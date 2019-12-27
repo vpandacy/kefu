@@ -223,6 +223,12 @@
                 dataType: 'json',
                 url: cs_common_ops.buildKFCSurl('/visitor/save'),
                 success: function (res) {
+                    if(res.code == -302) {
+                        return $.msg(res.msg, false, function(){
+                            location.href = res.data.url;
+                        });
+                    }
+
                     if(res.code != 200) {
                         return $.msg(res.msg);
                     }
