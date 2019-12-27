@@ -98,11 +98,14 @@
             }
 
             // 这里有图标展示. 这里要注意一下.
-            var icon_types = ['shoji','diannao', 'baidu1'];
+            var sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+            var sourceIcon = sourceName.find(function (item) {
+                return item.id == user.source;
+            });
             return  [
                 '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'" data-name="',user.nickname,'">',
                 '   <div class="', user && user.new_message <= 0 ? '' : 'content-new-message','">',
-                '       <i class="iconfont icon-shouji"></i>',
+                '       <i class="iconfont ', sourceIcon.icon ,'"></i>',
                 '       <span>',user.nickname,'</span>',
                 '   </div>',
                 '   <div>',
@@ -130,10 +133,14 @@
             if(!user) {
                 return '';
             }
+            var sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+            var sourceIcon = sourceName.find(function (item) {
+                return item.id == user.source;
+            });
             return [
                 '<div class="tab-content-list" data-uuid="',wait_uuid,'"  data-name="',user.nickname,'">',
                 '   <div>',
-                '       <i class="iconfont icon-shouji"></i>',
+                '       <i class="iconfont ', sourceIcon.icon ,'"></i>',
                 '       <span>',user.nickname,'</span>',
                 '   </div>',
                 '   <div>',
@@ -262,8 +269,35 @@
                 elem.find('.source span:last-child').attr('title',history.source);
                 elem.find('.referer-url span:last-child').text(history.referer_url ? history.referer_url : '暂无');
                 elem.find('.referer-url span:last-child').attr('title',history.referer_url);
-            }
-        })
+                var canalName = [
+                    {id:'0',name:'直接访问'},
+                    {id:'100',name:'百度'},
+                    {id:'110',name:'360'},
+                    {id:'120',name:'搜狗'},
+                    {id:'130',name:'神马'},
+                    {id:'140',name:'今日头条'},
+                    {id:'150',name:'OPPO'},
+                    {id:'160',name:'VIVO'},
+                    {id:'170',name:'小米'},
+                    {id:'180',name:'WIFI'},
+                    {id:'190',name:'趣头条'},
+                    {id:'200',name:'UC'},
+                    {id:'210',name:'一点资讯'},
+                    {id:'220',name:'快手'},
+                    {id:'230',name:'广点通'},
+                    {id:'240',name:'陌陌'},
+                    {id:'250',name:'WPS'},
+                    {id:'260',name:'趣看天下'},
+                    {id:'270',name:'知乎'},
+                    {id:'280',name:'爱奇艺'}
+                ];
+                var obj=canalName.find(function (item) {
+                    return item.id === history.referer_media;
+                });
+                elem.find('.canal-url span:last-child').text(obj.name ? obj.name : '暂无');
+                elem.find('.canal-url span:last-child').attr('title',obj.name);
+            },
+        });
     };
 
     window.Page = Page;

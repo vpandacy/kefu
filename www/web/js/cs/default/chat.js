@@ -325,7 +325,9 @@
             avatar: data.data.avatar,                   // 用户头像
             nickname: data.data.nickname,               // 用户昵称
             allocationTime: data.data.allocation_time,  // 用户的发起时间
-            is_online: 1,                                // 是否在线,1在线.0下线.
+            source: data.data.source,                   // 终端
+            media: data.data.media || 0,                // 媒体
+            is_online: 1,                               // 是否在线,1在线.0下线.
 
         };
 

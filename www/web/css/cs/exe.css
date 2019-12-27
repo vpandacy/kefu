@@ -375,6 +375,7 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-top .content-top-info .info {
     height: 26px;
     display: flex;
+    flex: 1;
     line-height: 26px;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .land-url span:first-child {
@@ -385,7 +386,7 @@ select[name='cs'] {
 }
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
     color: rgb(0, 0, 0);
-    width: 400px;
+    /*width: 400px;*/
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
