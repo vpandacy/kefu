@@ -188,7 +188,6 @@
                 {id: '270', name: '知乎'},
                 {id: '280', name: '爱奇艺'}
             ];
-            console.log(sourceIcon)
             var mediaIcon = mediaName.find(function (item) {
                 return item.id == user.media;
             });
