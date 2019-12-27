@@ -10,6 +10,7 @@ var mobile_logic = {
         $('.icon-zuojiantou').click(function () {
             if($('#online-from').attr('style').trim() == 'display: block;'){
                 $('#online-from').attr('style','display: none;');
+                $('.chat-close').show();
             }else {
                 $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
                 $('#wapOnline .waponline-max').addClass('dis_none');
@@ -20,7 +21,8 @@ var mobile_logic = {
             $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
             $('#wapOnline .waponline-max').addClass('dis_none');
             $('#wapOnline .icon-zaixianzixun').removeClass('dis_none');
-        })
+            $('#online-from').hide();
+        });
         // 点击新对话.
         $('.online_new_message').on('click', function () {
             ws_config.init();
