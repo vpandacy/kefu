@@ -156,7 +156,7 @@ $(document).ready( function(){
     user_center.init();
 } );
 
-if(window.location.hostname.indexOf('.kefu.dev.qwer.cn') <= -1) {
+if(window.location.hostname.indexOf('.kefu.dev.hsh568.cn') <= -1) {
     /**
      * 监听js错误并上报.
      * @param message 消息信息

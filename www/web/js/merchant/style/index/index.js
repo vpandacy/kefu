@@ -4,6 +4,7 @@ var merchant_style_index_ops = {
         this.eventBind();
     },
     eventBind: function () {
+        var that = this;
         layui.use('table', function(){
             var table = layui.table;
 
@@ -65,7 +66,7 @@ var merchant_style_index_ops = {
                         error: function () {
                             $.close(index);
                         }
-                    })
+                    });
                 });
             });
 
@@ -86,8 +87,28 @@ var merchant_style_index_ops = {
                 }
 
                 if(event.event == 'get') {
-                    location.href = merchant_common_ops.buildMerchantUrl('/overall/code/index', {
-                        code: event.data.id
+                    var index = $.loading(1,{shade: .5});
+                    $.ajax({
+                        type: 'POST',
+                        url: merchant_common_ops.buildMerchantUrl('/overall/code/obtain'),
+                        dataType : 'json',
+                        data: {
+                            group_id: event.data.id,
+                        },
+                        success:function (res) {
+                            $.close(index);
+                            if(res.code != 200) {
+                                return $.msg(res.msg);
+                            }
+
+                            var html = that.html2Escape(res.data);
+
+                            return $.open({
+                                'title': '客服代码',
+                                'content': '<pre style="padding: 20px; background-color: #eeeeee;">' + html + '</pre>',
+                                'area': ['1000px']
+                            })
+                        }
                     });
                     return false;
                 }
@@ -120,7 +141,13 @@ var merchant_style_index_ops = {
                 });
             });
         });
+    },
+    html2Escape:function (sHtml) {
+        return sHtml.replace(/[<>&"]/g, function(c){
+            return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];
+        });
     }
+
 };
 
 $(document).ready(function () {
