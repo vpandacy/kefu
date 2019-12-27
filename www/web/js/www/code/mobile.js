@@ -10,6 +10,7 @@ var mobile_logic = {
         $('.icon-zuojiantou').click(function () {
             if($('#online-from').attr('style').trim() == 'display: block;'){
                 $('#online-from').attr('style','display: none;');
+                $('.chat-close').show();
             }else {
                 $('#wapOnline .wapOnline-zheyan').addClass('dis_none');
                 $('#wapOnline .waponline-max').addClass('dis_none');
