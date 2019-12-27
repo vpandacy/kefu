@@ -40,7 +40,7 @@ class TrackController extends BaseController
         if($group_id) {
             $query->andWhere(['chat_stype_id'=>$group_id]);
         }
-        
+
         if($time) {
             $query->andWhere(['>','created_time', trim($time[0])]);
             $query->andWhere(['<','created_time', trim($time[1])]);

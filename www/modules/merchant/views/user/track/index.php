@@ -32,3 +32,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         <table class="layui-hide" id="trackTable" lay-filter="trackTable"></table>
     </div>
 </div>
+
+<script type="text/html" id="trackTool">
+    <a class="layui-btn layui-btn-xs" lay-event="see">查看详情</a>
+</script>

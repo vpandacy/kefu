@@ -19,7 +19,7 @@ var merchant_user_track_ops = {
                 ,url: merchant_common_ops.buildMerchantUrl('/user/track/index')
                 ,where: {
                     time: $('#time').val(),
-                    group_id: $('[name=group_id]').val(),
+                    group_id: $('[name=group_id]').val()
                 }
                 ,defaultToolbar: ['filter','exports']
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
@@ -47,9 +47,20 @@ var merchant_user_track_ops = {
                         return row.chat_duration + '秒';
                     }}
                     ,{field:'created_time', title: '来访时间'}
+                    ,{title: '操作', toolbar: '#trackTool'}
                 ]]
                 ,id: 'trackTable'
             }));
+
+            // 您点击了查看详情.
+            table.on('tool(trackTable)', function (event) {
+                if(event.event != 'see') {
+                    return false;
+                }
+
+                // 这里开始弹层
+                $.msg('您点击了查看详情');
+            });
         });
     }
 };
