@@ -178,3 +178,11 @@ ALTER TABLE `member`
 ALTER TABLE `guest_chat_log`
     ADD `cs_name` varchar(255) NOT NULL DEFAULT '' COMMENT '客服昵称' AFTER `cs_id`;
 ```
+## 20191227
+```
+ALTER TABLE `group_chat_setting`
+    CHANGE `is_active` `is_repeat` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否重复发起,0不重复,1重复' AFTER `province_id`,
+    ADD `repeat_times` int(10) NOT NULL DEFAULT '0' COMMENT '重复发起次数' AFTER `is_repeat`,
+    ADD `repeat_time` int(10) NOT NULL DEFAULT '0' COMMENT '重启发起时间间隔(秒)' AFTER `repeat_times`,
+    ADD `repeat_setting` varchar(1000) NOT NULL DEFAULT '' COMMENT '重复发起配置' AFTER `repeat_time`;
+```
