@@ -51,7 +51,7 @@ class GuestService extends BaseService
      * @return int
      */
     public static function getRefererSidByUrl( $url = null ){
-        $sid = '';
+        $sid = 0;
         $url_params = parse_url($url);
         $host = null;
         if (isset($url_params['host'])) {
