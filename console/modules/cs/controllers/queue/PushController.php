@@ -73,6 +73,8 @@ class PushController extends QueueBaseController
             ChatGroupService::leaveWaitGroup($params['t_id'], $guest_uuid);
             ChatGroupService::joinGroup($params['t_id'], $guest_uuid);
 
+            $cache_params = ChatEventService::getGuestBindCache($guest_uuid);
+
             $cs_params = [
                 "f_id" => $guest_uuid,
                 "t_id" => $params['t_id'],
@@ -80,6 +82,8 @@ class PushController extends QueueBaseController
                 'nickname'  =>  substr($guest_uuid, strlen($guest_uuid) - 12),
                 'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
                 'allocation_time'   =>  date('H:i:s'),
+                'source'    => isset($cache_params['source']) ? $cache_params['source'] : 2,
+                'media'     => isset($cache_params['media']) ? $cache_params['media'] : 0,
             ];
 
             $cs_params = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$cs_params );

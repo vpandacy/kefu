@@ -40,8 +40,21 @@ class GuestBusiHanlderService extends BaseService
                         if( isset( $message['data']['t_id'])){
                             //发送给对应的人
                             $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+
+                            if(!$tmp_client) {
+                                return;
+                            }
+
+                            //同时换成起来对应的客服信息
+                            $cache_params = ChatEventService::getGuestBindCache( $tmp_client[0] );
+
+                            if($message['cmd'] == ConstantService::$chat_cmd_guest_connect) {
+                                $data['source'] = $cache_params['source'];
+                                $data['media'] = $cache_params['media'];
+                            }
+
                             // 发送事件给游客
-                            $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
+                            Gateway::sendToClient( $tmp_client[0], $data );
                         }
 
                         GuestBusiHanlderService::handleInnerMessage($message);
@@ -126,6 +139,8 @@ class GuestBusiHanlderService extends BaseService
         Worker::log( $close_data );
         QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, json_decode($close_data, true) );
         QueueListService::push2CS( QueueConstant::$queue_cs_chat, json_decode($close_data,true) );
+        // 关闭内容.
+        ChatEventService::clearGuestBindCache($uuid);
         // 解绑.
         return Gateway::unbindUid($client_id, $uuid);
     }
@@ -206,7 +221,9 @@ class GuestBusiHanlderService extends BaseService
                     : 0
             ];
 
-            ChatEventService::setGuestBindCache( $client_id ,$cache_params);
+            // 绑定两份. 可能会通过f_id查找对应的信息.
+            ChatEventService::setGuestBindCache($f_id, $cache_params);
+            ChatEventService::setGuestBindCache( $client_id, $cache_params);
         }
 
         $ws_data = ChatEventService::buildMsg(ConstantService::$chat_cmd_hello, [
@@ -279,7 +296,7 @@ class GuestBusiHanlderService extends BaseService
             'media' =>  $cache_params['media'],
         ];
 
-        $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect,$transfer_params );
+        $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_connect, $transfer_params );
         QueueListService::push2CS( QueueConstant::$queue_cs_chat,json_decode($transfer_data,true) );
 
 
@@ -312,7 +329,7 @@ class GuestBusiHanlderService extends BaseService
         ]);
 
         //同时换成起来对应的客服信息
-        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+        $cache_params = ChatEventService::getGuestBindCache( $client_id );
 
         //转发消息给对应的客服，做好接待准备
         $transfer_params = [
@@ -354,6 +371,9 @@ class GuestBusiHanlderService extends BaseService
                 $tmp_client && Gateway::closeClient( $tmp_client[0] );
                 // 退出组信息.
                 ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
+                // 清除缓存...
+                ChatEventService::clearGuestBindCache($message['data']['t_id']);
+                $tmp_client && ChatEventService::clearCSBindCache($tmp_client[0]);
                 break;
             // 给组内进行广播.
             case ConstantService::$chat_cmd_kf_logout:

@@ -152,13 +152,17 @@ class GuestChatService extends BaseService
      */
     public static function genGuestInfo($uuid)
     {
+        $cache_params = ChatEventService::getGuestBindCache($uuid);
+
         return [
             // 随机生成一个昵称.
-            'nickname'  =>  'Guest-' . substr($uuid, strlen($uuid) - 12),
+            'nickname'  =>  substr($uuid, strlen($uuid) - 12),
             'uuid'      =>  $uuid,
             'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
             'allocation_time'   =>  date('H:i:s'),
-            'is_online' =>  ConstantService::$default_status_true
+            'is_online' =>  ConstantService::$default_status_true,
+            'source'    => isset($cache_params['source']) ? $cache_params['source'] : 2,
+            'media'     => isset($cache_params['media']) ? $cache_params['media'] : 0,
         ];
     }
 }
