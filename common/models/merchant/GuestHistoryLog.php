@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\kefu\chat;
+namespace common\models\merchant;
 
 use Yii;
 
@@ -16,11 +16,12 @@ use Yii;
  * @property string $referer_url 来源url
  * @property int $referer_media 来源媒体
  * @property string $land_url 落地页url
+ * @property string $land_title 落地页标题
  * @property string $client_ip 游客ip
  * @property string $client_ua 游客浏览器信息
  * @property int $province_id 游客来源省id
  * @property int $city_id 游客来源城市id
- * @property int $chat_stype_id 对话分格id
+ * @property int $chat_stype_id 对话风格id
  * @property string $closed_time 关闭对话时间
  * @property int $chat_duration 聊天时长，单位秒
  * @property int $status 聊天状态 ：-1 聊天中 1：聊天正常结束 0：聊天异常结束
@@ -56,7 +57,7 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
             [['closed_time'], 'required'],
             [['closed_time', 'updated_time', 'created_time'], 'safe'],
             [['uuid', 'client_id'], 'string', 'max' => 64],
-            [['referer_url', 'land_url','land_title'], 'string', 'max' => 1000],
+            [['referer_url', 'land_url', 'land_title'], 'string', 'max' => 1000],
             [['client_ip'], 'string', 'max' => 20],
             [['client_ua'], 'string', 'max' => 300],
         ];
@@ -77,7 +78,7 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
             'referer_url' => 'Referer Url',
             'referer_media' => 'Referer Media',
             'land_url' => 'Land Url',
-            'land_title'=> 'Land Title',
+            'land_title' => 'Land Title',
             'client_ip' => 'Client Ip',
             'client_ua' => 'Client Ua',
             'province_id' => 'Province ID',

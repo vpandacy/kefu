@@ -10,7 +10,8 @@
                     // 传参过去.然后根据参数来获取就可以了.
                     iframe.contentWindow.postMessage(JSON.stringify({
                         href : location.href,
-                        rf: document.referrer
+                        rf: document.referrer,
+                        title: document.title
                     }), iframe.src);
                 }
 
@@ -53,7 +54,8 @@ window.onload = function () {
                 // 传参过去.然后根据参数来获取就可以了.
                 iframe.contentWindow.postMessage(JSON.stringify({
                     href : location.href,
-                    rf: document.referrer
+                    rf: document.referrer,
+                    title: document.title
                 }), iframe.src);
             }
 

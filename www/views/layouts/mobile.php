@@ -11,7 +11,7 @@ AppAsset::register($this);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>测试标题</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?=$this->head()?>
 </head>

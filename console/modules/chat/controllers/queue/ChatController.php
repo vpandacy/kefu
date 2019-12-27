@@ -43,6 +43,7 @@ class ChatController extends QueueBaseController
                     "client_ua" => $params_data['ua'],
                     "referer_url" => $params_data['rf'],
                     "land_url" => $params_data['land'],
+                    'land_title'=>isset($params_data['title']) ? $params_data['title'] : '',
                     "uuid" => $params_data['f_id'],
                     "client_id" => $data['GATEWAY_CLIENT_ID'],
                     "client_ip" => $data['REMOTE_ADDR'],

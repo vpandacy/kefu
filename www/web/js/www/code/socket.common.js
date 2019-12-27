@@ -341,7 +341,8 @@
                 var params = {
                     ua: navigator.userAgent,
                     land: this.params.href,
-                    rf: this.params.rf
+                    rf: this.params.rf,
+                    title: this.params.title,
                 };
                 this.socketSend( this.buildMsg('guest_in',params ));
                 break;

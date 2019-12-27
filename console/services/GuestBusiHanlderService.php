@@ -216,6 +216,7 @@ class GuestBusiHanlderService extends BaseService
                 "uuid"  => $f_id,
                 "msn"   => $data['msn'] ?? '',
                 'source'=> CommonService::getSourceByUa($message['data']['ua']),    // 终端.
+                'title' => $data['title'] ?? '',
                 'media' =>  isset($message['data']['rf'])                           // 渠道.
                     ? GuestService::getRefererSidByUrl($data['rf'])
                     : 0
@@ -223,7 +224,7 @@ class GuestBusiHanlderService extends BaseService
 
             // 绑定两份. 可能会通过f_id查找对应的信息.
             ChatEventService::setGuestBindCache($f_id, $cache_params);
-            ChatEventService::setGuestBindCache( $client_id, $cache_params);
+            ChatEventService::setGuestBindCache($client_id, $cache_params);
         }
 
         $ws_data = ChatEventService::buildMsg(ConstantService::$chat_cmd_hello, [
