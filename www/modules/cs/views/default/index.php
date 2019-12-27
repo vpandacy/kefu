@@ -115,6 +115,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                     <div class="exe-content-history-load">
                         <div class="iconfont icon-jiazaizhong dis_none"></div>
                         <div class="history-look">查看更多消息</div>
+                        <div class="exe-content-history-content-null"></div>
                     </div>
                     <div class="exe-content-history-ready"></div>
                     <div class="exe-content-history-title">
