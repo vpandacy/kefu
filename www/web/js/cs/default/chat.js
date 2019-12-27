@@ -437,7 +437,7 @@
                 return;
             }
             // 退出.
-            location.href = cs_common_ops.buildUCUrl('/user/logout');
+            location.href = cs_common_ops.buildKFCSurl('/user/logout');
         });
     };
 

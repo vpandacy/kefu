@@ -16,9 +16,7 @@ class GuestService extends BaseService
     {
         $address_info = IPDBQuery::find($client_ip);
 
-        $address_info = explode(',', $address_info);
-
-        list($province, $city, $address) = $address_info;
+        list($province, $city, $address) = (array) $address_info;
 
         $province_info  = [
             'province_id'   =>  0,
@@ -53,7 +51,7 @@ class GuestService extends BaseService
      * @return int
      */
     public static function getRefererSidByUrl( $url = null ){
-        $sid = '';
+        $sid = 0;
         $url_params = parse_url($url);
         $host = null;
         if (isset($url_params['host'])) {

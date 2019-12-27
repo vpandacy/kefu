@@ -109,7 +109,7 @@ class ConstantService extends BaseService
     public static $referer_media_types = [
         0   =>  '直接访问',
         10  =>  '百度',
-        11  =>  '306',
+        11  =>  '360',
         12  =>  '搜狗',
         13  =>  '神马',
         14  =>  '今日头条',
