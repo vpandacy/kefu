@@ -138,20 +138,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label" style="width: 120px">发起时间间隔</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="repeat_time" value="" placeholder="请输入发起时间间隔(秒)" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <label class="layui-form-label" style="width: 120px">发起次数</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="repeat_times" value="" placeholder="请输入发起次数" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
                             <label class="layui-form-label" style="width: 120px">发起语句设置</label>
                             <div class="layui-input-block" style="margin-left: 150px;">
                                 <table class="layui-table" id="repeatTable" lay-filter="repeatTable">
@@ -178,3 +164,21 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 <script type="text/html" id="toolbar">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
+
+
+<div class="publish-form dis_none">
+    <form action="" class="layui-form">
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">发起时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="time" value=""  required="" lay-verify="required" placeholder="请输入发起时间" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="" class="layui-form-label">发起内容</label>
+            <div class="layui-input-block">
+                <textarea name="content" placeholder="请输入发起内容" lay-verify="required" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </form>
+</div>

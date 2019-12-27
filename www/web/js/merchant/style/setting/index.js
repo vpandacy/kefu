@@ -31,8 +31,9 @@ var merchant_style_setting_index_ops = {
                 data: that.data,
                 defaultToolbar: [],
                 cols: [[
-                    {field: 'content', title: '发起语', fixed: true},
-                    {title: '操作', fixed: true, edit: 'text', toolbar: '#toolbar'}
+                    {field: 'time',title: '发起时间'},
+                    {field: 'content', title: '发起语'},
+                    {title: '操作', toolbar: '#toolbar'}
                 ]],
                 toolbar: '#tool',
                 id: 'repeatTable'
@@ -43,22 +44,33 @@ var merchant_style_setting_index_ops = {
                     return false;
                 }
 
-                layer.prompt({
-                    formType: 2,
-                    value: '',
-                    maxLength: 400,
-                    title: '请输入发起语'
-                },function (value, index, elem) {
-                    if(value.length <= 0) {
-                        return false;
-                    }
-                    that.data.push({
-                        content: value
-                    });
+                $.open({
+                    title: '添加发起语',
+                    content: $('.publish-form').html(),
+                    btn: ['添加','取消'],
+                    yes: function (index) {
+                        var data = {
+                            time: parseInt($('.layui-layer-dialog [name=time]').val()),
+                            content: $('.layui-layer-dialog [name=content]').val()
+                        };
 
-                    $.close(index);
-                    that.reloadRepeatTable();
-                })
+                        if(!(/^\d+$/.test(data.time))) {
+                            return $.msg('请填写正确的发起时间');
+                        }
+
+                        if(data.content.length <= 0 || data.content.length > 255) {
+                            return $.msg('请输入正确的发起内容');
+                        }
+
+                        that.data.push(data);
+                        that.reloadRepeatTable()
+                        $.close(index);
+                    },
+                    btn2: function (index) {
+                        $.close(index);
+                    },
+                    area:['600px']
+                });
             });
 
             // 删除
@@ -131,8 +143,6 @@ var merchant_style_setting_index_ops = {
 
                 $('[name=company_name]').val(data ? data.company_name : '');
                 $('[name=company_desc]').val(data ? data.company_desc : '');
-                $('[name=repeat_time]').val(data ? data.repeat_time : '');
-                $('[name=repeat_times]').val(data ? data.repeat_times : '');
                 $('[name=times]').val(data ? data.times : '');
 
                 if(data && data.company_logo) {
