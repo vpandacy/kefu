@@ -102,6 +102,7 @@
                 $('.exe-content-history-ready').find('.content-message').remove();
                 $('.exe-content-history-content-null').html('');
                 $('.exe-content-history').find('.exe-content-history-title').html('');
+                $('.history-look').attr('style','pointer-events: all;');
             }
             var uuid = $(this).attr('data-uuid');
             if(!uuid) {
@@ -470,6 +471,8 @@
             let name = $('.content-message-active').attr('data-name');
             $.post('/cs/visitor/message',{last_time:formatDate,uuid:uuid},function (res) {
                 historyDate = res.data;
+                /** 当无历史消息时禁止点击 **/
+                historyDate.length == 0 ? $('.history-look').attr('style','pointer-events: none;') : '';
                let historyHtml = '';
                 for (let i=0; i<historyDate.length; i++) {
                     if(historyDate[i].from_id == uuid){
