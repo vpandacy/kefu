@@ -102,11 +102,11 @@
              * @Array:sourceName : 终端集合
              * @Array:mediaName : 媒体集合
              * **/
-            const sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
-            var sourceIcon = sourceName.find(function (item) {
+            let sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+            let sourceIcon = sourceName.find(function (item) {
                 return item.id == user.source;
             });
-            const mediaName = [
+            let mediaName = [
                 {id: '0', name: '直接访问'},
                 {id: '100', name: '百度'},
                 {id: '110', name: '360'},
@@ -128,7 +128,7 @@
                 {id: '270', name: '知乎'},
                 {id: '280', name: '爱奇艺'}
             ];
-            var mediaIcon = mediaName.find(function (item) {
+            let mediaIcon = mediaName.find(function (item) {
                 return item.id == user.media;
             });
             return  [
@@ -166,7 +166,7 @@
             var sourceIcon = sourceName.find(function (item) {
                 return item.id == user.source;
             });
-            const mediaName = [
+            var mediaName = [
                 {id: '0', name: '直接访问'},
                 {id: '100', name: '百度'},
                 {id: '110', name: '360'},

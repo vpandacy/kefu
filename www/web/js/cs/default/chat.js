@@ -100,6 +100,7 @@
             historyDate = []
             if($(this).attr('data-uuid') != $('.content-message-active').attr('data-uuid')){
                 $('.exe-content-history-ready').find('.content-message').remove();
+                $('.exe-content-history-content-null').html('');
                 $('.exe-content-history').find('.exe-content-history-title').html('');
             }
             var uuid = $(this).attr('data-uuid');
@@ -495,7 +496,7 @@
                 }
                 $('.exe-content-history-ready').prepend(historyHtml);
                 if(historyDate.length === 0){
-                    $('.exe-content-history-title').html('' +
+                    $('.exe-content-history-content-null').html('' +
                         '<fieldset>\n' +
                         '  <legend>暂无消息</legend>\n' +
                         '</fieldset>');
@@ -505,6 +506,7 @@
                         '<fieldset>\n' +
                         '  <legend>以上是历史消息</legend>\n' +
                         '</fieldset>');
+                    $('.exe-content-history-content-null').html('')
                     $('.icon-jiazaizhong').hide();
                 }
             });
