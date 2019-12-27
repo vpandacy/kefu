@@ -482,33 +482,29 @@
             return false;
         }
 
-        var times = config.style.repeat_times,
-            that = this,
-            messages = JSON.parse(config.style.repeat_setting),
-            time = config.style.repeat_time;
-        console.dir(messages);
+        var that = this,
+            messages = JSON.parse(config.style.repeat_setting);
+
+        if(messages.length <= 0) {
+            return false;
+        }
+
+        var message = messages.shift(),
+            time = message.time;
+
         repeatInterval = setInterval(function () {
             time--;
             if(time > 0) {
                 return false;
             }
 
-            times--;
-            if(times < 0) {
+            if(messages.length <= 0) {
                 clearInterval(repeatInterval);
                 return false;
             }
 
-            // 这里自动渲染.
-            // 这里就要发送一次.
-            time = config.style.repeat_time;
-            // 开始发送消息.
-
             // 渲染一条消息
-            if(messages.length > 0) {
-                var message = messages.shift();
-                !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
-            }
+            !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
             // 这里是否要强制展示.
             that.scrollToBottom();
             // 这里要强制显示出来.
