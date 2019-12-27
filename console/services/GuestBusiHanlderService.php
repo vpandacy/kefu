@@ -311,6 +311,9 @@ class GuestBusiHanlderService extends BaseService
             "wait_num" => $num + 1
         ]);
 
+        //同时换成起来对应的客服信息
+        $cache_params = ChatEventService::getGuestBindCache( $client_id);
+
         //转发消息给对应的客服，做好接待准备
         $transfer_params = [
             "f_id" => $f_id,
@@ -319,12 +322,12 @@ class GuestBusiHanlderService extends BaseService
             'nickname'  =>  'Guest-' . substr($f_id, strlen($f_id) - 12),
             'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
             'allocation_time'   =>  date('H:i:s'),
+            'source'    =>  isset($cache_params['source']) ? $cache_params['source'] : 0,
+            'media' =>  isset($cache_params['media']) ? $cache_params['media'] : 0,
         ];
 
         $transfer_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_wait_connect,$transfer_params );
 
-        //同时换成起来对应的客服信息
-        $cache_params = ChatEventService::getGuestBindCache( $client_id);
         $cache_params['kf_id'] = $kf_info['id'];
         $cache_params['kf_sn'] = $kf_info['sn'];
         if(!in_array($f_id, ChatGroupService::getWaitGroupAllUsers($kf_info['sn']))) {
