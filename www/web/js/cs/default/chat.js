@@ -549,10 +549,10 @@
                 $('.content-message-active').removeClass('content-message-active');
             }
 
-            online_users = online_users.map(function (curr) {
-                return curr != data.uuid;
+            online_users = online_users.filter(function (elem,curr) {
+                return elem != data.uuid;
             });
-
+            
             ChatStorage.removeItem(data.uuid);
             this.page.renderOnlineList();
         }
