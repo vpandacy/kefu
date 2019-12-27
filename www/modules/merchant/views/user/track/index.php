@@ -7,7 +7,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
-        'bar_menu'  =>  'member',
+        'bar_menu'  =>  'message',
         'current_menu'  =>  'track'
     ])?>
     <div class="tab_staff_content">

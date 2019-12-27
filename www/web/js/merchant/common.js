@@ -12,12 +12,13 @@ var merchant_common_ops = {
             nav_name = null,
             uris = {
                 'yonghuguanli'  : [
-                    '/merchant/user',
+                    '/merchant/user/index'
                 ],
                 'liaotian'      : [
                     '/merchant/chat/index',
                     '/merchant/chat/download',
-                    '/merchant/overall/offline'
+                    '/merchant/overall/offline',
+                    '/merchant/user/track'
                 ],
                 'quanjushezhi'  : [
                     '/merchant/overall/index',
