@@ -505,6 +505,8 @@
 
             // 渲染一条消息
             !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
+            message = messages.shift();
+            time = message.time;
             // 这里是否要强制展示.
             that.scrollToBottom();
             // 这里要强制显示出来.
