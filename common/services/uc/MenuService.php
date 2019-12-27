@@ -144,7 +144,7 @@ class MenuService extends BaseService
                     'url'   =>  'merchant/user/index/index',
                 ],
                 'track' =>  [
-                    'title' =>  '轨迹查看',
+                    'title' =>  '记录中心',
                     'url'   =>  'merchant/user/track/index',
                 ],
                 'message'   =>  [

@@ -149,7 +149,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <div class="tab fGrow1 one">
                     <div class="tab-switch height10 height50" >
                         <div class="tab-one switch-action">访客信息</div>
-                        <div class="tab-one">查看轨迹</div>
+                        <div class="tab-one">记录中心</div>
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
