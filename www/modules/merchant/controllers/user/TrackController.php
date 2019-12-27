@@ -14,14 +14,37 @@ class TrackController extends BaseController
     public function actionIndex()
     {
         if($this->isGet()) {
-            return $this->render('index');
+            $group_id = $this->get('group_id',0);
+            $time = $this->get('time','');
+            $groups = GroupChat::findAll(['merchant_id'=>$this->getMerchantId()]);
+
+            return $this->render('index',[
+                'groups'    =>  $groups,
+                'search_conditions' =>  [
+                    'group_id'  =>  $group_id,
+                    'time'      =>  $time
+                ],
+            ]);
         }
 
+        $group_id = intval($this->post('group_id',0));
+        $time = $this->post('time','');
+
+        $time = $time ? explode('~', $time) : [];
         $page = intval($this->post('page',1));
 
         $query = GuestHistoryLog::find()->where([
             'merchant_id'=>$this->getMerchantId()
         ]);
+
+        if($group_id) {
+            $query->andWhere(['chat_stype_id'=>$group_id]);
+        }
+        
+        if($time) {
+            $query->andWhere(['>','created_time', trim($time[0])]);
+            $query->andWhere(['<','created_time', trim($time[1])]);
+        }
 
         $count = $query->count();
 
