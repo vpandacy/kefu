@@ -98,9 +98,38 @@
             }
 
             // 这里有图标展示. 这里要注意一下.
-            var sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+            /**
+             * @Array:sourceName : 终端集合
+             * @Array:mediaName : 媒体集合
+             * **/
+            const sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
             var sourceIcon = sourceName.find(function (item) {
                 return item.id == user.source;
+            });
+            const mediaName = [
+                {id: '0', name: '直接访问'},
+                {id: '100', name: '百度'},
+                {id: '110', name: '360'},
+                {id: '120', name: '搜狗'},
+                {id: '130', name: '神马'},
+                {id: '140', name: '今日头条'},
+                {id: '150', name: 'OPPO'},
+                {id: '160', name: 'VIVO'},
+                {id: '170', name: '小米'},
+                {id: '180', name: 'WIFI'},
+                {id: '190', name: '趣头条'},
+                {id: '200', name: 'UC'},
+                {id: '210', name: '一点资讯'},
+                {id: '220', name: '快手'},
+                {id: '230', name: '广点通'},
+                {id: '240', name: '陌陌'},
+                {id: '250', name: 'WPS'},
+                {id: '260', name: '趣看天下'},
+                {id: '270', name: '知乎'},
+                {id: '280', name: '爱奇艺'}
+            ];
+            var mediaIcon = mediaName.find(function (item) {
+                return item.id == user.media;
             });
             return  [
                 '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'" data-name="',user.nickname,'">',
@@ -136,6 +165,31 @@
             var sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
             var sourceIcon = sourceName.find(function (item) {
                 return item.id == user.source;
+            });
+            const mediaName = [
+                {id: '0', name: '直接访问'},
+                {id: '100', name: '百度'},
+                {id: '110', name: '360'},
+                {id: '120', name: '搜狗'},
+                {id: '130', name: '神马'},
+                {id: '140', name: '今日头条'},
+                {id: '150', name: 'OPPO'},
+                {id: '160', name: 'VIVO'},
+                {id: '170', name: '小米'},
+                {id: '180', name: 'WIFI'},
+                {id: '190', name: '趣头条'},
+                {id: '200', name: 'UC'},
+                {id: '210', name: '一点资讯'},
+                {id: '220', name: '快手'},
+                {id: '230', name: '广点通'},
+                {id: '240', name: '陌陌'},
+                {id: '250', name: 'WPS'},
+                {id: '260', name: '趣看天下'},
+                {id: '270', name: '知乎'},
+                {id: '280', name: '爱奇艺'}
+            ];
+            var mediaIcon = mediaName.find(function (item) {
+                return item.id == user.media;
             });
             return [
                 '<div class="tab-content-list" data-uuid="',wait_uuid,'"  data-name="',user.nickname,'">',
@@ -222,7 +276,7 @@
                 // 获取聊天轨迹.
                 var html = res.data.map(function (history) {
                     return [
-                        '<div style="background-color: #ffffff;padding: 5px 25px;">',
+                        '<div style="background-color: #ffffff;padding: 5px 25px;overflow: hidden;word-break: break-all;">',
                             '<div>落地页：', history.land_url ? history.land_url : '暂无','　</div>',
                             '<div>来源：', history.referer_url ? history.referer_url : '暂无' ,'　</div>',
                             '<div>接待人：',history.staff_name,'</div>',
