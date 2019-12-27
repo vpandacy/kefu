@@ -269,6 +269,11 @@
             },
             dataType: 'json',
             success:function (res) {
+                if(res.code == -302) {
+                    return $.msg(res.msg, false, function(){
+                        location.href = res.data.url;
+                    });
+                }
                 if(res.code != 200) {
                     return $.msg(res.msg);
                 }
@@ -302,6 +307,11 @@
             },
             dataType: 'json',
             success:function (res) {
+                if(res.code == -302) {
+                    return $.msg(res.msg, false, function(){
+                        location.href = res.data.url;
+                    });
+                }
                 if(res.code != 200) {
                     return $.msg(res.msg);
                 }

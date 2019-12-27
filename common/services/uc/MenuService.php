@@ -143,14 +143,6 @@ class MenuService extends BaseService
                     'title' =>  '会员管理',
                     'url'   =>  'merchant/user/index/index',
                 ],
-                'track' =>  [
-                    'title' =>  '记录中心',
-                    'url'   =>  'merchant/user/track/index',
-                ],
-                'message'   =>  [
-                    'title' =>  '聊天内容',
-                    'url'   =>  'merchant/user/message/index',
-                ],
             ],
             'chat'  =>  [
                 'chat'  =>  [
@@ -236,9 +228,13 @@ class MenuService extends BaseService
             ],
             'message'   =>  [
                 'leave' =>  [
-                    'title' =>  '留言管理',
+                    'title' =>  '留言板管理',
                     'url'   =>  'merchant/overall/offline/index'
                 ],
+                'track' =>  [
+                    'title' =>  '记录中心',
+                    'url'   =>  'merchant/user/track/index',
+                ]
             ],
         ];
     }
