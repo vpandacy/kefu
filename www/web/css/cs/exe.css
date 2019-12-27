@@ -555,18 +555,31 @@ select[name='cs'] {
     display:-webkit-flex;
     flex: 1;
     flex-direction: column;
-    /*height: 90%;*/
-    justify-content: space-around;
+    height: 90%;
+    /*justify-content: space-around;*/
     font-size: 14px;
     padding: 0 10px;
+    overflow-y: auto;
 }
-
-#chatExe .exe-info .one .tab-content div {
+#chatExe .tab .content-tab-one {
     color: rgb(125, 128, 136);
-    margin: 5% 0;
+    margin: 10% 0;
     border-radius: 5px;
     font: small-caption;
+    height: 90%;
+    /*display: flex;*/
+    /*flex-direction: column;*/
 }
+#chatExe .tab .content-tab-one div{
+    margin: 10px 0;
+}
+#chatExe .tab .content-tab-two div {
+    margin: 10px 0px;
+    /*height: 100%;*/
+}
+    /*#chatExe .exe-info .one .tab-content div {*/
+
+/*}*/
 #chatExe .exe-info .one .tab-content div .name input{
     border: 1px;
     border-radius: 3px;
@@ -580,6 +593,7 @@ select[name='cs'] {
 
 #chatExe .fGrow1 {
     flex: 1;
+    height: 100%;
 }
 
 #chatExe .height10 {
