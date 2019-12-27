@@ -142,6 +142,32 @@ class UserController extends BaseController
     }
 
     /**
+     * 退出登录操作.
+     * @return \yii\web\Response
+     */
+    public function actionLogout()
+    {
+        $cookie = \Yii::$app->params['cookies']['staff'];
+
+        if($this->current_user) {
+            // 更新在线的状态.如果是退出登录了.
+            Staff::updateAll([
+                'is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+        }
+
+        $this->removeCookie($cookie['name'],$cookie['domain']);
+
+        $url = GlobalUrlService::buildKFCSUrl('/user/login');
+
+        if($this->isAjax()) {
+            return $this->renderJSON(['redirect'=>$url],'退出成功');
+        }
+
+        return $this->redirect($url);
+    }
+
+
+    /**
      * 获取图形验证码.
      */
     public function actionCaptcha()
