@@ -1,4 +1,27 @@
 ;
+const sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+const mediaName = [
+    {id: '0', name: '直接访问',icon:'http://static.kefu.test.hsh568.cn/logo/直接访问.png'},
+    {id: '100', name: '百度',icon:'http://static.kefu.test.hsh568.cn/logo/百度.png'},
+    {id: '110', name: '360',icon:'http://static.kefu.test.hsh568.cn/logo/360.png'},
+    {id: '120', name: '搜狗',icon:'http://static.kefu.test.hsh568.cn/logo/搜狗.png'},
+    {id: '130', name: '神马',icon:'http://static.kefu.test.hsh568.cn/logo/神马.png'},
+    {id: '140', name: '今日头条',icon:'http://static.kefu.test.hsh568.cn/logo/头条.png'},
+    {id: '150', name: 'OPPO',icon:'http://static.kefu.test.hsh568.cn/logo/oppo.png'},
+    {id: '160', name: 'VIVO',icon:'http://static.kefu.test.hsh568.cn/logo/vivo.png'},
+    {id: '170', name: '小米',icon:'http://static.kefu.test.hsh568.cn/logo/小米.png'},
+    {id: '180', name: 'WIFI',icon:'http://static.kefu.test.hsh568.cn/logo/WIFI.png'},
+    {id: '190', name: '趣头条',icon:'http://static.kefu.test.hsh568.cn/logo/趣头条.png'},
+    {id: '200', name: 'UC',icon:'http://static.kefu.test.hsh568.cn/logo/UC.png'},
+    {id: '210', name: '一点资讯',icon:'http://static.kefu.test.hsh568.cn/logo/一点资讯.png'},
+    {id: '220', name: '快手',icon:'http://static.kefu.test.hsh568.cn/logo/快手.png'},
+    {id: '230', name: '广点通',icon:'http://static.kefu.test.hsh568.cn/logo/广点通.png'},
+    {id: '240', name: '陌陌',icon:'http://static.kefu.test.hsh568.cn/logo/陌陌.png'},
+    {id: '250', name: 'WPS',icon:'http://static.kefu.test.hsh568.cn/logo/WPS.png'},
+    {id: '260', name: '趣看天下',icon:'http://static.kefu.test.hsh568.cn/logo/趣看天下.png'},
+    {id: '270', name: '知乎',icon:'http://static.kefu.test.hsh568.cn/logo/知乎.png'},
+    {id: '280', name: '爱奇艺',icon:'http://static.kefu.test.hsh568.cn/logo/爱奇艺.png'}
+];
 var merchant_user_track_ops = {
     init: function () {
         this.eventBind();
@@ -67,8 +90,26 @@ var merchant_user_track_ops = {
                     "</div>" +
                     "<div class='tabs_content'>" +
                     "<div class='content_assgin'></div>" +
-                    "<div class='dis_none'>2</div>" +
-                    "<div class='dis_none'>3</div>" +
+                    "<div class='content_information dis_none'>" +
+                    "</div>" +
+                    "<div class='dis_none'>" +
+                    "<table class='layui-table'>\n" +
+                    "  <colgroup>\n" +
+                    "    <col width='90'>\n" +
+                    "    <col  width='300'>\n" +
+                    "    <col>\n" +
+                    "  </colgroup>\n" +
+                    "  <thead>\n" +
+                    "    <tr>\n" +
+                    "      <th>访问时间</th>\n" +
+                    "      <th>访问地址</th>\n" +
+                    "      <th>停留时长</th>\n" +
+                    "    </tr> \n" +
+                    "  </thead>\n" +
+                    "  <tbody class='route_thead'>\n" +
+                    "  </tbody>\n" +
+                    "</table>" +
+                    "</div>" +
                     "</div>"+
                     "</div>\n";
                 $('.trackTable_big').append(fromHtml);
@@ -88,6 +129,39 @@ var merchant_user_track_ops = {
                         return;
                     }
                     layer.msg('请联系管理员');
+                });
+                $.post('/merchant/user/track/detail',{history_id:historyId},function (res) {
+                    if(res.code === 200){
+                        var source_name= sourceName.find(function (item) {
+                            return item.id==res.data.source;
+                        })
+                        var media_name= mediaName.find(function (item) {
+                            return item.id==res.data.referer_media;
+                        })
+                        $('.content_information').append("<div><span class='information_title'>开始时间：</span><span>"+res.data.created_time+"</span></div>" +
+                            "<div><span class='information_title'>结束时间：</span><span>"+res.data.closed_time+"</span></div>" +
+                            "<div><span class='information_title'>对话时长：</span><span>"+res.data.chat_duration+"</span></div>" +
+                            "<div><span class='information_title'>地区：</span><span>"+res.data.province_str+"</span></div>" +
+                            "<div><span class='information_title'>访客IP：</span><span>"+res.data.client_ip+"</span></div>" +
+                            "<div><span class='information_title'>开始方式：</span><span>暂无</span></div>" +
+                            "<div><span class='information_title'>结束方式：</span><span>暂无</span></div>" +
+                            "<div><span class='information_title'>终端：</span><span>"+source_name.name+"</span></div>" +
+                            "<div><span class='information_title'>消息类型：</span><span>在线消息</span></div>" +
+                            "<div><span class='information_title'>访问来源：</span><span>"+media_name.name+"</span></div>" +
+                            "<div><span class='information_title'>关键词：</span><span>暂无</span></div>" +
+                            "<div><span class='information_title'>落地页：</span><a href='"+ res.data.land_url +"'>"+res.data.land_url+"</a></div>");
+                    }
+                });
+                $.post('/merchant/user/track/history',{history_id:historyId},function (res){
+                    if(res.code == 200){
+                        res.data.forEach(function (item) {
+                            $('.route_thead').append("    <tr>\n" +
+                                "      <td>"+item.created_time+"</td>\n" +
+                                "      <td>"+item.land_url+"</td>\n" +
+                                "      <td>"+item.chat_duration+"</td>\n" +
+                                "    </tr>\n");
+                        });
+                    }
                 });
                 // 菜单栏切换.
                 $(".trackTable_toop .tab .tabs").click(function() {
