@@ -57,9 +57,30 @@ var merchant_user_track_ops = {
                 if(event.event != 'see') {
                     return false;
                 }
-
                 // 这里开始弹层
-                $.msg('您点击了查看详情');
+                $('.layui-table-view').append('<div class="trackTable_big"></div>');
+                var fromHtml = "<div class='trackTable_toop'>" +
+                    "<div class='tab'>" +
+                    "<div class='tabs tabs_active'>对话记录</div><div class='tabs'>详细信息</div><div class='tabs'>访问轨迹</div>" +
+                    "<div class='iconfont icon-guanbi'></div>"+
+                    "</div>" +
+                    "<div class='tabs_content'>" +
+                    "<div>1</div>" +
+                    "<div class='dis_none'>2</div>" +
+                    "<div class='dis_none'>3</div>" +
+                    "</div>"+
+                    "</div>\n";
+                $('.trackTable_big').append(fromHtml);
+                // 菜单栏切换.
+                $(".trackTable_toop .tab .tabs").click(function() {
+                    // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
+                    $(this).addClass("tabs_active").siblings().removeClass("tabs_active");
+                    // parent 父元素 next 下一个兄弟节点  children 子节点
+                    $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
+                });
+                $('.trackTable_toop .tab .icon-guanbi').click(function () {
+                    $('.trackTable_big').html("");
+                });
             });
         });
     }
