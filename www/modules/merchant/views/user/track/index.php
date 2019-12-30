@@ -29,7 +29,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
             </div>
         </form>
-        <table class="layui-hide" id="trackTable" lay-filter="trackTable"></table>
+        <table class="layui-hide" id="trackTable" lay-filter="trackTable">
+
+        </table>
     </div>
 </div>
 
