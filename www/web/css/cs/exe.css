@@ -260,6 +260,10 @@ select[name='cs'] {
     pointer-events:none;
     position: relative;
 }
+#chatExe .exe-keep .tab .tab-content-list div img{
+    width: 20px;
+    vertical-align: bottom;
+}
 #chatExe .exe-keep .tab .tab-content-list:hover {
     background: #e2e1e1;
     color: white;
