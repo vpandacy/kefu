@@ -1,7 +1,7 @@
 <?php
 namespace common\services\chat;
 
-use common\models\kefu\chat\GuestHistoryLog;
+use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GuestChatLog;
 use common\models\uc\Staff;
 use common\services\BaseService;

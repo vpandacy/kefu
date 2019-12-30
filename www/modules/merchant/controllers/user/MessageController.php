@@ -3,7 +3,7 @@ namespace www\modules\merchant\controllers\user;
 
 use common\components\DataHelper;
 use common\components\helper\ModelHelper;
-use common\models\kefu\chat\GuestHistoryLog;
+use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GuestChatLog;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
