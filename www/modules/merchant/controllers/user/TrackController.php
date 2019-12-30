@@ -3,6 +3,7 @@ namespace www\modules\merchant\controllers\user;
 
 use common\components\DataHelper;
 use common\components\helper\ModelHelper;
+use common\models\merchant\City;
 use common\models\merchant\GuestChatLog;
 use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GroupChat;
@@ -127,10 +128,23 @@ class TrackController extends BaseController
             return $this->renderErrJSON('请选择正确的聊天记录');
         }
 
-        $history = GuestHistoryLog::findOne(['id'=>$history_id,'merchant_id'=>$this->getMerchantId()]);
+        $history = GuestHistoryLog::find()
+            ->where(['id'=>$history_id,'merchant_id'=>$this->getMerchantId()])
+            ->asArray()
+            ->one();
 
         if(!$history) {
             return $this->renderErrJSON('请选择正确的聊天记录');
+        }
+
+        // 这里查询省市区.
+        if(!$history['province_id']) {
+            $history['province_str'] = '局域网访问';
+        }else{
+            $province = City::findOne(['id'=>$history['province_id']]);
+            $city = City::findOne(['id'=>$history['city_id']]);
+
+            $history['province_str'] = $province['name'] . ' ' . $city['name'];
         }
 
         return $this->renderJSON($history,'获取成功');
