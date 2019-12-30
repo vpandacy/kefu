@@ -129,6 +129,7 @@ body {
 #online .online-info .content-message .message-info {
     width: 70%;
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 #online .online-info .content-message .message-info .message-name-date {
