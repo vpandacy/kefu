@@ -136,6 +136,10 @@ class CSBusiHanlderService extends BaseService
                     $client_ids = Gateway::getClientIdByUid($f_id);
                     if($client_ids) {
                         foreach($client_ids as $old_client) {
+                            Gateway::sendToClient($old_client, json_encode([
+                                // 这里退出.
+                                'cmd'   =>  ConstantService::$chat_cmd_kf_logout
+                            ]));
                             Gateway::closeClient($old_client);
                         }
                     }

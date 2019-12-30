@@ -301,6 +301,10 @@
             case 'guest_connect_wait':
                 this.guestConnectWait(data);
                 break;
+            case 'kf_logout':
+                // 这里弹出信息.
+                this.logout();
+                break;
         }
     };
 
@@ -556,6 +560,15 @@
             ChatStorage.removeItem(data.uuid);
             this.page.renderOnlineList();
         }
+    };
+
+    /**
+     * 多个客服登录.强制退出.
+     */
+    Chat.prototype.logout = function() {
+        return $.msg('您已经在其他地方登录了，如果继续操作请重新登录',false, function(){
+            location.href = cs_common_ops.buildKFCSurl('/user/login');
+        });
     };
 
     window.Chat = Chat;
