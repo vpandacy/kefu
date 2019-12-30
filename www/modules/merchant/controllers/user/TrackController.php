@@ -107,6 +107,12 @@ class TrackController extends BaseController
             ->asArray()
             ->all();
 
+        if($guest_chat_log) {
+            foreach($guest_chat_log as $key=>$value) {
+                $guest_chat_log[$key]['nickname'] = substr($value['uuid'], strlen($value['uuid']) - 12);
+            }
+        }
+
         return $this->renderJSON($guest_chat_log, '获取成功');
     }
 
