@@ -481,6 +481,23 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 .tab_staff_content .trackTable_toop .tab .tabs_active{
     border-bottom: 2px solid rgba(1, 170, 237, 1);
 }
+.tab_staff_content .trackTable_toop .tabs_content{
+    padding: 5px;
+}
+.tab_staff_content .trackTable_toop .tabs_content .content_assgin .assgin_info{
+    margin-bottom: 10px;
+}
+.tab_staff_content .trackTable_toop .tabs_content .content_assgin .assgin_title{
+    font-size: 14px;
+    color: #01aaed;
+}
+.tab_staff_content .trackTable_toop .tabs_content .content_assgin .as_title_my{
+    font-size: 14px;
+    color: #009688 !important;
+}
+.tab_staff_content .trackTable_toop .tabs_content .content_assgin .assgin_content{
+
+}
 /**
 merchantform.css
  */

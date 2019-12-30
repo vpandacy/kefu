@@ -54,6 +54,7 @@ var merchant_user_track_ops = {
 
             // 您点击了查看详情.
             table.on('tool(trackTable)', function (event) {
+                let historyId = event.data.id;
                 if(event.event != 'see') {
                     return false;
                 }
@@ -65,12 +66,29 @@ var merchant_user_track_ops = {
                     "<div class='iconfont icon-guanbi'></div>"+
                     "</div>" +
                     "<div class='tabs_content'>" +
-                    "<div>1</div>" +
+                    "<div class='content_assgin'></div>" +
                     "<div class='dis_none'>2</div>" +
                     "<div class='dis_none'>3</div>" +
                     "</div>"+
                     "</div>\n";
                 $('.trackTable_big').append(fromHtml);
+                $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
+                    if(res.code === 200){
+                        res.data.forEach(function (item) {
+                            if(item.uuid === item.from_id){
+                                $('.content_assgin').append(
+                                    " <div class='assgin_info'><div class='assgin_title'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
+                                    " <div class='assgin_content'>"+item.content+"</div></div>");
+                            }else {
+                                $('.content_assgin').append(
+                                    " <div class='assgin_info'><div class='assgin_title as_title_my'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
+                                    " <div class='assgin_content'>"+item.content+"</div></div>");
+                            }
+                        })
+                        return;
+                    }
+                    layer.msg('请联系管理员');
+                });
                 // 菜单栏切换.
                 $(".trackTable_toop .tab .tabs").click(function() {
                     // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
