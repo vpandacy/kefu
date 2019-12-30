@@ -17,6 +17,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/socket.js'), CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/chat.js'), CsAsset::className());
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/index.js'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipboard/clipboard.js'), CsAsset::className());
 ?>
 <script>
     WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
@@ -103,7 +104,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <div class="exe-content-top">
                     <div class="content-top-info">
                     <!-- <div class="info keyword"><span>关键词：</span><span>-</span></div>-->
-                        <div class="info land-url"><span>落地页：</span><span>-</span></div>
+                        <div class="info land-url"><span>落地页：</span><span class="land-url-url">-</span>
+                            <span data-clipboard-text="" class="landUrl-copy dis_none">复制</span></div>
                         <div class="info canal-url"><span>渠道：</span><span>-</span></div>
                     </div>
                     <div class="content-top-info">

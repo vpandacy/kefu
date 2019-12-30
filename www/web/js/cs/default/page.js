@@ -320,7 +320,14 @@
 
                 var member = res.data.member,
                     history= res.data.history;
-                console.log(history)
+                $('.land-url').mousemove(function () {
+                    $('.landUrl-copy').show();
+                });
+                $('.land-url').mouseout(function () {
+                    $('.landUrl-copy').hide();
+                });
+                $('.landUrl-copy').attr('data-clipboard-text', history.land_url)
+                new ClipboardJS('.landUrl-copy');
                 // 批量渲染.
                 elem.find('.exe-info .name').text(member && member.name ? member.name : '暂无');
                 elem.find('.exe-info .mobile').text(member && member.mobile ?  member.mobile : '暂无');
@@ -330,8 +337,8 @@
                 elem.find('.exe-info .desc').text(member && member.desc ? member.desc : '暂无');
                 // elem.find('.keyword span:last-child').text(history.)
                 elem.find('.exe-header-info-left span:last-child').text(history.province + ' ('+ history.client_ip +')');
-                elem.find('.land-url span:last-child').text(history.land_title ? history.land_title : history.land_url);
-                elem.find('.land-url span:last-child').attr('title',history.land_title ? history.land_title : history.land_url);
+                elem.find('.land-url .land-url-url').text(history.title ? history.title : history.land_url);
+                elem.find('.land-url .land-url-url').attr('title',history.title ? history.title : history.land_url);
                 elem.find('.source span:last-child').text(history.source ? history.source : '暂无');
                 elem.find('.source span:last-child').attr('title',history.source);
                 elem.find('.referer-url span:last-child').text(history.referer_url ? history.referer_url : '暂无');

@@ -381,9 +381,21 @@ select[name='cs'] {
     display: flex;
     flex: 1;
     line-height: 26px;
+    position: relative;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .land-url span:first-child {
     width: 55px !important;
+}
+#chatExe .exe-content .exe-content-top .content-top-info .land-url .land-url-url {
+    cursor: pointer;
+}
+#chatExe .exe-content .exe-content-top .content-top-info .land-url .landUrl-copy {
+    background: black;
+    padding: 0 5px;
+    color: white;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(1) {
     width: 40px;
