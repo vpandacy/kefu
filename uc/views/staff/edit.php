@@ -81,7 +81,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">请选择部门</label>
-                    <div class="layui-input-block">
+                    <div class="layui-inline">
                         <select name="department_id" lay-verify="required">
                             <option value="0">请选择部门</option>
                             <?php foreach($departments as $department):?>
@@ -92,7 +92,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">请选择角色</label>
+                    <label class="layui-inline">请选择角色</label>
                     <div class="layui-input-block">
 
                         <select multiple="multiple" lay-filter="test">
