@@ -5,7 +5,7 @@ use common\components\helper\DateHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\components\ip\IPDBQuery;
-use common\models\kefu\chat\GuestHistoryLog;
+use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GuestChatLog;
 use common\models\merchant\Member;

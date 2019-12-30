@@ -3,7 +3,8 @@ namespace www\modules\merchant\controllers\user;
 
 use common\components\DataHelper;
 use common\components\helper\ModelHelper;
-use common\models\kefu\chat\GuestHistoryLog;
+use common\models\merchant\GuestChatLog;
+use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GroupChat;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
@@ -78,5 +79,83 @@ class TrackController extends BaseController
 
         // 转义字符.
         return $this->renderPageJSON(DataHelper::encodeArray($lists), '获取成功', $count);
+    }
+
+    /**
+     * 获取当次的聊天的聊天记录.
+     */
+    public function actionChat()
+    {
+        $history_id = $this->post('history_id',0);
+
+        if(!$history_id) {
+            return $this->renderErrJSON('请选择正确的聊天记录.');
+        }
+
+        $history = GuestHistoryLog::findOne(['id'=>$history_id,'merchant_id'=>$this->getMerchantId()]);
+
+        if(!$history) {
+            return $this->renderErrJSON('请选择正确的历史记录');
+        }
+
+        // 开始获取信息.
+        $guest_chat_log = GuestChatLog::find()
+            ->where([
+                'guest_log_id'  =>  $history_id,
+                'merchant_id'   =>  $this->getMerchantId(),
+            ])
+            ->asArray()
+            ->all();
+
+        return $this->renderJSON($guest_chat_log, '获取成功');
+    }
+
+    /**
+     * 获取详细的聊天记录.
+     */
+    public function actionDetail()
+    {
+        $history_id = $this->post('history_id',0);
+
+        if(!$history_id) {
+            return $this->renderErrJSON('请选择正确的聊天记录');
+        }
+
+        $history = GuestHistoryLog::findOne(['id'=>$history_id,'merchant_id'=>$this->getMerchantId()]);
+
+        if(!$history) {
+            return $this->renderErrJSON('请选择正确的聊天记录');
+        }
+
+        return $this->renderJSON($history,'获取成功');
+    }
+
+    /**
+     * 获取当前游客的历史轨迹.
+     */
+    public function actionHistory()
+    {
+        $history_id = $this->post('history_id',0);
+
+        if(!$history_id) {
+            return $this->renderErrJSON('请选择正确的聊天记录');
+        }
+
+        $history = GuestHistoryLog::findOne(['id'=>$history_id,'merchant_id'=>$this->getMerchantId()]);
+
+        if(!$history) {
+            return $this->renderErrJSON('请选择正确的聊天记录');
+        }
+
+        // 查询所有的聊天信息.
+        $all_history = GuestHistoryLog::find()
+            ->where([
+                'uuid'  =>  $history['uuid'],
+                'merchant_id'   =>  $this->getMerchantId()
+            ])
+            ->asArray()
+            ->all();
+
+        return $this->renderJSON($all_history,'获取成功');
     }
 }
