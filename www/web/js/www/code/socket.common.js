@@ -257,6 +257,7 @@
         $(this.input).html('');
         this.scrollToBottom();
         this.autoClose();
+        this.bindRepeatEvent();
     };
 
     // ws发送消息.
