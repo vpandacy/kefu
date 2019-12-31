@@ -251,11 +251,11 @@ class MerchantService extends BaseService
                 ->asArray()
                 ->where(['group_chat_id'=>$group_chat_id,'merchant_id'=>$merchant_id])
                 ->one();
-
+            
             if(!$setting) {
                 // 生成默认的配置信息.
                 $setting = self::genDefaultStyleConfig();
-                $setting['group_chat_id'] = 0;
+                $setting['group_chat_id'] = $group_chat_id;
             }
 
             $style = json_encode($setting);

@@ -50,8 +50,8 @@ class ChatController extends QueueBaseController
                     "status" => ConstantService::$default_status_neg_1,
                     "closed_time" => ConstantService::$default_datetime
                 ];
-                if(isset($data['code'])) {
-                    $style = MerchantService::getStyleConfig($data['code'], $merchant_info['id']);
+                if(isset($params_data['code'])) {
+                    $style = MerchantService::getStyleConfig($params_data['code'], $merchant_info['id']);
                     $params['chat_stype_id'] = $style['group_chat_id'];
                 }
                 GuestChatService::addGuest( $params );
