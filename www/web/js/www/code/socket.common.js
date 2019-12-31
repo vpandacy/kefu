@@ -344,6 +344,7 @@
                     land: this.params.href,
                     rf: this.params.rf,
                     title: this.params.title,
+                    code: this.getRequest('code', '')
                 };
                 this.socketSend( this.buildMsg('guest_in',params ));
                 break;
