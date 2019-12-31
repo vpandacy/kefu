@@ -219,7 +219,8 @@ class GuestBusiHanlderService extends BaseService
                 'title' => $data['title'] ?? '',
                 'media' =>  isset($message['data']['rf'])                           // 渠道.
                     ? GuestService::getRefererSidByUrl($data['rf'])
-                    : 0
+                    : 0,
+                'code'  => $data['code'] ?? '',
             ];
 
             // 绑定两份. 可能会通过f_id查找对应的信息.
@@ -232,7 +233,7 @@ class GuestBusiHanlderService extends BaseService
         ]);
 
         //需要同时将消息转发一份到对话队列，然后存储起来
-        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log,$message );
+        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, $message );
         Gateway::sendToClient( $client_id,$ws_data );
     }
 

@@ -50,9 +50,16 @@ class ChatController extends QueueBaseController
                     "status" => ConstantService::$default_status_neg_1,
                     "closed_time" => ConstantService::$default_datetime
                 ];
+                if(isset($data['code'])) {
+                    $style = MerchantService::getStyleConfig($data['code'], $merchant_info['id']);
+                    $params['chat_stype_id'] = $style['group_chat_id'];
+                }
                 GuestChatService::addGuest( $params );
                 break;
             case ConstantService::$chat_cmd_guest_close://　游客关闭了ws
+                if(!isset($params_data['msn'])) {
+                    return $this->echoLog( "no~~" );
+                }
                 $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
                 $params = [
                     "client_id" => $params_data['client_id'],
