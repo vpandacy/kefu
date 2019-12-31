@@ -75,17 +75,49 @@ var merchant_style_setting_index_ops = {
 
             // 删除
             that.table.on('tool(repeatTable)', function (event) {
-                if(event.event != 'delete') {
+                if(event.event == 'delete') {
+                    var index = event.tr[0].getAttribute('data-index')
+
+                    that.data = that.data.filter(function (row,cur) {
+                        return cur != index;
+                    });
+                    // 删除本身.
+                    event.del();
                     return false;
                 }
+                var curr = event.tr[0].getAttribute('data-index'),
+                    data = that.data[curr];
 
-                var index = event.tr[0].getAttribute('data-index')
+                $.open({
+                    title: '添加发起语',
+                    content: $('.publish-form').html(),
+                    btn: ['添加','取消'],
+                    yes: function (index) {
+                        var data = {
+                            time: parseInt($('.layui-layer-dialog [name=time]').val()),
+                            content: $('.layui-layer-dialog [name=content]').val()
+                        };
 
-                that.data = that.data.filter(function (row,cur) {
-                    return cur != index;
+                        if(!(/^\d+$/.test(data.time))) {
+                            return $.msg('请填写正确的发起时间');
+                        }
+
+                        if(data.content.length <= 0 || data.content.length > 255) {
+                            return $.msg('请输入正确的发起内容');
+                        }
+
+                        that.data[curr] = data;
+                        that.reloadRepeatTable()
+                        $.close(index);
+                    },
+                    btn2: function (index) {
+                        $.close(index);
+                    },
+                    area:['600px']
                 });
-                // 删除本身.
-                event.del();
+
+                $('.layui-layer-dialog [name=time]').val(data.time);
+                $('.layui-layer-dialog [name=content]').val(data.content);
             });
 
             // 初始化.

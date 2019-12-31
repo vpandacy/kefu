@@ -494,25 +494,26 @@
         var message = messages.shift(),
             time = message.time;
 
+        // 先获取一个来进行循环.依次处理. 最后一次处理完成后.
         repeatInterval = setInterval(function () {
             time--;
             if(time > 0) {
                 return false;
             }
-
-            if(messages.length <= 0) {
-                clearInterval(repeatInterval);
-                return false;
-            }
-
+            console.dir(message);
             // 渲染一条消息
             !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
             message = messages.shift();
-            time = message.time;
             // 这里是否要强制展示.
             that.scrollToBottom();
             // 这里要强制显示出来.
             that.showChat();
+
+            if(!message) {
+                clearInterval(repeatInterval);
+                return false;
+            }
+            time = message.time;
         }, 1000);
     };
 
