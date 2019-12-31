@@ -140,10 +140,10 @@ var merchant_user_track_ops = {
                     ,page: false
                     ,method:'post'
                     ,where: {history_id:historyId}
-                    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                    ,cellMinWidth: 70 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                     ,cols: [[
-                        {field:'created_time', width:170, title: '访问时间'}
-                        ,{field:'land_url', width:200, title: '访问地址'}
+                        {field:'created_time', width:150, title: '访问时间'}
+                        ,{field:'land_url', width:190, title: '访问地址'}
                         ,{field:'chat_duration', title: '停留时长'}
                     ]]
                 }))

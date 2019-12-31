@@ -5,6 +5,11 @@ use www\assets\MerchantAsset;
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/user/track/index.js'), MerchantAsset::className())
 ?>
+<style>
+    .layui-table-body {
+        overflow-x: hidden;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
         'bar_menu'  =>  'message',
