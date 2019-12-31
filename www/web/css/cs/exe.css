@@ -597,7 +597,7 @@ select[name='cs'] {
     /*#chatExe .exe-info .one .tab-content div {*/
 
 /*}*/
-#chatExe .exe-info .one .tab-content div .name input{
+#chatExe .exe-info .one .tab-content .content-tab-one input{
     border: 1px;
     border-radius: 3px;
     width: 120px;
