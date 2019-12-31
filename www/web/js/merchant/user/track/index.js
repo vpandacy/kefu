@@ -54,21 +54,21 @@ var merchant_user_track_ops = {
                     ,{field:'style_title',  title: '风格分组'}
                     ,{field:'member_name', title: '会员名'}
                     ,{field:'referer_url', title: '来源',templet:function (row) {
-                        return row.referer_url == '' ? '暂无' : row.referer_url;
-                    }}
+                            return row.referer_url == '' ? '暂无' : row.referer_url;
+                        }}
                     ,{field:'land_url', title: '落地页'}
                     ,{field: 'source', title: '终端来源', templet:function (row) {
-                        var sources_map = {
-                            0: '暂无',
-                            1: 'PC',
-                            2: '手机',
-                            3: '微信'
-                        };
-                        return sources_map[row.source];
-                    }}
+                            var sources_map = {
+                                0: '暂无',
+                                1: 'PC',
+                                2: '手机',
+                                3: '微信'
+                            };
+                            return sources_map[row.source];
+                        }}
                     ,{field:'chat_duration', title: '聊天时长', templet:function (row) {
-                        return row.chat_duration + '秒';
-                    }}
+                            return row.chat_duration + '秒';
+                        }}
                     ,{field:'created_time', title: '来访时间'}
                     ,{title: '操作', toolbar: '#trackTool'}
                 ]]
@@ -91,31 +91,14 @@ var merchant_user_track_ops = {
                     "<div class='tabs_content'>" +
                     "<div class='content_assgin'></div>" +
                     "<div class='content_information dis_none'>" +
-                    "</div>" +
-                    "<div class='dis_none'>" +
-                    "<table class='layui-table'>\n" +
-                    "  <colgroup>\n" +
-                    "    <col width='90'>\n" +
-                    "    <col  width='300'>\n" +
-                    "    <col>\n" +
-                    "  </colgroup>\n" +
-                    "  <thead>\n" +
-                    "    <tr>\n" +
-                    "      <th>访问时间</th>\n" +
-                    "      <th>访问地址</th>\n" +
-                    "      <th>停留时长</th>\n" +
-                    "    </tr> \n" +
-                    "  </thead>\n" +
-                    "  <tbody class='route_thead'>\n" +
-                    "  </tbody>\n" +
-                    "</table>" +
-                    "</div>" +
+                    "</div><div class='dis_none'>" +
+                    "<div class='router_table'></div></div>"+
                     "</div>"+
                     "</div>\n";
                 $('.trackTable_big').append(fromHtml);
                 $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
                     if(res.code === 200){
-                        res.data.forEach(function (item) {
+                        res.data.length === 0 ? $('.content_assgin').text('暂无数据'):res.data.forEach(function (item) {
                             if(item.uuid === item.from_id){
                                 $('.content_assgin').append(
                                     " <div class='assgin_info'><div class='assgin_title'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
@@ -138,13 +121,11 @@ var merchant_user_track_ops = {
                         var media_name= mediaName.find(function (item) {
                             return item.id==res.data.referer_media;
                         })
-                        $('.content_information').append("<div><span class='information_title'>开始时间：</span><span>"+res.data.created_time+"</span></div>" +
+                        res.data.length === 0 ? $('.content_information').text('暂无数据'): $('.content_information').append("<div><span class='information_title'>开始时间：</span><span>"+res.data.created_time+"</span></div>" +
                             "<div><span class='information_title'>结束时间：</span><span>"+res.data.closed_time+"</span></div>" +
                             "<div><span class='information_title'>对话时长：</span><span>"+res.data.chat_duration+"</span></div>" +
                             "<div><span class='information_title'>地区：</span><span>"+res.data.province_str+"</span></div>" +
                             "<div><span class='information_title'>访客IP：</span><span>"+res.data.client_ip+"</span></div>" +
-                            "<div><span class='information_title'>开始方式：</span><span>暂无</span></div>" +
-                            "<div><span class='information_title'>结束方式：</span><span>暂无</span></div>" +
                             "<div><span class='information_title'>终端：</span><span>"+source_name.name+"</span></div>" +
                             "<div><span class='information_title'>消息类型：</span><span>在线消息</span></div>" +
                             "<div><span class='information_title'>访问来源：</span><span>"+media_name.name+"</span></div>" +
@@ -152,17 +133,20 @@ var merchant_user_track_ops = {
                             "<div><span class='information_title'>落地页：</span><a href='"+ res.data.land_url +"'>"+res.data.land_url+"</a></div>");
                     }
                 });
-                $.post('/merchant/user/track/history',{history_id:historyId},function (res){
-                    if(res.code == 200){
-                        res.data.forEach(function (item) {
-                            $('.route_thead').append("    <tr>\n" +
-                                "      <td>"+item.created_time+"</td>\n" +
-                                "      <td>"+item.land_url+"</td>\n" +
-                                "      <td>"+item.chat_duration+"</td>\n" +
-                                "    </tr>\n");
-                        });
-                    }
-                });
+                //执行渲染
+                table.render(merchant_common_ops.buildLayuiTableConfig({
+                    elem: '.router_table'
+                    ,url: merchant_common_ops.buildMerchantUrl('/user/track/history')
+                    ,page: false
+                    ,method:'post'
+                    ,where: {history_id:historyId}
+                    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                    ,cols: [[
+                        {field:'created_time', width:170, title: '访问时间'}
+                        ,{field:'land_url', width:200, title: '访问地址'}
+                        ,{field:'chat_duration', title: '停留时长'}
+                    ]]
+                }))
                 // 菜单栏切换.
                 $(".trackTable_toop .tab .tabs").click(function() {
                     // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
@@ -171,7 +155,7 @@ var merchant_user_track_ops = {
                     $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
                 });
                 $('.trackTable_toop .tab .icon-guanbi').click(function () {
-                    $('.trackTable_big').html("");
+                    $('.trackTable_big').hide();
                 });
             });
         });
