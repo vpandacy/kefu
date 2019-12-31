@@ -316,7 +316,7 @@
     font-size: 13px;
     /*margin-top: 8px;*/
     display: inline-block;
-    width: 100px;
+    max-width: 100px;
     overflow: hidden;
     word-break: break-all;
 }

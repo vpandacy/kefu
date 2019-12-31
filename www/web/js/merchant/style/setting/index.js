@@ -31,7 +31,7 @@ var merchant_style_setting_index_ops = {
                 data: that.data,
                 defaultToolbar: [],
                 cols: [[
-                    {field: 'time',title: '发起时间'},
+                    {field: 'time',title: '发起时间(秒)'},
                     {field: 'content', title: '发起语'},
                     {title: '操作', toolbar: '#toolbar'}
                 ]],
