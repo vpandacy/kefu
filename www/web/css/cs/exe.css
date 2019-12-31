@@ -477,9 +477,9 @@ select[name='cs'] {
     flex: 1;
     border: none;
     outline: 0;
-    padding: 10px;
-    max-height: 212px;
-    min-height: 50px;
+    /*padding: 10px;*/
+    /*max-height: 212px;*/
+    /*min-height: 50px;*/
     overflow-y: auto;
 }
 
