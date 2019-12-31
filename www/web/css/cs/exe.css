@@ -133,8 +133,8 @@ select[name='cs'] {
 
 #chatExe .exe-menu {
     /*width: 5%;*/
-    min-width: 85px;
-    max-width: 85px;
+    min-width: 50px;
+    max-width: 50px;
     padding: 15px 0px;
     border: 1px solid;
     text-align: center;
@@ -197,8 +197,8 @@ select[name='cs'] {
  }
 #chatExe .exe-keep {
     /*width: 22%;*/
-    min-width: 294px;
-    max-width: 294px;
+    min-width: 270px;
+    max-width: 270px;
     background: rgb(255, 255, 255);
     border-right: 1px solid rgb(216, 221, 230);
     display: flex;
@@ -514,7 +514,7 @@ select[name='cs'] {
 }
 
 #chatExe .exe-info {
-    width: 20%;
+    width: 30%;
     /*flex: 1;*/
     /*min-width: 290px;*/
     background: rgb(247, 248, 250);

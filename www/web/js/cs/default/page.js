@@ -283,11 +283,11 @@
                 // 获取聊天轨迹.
                 var html = res.data.map(function (history) {
                     return [
-                        '<div style="background-color: #ffffff;padding: 5px 25px;overflow: hidden;word-break: break-all;">',
+                        '<div style="background-color: #ffffff;padding: 5px 25px;overflow: hidden;word-break: break-all;    font-size: 12px;color: darkgray;">',
                             '<div>落地页：', history.land_url ? history.land_url : '暂无','　</div>',
                             '<div>来源：', history.referer_url ? history.referer_url : '暂无' ,'　</div>',
                             '<div>接待人：',history.staff_name,'</div>',
-                            '<div>来访时间：',history.created_time,'秒</div>',
+                            '<div>来访时间：',history.created_time,'</div>',
                         '</div>'
                     ].join('');
                 });
