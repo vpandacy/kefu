@@ -8,6 +8,7 @@ var chat_logic = {
         $('.show-hide').css({display:'none'});
         $('.show-hide-min').click(function () {
             $('.show-hide-min').css({display:'none'});
+            $('#online-from').hide();
             $('.show-hide').css({display:'block'});
         });
         $('.show-hide-max').click(function () {
