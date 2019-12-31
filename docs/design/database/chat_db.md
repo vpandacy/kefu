@@ -187,5 +187,5 @@ ALTER TABLE `group_chat_setting`
     ADD `repeat_setting` varchar(1000) NOT NULL DEFAULT '' COMMENT '重复发起配置' AFTER `repeat_time`;
     
 ALTER TABLE `guest_history_log`
-    ADD `title` varchar(1000) NOT NULL DEFAULT '' COMMENT '落地页标题' AFTER `land_url`;
+    ADD `land_title` varchar(1000) NOT NULL DEFAULT '' COMMENT '落地页标题' AFTER `land_url`;
 ```
