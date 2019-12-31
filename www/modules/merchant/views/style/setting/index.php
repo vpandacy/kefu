@@ -169,9 +169,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
     <form action="" class="layui-form">
     <form action="" class="layui-form">
         <div class="layui-form-item time_star">
-            <label for="" class="layui-form-label">发起时间秒(S)</label>
+            <label for="" class="layui-form-label">发起时间(秒)</label>
             <div class="layui-inline">
-                <input type="text" name="time" value=""  required="" lay-verify="required" placeholder="请输入发起时间秒(S)" autocomplete="off" class="layui-input">
+                <input type="text" name="time" value=""  required="" lay-verify="required" placeholder="请输入发起时间(秒)" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
