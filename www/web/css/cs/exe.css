@@ -667,6 +667,9 @@ select[name='cs'] {
     font-size: 13px;
     /*margin-top: 8px;*/
     display: inline-block;
+    max-width: 400px;
+    overflow: hidden;
+    word-break: break-all;
 }
 
 #chatExe .exe-content-history .message-my {
