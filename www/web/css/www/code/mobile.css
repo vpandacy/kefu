@@ -146,11 +146,10 @@ body {
 #wapOnline .bottom  #content {
     height: 2rem;
     line-height: 2rem;
-    width: 80%;
+    width: 14.5rem;
     border: none;
     padding-left: 15px;
     outline: none;
-
 }
 
 #wapOnline .bottom input:focus {
