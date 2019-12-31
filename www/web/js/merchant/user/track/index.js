@@ -105,7 +105,7 @@ var merchant_user_track_ops = {
                                     " <div class='assgin_content'>"+item.content+"</div></div>");
                             }else {
                                 $('.content_assgin').append(
-                                    " <div class='assgin_info'><div class='assgin_title as_title_my'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
+                                    " <div class='assgin_info'><div class='assgin_title as_title_my'>"+item.cs_name+"&nbsp;&nbsp;"+item.created_time+"</div>" +
                                     " <div class='assgin_content'>"+item.content+"</div></div>");
                             }
                         })
