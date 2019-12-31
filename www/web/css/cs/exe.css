@@ -75,6 +75,7 @@ select[name='cs'] {
 }
 
 #chatExe .tab .tab-one {
+    cursor: pointer;
     padding: 5px 0;
     flex: 1;
     /* display */
