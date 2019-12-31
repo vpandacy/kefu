@@ -680,4 +680,7 @@ select[name='cs'] {
 
 #chatExe .exe-content-history .message-my .message-info .message-message-my {
     margin-right: 10px;
+    max-width: 400px;
+    overflow: hidden;
+    word-break: break-all;
 }

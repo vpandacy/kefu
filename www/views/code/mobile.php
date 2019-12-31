@@ -68,11 +68,10 @@ StaticPluginHelper::includeJsPlugins([
                     <span class="submit-button">发送</span>
                 </div>
             </div>
+            <div class="chat-close dis_none">
+                当前对话已结束，您可以开始 <span class="online_new_message">新对话</span> 或 <span class="online_from_message">留言</span>
+            </div>
         </div>
-        <div class="chat-close dis_none">
-            当前对话已结束，您可以开始 <span class="online_new_message">新对话</span> 或 <span class="online_from_message">留言</span>
-        </div>
-
         <div class="overflow-message dis_none">
             <p>当前客服接待能力已达上限，请耐心等候！</p>
             <div class="operation">

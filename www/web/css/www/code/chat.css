@@ -316,6 +316,9 @@
     font-size: 13px;
     /*margin-top: 8px;*/
     display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    word-break: break-all;
 }
 #pc-online .message .content-message .message-info .message-message-my {
     margin-right: 10px;
