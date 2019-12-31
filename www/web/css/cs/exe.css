@@ -233,7 +233,7 @@ select[name='cs'] {
     display:-webkit-flex;
     justify-content: space-between;
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 12px;
     height: 50px;
     align-items: center;
 }
@@ -261,7 +261,7 @@ select[name='cs'] {
     position: relative;
 }
 #chatExe .exe-keep .tab .tab-content-list div img{
-    width: 20px;
+    width: 15px;
     vertical-align: bottom;
 }
 #chatExe .exe-keep .tab .tab-content-list:hover {
@@ -286,7 +286,7 @@ select[name='cs'] {
     color: white;
     border-radius: 5px;
     padding: 4px;
-    font-size: 14px;
+    font-size: 12px;
 }
 #chatExe .exe-keep .tab .tab-content-list .list-flag-online:before {
     /*content: "在线";*/
