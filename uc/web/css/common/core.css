@@ -468,7 +468,10 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 .tab_staff_content .trackTable_toop .tab{
     display: flex;
     border-bottom: 1px solid #e6e6e6;
-    position: relative;
+    position: fixed;
+    z-index: 99999999999;
+    background: white;
+    width: 450px;
 }
 .tab_staff_content .trackTable_toop .tab .icon-guanbi{
     position: absolute;
@@ -484,6 +487,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 }
 .tab_staff_content .trackTable_toop .tabs_content{
     padding: 5px;
+    margin-top: 47px;
 }
 .tab_staff_content .trackTable_toop .tabs_content .content_assgin .assgin_info{
     margin-bottom: 10px;
