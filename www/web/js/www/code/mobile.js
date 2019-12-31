@@ -31,7 +31,7 @@ var mobile_logic = {
         // 点击留言
         $('.online_from_message').on('click', function () {
             $('#online-from').show();
-            $('.chat-close').hide();
+            // $('.chat-close').hide();
             $('.overflow-message').hide();
             ws_config.close();
         });

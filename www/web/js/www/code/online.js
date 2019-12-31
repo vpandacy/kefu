@@ -19,7 +19,7 @@ var online_logic = {
         $('.online_from_message').click(function(){
             $('#online-from').show();
             ws_config.close();
-            $('.chat-close').hide();
+            // $('.chat-close').hide();
         });
 
         // 转留言.留言都要关闭ws链接.

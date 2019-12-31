@@ -49,7 +49,7 @@ var chat_logic = {
         // 留言. 留言都要关闭ws链接.
         $('.online_from_message').click(function(){
             $('#online-from').show();
-            $('.chat-close').hide();
+            // $('.chat-close').hide();
             ws_config.close();
         });
 

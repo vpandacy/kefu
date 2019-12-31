@@ -236,6 +236,7 @@ body {
 
 .online_new_message,.online_from_message {
     color:rgb(31, 140, 235);
+    z-index: 999;
 }
 
 #online-from {
