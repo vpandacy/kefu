@@ -481,6 +481,7 @@ select[name='cs'] {
     /*max-height: 212px;*/
     /*min-height: 50px;*/
     overflow-y: auto;
+    word-break: break-all;
 }
 
 #chatExe .exe-content .exe-content-sumbit .sumbit-bottom {
