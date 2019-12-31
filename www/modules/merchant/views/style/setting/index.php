@@ -165,30 +165,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 
-<style>
-    .time_star {
-        position: relative;
-    }
-    .time_star .disconnect_time {
-        position: absolute;
-        top: 0;
-        right: 0;
-        text-align: center;
-        background: rgba(1, 170, 237, 1);
-        color: white;
-        width: 50px;
-        height: 38px;
-        line-height: 38px;
-    }
-</style>
 <div class="publish-form dis_none">
     <form action="" class="layui-form">
         <div class="layui-form-item time_star">
-            <label for="" class="layui-form-label">发起时间</label>
+            <label for="" class="layui-form-label">发起时间秒(S)</label>
             <div class="layui-inline">
-                <input type="text" name="time" value=""  required="" lay-verify="required" placeholder="请输入发起时间" autocomplete="off" class="layui-input">
-                <div class="disconnect_time">秒(S)</div>
-            </div>
+                <input type="text" name="time" value=""  required="" lay-verify="required" placeholder="请输入发起时间秒(S)" autocomplete="off" class="layui-input">
+、            </div>
         </div>
         <div class="layui-form-item">
             <label for="" class="layui-form-label">发起内容</label>
