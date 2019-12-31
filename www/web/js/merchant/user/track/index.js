@@ -98,7 +98,7 @@ var merchant_user_track_ops = {
                 $('.trackTable_big').append(fromHtml);
                 $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
                     if(res.code === 200){
-                        res.data.length === 0 ? $('.content_assgin').text('暂无数据'):res.data.forEach(function (item) {
+                        res.data.length === 0 ? $('.content_assgin').text('暂无记录'):res.data.forEach(function (item) {
                             if(item.uuid === item.from_id){
                                 $('.content_assgin').append(
                                     " <div class='assgin_info'><div class='assgin_title'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
@@ -121,9 +121,9 @@ var merchant_user_track_ops = {
                         var media_name= mediaName.find(function (item) {
                             return item.id==res.data.referer_media;
                         })
-                        res.data.length === 0 ? $('.content_information').text('暂无数据'): $('.content_information').append("<div><span class='information_title'>开始时间：</span><span>"+res.data.created_time+"</span></div>" +
+                        res.data.length === 0 ? $('.content_information').text('暂无信息'): $('.content_information').append("<div><span class='information_title'>开始时间：</span><span>"+res.data.created_time+"</span></div>" +
                             "<div><span class='information_title'>结束时间：</span><span>"+res.data.closed_time+"</span></div>" +
-                            "<div><span class='information_title'>对话时长：</span><span>"+res.data.chat_duration+"</span></div>" +
+                            "<div><span class='information_title'>对话时长：</span><span>"+res.data.chat_duration +" 秒</span></div>" +
                             "<div><span class='information_title'>地区：</span><span>"+res.data.province_str+"</span></div>" +
                             "<div><span class='information_title'>访客IP：</span><span>"+res.data.client_ip+"</span></div>" +
                             "<div><span class='information_title'>终端：</span><span>"+source_name.name+"</span></div>" +
