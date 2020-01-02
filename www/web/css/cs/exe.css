@@ -403,7 +403,7 @@ select[name='cs'] {
 }
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
     color: rgb(0, 0, 0);
-    /*width: 400px;*/
+    width: 500px;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
