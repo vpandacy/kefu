@@ -173,6 +173,7 @@ class TrackController extends BaseController
                 'uuid'  =>  $history['uuid'],
                 'merchant_id'   =>  $this->getMerchantId()
             ])
+            ->orderBy(['id' => SORT_DESC])
             ->asArray()
             ->all();
 
