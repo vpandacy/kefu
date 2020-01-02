@@ -109,7 +109,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                         <div class="info canal-url"><span>渠道：</span><span>-</span></div>
                     </div>
                     <div class="content-top-info">
-                        <div class="info source"><span>终端：</span><span>-</span></div>
+                        <div class="info source"><span>关键词：</span><span>-</span></div>
                         <div class="info referer-url"><span>来源：</span><span>-</span></div>
                     </div>
                 </div>

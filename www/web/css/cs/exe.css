@@ -387,6 +387,9 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-top .content-top-info .land-url span:first-child {
     width: 55px !important;
 }
+#chatExe .exe-content .exe-content-top .content-top-info .source span:first-child {
+    width: 55px !important;
+}
 #chatExe .exe-content .exe-content-top .content-top-info .land-url .land-url-url {
     cursor: pointer;
 }
