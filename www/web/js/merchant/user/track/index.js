@@ -139,10 +139,11 @@ var merchant_user_track_ops = {
                     ,url: merchant_common_ops.buildMerchantUrl('/user/track/history')
                     ,page: false
                     ,method:'post'
+                    ,height: 500
                     ,where: {history_id:historyId}
-                    ,cellMinWidth: 70 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                    ,cellMinWidth: 90 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                     ,cols: [[
-                        {field:'created_time', width:150, title: '访问时间'}
+                        {field:'created_time', width:150, title: '访问时间',fixed: 'left'}
                         ,{field:'land_url', width:190, title: '访问地址'}
                         ,{field:'chat_duration', title: '停留时长'}
                     ]]

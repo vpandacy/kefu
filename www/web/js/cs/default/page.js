@@ -260,7 +260,7 @@
         }).join(':');
     };
 
-    // 页面访问轨迹.
+    // 页面.
     Page.prototype.renderAccessTrack = function(uuid) {
         $('.access-track').html('<div style="text-align: center;color: rgb(179, 181, 185) !important;">暂无</div>');
         $.ajax({
