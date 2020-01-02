@@ -92,8 +92,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-inline">请选择角色</label>
-                    <div class="layui-input-block">
+                    <label class="layui-form-label">请选择角色</label>
+                    <div class="layui-inline">
 
                         <select multiple="multiple" lay-filter="test">
                             <?php foreach($roles as $role):?>
