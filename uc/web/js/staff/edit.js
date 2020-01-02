@@ -48,11 +48,11 @@ var uc_staff_edit_ops = {
                     vals.push($(this).val());
                     texts.push($(this).text());
                 })
-                console.dir(vals);
-                console.dir(texts);
+                // console.dir(vals);
+                // console.dir(texts);
             })
             form.on('select(test)',function(data){
-                console.dir(data);
+                // console.dir(data);
             });
         });
     },
