@@ -100,4 +100,42 @@ class GuestService extends BaseService
 
         return $sid;
     }
+
+    /**
+     * 根据referer来获取对应的关键字.
+     * @param $referer
+     * @return string
+     */
+    public static function getKeywordByReferer($referer)
+    {
+        // 关键词提取列表.
+        $info = parse_url($referer);
+
+        if(!$info['query']) {
+            return false;
+        }
+
+        parse_str($info['query'], $query);
+
+        $keywords_mapping = [
+            'www.baidu.com' =>  'wd',
+            'm.baidu.com'   =>  'word',
+            'wap.baidu.com' =>  'word',
+            'www.sogou.com' =>  'query',
+            'm.sogou.com'   =>  'keyword',
+            'wap.sogou.com' =>  'keyword',
+            'sm'            =>  'q',
+            'so'            =>  'q',
+            'soso'          =>  'query'
+        ];
+
+        // 根据$info来获取对应的关键词.
+        foreach($keywords_mapping as $domain => $keyword) {
+            if(strpos($domain, $info['host']) !== false) {
+                return isset($query[$keyword]) ? $query[$keyword] : '';
+            }
+        }
+
+        return '';
+    }
 }

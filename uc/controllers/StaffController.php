@@ -282,6 +282,7 @@ class StaffController extends BaseController
             $data['avatar'] = ConstantService::$default_avatar;
             // 设置应用ID.
             $data['app_ids'] = ',' . $this->getAppId() . ',';
+            $staff->setAttributes($data);
         }
 
         if($data['password']) {
