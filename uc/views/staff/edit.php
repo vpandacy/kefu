@@ -35,6 +35,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
     .upload_container .upload_but {
         width: 100%;
     }
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+        margin-top: 0 !important;
+    }
 </style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
