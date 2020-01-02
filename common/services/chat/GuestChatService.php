@@ -19,9 +19,14 @@ class GuestChatService extends BaseService
     public static function addGuest($params = [])
     {
         $params = array_merge($params,GuestService::getProvinceByClientIP($params['client_ip']));
+
         $params['source'] = CommonService::getSourceByUa($params['client_ua']);
+
         if($params['referer_url']) {
+            // 来源媒体.
             $params['referer_media'] = GuestService::getRefererSidByUrl($params['referer_url']);
+            // 保存关键词.
+            $params['keyword'] = GuestService::getKeywordByReferer($params['referer_url']);
         }
 
         $model = new GuestHistoryLog();

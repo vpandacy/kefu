@@ -189,3 +189,8 @@ ALTER TABLE `group_chat_setting`
 ALTER TABLE `guest_history_log`
     ADD `land_title` varchar(1000) NOT NULL DEFAULT '' COMMENT '落地页标题' AFTER `land_url`;
 ```
+## 20200102
+```
+ALTER TABLE `guest_history_log`
+    ADD `keyword` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词' AFTER `referer_media`;
+```

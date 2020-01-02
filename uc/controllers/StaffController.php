@@ -10,6 +10,7 @@ use common\models\uc\Department;
 use common\models\uc\Staff;
 use common\services\CommonService;
 use common\services\ConstantService;
+use common\services\GlobalUrlService;
 use common\services\uc\RoleService;
 use uc\controllers\common\BaseController;
 
@@ -180,7 +181,7 @@ class StaffController extends BaseController
         }
 
         if(!ValidateHelper::validEmail($data['email'])) {
-            return $this->renderErrJSON( '请输入正确的手机号' );
+            return $this->renderErrJSON( '请输入正确的邮箱号码' );
         }
 
         if(!ValidateHelper::validLength($data['name'], 1, 255)) {
@@ -282,6 +283,7 @@ class StaffController extends BaseController
             $data['avatar'] = ConstantService::$default_avatar;
             // 设置应用ID.
             $data['app_ids'] = ',' . $this->getAppId() . ',';
+            $staff->setAttributes($data);
         }
 
         if($data['password']) {
@@ -301,10 +303,11 @@ class StaffController extends BaseController
             return $this->renderErrJSON( RoleService::getLastErrorMsg() );
         }
 
-        if(isset($data['password'])) {
+        if($staff['id'] == $this->getStaffId() && isset($data['password'])) {
             $cookie = \Yii::$app->params['cookies']['staff'];
             // 删除cookie
             $this->removeCookie($cookie['name'], $cookie['domain']);
+            return $this->renderJSON(['url'=>GlobalUrlService::buildUcUrl('/user/login')],'操作成功', ConstantService::$response_code_success);
         }
 
         return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);

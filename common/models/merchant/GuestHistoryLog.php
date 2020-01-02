@@ -19,6 +19,7 @@ use Yii;
  * @property string $land_title 落地页标题
  * @property string $client_ip 游客ip
  * @property string $client_ua 游客浏览器信息
+ * @property string $keyword 搜索关键词
  * @property int $province_id 游客来源省id
  * @property int $city_id 游客来源城市id
  * @property int $chat_stype_id 对话风格id
@@ -60,6 +61,7 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
             [['referer_url', 'land_url', 'land_title'], 'string', 'max' => 1000],
             [['client_ip'], 'string', 'max' => 20],
             [['client_ua'], 'string', 'max' => 300],
+            [['referer_media', 'keyword'], 'string', 'max' => 255],
         ];
     }
 
@@ -77,6 +79,7 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
             'cs_id' => 'Cs ID',
             'referer_url' => 'Referer Url',
             'referer_media' => 'Referer Media',
+            'keyword'   =>  'Keyword',
             'land_url' => 'Land Url',
             'land_title' => 'Land Title',
             'client_ip' => 'Client Ip',
