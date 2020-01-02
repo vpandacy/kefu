@@ -69,6 +69,7 @@ var mobile_logic = {
                     if(res.code == 200) {
                         $('#online-from').hide();
                         $('.chat-close').show();
+                        $('#online-from textarea[name="message"]').val("");
                     }
                     alert(res.msg);
                 }
