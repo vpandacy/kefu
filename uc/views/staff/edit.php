@@ -35,6 +35,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
     .upload_container .upload_but {
         width: 100%;
     }
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+        margin-top: 0 !important;
+    }
 </style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
@@ -92,8 +95,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-inline">请选择角色</label>
-                    <div class="layui-input-block">
+                    <label class="layui-form-label">请选择角色</label>
+                    <div class="layui-inline">
 
                         <select multiple="multiple" lay-filter="test">
                             <?php foreach($roles as $role):?>
