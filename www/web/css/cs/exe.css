@@ -360,6 +360,7 @@ select[name='cs'] {
     align-items: center;
     font-size: 13px;
     padding: 0 10px;
+    overflow: hidden;
 }
 
 #chatExe .exe-content .exe-content-top .content-top-info {
@@ -406,7 +407,7 @@ select[name='cs'] {
 }
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
     color: rgb(0, 0, 0);
-    width: 350px;
+    width: 300px;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
