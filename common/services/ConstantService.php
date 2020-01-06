@@ -78,6 +78,8 @@ class ConstantService extends BaseService
     public static $chat_cmd_kf_in = 'kf_in';
     // 客服退出.
     public static $chat_cmd_kf_logout = 'kf_logout';
+    // 检查客服是否存在.
+    public static $chat_cmd_kf_health = 'health_check';
     //------- 客服动作  end ------//
 
 

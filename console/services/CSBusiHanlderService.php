@@ -159,6 +159,13 @@ class CSBusiHanlderService extends BaseService
             case ConstantService::$chat_cmd_ping:
                 //EventsDispatch::addChatHistory( $client_id,$message );
                 break;
+            // 更新客服状态.
+            case ConstantService::$chat_cmd_kf_health:
+                if(!Gateway::isUidOnline($data['sn'])) {
+                    // 更新状态.
+                    Staff::updateAll(['is_online'=>1],['sn'=>$data['sn']]);
+                }
+                break;
         }
     }
 }

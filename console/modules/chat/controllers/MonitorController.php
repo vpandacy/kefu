@@ -2,7 +2,12 @@
 
 namespace console\modules\chat\controllers;
 
+use common\models\uc\Staff;
+use common\services\constant\QueueConstant;
+use common\services\ConstantService;
 use common\services\monitor\WSCenterService;
+use common\services\QueueListService;
+use common\services\redis\CacheService;
 use common\services\worker\WorkerService;
 use console\controllers\BaseController;
 use uc\services\UCConstantService;
@@ -171,5 +176,36 @@ class MonitorController extends BaseController
 
             WSCenterService::setKFWS( $params );
         }
+    }
+
+    /**
+     * php yii chat/monitor/check-online-cs
+     * 检查客服是否在线.
+     */
+    public function actionCheckOnlineCs()
+    {
+        // 获取所有的OnlineUsers.
+        $online_users = Staff::find()
+            ->asArray()
+            ->select(['sn'])
+            ->where([
+                'is_online' =>  1
+            ])
+            ->all();
+
+        if(!$online_users) {
+            return $this->stdout("no online customer service\n");
+        }
+
+        foreach($online_users as $user) {
+            // 开始批量获取查询.
+            QueueListService::push2CS(QueueConstant::$queue_cs_chat, [
+                'cmd'   =>  ConstantService::$chat_cmd_kf_health,
+                'data'  =>  [
+                    'sn'    =>  $user
+                ],
+            ]);
+        }
+        return $this->stdout("success");
     }
 }
