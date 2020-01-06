@@ -27,7 +27,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
             <div>
                 <div class="layui-input-inline">
                     <label>
-                        <input type="checkbox" lay-ignore　class="checkAll" name="staff_id[]" value="-1">全选
+                        <input class="checkAll" type="checkbox" lay-ignore name="staff_id[]" value="-1">全选
                     </label>
                     <?php foreach($department_staff as $staff):?>
                         <label>
