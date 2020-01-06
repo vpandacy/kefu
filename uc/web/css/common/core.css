@@ -433,6 +433,8 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     /*margin: 0 30px;*/
 }
 .tab_staff_content .layui-icon-dows {
+    font-size: 14px;
+    padding: 5px;
     color: white;
 }
 .staff_tab .tab_list {
