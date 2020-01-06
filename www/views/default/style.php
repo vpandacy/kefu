@@ -4,7 +4,7 @@
         var _ht_kf_code = document.createElement("script"),
             s = document.getElementsByTagName("script")[0];
 
-        _ht_kf_code.src = "http://www.kefu.test.hsh568.cn/3t310igj/code/index?code=14h5mych";
+        _ht_kf_code.src = "http://www.kefu.test.hsh568.cn/dy3ybo5w/code/index?code=vc2jtcbc";
         s.parentNode.insertBefore(_ht_kf_code, s);
     })();
 </script>

@@ -19,6 +19,7 @@ use console\controllers\QueueBaseController;
 class PushController extends QueueBaseController
 {
     private  $socket = null;
+
     public function __construct($id, $module, $config = [])
     {
         $this->queue_name = QueueConstant::$queue_cs_chat;
