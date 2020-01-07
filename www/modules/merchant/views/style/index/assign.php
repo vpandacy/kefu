@@ -26,14 +26,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
             </fieldset>
             <div>
                 <div class="layui-input-inline">
-                    <label>
-                        <input type="checkbox" lay-ignore　class="checkAll" name="staff_id[]" value="-1">全选
-                    </label>
+                        <input lay-ignore data-name="<?=$department_staff[0]['department']?>"  type="checkbox" class="checkAll" name="staff_id[]" value="-1" title="全选">全选
                     <?php foreach($department_staff as $staff):?>
-                        <label>
-                            <input type="checkbox" lay-ignore <?=in_array($staff['id'], $staff_ids) ? 'checked' : ''?> name="staff_id[]" value="<?=$staff['id']?>" title="<?=$staff['name']?>">
+                            <input type="checkbox" class="check" lay-ignore data-name="<?=$department_staff[0]['department']?>" <?=in_array($staff['id'], $staff_ids) ? 'checked' : ''?> name="staff_id[]" value="<?=$staff['id']?>" title="<?=$staff['name']?>">
                             <?=$staff['name']?>
-                        </label>
                     <?php endforeach;?>
                 </div>
             </div>

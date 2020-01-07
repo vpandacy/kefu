@@ -23,7 +23,7 @@ var merchant_style_index_assign_ops = {
 
                 // 保存数据
                 var index = $.loading(1,{shade: .5});
-
+                select_staff_ids = $.grep(select_staff_ids, function (a) { return a != -1; })
                 $.ajax({
                     type: 'POST',
                     url : merchant_common_ops.buildMerchantUrl('/style/index/distribution'),
@@ -34,10 +34,10 @@ var merchant_style_index_assign_ops = {
                     dataType: 'json',
                     success:function (res) {
                         $.close(index);
-
-                        var callback = res.code != 200 ? null : function () {
-                            location.href = merchant_common_ops.buildMerchantUrl('/style/index/index');
-                        };
+                        //
+                        // var callback = res.code != 200 ? null : function () {
+                        //     location.href = merchant_common_ops.buildMerchantUrl('/style/index/index');
+                        // };
 
                         return $.msg(res.msg, res.code == 200 , callback);
                     },
@@ -48,7 +48,27 @@ var merchant_style_index_assign_ops = {
                 return false;
             });
         });
-    }
+        $('.checkAll').change(function () {
+            let flag = $(this)[0].checked;
+            $(this).parent('.layui-input-inline').find('input').each(function () {
+                $(this).prop('checked',flag);
+            });
+        });
+        $('.check').change(function () {
+            var checkFlag = 1;
+            $(this).parent('.layui-input-inline').children('input[class="check"]').each(function () {
+                !($(this).is(':checked')) ? checkFlag = 0 : '';
+            });
+            $(this).parent('.layui-input-inline').find('input[class="checkAll"]').prop('checked',Boolean(checkFlag));
+        });
+        $('.layui-input-inline').each(function () {
+            let checkFlag = 1;
+            $(this).find('input[class="check"]').each(function () {
+                !($(this).is(':checked')) ? checkFlag = 0 : '';
+            });
+            $(this).find('input[class="checkAll"]').prop('checked',Boolean(checkFlag));
+        });
+    },
 };
 
 
