@@ -6,6 +6,12 @@
 ::-webkit-scrollbar-thumb {background-color:#606d71;background-clip:padding-box;min-height:28px;-webkit-border-radius: 2em;-moz-border-radius: 2em;border-radius:2em;}
 /*滚动条移上去的背景*/
 ::-webkit-scrollbar-thumb:hover {background-color:#606d71;}
+.img_zaixiankefu {
+    text-align: right;
+}
+.img_zaixiankefu img {
+    cursor: pointer;
+}
 #online_kf {
     width: 360px;
     height: 450px;
@@ -331,6 +337,7 @@
     display: -webkit-flex;
     flex-direction: column;
     position: relative;
+    background: white;
 }
 #pc-online .online-submit .chat-close{
     position: absolute;
