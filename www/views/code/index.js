@@ -27,7 +27,8 @@
                 iframe.style['height'] = '100%';
                 iframe.style['min-width'] = '100%';
                 iframe.style['width'] = '100%';
-                iframe.style['position'] = 'absolute';
+                iframe.style['z-index'] = '9999';
+                iframe.style['position'] = 'fixed';
                 iframe.style['top'] = '0';
                 iframe.style['bottom'] = '0';
                 iframe.style['right'] = '0';

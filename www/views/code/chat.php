@@ -31,7 +31,7 @@ StaticPluginHelper::includeJsPlugins([
 
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
-
+<div class="img_zaixiankefu" ><img class="icon-_DYGYxinyemiandakai" src="<?=GlobalUrlService::buildStaticUrl('/logo/big_zaixiankefu.jpg')?>"></div>
 <div id="online_kf">
     <div class="show-hide-min" style="display: block">
         <div class="min-onclick">
