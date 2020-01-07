@@ -96,6 +96,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                 <span>暂无 (暂无)</span>
             </div>
             <div class="exe-header-info-right">
+                <span class="exe-header-info-kfname"><?=$this->params['current_user']['nickname']?></span>
                 <span><i class="iconfont icon-guanbi"></i></span>
             </div>
         </div>
