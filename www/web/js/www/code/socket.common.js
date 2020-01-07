@@ -481,7 +481,7 @@
         repeatInterval && clearInterval(repeatInterval);
 
         // 如果是已经关闭.那就不用管了.
-        if(closed || !parseInt(config.style.is_repeat)) {
+        if(closed || !parseInt(config.style.is_repeat) || !config.style.repeat_setting) {
             return false;
         }
 
