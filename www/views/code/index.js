@@ -27,7 +27,8 @@
                 iframe.style['height'] = '100%';
                 iframe.style['min-width'] = '100%';
                 iframe.style['width'] = '100%';
-                iframe.style['position'] = 'absolute';
+                iframe.style['z-index'] = '9999';
+                iframe.style['position'] = 'fixed';
                 iframe.style['top'] = '0';
                 iframe.style['bottom'] = '0';
                 iframe.style['right'] = '0';
@@ -68,12 +69,14 @@ window.onload = function () {
             iframe.setAttribute('scrolling','no');
 
             iframe.style['min-height'] = '1px';
-            iframe.style['height'] = '450px';
+            iframe.style['height'] = '650px';
             iframe.style['min-width'] = '1px';
             iframe.style['width'] = '400px';
-            iframe.style['position'] = 'absolute';
+            iframe.style['border'] = 'none';
+            iframe.style['position'] = 'fixed';
             iframe.style['bottom'] = '0';
             iframe.style['right'] = '0';
+            iframe.style['z-index'] = '9999';
             iframe.style['border'] = 'none';
             iframe.style['overflow']= 'hidden';
 

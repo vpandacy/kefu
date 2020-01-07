@@ -340,6 +340,9 @@ select[name='cs'] {
     margin-right: 10px;
     color: rgb(98, 119, 140);
 }
+#chatExe .exe-header .exe-header-info-right .exe-header-info-kfname {
+    padding: 0 20px;
+}
 #chatExe .exe-header .exe-header-info-right i {
     margin: 0 10px 0 0;
 }

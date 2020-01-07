@@ -111,6 +111,7 @@ body {
     right:0;
     width: 100%;
     background-color: white;
+    justify-content: space-around;
 }
 #wapOnline .bottom .mobile-text-disflex {
     display: flex;
