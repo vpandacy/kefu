@@ -202,7 +202,7 @@ class MonitorController extends BaseController
             QueueListService::push2CS(QueueConstant::$queue_cs_chat, [
                 'cmd'   =>  ConstantService::$chat_cmd_kf_health,
                 'data'  =>  [
-                    'sn'    =>  $user
+                    'sn'    =>  $user['sn']
                 ],
             ]);
         }

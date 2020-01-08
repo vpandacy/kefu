@@ -29,15 +29,7 @@ class CSBusiHanlderService extends BaseService
                 $inner_worker->name = $params_inner['name'];
                 $inner_worker->onMessage = function( $connection, $data){
                     try{
-                        $message = json_decode( $data,true );
-                        self::consoleLog( var_export( $message,true ) );
-                        if( isset( $message['data']['t_id']) ){
-                            //发送给对应的人
-                            $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
-                            $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
-                        }
-
-                        return $connection->send( "success" );
+                        CSBusiHanlderService::handleInnerMessage($connection,$data);
                     }catch (\Exception $e){
                         ChatEventService::handlerError( $e->getTraceAsString() );
                     }
@@ -159,13 +151,35 @@ class CSBusiHanlderService extends BaseService
             case ConstantService::$chat_cmd_ping:
                 //EventsDispatch::addChatHistory( $client_id,$message );
                 break;
-            // 更新客服状态.
+        }
+    }
+
+    /**
+     * 处理内部消息.
+     * @param $connection
+     * @param $data
+     * @return mixed
+     */
+    public static function handleInnerMessage($connection,$data)
+    {
+        $message = json_decode( $data,true );
+        self::consoleLog( var_export( $message,true ) );
+        switch ($message['cmd']) {
             case ConstantService::$chat_cmd_kf_health:
-                if(!Gateway::isUidOnline($data['sn'])) {
-                    // 更新状态.
-                    Staff::updateAll(['is_online'=>1],['sn'=>$data['sn']]);
+                if(!Gateway::isUidOnline($message['data']['sn'])) {
+                    // 更新客服的在线状态.
+                    Staff::updateAll(['is_online' => 0],['sn' => $message['data']['sn']]);
                 }
                 break;
+            default:
+                if( isset( $message['data']['t_id']) ) {
+                    //发送给对应的人
+                    $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
+                    $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
+                }
+                $connection->send( "success" );
         }
+
+        return true;
     }
 }

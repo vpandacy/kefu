@@ -141,7 +141,14 @@ class GuestBusiHanlderService extends BaseService
         QueueListService::push2CS( QueueConstant::$queue_cs_chat, json_decode($close_data,true) );
         // 关闭内容.
         ChatEventService::clearGuestBindCache($uuid);
-        // 解绑.
+        // 解绑.同时还要处理其他动作.移除在线状态和离线状态.
+        if(in_array($uuid, ChatGroupService::getWaitGroupAllUsers($close_params['t_id']))) {
+            ChatGroupService::leaveGroup($close_params['t_id'], $uuid);
+        }
+
+        if(in_array($uuid, ChatGroupService::getWaitGroupAllUsers($close_params['t_id']))) {
+            ChatGroupService::leaveWaitGroup($close_params['t_id'], $uuid);
+        }
         return Gateway::unbindUid($client_id, $uuid);
     }
 
