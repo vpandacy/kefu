@@ -166,6 +166,7 @@
             var sourceIcon = sourceName.find(function (item) {
                 return item.id == user.source;
             });
+
             var mediaName = [
                 {id: '0', name: '直接访问',icon:'http://static.kefu.test.hsh568.cn/logo/直接访问.png'},
                 {id: '100', name: '百度',icon:'http://static.kefu.test.hsh568.cn/logo/百度.png'},
