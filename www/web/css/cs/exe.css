@@ -551,8 +551,8 @@ select[name='cs'] {
 #chatExe .exe-info .two .tab-content {
     width: 90%;
     margin: 0 auto;
-    /*overflow-y: auto;*/
-    /*max-height: 405px;*/
+    overflow-y: auto;
+    max-height: 405px;
 }
 
 #chatExe .exe-info .two .tab-content .words-content{
