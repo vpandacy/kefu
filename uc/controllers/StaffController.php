@@ -355,7 +355,11 @@ class StaffController extends BaseController
                 'status'=>ConstantService::$default_status_true
             ])
             ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
-            ->one();;
+            ->one();
+
+        if($staff['is_root']) {
+            return $this->renderErrJSON('您不能禁用超级管理员帐号');
+        }
 
         if($staff['status'] != ConstantService::$default_status_true) {
             return $this->renderErrJSON( '该帐号不需要删除' );

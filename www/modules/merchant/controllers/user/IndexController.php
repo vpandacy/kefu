@@ -138,6 +138,7 @@ class IndexController extends BaseController
             'city_id'   =>  $city_id
         ]);
 
+
         if(!$member->save(0)) {
             return $this->renderErrJSON('数据保存失败，请联系管理员');
         }
