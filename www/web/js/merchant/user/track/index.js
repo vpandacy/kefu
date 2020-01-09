@@ -73,7 +73,9 @@ var merchant_user_track_ops = {
                         return sources_map[row.source];
                     }}
                     ,{field:'chat_duration', title: '聊天时长', templet:function (row) {
-                            return row.chat_duration + '秒';
+                        var sec = row.chat_duration % 60,
+                            min = parseInt(row.chat_duration - sec) / 60;
+                        return min + '分' + sec + '秒';
                     }}
                     ,{field:'created_time', title: '来访时间'}
                     ,{title: '操作', toolbar: '#trackTool'}
