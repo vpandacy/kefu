@@ -106,7 +106,7 @@ class MenuService extends BaseService
             ],
             'message'   =>  [
                 'title' =>  '留言管理',
-                'url'   =>  'merchant/overall/offline/index',
+                'url'   =>  'merchant/user/track/index',
                 'icon'  =>  'icon-liaotian',
             ],
             // 风格管理
@@ -230,13 +230,13 @@ class MenuService extends BaseService
                 ],
             ],
             'message'   =>  [
+                'track' =>  [
+                    'title' =>  '聊天记录',
+                    'url'   =>  'merchant/user/track/index',
+                ],
                 'leave' =>  [
                     'title' =>  '留言板管理',
                     'url'   =>  'merchant/overall/offline/index'
-                ],
-                'track' =>  [
-                    'title' =>  '记录中心',
-                    'url'   =>  'merchant/user/track/index',
                 ]
             ],
         ];
