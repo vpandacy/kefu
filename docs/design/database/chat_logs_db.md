@@ -34,3 +34,15 @@ CREATE TABLE `app_err_logs` (
   KEY `idx_created_time_app_name` (`created_time`,`app_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='app错误日表';
 ```
+### 20200109
+```
+CREATE TABLE `staff_logs` (
+  `id` bigint(20) NOT NULL COMMENT '主键' AUTO_INCREMENT PRIMARY KEY,
+  `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
+  `staff_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工ID',
+  `login_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登录时间',
+  `logout_time` datetime NULL COMMENT '退出时间',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '登录时间'
+) COMMENT='用户登录日志' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+```
