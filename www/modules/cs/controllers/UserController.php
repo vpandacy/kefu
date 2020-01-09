@@ -5,6 +5,7 @@ use common\components\helper\ValidateHelper;
 use common\components\ValidateCode;
 use common\models\uc\Merchant;
 use common\models\uc\Staff;
+use common\services\applog\AppLogService;
 use common\services\CaptchaService;
 use common\services\uc\CustomerService;
 use www\modules\cs\controllers\common\BaseController;
@@ -84,6 +85,13 @@ class UserController extends BaseController
             return $this->renderErrJSON('数据保存失败，请联系管理员');
         }
 
+        // 这里添加登录的日志.
+        AppLogService::addLoginLog($staff_info['merchant_id'],$staff_info['id'],0,[
+            'login_ip'  =>  CommonService::getIP(),
+            'source'    =>  CommonService::getSourceByUa(\Yii::$app->request->getUserAgent()),
+            'ua'        =>  \Yii::$app->request->getUserAgent()
+        ]);
+
         return $this->renderJSON([
             "url" => $url ?? GlobalUrlService::buildKFUrl('/cs')
         ],'登录成功~~~~' );
@@ -152,7 +160,10 @@ class UserController extends BaseController
         if($this->current_user) {
             // 更新在线的状态.如果是退出登录了.
             Staff::updateAll([
-                'is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+                'is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']
+            ]);
+            // 添加退出日志.
+            AppLogService::addLoginLog($this->current_user['merchant_id'], $this->current_user['id'],1);
         }
 
         $this->removeCookie($cookie['name'],$cookie['domain']);

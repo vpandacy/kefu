@@ -35,14 +35,19 @@ CREATE TABLE `app_err_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='app错误日表';
 ```
 ### 20200109
-```
-CREATE TABLE `staff_logs` (
-  `id` bigint(20) NOT NULL COMMENT '主键' AUTO_INCREMENT PRIMARY KEY,
+``` 
+CREATE TABLE `cs_login_logs` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `merchant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商户ID',
   `staff_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '员工ID',
+  `ua` varchar(255) NOT NULL DEFAULT '' COMMENT 'ua',
+  `source` tinyint(1) NOT NULL DEFAULT '0' COMMENT '登录终端',
+  `login_ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '登录IP',
   `login_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登录时间',
-  `logout_time` datetime NULL COMMENT '退出时间',
+  `logout_time` datetime DEFAULT NULL COMMENT '退出时间',
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '登录时间'
-) COMMENT='用户登录日志' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '登录时间',
+  PRIMARY KEY (`id`),
+  KEY `merchant_id_staff_id` (`merchant_id`,`staff_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='客服登录日志'
 ```
