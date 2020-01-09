@@ -45,7 +45,10 @@ var merchant_user_track_ops = {
                     group_id: $('[name=group_id]').val(),
                     mobile: $('#mobile').val(),
                     url: $('#url').val(),
-                    staff_id: $('#staff_id').val()
+                    staff_id: $('#staff_id').val(),
+                    qq: $('#qq').val(),
+                    email: $('#email').val(),
+                    wechat: $('#wechat').val()
                 }
                 ,defaultToolbar: ['filter','exports']
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增

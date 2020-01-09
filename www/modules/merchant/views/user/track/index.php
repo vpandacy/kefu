@@ -47,6 +47,19 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <?php endforeach;?>
                     </select>
                 </div>
+
+                <div class="layui-inline">
+                    <input type="text" class="layui-input" id="qq" name="qq" value="<?=$search_conditions['qq']?>" placeholder="请输入QQ号码">
+                </div>
+
+                <div class="layui-inline">
+                    <input type="text" class="layui-input" id="email" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱">
+                </div>
+
+                <div class="layui-inline">
+                    <input type="text" class="layui-input" id="wechat" name="wechat" value="<?=$search_conditions['wechat']?>" placeholder="请输入微信号码">
+                </div>
+
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
             </div>
         </form>

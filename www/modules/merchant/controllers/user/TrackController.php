@@ -22,6 +22,11 @@ class TrackController extends BaseController
             $mobile = $this->get('mobile','');
             $url = $this->get('url','');
             $staff_id = intval($this->get('staff_id',0));
+            $qq = $this->get('qq','');
+            $wechat = $this->get('wechat','');
+            $email = $this->get('email','');
+
+
             $groups = GroupChat::findAll(['merchant_id'=>$this->getMerchantId()]);
             $staffs  = Staff::find()
                 ->where(['merchant_id'=>$this->getMerchantId()])
@@ -36,7 +41,10 @@ class TrackController extends BaseController
                     'time'      =>  $time,
                     'mobile'    =>  $mobile,
                     'url'       =>  $url,
-                    'staff_id'  =>  $staff_id
+                    'staff_id'  =>  $staff_id,
+                    'email'     =>  $email,
+                    'wechat'    =>  $wechat,
+                    'qq'        =>  $qq,
                 ],
             ]);
         }
@@ -46,9 +54,14 @@ class TrackController extends BaseController
         $staff_id = intval($this->post('staff_id',0));
         $mobile = trim($this->post('mobile',''));
         $url = trim($this->post('url',''));
+        $qq = $this->post('qq',0);
+        $wechat = $this->post('wechat',0);
+        $email = $this->post('email',0);
 
         $time = $time ? explode('~', $time) : [];
         $page = intval($this->post('page',1));
+
+        $member_ids = [];
 
         $query = GuestHistoryLog::find()->where([
             'merchant_id'=>$this->getMerchantId()
@@ -68,9 +81,42 @@ class TrackController extends BaseController
                 ->where(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile])
                 ->all();
 
-            $member_ids = !$member ? [-1] : array_column($member,'id');
-            $query->andWhere(['member_id'=>$member_ids]);
+            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
         }
+
+        if($email) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'email'=>$email])
+                ->all();
+
+            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        if($qq) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'qq'=>$qq])
+                ->all();
+
+            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        if($wechat) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'wechat'=>$wechat])
+                ->all();
+
+            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        $member_ids = array_unique($member_ids);
+
+        if($member_ids) {
+            $query->andWhere(['member_id'=>in_array(-1,$member_ids) ? [-1] : $member_ids]);
+        }
+
 
         if($url) {
             $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
