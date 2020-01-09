@@ -10,6 +10,7 @@ use common\models\merchant\GroupChat;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
 use www\modules\merchant\controllers\common\BaseController;
+use yii\db\Expression;
 
 class TrackController extends BaseController
 {
@@ -62,14 +63,17 @@ class TrackController extends BaseController
         }
 
         if($mobile) {
-            $member = Member::findOne(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile]);
-            $member_id = !$member ? -1 : $member['id'];
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile])
+                ->all();
 
-            $query->andWhere(['member_id'=>$member_id]);
+            $member_ids = !$member ? [-1] : array_column($member,'id');
+            $query->andWhere(['member_id'=>$member_ids]);
         }
 
         if($url) {
-            $query->andWhere(['like','url',"%$url%"]);
+            $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
         }
 
         if($time) {
