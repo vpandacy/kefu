@@ -30,7 +30,11 @@ class GuestChatService extends BaseService
             $params['keyword'] = GuestService::getKeywordByReferer($params['referer_url']);
         }
 
+        $member = Member::findOne(['uuid' => $params['uuid']]);
 
+        if($member) {
+            $params['member_id'] = $member['id'];
+        }
 
         $model = new GuestHistoryLog();
         $model->setAttributes($params);
