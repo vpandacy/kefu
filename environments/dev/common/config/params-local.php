@@ -105,5 +105,9 @@ return [
                 "menu_title" => "Admin系统"
             ]
         ],
-    ]
+    ],
+    // 聊天默认配置.
+    'default_chat_config'   =>  [
+          'auto_disconnect' =>  30,
+    ],
 ];

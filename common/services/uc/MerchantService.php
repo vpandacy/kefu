@@ -132,6 +132,59 @@ class MerchantService extends BaseService
             return self::_err('数据库保存失败,请联系管理员');
         }
 
+        // 这里要创建一个默认的商户配置信息.
+        self::afterCreateMerchant($merchant);
+        return true;
+    }
+
+    /**
+     * 创建默认的配置.
+     * @param $merchant
+     * @return bool
+     */
+    public static function afterCreateMerchant($merchant)
+    {
+        // 生成默认的风格配置.
+        $setting = new GroupChatSetting();
+
+        $default_config = self::genDefaultStyleConfig();
+
+        $default_config['group_chat_id'] = 0;
+        $default_config['merchant_id'] = $merchant['id'];
+
+        $setting->setAttributes($default_config);
+
+        if(!$setting->save()) {
+            return false;
+        }
+
+        // 生成默认的分配规则.
+        $rule = new ReceptionRule();
+
+        $default_rule = self::genDefaultReceptionRuleConfig();
+
+        $default_rule['merchant_id'] = $merchant['id'];
+        $default_rule['group_chat_id'] = 0;
+
+        $rule->setAttributes($default_rule);
+
+        if(!$rule->save()) {
+            return false;
+        }
+
+        // 生成默认的商户配置.
+        $merchant_setting = new MerchantSetting();
+
+        $merchant_setting->setAttributes([
+            'merchant_id'   =>  $merchant['id'],
+            'auto_disconnect'   =>  \Yii::$app->params['default_chat_config']['auto_disconnect'],
+            'greetings'  => '欢迎使用好商会客服系统',
+        ]);
+
+        if(!$merchant_setting->save(0)) {
+            return false;
+        }
+
         return true;
     }
 
