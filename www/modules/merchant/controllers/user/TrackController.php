@@ -18,19 +18,33 @@ class TrackController extends BaseController
         if($this->isGet()) {
             $group_id = $this->get('group_id',0);
             $time = $this->get('time','');
+            $mobile = $this->get('mobile','');
+            $url = $this->get('url','');
+            $staff_id = intval($this->get('staff_id',0));
             $groups = GroupChat::findAll(['merchant_id'=>$this->getMerchantId()]);
+            $staffs  = Staff::find()
+                ->where(['merchant_id'=>$this->getMerchantId()])
+                ->asArray()
+                ->all();
 
             return $this->render('index',[
                 'groups'    =>  $groups,
+                'staffs'    =>  $staffs,
                 'search_conditions' =>  [
                     'group_id'  =>  $group_id,
-                    'time'      =>  $time
+                    'time'      =>  $time,
+                    'mobile'    =>  $mobile,
+                    'url'       =>  $url,
+                    'staff_id'  =>  $staff_id
                 ],
             ]);
         }
 
         $group_id = intval($this->post('group_id',0));
         $time = $this->post('time','');
+        $staff_id = intval($this->post('staff_id',0));
+        $mobile = trim($this->post('mobile',''));
+        $url = trim($this->post('url',''));
 
         $time = $time ? explode('~', $time) : [];
         $page = intval($this->post('page',1));
@@ -41,6 +55,21 @@ class TrackController extends BaseController
 
         if($group_id) {
             $query->andWhere(['chat_stype_id'=>$group_id]);
+        }
+
+        if($staff_id) {
+            $query->andWhere(['staff_id'=>$staff_id]);
+        }
+
+        if($mobile) {
+            $member = Member::findOne(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile]);
+            $member_id = !$member ? -1 : $member['id'];
+
+            $query->andWhere(['member_id'=>$member_id]);
+        }
+
+        if($url) {
+            $query->andWhere(['like','url',"%$url%"]);
         }
 
         if($time) {

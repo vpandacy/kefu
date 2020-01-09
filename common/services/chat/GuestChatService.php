@@ -3,6 +3,7 @@ namespace common\services\chat;
 
 use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GuestChatLog;
+use common\models\merchant\Member;
 use common\models\uc\Staff;
 use common\services\BaseService;
 use common\services\CommonService;
@@ -29,6 +30,8 @@ class GuestChatService extends BaseService
             $params['keyword'] = GuestService::getKeywordByReferer($params['referer_url']);
         }
 
+
+
         $model = new GuestHistoryLog();
         $model->setAttributes($params);
         return $model->save(0);
@@ -46,11 +49,18 @@ class GuestChatService extends BaseService
             ->andWhere([ "closed_time" => ConstantService::$default_datetime ])
             ->orderBy([ "id" => SORT_DESC ])->limit(1)->one();
         if( $guest_log ){
+            $member = Member::findOne(['uuid'=>$params['uuid'], 'merchant_id' => $params['merchant_id']]);
             $guest_log->closed_time = $params['closed_time'];
+            $guest_log->member_id = $member ? $member['id'] : 0;
             $guest_log->cs_id = $params['cs_id'];
             $guest_log->chat_duration = strtotime( $guest_log->closed_time ) - strtotime( $guest_log->created_time );
             $guest_log->status = $params['status'];
             $guest_log->save(0);
+
+            if($member) {
+                // 这里要批量去更新这次的会话.
+                GuestChatLog::updateAll(['member_id'=>$member['id']],['guest_log_id'=>$guest_log['id']]);
+            }
         }
         return true;
     }

@@ -18,7 +18,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/l
                     <select name="staff_id" id="">
                         <option value="0">请选择客服</option>
                         <?php foreach($staffs as $staff):?>
-                            <option value="<?=$staff['id']?>" <?=$search_conditions['staff_id'] == $staff['id'] ? 'selected' : '' ?>><?=$staff['name']?></option>
+                            <option value="<?=$staff['id']?>" <?=$search_conditions['staff_id'] == $staff['id'] ? 'selected' : '' ?>><?="{$staff['name']}[{$staff['mobile']}]"?></option>
                         <?php endforeach;?>
                     </select>
                 </div>
