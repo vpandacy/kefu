@@ -307,10 +307,10 @@ class StaffController extends BaseController
             $cookie = \Yii::$app->params['cookies']['staff'];
             // 删除cookie
             $this->removeCookie($cookie['name'], $cookie['domain']);
-            return $this->renderJSON(['url'=>GlobalUrlService::buildUcUrl('/user/login')],'操作成功', ConstantService::$response_code_success);
+            return $this->renderJSON(['url'=>GlobalUrlService::buildUcUrl('/user/login')],'操作成功');
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
     /**

@@ -139,6 +139,9 @@ class UserController extends BaseController
             return $this->renderErrJSON( MerchantService::getLastErrorMsg() );
         }
 
+        $staff = Staff::findOne(['mobile'=>$mobile]);
+        $this->createLoginStatus($staff);
+
         return $this->renderJSON( [], '创建成功,请登录商户~~' );
     }
 
