@@ -97,7 +97,7 @@ class StaffBaseController extends BaseWebController
      */
     protected function checkToken($token, $staff)
     {
-        return $token == $staff['login_token'];
+        return $token == $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
     }
 
     /**
@@ -109,7 +109,7 @@ class StaffBaseController extends BaseWebController
      */
     protected function genToken($merchant_id, $staff_salt, $password)
     {
-        return md5($staff_salt . md5($merchant_id . $password) . time());
+        return md5($staff_salt . md5($merchant_id . $password));
     }
 
     /**

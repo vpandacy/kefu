@@ -46,7 +46,7 @@ class MenuService extends BaseService
             'bar_menu'  =>  self::getBarMenu()
         ];
 
-        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company'];
+        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company', 'staff_log'];
         // 开始过滤菜单.
         foreach($all_menu['left_menu'] as $key=>$action) {
             if(!in_array($action['url'], $urls)) {
@@ -127,7 +127,6 @@ class MenuService extends BaseService
                 'title' =>  '全局设置',
                 'icon'  =>  'icon-quanjushezhi',
             ],
-
         ];
     }
 
@@ -224,6 +223,10 @@ class MenuService extends BaseService
                 'action'    =>  [
                     'title' =>  '权限管理',
                     'url'   =>  'action/index',
+                ],
+                'staff_log' =>  [
+                    'title' =>  '客服日志',
+                    'url'   =>  'log/index'
                 ],
             ],
             'message'   =>  [

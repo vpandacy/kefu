@@ -76,14 +76,7 @@ class UserController extends BaseController
         }
 
         // 开始创建登录的信息.
-        $token = $this->createLoginStatus( $staff_info );
-
-        // 登录成功则认为可以接待游客.
-        $staff_info['login_token']  = $token;
-
-        if(!$staff_info->save(0)) {
-            return $this->renderErrJSON('数据保存失败，请联系管理员');
-        }
+        $this->createLoginStatus( $staff_info );
 
         // 这里添加登录的日志.
         AppLogService::addLoginLog($staff_info['merchant_id'],$staff_info['id'],0,[

@@ -111,7 +111,7 @@ class GuestService extends BaseService
         // 关键词提取列表.
         $info = parse_url($referer);
 
-        if(!$info['query']) {
+        if(!isset($info['query']) || !$info['query']) {
             return false;
         }
 

@@ -568,7 +568,7 @@
      */
     Chat.prototype.logout = function() {
         return $.msg('您已经在其他地方登录了，如果继续操作请重新登录',false, function(){
-            location.href = cs_common_ops.buildKFCSurl('/user/login');
+            location.href = cs_common_ops.buildKFCSurl('/user/logout');
         });
     };
 

@@ -127,6 +127,9 @@ class CSBusiHanlderService extends BaseService
                 if ($f_id) {
                     // 关闭之前的信息.
                     $client_ids = Gateway::getClientIdByUid($f_id);
+                    echo "-----------------------\n";
+                    var_dump($client_ids);
+                    echo "-----------------------\n";
                     if($client_ids) {
                         foreach($client_ids as $old_client) {
                             Gateway::sendToClient($old_client, json_encode([
