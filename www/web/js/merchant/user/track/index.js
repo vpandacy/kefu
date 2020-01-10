@@ -60,7 +60,7 @@ var merchant_user_track_ops = {
                     ,{field:'style_title',  title: '风格分组'}
                     ,{field:'member_name', title: '会员名'}
                     ,{field:'referer_url', title: '来源',templet:function (row) {
-                            return row.referer_url == '' ? '暂无' : row.referer_url;
+                        return row.referer_url == '' ? '暂无' : row.referer_url;
                     }}
                     ,{field:'land_url', title: '落地页'}
                     ,{field: 'source', title: '终端来源', templet:function (row) {

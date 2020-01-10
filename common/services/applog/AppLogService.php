@@ -100,6 +100,10 @@ class AppLogService
                 ->orderBy(['id'=>SORT_DESC])
                 ->one();
 
+            if(!$logs) {
+                return false;
+            }
+
             $logs->setAttribute('logout_time', DateHelper::getFormatDateTime());
         }
 

@@ -126,13 +126,17 @@ class UserController extends BaseController
             return $this->renderErrJSON('请输入正确的图形验证码');
         }
 
-        if(!CaptchaService::checkCaptcha($mobile, 1, $captcha)) {
-            return $this->renderErrJSON('您输入的手机验证码不一致');
+        if(Staff::findOne(['mobile'=>$mobile])) {
+            return $this->renderErrJSON('该手机号已经被别人使用了，请重新更换一个手机号');
         }
 
         $merchant = Merchant::findOne(['name' => $merchant_name]);
         if($merchant) {
             return $this->renderErrJSON( '该商户名已经被使用了~~' );
+        }
+
+        if(!CaptchaService::checkCaptcha($mobile, 1, $captcha)) {
+            return $this->renderErrJSON('您输入的手机验证码不一致');
         }
 
         if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $mobile, $password)){
@@ -141,6 +145,13 @@ class UserController extends BaseController
 
         $staff = Staff::findOne(['mobile'=>$mobile]);
         $this->createLoginStatus($staff);
+
+        // 这里添加登录的日志.
+        AppLogService::addLoginLog($staff['merchant_id'],$staff['id'],0,[
+            'login_ip'  =>  CommonService::getIP(),
+            'source'    =>  CommonService::getSourceByUa(\Yii::$app->request->getUserAgent()),
+            'ua'        =>  \Yii::$app->request->getUserAgent()
+        ]);
 
         return $this->renderJSON( [], '创建成功,请登录商户~~' );
     }

@@ -91,10 +91,6 @@ class MerchantService extends BaseService
         $merchant = new Merchant();
         $now = DateHelper::getFormatDateTime();
 
-        if(Staff::findOne(['mobile'=>$mobile])) {
-            return self::_err('该手机号已经被别人使用了，请重新更换一个手机号');
-        }
-
         $merchant->setAttributes([
             'status'    =>  ConstantService::$default_status_true,
             'sn'        =>  CommonService::genUniqueName(),
@@ -151,10 +147,13 @@ class MerchantService extends BaseService
 
         $default_config['group_chat_id'] = 0;
         $default_config['merchant_id'] = $merchant['id'];
+        $default_config['company_name']= $merchant['name'];
+        // 默认logo.
+        $default_config['company_logo']= ConstantService::$default_avatar;
 
         $setting->setAttributes($default_config);
 
-        if(!$setting->save()) {
+        if(!$setting->save(0)) {
             return false;
         }
 
@@ -168,7 +167,7 @@ class MerchantService extends BaseService
 
         $rule->setAttributes($default_rule);
 
-        if(!$rule->save()) {
+        if(!$rule->save(0)) {
             return false;
         }
 
