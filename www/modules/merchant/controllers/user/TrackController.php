@@ -118,7 +118,7 @@ class TrackController extends BaseController
         if($member_ids) {
             $query->andWhere(['member_id'=>$member_ids]);
         }
-        
+
         if($url) {
             $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
         }
