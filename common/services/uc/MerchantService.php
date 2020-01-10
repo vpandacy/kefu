@@ -296,7 +296,7 @@ class MerchantService extends BaseService
             }
             $group_chat_id = $group_chat['id'];
         }
-        $cache_key = 'merchant_style_config_' . $group_chat_id;
+        $cache_key = 'merchant_style_config_' . $merchant_id . '_' . $group_chat_id;
         $style = CacheService::get($cache_key);
         if(!$style) {
             $setting = GroupChatSetting::find()
