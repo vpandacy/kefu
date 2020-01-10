@@ -116,7 +116,7 @@ class MerchantService extends BaseService
             'mobile'        =>  $mobile,
             'avatar'        =>  ConstantService::$default_avatar,
             'password'      =>  $password,
-            'listen_nums'   =>  0,
+            'listen_nums'   =>  \Yii::$app->params['default_chat_config']['listen_num']['min'], // 最小接听数.
             'status'        =>  ConstantService::$default_status_true,
             'is_root'       =>  1,
             'created_time'  =>  $now,

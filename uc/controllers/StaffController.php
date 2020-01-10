@@ -188,8 +188,9 @@ class StaffController extends BaseController
             return $this->renderErrJSON( '请输入正确的姓名/商户名' );
         }
 
-        if($data['listen_nums'] < 0 || !is_numeric($data['listen_nums'])) {
-            return $this->renderErrJSON( '请输入正确的接听数' );
+        $default = \Yii::$app->params['default_chat_config']['listen_num'];
+        if(!is_numeric($data['listen_nums']) || ValidateHelper::validRange($data['listen_nums'],$default['min'], $default['max'])) {
+            return $this->renderErrJSON( '请输入正确的接听数,最小为' . $default['min'] . ',最大为' . $default['max'] );
         }
 
         $departments = Department::find()

@@ -109,5 +109,10 @@ return [
     // 聊天默认配置.
     'default_chat_config'   =>  [
         'auto_disconnect' =>  30,
+        // 接听数.
+        'listen_num'    =>  [
+            'min'   =>  1,
+            'max'   =>  50
+        ]
     ],
 ];
