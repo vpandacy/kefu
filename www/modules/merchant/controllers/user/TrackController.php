@@ -81,7 +81,8 @@ class TrackController extends BaseController
                 ->where(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile])
                 ->all();
 
-            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
         }
 
         if($email) {
@@ -90,7 +91,8 @@ class TrackController extends BaseController
                 ->where(['merchant_id'=>$this->getMerchantId(),'email'=>$email])
                 ->all();
 
-            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
         }
 
         if($qq) {
@@ -99,7 +101,8 @@ class TrackController extends BaseController
                 ->where(['merchant_id'=>$this->getMerchantId(),'qq'=>$qq])
                 ->all();
 
-            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
         }
 
         if($wechat) {
@@ -108,16 +111,14 @@ class TrackController extends BaseController
                 ->where(['merchant_id'=>$this->getMerchantId(),'wechat'=>$wechat])
                 ->all();
 
-            $member_ids = array_merge($member_ids, !$member ? [-1] : array_column($member,'id'));
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
         }
-
-        $member_ids = array_unique($member_ids);
 
         if($member_ids) {
-            $query->andWhere(['member_id'=>in_array(-1,$member_ids) ? [-1] : $member_ids]);
+            $query->andWhere(['member_id'=>$member_ids]);
         }
-
-
+        
         if($url) {
             $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
         }
