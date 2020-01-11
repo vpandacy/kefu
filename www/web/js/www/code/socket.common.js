@@ -90,6 +90,10 @@
             ? base_config.showChat
             : null;
 
+        this._renderNickName = base_config.hasOwnProperty('renderNickName')
+            ? base_config.renderNickName
+            : null;
+
         // 保存socket信息.
         this.ws = null;
         // 表情初始化
@@ -365,6 +369,7 @@
                 $('.overflow-message').hide();
                 //显示一些系统文字提醒，例如已分配哪个客服
                 $(this.output).append(this.renderSystemMessage('客服:' + config.cs.t_name + ',为您服务...'));
+                this.renderNickName(config.cs.t_name, config.cs.avatar);
                 break;
             case "change_kf":
                 config.cs = {
@@ -542,6 +547,16 @@
         }
 
         return theRequest;
+    };
+
+    socket.prototype.renderNickName = function(nickname, logo) {
+        if(!this._renderNickName && typeof this._renderNickName == 'function') {
+            return this._renderNickName(nickname, logo);
+        }
+
+        $('.online-header .logo').attr('src', logo);
+        $('.online-header span').text(nickname);
+        return true;
     };
 
 
