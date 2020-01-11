@@ -87,7 +87,7 @@ var merchant_user_track_ops = {
                         return min + '分' + sec + '秒';
                     }}
                     ,{field:'created_time', title: '来访时间'}
-                    ,{title: '操作', toolbar: '#trackTool'}
+                    ,{title: '操作', toolbar: '#trackTool',fixed: 'right',width: 100}
                 ]]
                 ,id: 'trackTable'
             }));
