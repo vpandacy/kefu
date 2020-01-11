@@ -2,6 +2,7 @@
 (function(window){
     var config = JSON.parse( $(".hidden_wrapper input[name=params]").val() ),
         repeatInterval = null,
+        repeatMessages = [],
         closed = false,
         interval = null;
 
@@ -490,14 +491,17 @@
             return false;
         }
 
-        var that = this,
-            messages = JSON.parse(config.style.repeat_setting);
+        var that = this;
+        // 这里要设置成全局的.
+        if(!repeatMessages.length) {
+            repeatMessages = JSON.parse(config.style.repeat_setting);
+        }
 
-        if(messages.length <= 0) {
+        if(repeatMessages.length <= 0) {
             return false;
         }
 
-        var message = messages.shift(),
+        var message = repeatMessages.shift(),
             time = message.time;
 
         // 先获取一个来进行循环.依次处理. 最后一次处理完成后.
@@ -508,7 +512,7 @@
             }
             // 渲染一条消息
             !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
-            message = messages.shift();
+            message = repeatMessages.shift();
             // 这里是否要强制展示.
             that.scrollToBottom();
             // 这里要强制显示出来.
