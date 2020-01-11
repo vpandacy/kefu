@@ -186,7 +186,6 @@ var merchant_user_track_ops = {
                     // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
                     $(this).addClass("tabs_active").siblings().removeClass("tabs_active");
                     // parent 父元素 next 下一个兄弟节点  children 子节点
-                    console.log($(this).parent().eq(2))
                     $(this).parent().parent().next().children().eq($(this).index()).show().siblings().hide();
                 });
                 $('.trackTable_toop .tab .icon-guanbi').click(function () {
@@ -196,7 +195,6 @@ var merchant_user_track_ops = {
                     $.post(merchant_common_ops.buildMerchantUrl('/user/track/index'),{group_id: 0},function (res){
                        let index = res.data.findIndex((item)=>item.id === historyId);
                        historyId = res.data[index-1].id;
-                       console.log(index)
                         trackChat(historyId);
                         trackDetail(historyId);
                         trackHistory(historyId);
