@@ -520,6 +520,8 @@
 
             if(!message) {
                 clearInterval(repeatInterval);
+                // 重置一下.
+                config.style.repeat_setting = '[]';
                 return false;
             }
             time = message.time;
