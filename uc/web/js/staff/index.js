@@ -32,9 +32,9 @@ var uc_staff_index_ops = {
                     ,{field:'mobile', title: '手机号', width: 130, templet: function (row) {
                         return row.mobile ? row.mobile : '暂无';
                     }} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    ,{field:'department', title: '所属部门',width:120}
-                    ,{field:'listen_nums', width: 80, title: '接听数'}
-                    ,{field:'status', width: 80, title: '状态', templet: function (row) {
+                    ,{field:'department', title: '所属部门',width:100}
+                    ,{field:'listen_nums', width: 100, title: '接听数'}
+                    ,{field:'status', width: 100, title: '状态', templet: function (row) {
                         var map = {
                             '0'  : '禁止登录',
                             '1'  : '正常'
