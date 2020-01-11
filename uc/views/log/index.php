@@ -15,7 +15,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/l
         <form action="" class="layui-form">
             <div class="demoTable" style=" text-align: left;margin:10px 0px;">
                 <div class="layui-inline">
-                    <select name="staff_id" id="">
+                    <select name="staff_id" id="" lay-filter="choice">
                         <option value="0">请选择客服</option>
                         <?php foreach($staffs as $staff):?>
                             <option value="<?=$staff['id']?>" <?=$search_conditions['staff_id'] == $staff['id'] ? 'selected' : '' ?>><?="{$staff['name']}[{$staff['mobile']}]"?></option>
