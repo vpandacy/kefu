@@ -302,7 +302,7 @@
                 '<div style="text-align: right">',
                 '<div class="content-message online-my-message">\n' +
                 '     <div class="message-info">\n' +
-                '     <div class="message-name-date"><span class="date">',time,'</span><span>我</span></div>\n' +
+                '     <div class="message-name-date"><span>我</span><span class="date">',time,'</span></div>\n' +
                 '   <div class="message-message">',msg,'</div>\n' +
                 '  </div>\n' +
                 '</div>',
