@@ -364,7 +364,7 @@ class MerchantService extends BaseService
             return self::_err('数据保存失败');
         }
 
-        $cache_key = 'merchant_style_config_' . $id;
+        $cache_key = 'merchant_style_config_' . $merchant_id . '_' . $id;
         CacheService::set($cache_key, json_encode($setting->toArray()), 86400 * 30);
         return true;
     }
@@ -411,7 +411,7 @@ class MerchantService extends BaseService
             return self::_err('数据保存失败，请联系管理员');
         }
 
-        $cache_key = 'merchant_style_reception_' . $group_chat_id;
+        $cache_key = 'merchant_style_reception_' . $merchant_id .'_' . $group_chat_id;
         CacheService::set($cache_key, json_encode($rule->toArray()), 86400 * 30);
         return true;
     }
@@ -432,7 +432,7 @@ class MerchantService extends BaseService
             }
             $group_chat_id = $group_chat['id'];
         }
-        $cache_key = 'merchant_style_reception_' . $group_chat_id;
+        $cache_key = 'merchant_style_reception_' . $merchant_id .'_' . $group_chat_id;
         $reception = CacheService::get($cache_key);
         if(!$reception) {
             $reception = ReceptionRule::find()

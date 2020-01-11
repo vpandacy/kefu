@@ -3,6 +3,35 @@
 var merchant_style_setting_index_ops = {
     data:[],
     table: null,
+    umconfig: {
+        initialFrameWidth: 640,
+        initialFrameHeight: 275,
+        toolbar: [
+            'undo', //撤销
+            'bold', //加粗
+            'italic', //斜体
+            'underline', //下划线
+            'strikethrough', //删除线
+            'subscript', //下标
+            'fontborder', //字符边框
+            'superscript', //上标
+            'pasteplain', //纯文本粘贴模式
+            'selectall', //全选
+            'time', //时间
+            'date', //日期
+            'cleardoc', //清空文档
+            'fontsize', //字号
+            'paragraph', //段落格式
+            'emotion', //表情
+            'spechars', //特殊字符
+            'searchreplace', //查询替换
+            'forecolor', //字体颜色
+            'backcolor', //背景色
+            'lineheight', //行间距
+            'touppercase', //字母大写
+            'tolowercase' //字母小写
+        ]
+    },
     init: function () {
         this.eventBind();
 
@@ -43,7 +72,7 @@ var merchant_style_setting_index_ops = {
                 if(event.event != 'add') {
                     return false;
                 }
-
+                var um = null;
                 $.open({
                     title: '添加发起语',
                     content: $('.publish-form').html(),
@@ -51,7 +80,7 @@ var merchant_style_setting_index_ops = {
                     yes: function (index) {
                         var data = {
                             time: parseInt($('.layui-layer-dialog [name=time]').val()),
-                            content: $('.layui-layer-dialog [name=content]').val()
+                            content: um.getContent()
                         };
 
                         if(!(/^\d+$/.test(data.time))) {
@@ -63,14 +92,22 @@ var merchant_style_setting_index_ops = {
                         }
 
                         that.data.push(data);
-                        that.reloadRepeatTable()
+                        that.reloadRepeatTable();
+                        um.destroy();
                         $.close(index);
                     },
                     btn2: function (index) {
+                        um.destroy();
                         $.close(index);
                     },
-                    area:['600px']
+                    cancel: function() {
+                        um.destroy();
+                    },
+                    area:['800px','550px']
                 });
+
+                $('.layui-layer-dialog .layui-textarea').attr('id', 'editor');
+                um = UM.getEditor('editor', that.umconfig);
             });
 
             // 删除
@@ -86,7 +123,8 @@ var merchant_style_setting_index_ops = {
                     return false;
                 }
                 var curr = event.tr[0].getAttribute('data-index'),
-                    data = that.data[curr];
+                    data = that.data[curr],
+                    um = null;
 
                 $.open({
                     title: '添加发起语',
@@ -95,7 +133,7 @@ var merchant_style_setting_index_ops = {
                     yes: function (index) {
                         var data = {
                             time: parseInt($('.layui-layer-dialog [name=time]').val()),
-                            content: $('.layui-layer-dialog [name=content]').val()
+                            content: um.getContent()
                         };
 
                         if(!(/^\d+$/.test(data.time))) {
@@ -107,17 +145,25 @@ var merchant_style_setting_index_ops = {
                         }
 
                         that.data[curr] = data;
-                        that.reloadRepeatTable()
+                        that.reloadRepeatTable();
+                        um.destroy();
                         $.close(index);
                     },
                     btn2: function (index) {
                         $.close(index);
+                        um.destroy();
                     },
-                    area:['600px']
+                    cancel: function() {
+                        um.destroy();
+                    },
+                    area:['800px','550px']
                 });
 
                 $('.layui-layer-dialog [name=time]').val(data.time);
                 $('.layui-layer-dialog [name=content]').val(data.content);
+
+                $('.layui-layer-dialog .layui-textarea').attr('id', 'editor');
+                um = UM.getEditor('editor', that.umconfig);
             });
 
             // 初始化.
