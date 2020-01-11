@@ -10,6 +10,11 @@ StaticPluginHelper::qiniuPlugin();
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/company/index.js'), UcAsset::className() )
 ?>
+<style>
+    .layui-input-block {
+        width: 210px;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'settings',

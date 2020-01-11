@@ -8,6 +8,15 @@ use uc\assets\UcAsset;
 
 StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/staff/index.js"),UcAsset::className() )
 ?>
+<style>
+    .layui-table-tool-temp {
+        padding-right: 0px !important;
+    }
+    .layui-table-tool .layui-btn-container {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',

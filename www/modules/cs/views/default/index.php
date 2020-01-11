@@ -111,9 +111,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                     </div>
                     <div class="content-top-info">
                         <div class="info source"><span>关键词：</span><span>-</span></div>
-                        <div class="info referer-url"><span>来源：</span><span>-</span>
-                            <span data-clipboard-text="" class="referer-url-copy dis_none" style="display: none;">复制</span>
-                        </div>
+                        <div class="info referer-url"><span>来源：</span><span>-</span><span data-clipboard-text="" class="landUrl-copy dis_none">复制</span></div>
                     </div>
                 </div>
                 <div class="exe-content-history">
