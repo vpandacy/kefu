@@ -45,7 +45,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             <label class="layui-form-label" >请选择风格</label>
                             <div class="layui-input-block">
                                 <select name="group_chat_id" lay-filter="choice">
-                                    <option value="0">普通风格</option>
+                                    <option value="0">默认风格</option>
                                     <?php foreach($groups as $group):?>
                                         <option value="<?=$group['id']?>"><?=$group['title']?></option>
                                     <?php endforeach;?>
