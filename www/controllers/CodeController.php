@@ -34,6 +34,7 @@ class CodeController extends BaseController
         $uuid = $this->getGuestUUID();
         $msn = $this->get('msn','');
         $code = $this->get('code','');
+
         $this->layout = false;
         $is_mobile = CommonService::isMobile();
         $params = [

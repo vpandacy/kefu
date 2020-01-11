@@ -29,6 +29,10 @@ class ValidateHelper extends  \common\services\BaseService {
         return empty($params);
     }
 
+    public static function validRange($num, $min, $max) {
+        return $num >= $min && $num <= $max;
+    }
+
     /**
      * Author: Vincent
      * @param $params [

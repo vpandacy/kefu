@@ -1,6 +1,7 @@
 <?php
 namespace console\services;
 use common\models\uc\Staff;
+use common\services\applog\AppLogService;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
 use common\services\constant\QueueConstant;
@@ -126,6 +127,9 @@ class CSBusiHanlderService extends BaseService
                 if ($f_id) {
                     // 关闭之前的信息.
                     $client_ids = Gateway::getClientIdByUid($f_id);
+                    echo "-----------------------\n";
+                    var_dump($client_ids);
+                    echo "-----------------------\n";
                     if($client_ids) {
                         foreach($client_ids as $old_client) {
                             Gateway::sendToClient($old_client, json_encode([
@@ -167,6 +171,12 @@ class CSBusiHanlderService extends BaseService
         switch ($message['cmd']) {
             case ConstantService::$chat_cmd_kf_health:
                 if(!Gateway::isUidOnline($message['data']['sn'])) {
+                    $staff = Staff::findOne(['sn'=> $message['data']['sn']]);
+                    if(!$staff) {
+                        return false;
+                    }
+                    // 退出操作.
+                    AppLogService::addLoginLog($staff['merchant_id'],$staff['id'],1);
                     // 更新客服的在线状态.
                     Staff::updateAll(['is_online' => 0],['sn' => $message['data']['sn']]);
                 }

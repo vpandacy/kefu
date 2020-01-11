@@ -188,8 +188,9 @@ class StaffController extends BaseController
             return $this->renderErrJSON( '请输入正确的姓名/商户名' );
         }
 
-        if($data['listen_nums'] < 0 || !is_numeric($data['listen_nums'])) {
-            return $this->renderErrJSON( '请输入正确的接听数' );
+        $default = \Yii::$app->params['default_chat_config']['listen_num'];
+        if(!is_numeric($data['listen_nums']) || !ValidateHelper::validRange($data['listen_nums'],$default['min'], $default['max'])) {
+            return $this->renderErrJSON( '请输入正确的接听数,最小为' . $default['min'] . ',最大为' . $default['max'] );
         }
 
         $departments = Department::find()
@@ -307,10 +308,10 @@ class StaffController extends BaseController
             $cookie = \Yii::$app->params['cookies']['staff'];
             // 删除cookie
             $this->removeCookie($cookie['name'], $cookie['domain']);
-            return $this->renderJSON(['url'=>GlobalUrlService::buildUcUrl('/user/login')],'操作成功', ConstantService::$response_code_success);
+            return $this->renderJSON(['url'=>GlobalUrlService::buildUcUrl('/user/login')],'操作成功');
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
     /**
@@ -355,7 +356,11 @@ class StaffController extends BaseController
                 'status'=>ConstantService::$default_status_true
             ])
             ->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false])
-            ->one();;
+            ->one();
+
+        if($staff['is_root']) {
+            return $this->renderErrJSON('您不能禁用超级管理员帐号');
+        }
 
         if($staff['status'] != ConstantService::$default_status_true) {
             return $this->renderErrJSON( '该帐号不需要删除' );

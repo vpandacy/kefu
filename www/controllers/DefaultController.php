@@ -13,7 +13,7 @@ class DefaultController extends Controller
     public function actionTest()
     {
         $this->layout = 'main';
-        return $this->render('index2');
+        return $this->render('test');
     }
 
     public function actionStyle()

@@ -91,10 +91,6 @@ class MerchantService extends BaseService
         $merchant = new Merchant();
         $now = DateHelper::getFormatDateTime();
 
-        if(Staff::findOne(['mobile'=>$mobile])) {
-            return self::_err('该手机号已经被别人使用了，请重新更换一个手机号');
-        }
-
         $merchant->setAttributes([
             'status'    =>  ConstantService::$default_status_true,
             'sn'        =>  CommonService::genUniqueName(),
@@ -120,7 +116,7 @@ class MerchantService extends BaseService
             'mobile'        =>  $mobile,
             'avatar'        =>  ConstantService::$default_avatar,
             'password'      =>  $password,
-            'listen_nums'   =>  0,
+            'listen_nums'   =>  \Yii::$app->params['default_chat_config']['listen_num']['min'], // 最小接听数.
             'status'        =>  ConstantService::$default_status_true,
             'is_root'       =>  1,
             'created_time'  =>  $now,
@@ -130,6 +126,62 @@ class MerchantService extends BaseService
 
         if(!$employee->save(0)) {
             return self::_err('数据库保存失败,请联系管理员');
+        }
+
+        // 这里要创建一个默认的商户配置信息.
+        self::afterCreateMerchant($merchant);
+        return true;
+    }
+
+    /**
+     * 创建默认的配置.
+     * @param $merchant
+     * @return bool
+     */
+    public static function afterCreateMerchant($merchant)
+    {
+        // 生成默认的风格配置.
+        $setting = new GroupChatSetting();
+
+        $default_config = self::genDefaultStyleConfig();
+
+        $default_config['group_chat_id'] = 0;
+        $default_config['merchant_id'] = $merchant['id'];
+        $default_config['company_name']= $merchant['name'];
+        // 默认logo.
+        $default_config['company_logo']= ConstantService::$default_avatar;
+
+        $setting->setAttributes($default_config);
+
+        if(!$setting->save(0)) {
+            return false;
+        }
+
+        // 生成默认的分配规则.
+        $rule = new ReceptionRule();
+
+        $default_rule = self::genDefaultReceptionRuleConfig();
+
+        $default_rule['merchant_id'] = $merchant['id'];
+        $default_rule['group_chat_id'] = 0;
+
+        $rule->setAttributes($default_rule);
+
+        if(!$rule->save(0)) {
+            return false;
+        }
+
+        // 生成默认的商户配置.
+        $merchant_setting = new MerchantSetting();
+
+        $merchant_setting->setAttributes([
+            'merchant_id'   =>  $merchant['id'],
+            'auto_disconnect'   =>  \Yii::$app->params['default_chat_config']['auto_disconnect'],
+            'greetings'  => '欢迎使用好商会客服系统',
+        ]);
+
+        if(!$merchant_setting->save(0)) {
+            return false;
         }
 
         return true;
@@ -244,7 +296,7 @@ class MerchantService extends BaseService
             }
             $group_chat_id = $group_chat['id'];
         }
-        $cache_key = 'merchant_style_config_' . $group_chat_id;
+        $cache_key = 'merchant_style_config_' . $merchant_id . '_' . $group_chat_id;
         $style = CacheService::get($cache_key);
         if(!$style) {
             $setting = GroupChatSetting::find()

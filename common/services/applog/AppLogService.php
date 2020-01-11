@@ -1,10 +1,12 @@
 <?php
 namespace common\services\applog;
 
+use common\components\helper\DateHelper;
 use common\components\helper\UtilHelper;
 use common\components\ip\IPDBQuery;
 use common\models\logs\AppAccessLog;
 use common\models\logs\AppErrLogs;
+use common\models\logs\CsLoginLogs;
 use Yii;
 
 class AppLogService
@@ -79,79 +81,43 @@ class AppLogService
 
     }
 
-    public static function addMerchantAccessLog($merchant_info){
-        $get_params = \Yii::$app->request->get();
-        $post_params = \Yii::$app->request->post();
+    /**
+     * 添加登录日志.
+     * @param $merchant_id
+     * @param $staff_id
+     * @param int $type 0为登录,1为退出.
+     * @param array $params
+     * @return bool
+     */
+    public static function addLoginLog($merchant_id, $staff_id, $type = 0, $params = [])
+    {
+        if(!$type) {
+            $logs = new CsLoginLogs();
+            $logs->setAttribute('login_time',DateHelper::getFormatDateTime());
+        }else{
+            $logs = CsLoginLogs::find()
+                ->where(['merchant_id'=>$merchant_id, 'staff_id'=>$staff_id])
+                ->orderBy(['id'=>SORT_DESC])
+                ->one();
 
-        $target_url = isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'';
+            if(!$logs) {
+                return false;
+            }
 
-        $ignore_urls = [
-            "/merchant/profile/wechat"
-        ];
-        $ignore_url = "#".implode("|",$ignore_urls)."#";
-        if( $target_url && preg_match($ignore_url,$target_url) ){
-            return true;
+            $logs->setAttribute('logout_time', DateHelper::getFormatDateTime());
         }
 
-        $referer = Yii::$app->request->getReferrer();
-        $ua = Yii::$app->request->getUserAgent();
-
-        $query_params = array_merge($get_params,$post_params);
-        if( count( $query_params ) > 10 ){
-            $query_params =  array_rand( $query_params ,10);
+        if(!$logs) {
+            return false;
         }
 
-        $access_log = new MerchantAccessLog();
-        $access_log->merchant_id = $merchant_info ? $merchant_info['id'] : 0;
-        $access_log->merchant_name = $merchant_info ? $merchant_info['realname'] :'';
-        $access_log->referer_url = $referer ? $referer : '';
-        $access_log->target_url = $target_url;
-        $access_log->query_params = json_encode( $query_params );
-        $access_log->ua = $ua?$ua:'';
-        $access_log->ip = UtilHelper::getClientIP();
-        $access_log->ip_desc = implode(" ",IPDBQuery::find( $access_log->ip ) );
-        $access_log->created_time = date("Y-m-d H:i:s");
-        return $access_log->save(0);
+        $data = array_merge([
+            'merchant_id'   =>  $merchant_id,
+            'staff_id'      =>  $staff_id
+        ], $params);
+
+        $logs->setAttributes($data);
+
+        return $logs->save();
     }
-
-
-
-    public static function addDwMerchantAccessLog($merchant_info){
-        $get_params = \Yii::$app->request->get();
-        $post_params = \Yii::$app->request->post();
-
-        $target_url = isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'';
-
-        $ignore_urls = [
-            "/merchant/profile/wechat"
-        ];
-        $ignore_url = "#".implode("|",$ignore_urls)."#";
-        if( $target_url && preg_match($ignore_url,$target_url) ){
-            return true;
-        }
-
-        $referer = Yii::$app->request->getReferrer();
-        $ua = Yii::$app->request->getUserAgent();
-
-        $query_params = array_merge($get_params,$post_params);
-        if( count( $query_params ) > 10 ){
-            $query_params =  array_rand( $query_params ,10);
-        }
-
-        $access_log = new DwMerchantAccessLog();
-        $access_log->saas_merchant_id = ( $merchant_info && isset( $merchant_info['saas_merchant_id'] ) )?$merchant_info['saas_merchant_id']:0;
-        $access_log->merchant_id = $merchant_info ? $merchant_info['id'] : 0;
-        $access_log->merchant_name = $merchant_info ? $merchant_info['realname'] :'';
-        $access_log->referer_url = $referer ? $referer : '';
-        $access_log->target_url = $target_url;
-        $access_log->query_params = json_encode( $query_params );
-        $access_log->ua = $ua?$ua:'';
-        $access_log->ip = UtilHelper::getClientIP();
-        $access_log->ip_desc = implode(" ",IPDBQuery::find( $access_log->ip ) );
-        $access_log->created_time = date("Y-m-d H:i:s");
-        return $access_log->save(0);
-
-    }
-
-
 }

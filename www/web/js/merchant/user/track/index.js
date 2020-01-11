@@ -1,6 +1,6 @@
 ;
-const sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
-const mediaName = [
+var sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+var mediaName = [
     {id: '0', name: '直接访问',icon:'http://static.kefu.test.hsh568.cn/logo/直接访问.png'},
     {id: '100', name: '百度',icon:'http://static.kefu.test.hsh568.cn/logo/百度.png'},
     {id: '110', name: '360',icon:'http://static.kefu.test.hsh568.cn/logo/360.png'},
@@ -42,33 +42,50 @@ var merchant_user_track_ops = {
                 ,url: merchant_common_ops.buildMerchantUrl('/user/track/index')
                 ,where: {
                     time: $('#time').val(),
-                    group_id: $('[name=group_id]').val()
+                    group_id: $('[name=group_id]').val(),
+                    mobile: $('#mobile').val(),
+                    url: $('#url').val(),
+                    staff_id: $('#staff_id').val(),
+                    qq: $('#qq').val(),
+                    email: $('#email').val(),
+                    wechat: $('#wechat').val()
                 }
                 ,defaultToolbar: ['filter','exports']
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
                     {field:'id', width:80, title: '序号'}
-                    ,{field:'client_ip',  title: 'IP地址'}
+                    ,{field:'uuid',  title: '访客名称', templet:function (row) {
+                        return row.uuid.substr(row.uuid.length - 12);
+                    }}
                     ,{field:'uuid',  title: '访客编号'}
+                    ,{field:'client_ip',  title: 'IP地址'}
                     ,{field:'staff_name', title: '客服'}
                     ,{field:'style_title',  title: '风格分组'}
                     ,{field:'member_name', title: '会员名'}
                     ,{field:'referer_url', title: '来源',templet:function (row) {
-                            return row.referer_url == '' ? '暂无' : row.referer_url;
-                        }}
-                    ,{field:'land_url', title: '落地页'}
+                        return row.referer_url == '' ? '暂无' : [
+                            '<a href="', row.referer_url, '" target="_blank">',row.referer_url,'</a>'
+                        ].join('');
+                    }}
+                    ,{field:'land_url', title: '落地页', templet: function (row) {
+                        return row.land_url == '' ? '暂无' : [
+                            '<a href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
+                        ].join('');
+                    }}
                     ,{field: 'source', title: '终端来源', templet:function (row) {
-                            var sources_map = {
-                                0: '暂无',
-                                1: 'PC',
-                                2: '手机',
-                                3: '微信'
-                            };
-                            return sources_map[row.source];
-                        }}
+                        var sources_map = {
+                            0: '暂无',
+                            1: 'PC',
+                            2: '手机',
+                            3: '微信'
+                        };
+                        return sources_map[row.source];
+                    }}
                     ,{field:'chat_duration', title: '聊天时长', templet:function (row) {
-                            return row.chat_duration + '秒';
-                        }}
+                        var sec = row.chat_duration % 60,
+                            min = parseInt(row.chat_duration - sec) / 60;
+                        return min + '分' + sec + '秒';
+                    }}
                     ,{field:'created_time', title: '来访时间'}
                     ,{title: '操作', toolbar: '#trackTool'}
                 ]]
@@ -96,6 +113,7 @@ var merchant_user_track_ops = {
                     "</div>"+
                     "</div>\n";
                 $('.trackTable_big').append(fromHtml);
+
                 $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
                     if(res.code === 200){
                         res.data.length === 0 ? $('.content_assgin').text('暂无记录'):res.data.forEach(function (item) {
@@ -113,6 +131,7 @@ var merchant_user_track_ops = {
                     }
                     layer.msg('请联系管理员');
                 });
+
                 $.post('/merchant/user/track/detail',{history_id:historyId},function (res) {
                     if(res.code === 200){
                         var source_name= sourceName.find(function (item) {
@@ -130,9 +149,10 @@ var merchant_user_track_ops = {
                             "<div><span class='information_title'>消息类型：</span><span>在线消息</span></div>" +
                             "<div><span class='information_title'>访问来源：</span><span>"+media_name.name+"</span></div>" +
                             "<div><span class='information_title'>关键词：</span><span>暂无</span></div>" +
-                            "<div><span class='information_title'>落地页：</span><a href='"+ res.data.land_url +"'>"+res.data.land_url+"</a></div>");
+                            "<div><span class='information_title'>落地页：</span><a target='_blank' href='"+ res.data.land_url +"'>"+res.data.land_url+"</a></div>");
                     }
                 });
+
                 //执行渲染
                 table.render(merchant_common_ops.buildLayuiTableConfig({
                     elem: '.router_table'
@@ -144,7 +164,9 @@ var merchant_user_track_ops = {
                     ,cellMinWidth: 90 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                     ,cols: [[
                         {field:'created_time', width:150, title: '访问时间',fixed: 'left'}
-                        ,{field:'land_url', width:190, title: '访问地址'}
+                        ,{field:'land_url', width:190, title: '访问地址', templet: function (row) {
+                            return '<a href="' + row.land_url +'" target="_blank">' + row.land_url + '</a>';
+                        }}
                         ,{field:'chat_duration', title: '停留时长'}
                     ]]
                 }))

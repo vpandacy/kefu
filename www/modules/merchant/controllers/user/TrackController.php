@@ -10,6 +10,7 @@ use common\models\merchant\GroupChat;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
 use www\modules\merchant\controllers\common\BaseController;
+use yii\db\Expression;
 
 class TrackController extends BaseController
 {
@@ -18,22 +19,49 @@ class TrackController extends BaseController
         if($this->isGet()) {
             $group_id = $this->get('group_id',0);
             $time = $this->get('time','');
+            $mobile = $this->get('mobile','');
+            $url = $this->get('url','');
+            $staff_id = intval($this->get('staff_id',0));
+            $qq = $this->get('qq','');
+            $wechat = $this->get('wechat','');
+            $email = $this->get('email','');
+
+
             $groups = GroupChat::findAll(['merchant_id'=>$this->getMerchantId()]);
+            $staffs  = Staff::find()
+                ->where(['merchant_id'=>$this->getMerchantId()])
+                ->asArray()
+                ->all();
 
             return $this->render('index',[
                 'groups'    =>  $groups,
+                'staffs'    =>  $staffs,
                 'search_conditions' =>  [
                     'group_id'  =>  $group_id,
-                    'time'      =>  $time
+                    'time'      =>  $time,
+                    'mobile'    =>  $mobile,
+                    'url'       =>  $url,
+                    'staff_id'  =>  $staff_id,
+                    'email'     =>  $email,
+                    'wechat'    =>  $wechat,
+                    'qq'        =>  $qq,
                 ],
             ]);
         }
 
         $group_id = intval($this->post('group_id',0));
         $time = $this->post('time','');
+        $staff_id = intval($this->post('staff_id',0));
+        $mobile = trim($this->post('mobile',''));
+        $url = trim($this->post('url',''));
+        $qq = $this->post('qq',0);
+        $wechat = $this->post('wechat',0);
+        $email = $this->post('email',0);
 
         $time = $time ? explode('~', $time) : [];
         $page = intval($this->post('page',1));
+
+        $member_ids = [];
 
         $query = GuestHistoryLog::find()->where([
             'merchant_id'=>$this->getMerchantId()
@@ -41,6 +69,58 @@ class TrackController extends BaseController
 
         if($group_id) {
             $query->andWhere(['chat_stype_id'=>$group_id]);
+        }
+
+        if($staff_id) {
+            $query->andWhere(['staff_id'=>$staff_id]);
+        }
+
+        if($mobile) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile])
+                ->all();
+
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        if($email) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'email'=>$email])
+                ->all();
+
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        if($qq) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'qq'=>$qq])
+                ->all();
+
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        if($wechat) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'wechat'=>$wechat])
+                ->all();
+
+            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
+        }
+
+        if($member_ids) {
+            $query->andWhere(['member_id'=>$member_ids]);
+        }
+
+        if($url) {
+            $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
         }
 
         if($time) {

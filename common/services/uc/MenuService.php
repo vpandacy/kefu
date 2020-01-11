@@ -46,7 +46,7 @@ class MenuService extends BaseService
             'bar_menu'  =>  self::getBarMenu()
         ];
 
-        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company'];
+        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company', 'staff_log'];
         // 开始过滤菜单.
         foreach($all_menu['left_menu'] as $key=>$action) {
             if(!in_array($action['url'], $urls)) {
@@ -106,7 +106,7 @@ class MenuService extends BaseService
             ],
             'message'   =>  [
                 'title' =>  '留言管理',
-                'url'   =>  'merchant/overall/offline/index',
+                'url'   =>  'merchant/user/track/index',
                 'icon'  =>  'icon-liaotian',
             ],
             // 风格管理
@@ -127,7 +127,6 @@ class MenuService extends BaseService
                 'title' =>  '全局设置',
                 'icon'  =>  'icon-quanjushezhi',
             ],
-
         ];
     }
 
@@ -225,15 +224,19 @@ class MenuService extends BaseService
                     'title' =>  '权限管理',
                     'url'   =>  'action/index',
                 ],
+                'staff_log' =>  [
+                    'title' =>  '客服日志',
+                    'url'   =>  'log/index'
+                ],
             ],
             'message'   =>  [
+                'track' =>  [
+                    'title' =>  '聊天记录',
+                    'url'   =>  'merchant/user/track/index',
+                ],
                 'leave' =>  [
                     'title' =>  '留言板管理',
                     'url'   =>  'merchant/overall/offline/index'
-                ],
-                'track' =>  [
-                    'title' =>  '记录中心',
-                    'url'   =>  'merchant/user/track/index',
                 ]
             ],
         ];

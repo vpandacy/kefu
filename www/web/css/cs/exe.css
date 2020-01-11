@@ -407,7 +407,9 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-top .content-top-info .land-url .land-url-url {
     cursor: pointer;
 }
-#chatExe .exe-content .exe-content-top .content-top-info .land-url .landUrl-copy {
+#chatExe .exe-content .exe-content-top .content-top-info .land-url .landUrl-copy,
+#chatExe .exe-content .exe-content-top .content-top-info .referer-url .referer-url-copy
+{
     background: black;
     padding: 0 5px;
     color: white;

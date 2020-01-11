@@ -78,17 +78,12 @@ class UserController extends BaseController
         }
 
         // 开始创建登录的信息.
-        $token = $this->createLoginStatus( $staff_info );
-
-        $staff_info['login_token'] = $token;
-
-        if(!$staff_info->save()) {
-            return $this->renderErrJSON('数据保存失败，请联系管理员');
-        }
+        $this->createLoginStatus( $staff_info );
 
         $data = [
             "url" => $url ?? UCUrlService::buildUCUrl("/default/application",$this->app_id)
         ];
+
         return $this->renderJSON($data,'登录成功~~~~' );
     }
 
@@ -140,6 +135,9 @@ class UserController extends BaseController
         if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $mobile, $password)){
             return $this->renderErrJSON( MerchantService::getLastErrorMsg() );
         }
+
+        $staff = Staff::findOne(['mobile'=>$mobile]);
+        $this->createLoginStatus( $staff);
 
         return $this->renderJSON( [], '创建成功,请登录商户~~' );
     }

@@ -5,6 +5,7 @@ use common\components\helper\ValidateHelper;
 use common\components\ValidateCode;
 use common\models\uc\Merchant;
 use common\models\uc\Staff;
+use common\services\applog\AppLogService;
 use common\services\CaptchaService;
 use common\services\uc\CustomerService;
 use www\modules\cs\controllers\common\BaseController;
@@ -75,14 +76,14 @@ class UserController extends BaseController
         }
 
         // 开始创建登录的信息.
-        $token = $this->createLoginStatus( $staff_info );
+        $this->createLoginStatus( $staff_info );
 
-        // 登录成功则认为可以接待游客.
-        $staff_info['login_token']  = $token;
-
-        if(!$staff_info->save(0)) {
-            return $this->renderErrJSON('数据保存失败，请联系管理员');
-        }
+        // 这里添加登录的日志.
+        AppLogService::addLoginLog($staff_info['merchant_id'],$staff_info['id'],0,[
+            'login_ip'  =>  CommonService::getIP(),
+            'source'    =>  CommonService::getSourceByUa(\Yii::$app->request->getUserAgent()),
+            'ua'        =>  \Yii::$app->request->getUserAgent()
+        ]);
 
         return $this->renderJSON([
             "url" => $url ?? GlobalUrlService::buildKFUrl('/cs')
@@ -125,8 +126,8 @@ class UserController extends BaseController
             return $this->renderErrJSON('请输入正确的图形验证码');
         }
 
-        if(!CaptchaService::checkCaptcha($mobile, 1, $captcha)) {
-            return $this->renderErrJSON('您输入的手机验证码不一致');
+        if(Staff::findOne(['mobile'=>$mobile])) {
+            return $this->renderErrJSON('该手机号已经被别人使用了，请重新更换一个手机号');
         }
 
         $merchant = Merchant::findOne(['name' => $merchant_name]);
@@ -134,9 +135,23 @@ class UserController extends BaseController
             return $this->renderErrJSON( '该商户名已经被使用了~~' );
         }
 
+        if(!CaptchaService::checkCaptcha($mobile, 1, $captcha)) {
+            return $this->renderErrJSON('您输入的手机验证码不一致');
+        }
+
         if(!MerchantService::createMerchant($this->getAppId(), $merchant_name, $mobile, $password)){
             return $this->renderErrJSON( MerchantService::getLastErrorMsg() );
         }
+
+        $staff = Staff::findOne(['mobile'=>$mobile]);
+        $this->createLoginStatus($staff);
+
+        // 这里添加登录的日志.
+        AppLogService::addLoginLog($staff['merchant_id'],$staff['id'],0,[
+            'login_ip'  =>  CommonService::getIP(),
+            'source'    =>  CommonService::getSourceByUa(\Yii::$app->request->getUserAgent()),
+            'ua'        =>  \Yii::$app->request->getUserAgent()
+        ]);
 
         return $this->renderJSON( [], '创建成功,请登录商户~~' );
     }
@@ -152,7 +167,10 @@ class UserController extends BaseController
         if($this->current_user) {
             // 更新在线的状态.如果是退出登录了.
             Staff::updateAll([
-                'is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']]);
+                'is_online'=>ConstantService::$default_status_false],['id'=>$this->current_user['id']
+            ]);
+            // 添加退出日志.
+            AppLogService::addLoginLog($this->current_user['merchant_id'], $this->current_user['id'],1);
         }
 
         $this->removeCookie($cookie['name'],$cookie['domain']);

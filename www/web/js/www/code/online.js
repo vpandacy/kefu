@@ -111,6 +111,11 @@ var ws_config = new socket({
             '   <span class="message-tip">',msg,'</span>',
             '</div>'
         ].join('');
+    },
+    renderNickName: function (nickname, logo) {
+        $('.online-header .logo').attr('src', logo);
+        $('.online-header .title').text(nickname);
+        return true;
     }
 });
 

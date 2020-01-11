@@ -194,3 +194,9 @@ ALTER TABLE `guest_history_log`
 ALTER TABLE `guest_history_log`
     ADD `keyword` varchar(255) NOT NULL DEFAULT '' COMMENT '搜索关键词' AFTER `referer_media`;
 ```
+## 20200110
+```
+ALTER TABLE `group_chat_setting`
+    ADD UNIQUE `group_chat_id_merchant_id` (`group_chat_id`, `merchant_id`),
+    DROP INDEX `group_chat_id`;
+```

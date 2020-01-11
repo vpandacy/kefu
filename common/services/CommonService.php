@@ -234,4 +234,14 @@ class CommonService extends BaseService
 
         return 1;
     }
+
+    /**
+     * 获取IP
+     * @return string
+     */
+    public static function getIP(){
+        if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"]))
+            return $_SERVER["HTTP_X_FORWARDED_FOR"];
+        return isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"]:'';
+    }
 }

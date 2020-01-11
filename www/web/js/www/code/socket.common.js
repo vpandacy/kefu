@@ -90,6 +90,10 @@
             ? base_config.showChat
             : null;
 
+        this._renderNickName = base_config.hasOwnProperty('renderNickName')
+            ? base_config.renderNickName
+            : null;
+
         // 保存socket信息.
         this.ws = null;
         // 表情初始化
@@ -298,7 +302,7 @@
                 '<div style="text-align: right">',
                 '<div class="content-message online-my-message">\n' +
                 '     <div class="message-info">\n' +
-                '     <div class="message-name-date"><span class="date">',time,'</span><span>我</span></div>\n' +
+                '     <div class="message-name-date"><span>我</span><span class="date">',time,'</span></div>\n' +
                 '   <div class="message-message">',msg,'</div>\n' +
                 '  </div>\n' +
                 '</div>',
@@ -365,6 +369,7 @@
                 $('.overflow-message').hide();
                 //显示一些系统文字提醒，例如已分配哪个客服
                 $(this.output).append(this.renderSystemMessage('客服:' + config.cs.t_name + ',为您服务...'));
+                this.renderNickName(config.cs.t_name, config.cs.avatar);
                 break;
             case "change_kf":
                 config.cs = {
@@ -501,7 +506,6 @@
             if(time > 0) {
                 return false;
             }
-            console.dir(message);
             // 渲染一条消息
             !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
             message = messages.shift();
@@ -542,6 +546,16 @@
         }
 
         return theRequest;
+    };
+
+    socket.prototype.renderNickName = function(nickname, logo) {
+        if(!this._renderNickName && typeof this._renderNickName == 'function') {
+            return this._renderNickName(nickname, logo);
+        }
+
+        $('.online-header .logo').attr('src', logo);
+        $('.online-header span').text(nickname);
+        return true;
     };
 
 

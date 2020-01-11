@@ -90,7 +90,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                 <div class="layui-form-item">
                     <label class="layui-form-label">接听数</label>
                     <div class="layui-input-block">
-                        <input type="text" name="listen_nums" value="<?=$staff['listen_nums']?>" lay-verify="required" title="0代表没有上限" placeholder="请输入接听数量" autocomplete="off" class="layui-input">
+                        <input type="text" name="listen_nums" value="<?=$staff['listen_nums']?>" lay-verify="required" title="最小为1" placeholder="请输入接听数量,最小为1" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 

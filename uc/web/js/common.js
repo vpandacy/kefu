@@ -15,7 +15,8 @@ var uc_common_ops = {
                 '/staff/',
                 '/action/',
                 '/role/',
-                '/department/'
+                '/department/',
+                '/log/'
             ],
             'liaotian'      : [
                 '/merchant/chat/index',

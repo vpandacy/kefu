@@ -118,9 +118,9 @@ var uc_department_index_ops = {
                 '<input type="hidden" name="id" value="',row ? row.id : '','">'
             ].join(''),
             btn: [
-                '立即提交','重置'
+                '保存','重置'
             ],
-            area:['600px'],
+            area:['400px'],
             yes:function (index) {
                 var name = $('[name=name]').val(),
                     id = $('[name=id]').val();
