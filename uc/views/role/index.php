@@ -6,6 +6,11 @@ use uc\assets\UcAsset;
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/role/index.js'), UcAsset::className())
 ?>
+<style>
+    .layui-input-block {
+        width: 150px;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',
