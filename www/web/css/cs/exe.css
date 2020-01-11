@@ -599,7 +599,7 @@ select[name='cs'] {
 }
 #chatExe .tab .content-tab-one {
     color: rgb(125, 128, 136);
-    margin: 10% 0;
+    /*margin: 10% 0;*/
     border-radius: 5px;
     font: small-caption;
     height: 90%;
@@ -607,7 +607,7 @@ select[name='cs'] {
     /*flex-direction: column;*/
 }
 #chatExe .tab .content-tab-one div{
-    margin: 30px 0;
+    margin: 20px 0;
 }
 #chatExe .tab .content-tab-two div {
     margin: 10px 0px;
