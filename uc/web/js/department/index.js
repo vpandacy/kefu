@@ -120,7 +120,7 @@ var uc_department_index_ops = {
             btn: [
                 '保存','重置'
             ],
-            area:['400px'],
+            area:['300px'],
             yes:function (index) {
                 var name = $('[name=name]').val(),
                     id = $('[name=id]').val();

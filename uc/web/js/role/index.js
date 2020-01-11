@@ -118,7 +118,7 @@
             btn: [
                 '立即提交','重置'
             ],
-            area:['600px'],
+            area:['300px'],
             yes:function (index) {
                 var name = $('[name=name]').val(),
                     id = $('[name=id]').val();
