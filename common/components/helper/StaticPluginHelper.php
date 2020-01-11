@@ -106,4 +106,18 @@ class StaticPluginHelper
             self::getDepend());
     }
 
+    public static function umeditor()
+    {
+        StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/plugins/umeditor/themes/default/css/umeditor.css'),
+            self::getDepend()
+        );
+
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/umeditor/umeditor.config.js'),
+            self::getDepend()
+        );
+
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/plugins/umeditor/umeditor.js'),
+            self::getDepend()
+        );
+    }
 }

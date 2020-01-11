@@ -7,6 +7,7 @@ use common\services\GlobalUrlService;
 StaticPluginHelper::setDepend(MerchantAsset::className());
 
 StaticPluginHelper::qiniuPlugin();
+StaticPluginHelper::umeditor();
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/style/setting/index.js'),MerchantAsset::className());
 ?>
@@ -177,7 +178,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         </div>
         <div class="layui-form-item">
             <label for="" class="layui-form-label">发起内容</label>
-            <div class="layui-inline">
+            <div class="layui-inline" style="width: 600px;">
                 <textarea name="content" placeholder="请输入发起内容" lay-verify="required" class="layui-textarea"></textarea>
             </div>
         </div>

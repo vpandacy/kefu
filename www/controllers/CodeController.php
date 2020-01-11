@@ -100,6 +100,7 @@ class CodeController extends BaseController
                 "style"             => $style
             ]
         ];
+        
         return $this->render('chat',$data);
     }
 
