@@ -473,11 +473,25 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     z-index: 99999999999;
     background: white;
     width: 450px;
+    justify-content: space-between;
+    padding-right: 15px;
 }
-.tab_staff_content .trackTable_toop .tab .icon-guanbi{
-    position: absolute;
-    top: 6px;
-    right: 6px;
+.tab_staff_content .trackTable_toop .tab .tabs_tools .icon-guanbi{
+    /*position: absolute;*/
+    /*top: 6px;*/
+    /*right: 6px;*/
+}
+ .tab_staff_content .trackTable_toop .tab .tabs_all {
+     display: flex;
+     align-items: center
+ }
+.tab_staff_content .trackTable_toop .tab .tabs_tools {
+    display: flex;
+    align-items: center
+}
+
+.tab_staff_content .trackTable_toop .tab .iconfont {
+    margin: 0 10px;
 }
 .tab_staff_content .trackTable_toop .tab .tabs{
     margin: 10px 10px;
