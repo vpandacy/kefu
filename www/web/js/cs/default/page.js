@@ -101,11 +101,11 @@
              * @Array:sourceName : 终端集合
              * @Array:mediaName : 媒体集合
              * **/
-            let sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
-            let sourceIcon = sourceName.find(function (item) {
+            var sourceName = [{id:'1',name:'PC',icon:'icon-diannao01'}, {id:'2',name:'手机',icon:'icon-shouji'}, {id:'3',name:'微信',icon:'icon-z-weixin'}];
+            var sourceIcon = sourceName.find(function (item) {
                 return item.id == user.source;
             });
-            let mediaName = [
+            var mediaName = [
                 {id: '0', name: '直接访问',icon:'http://static.kefu.test.hsh568.cn/logo/直接访问.png'},
                 {id: '100', name: '百度',icon:'http://static.kefu.test.hsh568.cn/logo/百度.png'},
                 {id: '110', name: '360',icon:'http://static.kefu.test.hsh568.cn/logo/360.png'},
@@ -127,7 +127,7 @@
                 {id: '270', name: '知乎',icon:'http://static.kefu.test.hsh568.cn/logo/知乎.png'},
                 {id: '280', name: '爱奇艺',icon:'http://static.kefu.test.hsh568.cn/logo/爱奇艺.png'}
             ];
-            let mediaIcon = mediaName.find(function (item) {
+            var mediaIcon = mediaName.find(function (item) {
                 return item.id == user.media;
             });
             return  [
@@ -326,8 +326,16 @@
                 $('.land-url').mouseout(function () {
                     $('.landUrl-copy').hide();
                 });
+                $('.referer-url').mousemove(function () {
+                    $('.referer-url-copy').show();
+                });
+                $('.referer-url').mouseout(function () {
+                    $('.referer-url-copy').hide();
+                });
                 $('.landUrl-copy').attr('data-clipboard-text', history.land_url)
+                $('.referer-url-copy').attr('data-clipboard-text', history.referer_url ? history.referer_url : '');
                 new ClipboardJS('.landUrl-copy');
+                new ClipboardJS('.referer-url-copy');
                 // 批量渲染.
                 elem.find('.exe-info .name').text(member && member.name ? member.name : '暂无');
                 elem.find('.exe-info .mobile').text(member && member.mobile ?  member.mobile : '暂无');
@@ -341,8 +349,8 @@
                 elem.find('.land-url .land-url-url').attr('title', history.land_url);
                 elem.find('.source span:last-child').text(history.keyword ? history.keyword : '暂无');
                 elem.find('.source span:last-child').attr('title',history.keyword);
-                elem.find('.referer-url span:last-child').text(history.referer_url ? history.referer_url : '暂无');
-                elem.find('.referer-url span:last-child').attr('title',history.referer_url);
+                elem.find('.referer-url span:nth-child(2)').text(history.referer_url ? history.referer_url : '暂无');
+                elem.find('.referer-url span:nth-child(2)').attr('title',history.referer_url);
                 var canalName = [
                     {id:'0',name:'直接访问'},
                     {id:'100',name:'百度'},
