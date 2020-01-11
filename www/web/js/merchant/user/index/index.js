@@ -31,7 +31,7 @@ var merchant_user_index_ops = {
                         return sources_map[row.source];
                     }}
                     ,{field:'desc', title: '备注'}
-                    ,{field:'created_time', title: '添加时间'}
+                    ,{field:'created_time', width: 170, title: '添加时间'}
                     ,{fixed: 'right', title:'操作', toolbar: '#userBar'}
                 ]]
                 ,id: 'userTable'
