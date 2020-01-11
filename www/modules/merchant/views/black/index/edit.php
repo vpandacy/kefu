@@ -5,13 +5,16 @@ use www\assets\MerchantAsset;
 
 StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildKFStaticUrl('/js/merchant/black/index/edit.js'), MerchantAsset::className() )
 ?>
-
+<style>
+    .layui-input-block {
+        width: 210px;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
         'bar_menu'  =>  'blacklist',
         'current_menu'  =>  'blacklist'
     ])?>
-
     <div class="tab_staff_content">
         <div class="site-text">
             <form class="layui-form">

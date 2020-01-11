@@ -35,9 +35,21 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
     .upload_container .upload_but {
         width: 100%;
     }
-    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
-        margin-top: 0 !important;
+    .layui-input-block {
+        width: 200px;
     }
+    .layui-input-inline {
+        width: 200px !important;
+    }
+    /*.layui-form-item .layui-form-checkbox[lay-skin=primary] {*/
+    /*    margin-top: 0 !important;*/
+    /*}*/
+    /*.layui-form-select .layui-input {*/
+    /*    padding-right: 0px;*/
+    /*}*/
+    /*.layui-form-select .layui-edge {*/
+    /*    left: 120px;*/
+    /*}*/
 </style>
 <div id="staff_index_index">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
@@ -84,7 +96,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">请选择部门</label>
-                    <div class="layui-inline">
+                    <div class="layui-input-block">
                         <select name="department_id" lay-verify="required">
                             <option value="0">请选择部门</option>
                             <?php foreach($departments as $department):?>
@@ -96,7 +108,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">请选择角色</label>
-                    <div class="layui-inline">
+                    <div class="layui-input-block">
 
                         <select multiple="multiple" lay-filter="test">
                             <?php foreach($roles as $role):?>
@@ -130,7 +142,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/s
                     <div class="layui-input-inline">
                         <input type="password" name="confirm_password" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">如需修改密码请输入</div>
+                    <div class="layui-form-mid layui-word-aux">辅助文字</div>
                 </div>
 
                 <div class="layui-form-item">

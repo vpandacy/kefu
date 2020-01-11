@@ -5,6 +5,11 @@ use www\assets\MerchantAsset;
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/user/index/edit.js'), MerchantAsset::className());
 ?>
+<style>
+    .layui-input-block {
+        width: 200px;
+    }
+</style>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
         'bar_menu'  =>  'member',
