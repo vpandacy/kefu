@@ -29,7 +29,7 @@ var uc_staff_index_ops = {
                     ,{field:'nickname', title: '昵称', templet: function (row) {
                         return row.nickname ? row.nickname : '暂无';
                     }}
-                    ,{field:'mobile', title: '手机号', width: 130, templet: function (row) {
+                    ,{field:'mobile', title: '手机号', templet: function (row) {
                         return row.mobile ? row.mobile : '暂无';
                     }} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
                     ,{field:'department', title: '所属部门',width:100}
