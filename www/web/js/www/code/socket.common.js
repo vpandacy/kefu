@@ -506,7 +506,6 @@
             if(time > 0) {
                 return false;
             }
-            console.dir(message);
             // 渲染一条消息
             !closed && $(that.output).append(that.renderCsMsg(config.cs.t_name, config.cs.avatar, message.content, getCurrentDateTime()));
             message = messages.shift();
