@@ -15,7 +15,11 @@
                     return $.msg('请选择正确的客服');
                 }
 
-                table.reload('logTable');
+                table.reload('logTable',{
+                    where: {
+                        staff_id: $('[name=staff_id]').val()
+                    }
+                });
             });
 
             table.render(uc_common_ops.buildLayuiTableConfig({
