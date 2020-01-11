@@ -54,15 +54,24 @@ var merchant_user_track_ops = {
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
                     {field:'id', width:80, title: '序号'}
-                    ,{field:'client_ip',  title: 'IP地址'}
+                    ,{field:'uuid',  title: '访客名称', templet:function (row) {
+                        return row.uuid.substr(row.uuid.length - 12);
+                    }}
                     ,{field:'uuid',  title: '访客编号'}
+                    ,{field:'client_ip',  title: 'IP地址'}
                     ,{field:'staff_name', title: '客服'}
                     ,{field:'style_title',  title: '风格分组'}
                     ,{field:'member_name', title: '会员名'}
                     ,{field:'referer_url', title: '来源',templet:function (row) {
-                        return row.referer_url == '' ? '暂无' : row.referer_url;
+                        return row.referer_url == '' ? '暂无' : [
+                            '<a href="', row.referer_url, '" target="_blank">',row.referer_url,'</a>'
+                        ].join('');
                     }}
-                    ,{field:'land_url', title: '落地页'}
+                    ,{field:'land_url', title: '落地页', templet: function (row) {
+                        return row.land_url == '' ? '暂无' : [
+                            '<a href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
+                        ].join('');
+                    }}
                     ,{field: 'source', title: '终端来源', templet:function (row) {
                         var sources_map = {
                             0: '暂无',
@@ -104,6 +113,7 @@ var merchant_user_track_ops = {
                     "</div>"+
                     "</div>\n";
                 $('.trackTable_big').append(fromHtml);
+
                 $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
                     if(res.code === 200){
                         res.data.length === 0 ? $('.content_assgin').text('暂无记录'):res.data.forEach(function (item) {
@@ -121,6 +131,7 @@ var merchant_user_track_ops = {
                     }
                     layer.msg('请联系管理员');
                 });
+
                 $.post('/merchant/user/track/detail',{history_id:historyId},function (res) {
                     if(res.code === 200){
                         var source_name= sourceName.find(function (item) {
@@ -138,9 +149,10 @@ var merchant_user_track_ops = {
                             "<div><span class='information_title'>消息类型：</span><span>在线消息</span></div>" +
                             "<div><span class='information_title'>访问来源：</span><span>"+media_name.name+"</span></div>" +
                             "<div><span class='information_title'>关键词：</span><span>暂无</span></div>" +
-                            "<div><span class='information_title'>落地页：</span><a href='"+ res.data.land_url +"'>"+res.data.land_url+"</a></div>");
+                            "<div><span class='information_title'>落地页：</span><a target='_blank' href='"+ res.data.land_url +"'>"+res.data.land_url+"</a></div>");
                     }
                 });
+
                 //执行渲染
                 table.render(merchant_common_ops.buildLayuiTableConfig({
                     elem: '.router_table'
