@@ -22,7 +22,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcStaticUrl('/js/l
                         <?php endforeach;?>
                     </select>
                 </div>
-                <button class="layui-btn" data-type="reload" type="submit">搜索</button>
             </div>
         </form>
 
