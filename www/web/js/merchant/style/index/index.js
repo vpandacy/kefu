@@ -13,17 +13,17 @@ var merchant_style_index_ops = {
                 ,url: merchant_common_ops.buildMerchantUrl('/style/index/index')
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: []
-                ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
                     {type:'checkbox', fixed: 'left'},
-                    {field:'id', title: '序号'}
+                    {field:'id', width:60, title: '序号'}
                     ,{field:'title', title: '标题'}
-                    ,{field:'desc', title: '描述'}
+                    ,{field:'desc' , title: '描述'}
                     ,{field:'status', width:80, title: '状态', templet: function (row) {
                         return row.status == 1 ? '正常' : '禁用';
                     }}
                     ,{field:'created_time', title: '创建时间'}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:250}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:300}
                 ]]
                 ,id: 'groupChat'
             }));
