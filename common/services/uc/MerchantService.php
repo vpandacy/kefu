@@ -111,6 +111,7 @@ class MerchantService extends BaseService
         $employee->setAttributes([
             'merchant_id'   =>  $merchant->primaryKey,
             'sn'            =>  CommonService::genUniqueName(),
+            'nickname'      =>  $merchant_name, //生成一个默认的昵称.
             'app_ids'       =>  ',1,',
             'name'          =>  $merchant_name,
             'mobile'        =>  $mobile,
