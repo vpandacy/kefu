@@ -49,5 +49,5 @@ CREATE TABLE `cs_login_logs` (
   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '登录时间',
   PRIMARY KEY (`id`),
   KEY `merchant_id_staff_id` (`merchant_id`,`staff_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='客服登录日志'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='客服登录日志';
 ```
