@@ -47,11 +47,20 @@ class GuestChatService extends BaseService
      * @return bool
      */
     public static function closeGuest( $params = [] ){
-        $guest_log = GuestHistoryLog::find()
-            ->where([ "client_id" => $params['client_id'],"status" => ConstantService::$default_status_neg_1 ])
-            ->andWhere([ "merchant_id" => $params['merchant_id'],"uuid" => $params['uuid'] ])
-            ->andWhere([ "closed_time" => ConstantService::$default_datetime ])
-            ->orderBy([ "id" => SORT_DESC ])->limit(1)->one();
+        $query = GuestHistoryLog::find();
+        if(isset($params['client_id'])) {
+            $query->andWhere([ "client_id" => $params['client_id']]);
+        }
+
+        $query->andWhere([
+            "status" => ConstantService::$default_status_neg_1,
+            "merchant_id" => $params['merchant_id'],
+            "uuid" => $params['uuid'],
+            "closed_time" => ConstantService::$default_datetime
+        ]);
+
+        $guest_log = $query->orderBy([ "id" => SORT_DESC ])->limit(1)->one();
+
         if( $guest_log ){
             $member = Member::findOne(['uuid'=>$params['uuid'], 'merchant_id' => $params['merchant_id']]);
             $guest_log->closed_time = $params['closed_time'];
