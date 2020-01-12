@@ -64,12 +64,12 @@ var merchant_user_track_ops = {
                     ,{field:'member_name', title: '会员名'}
                     ,{field:'referer_url', title: '来源',templet:function (row) {
                         return row.referer_url == '' ? '暂无' : [
-                            '<a href="', row.referer_url, '" target="_blank">',row.referer_url,'</a>'
+                            '<a title="', row.referer_url, '" href="', row.referer_url, '" target="_blank">',row.referer_url,'</a>'
                         ].join('');
                     }}
                     ,{field:'land_url', title: '落地页', templet: function (row) {
                         return row.land_url == '' ? '暂无' : [
-                            '<a href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
+                            '<a title="', row.land_url, '" href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
                         ].join('');
                     }}
                     ,{field: 'source', title: '终端来源', templet:function (row) {
@@ -86,7 +86,7 @@ var merchant_user_track_ops = {
                             min = parseInt(row.chat_duration - sec) / 60;
                         return min + '分' + sec + '秒';
                     }}
-                    ,{field:'created_time', title: '来访时间'}
+                    ,{field:'created_time', width: 170, title: '来访时间'}
                     ,{title: '操作', toolbar: '#trackTool',fixed: 'right',width: 100}
                 ]]
                 ,id: 'trackTable'
@@ -122,8 +122,8 @@ var merchant_user_track_ops = {
                 function trackChat(historyId) {
                     $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
                         if(res.code === 200){
+                            $('.content_assgin').html("");
                             res.data.length === 0 ? $('.content_assgin').text('暂无记录'):res.data.forEach(function (item) {
-                                $('.content_assgin').html("");
                                 if(item.uuid === item.from_id){
                                     $('.content_assgin').append(
                                         " <div class='assgin_info'><div class='assgin_title'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
@@ -173,9 +173,9 @@ var merchant_user_track_ops = {
                         ,where: {history_id:historyId}
                         ,cellMinWidth: 90 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                         ,cols: [[
-                            {field:'created_time', width:150, title: '访问时间',fixed: 'left'}
+                            {field:'created_time', width:170, title: '访问时间',fixed: 'left'}
                             ,{field:'land_url', width:190, title: '访问地址', templet: function (row) {
-                                    return '<a href="' + row.land_url +'" target="_blank">' + row.land_url + '</a>';
+                                    return '<a title="' + row.land_url +'" href="' + row.land_url +'" target="_blank">' + row.land_url + '</a>';
                                 }}
                             ,{field:'chat_duration', title: '停留时长'}
                         ]]
@@ -198,6 +198,19 @@ var merchant_user_track_ops = {
                         trackChat(historyId);
                         trackDetail(historyId);
                         trackHistory(historyId);
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index-1]).addClass('layui-table-click');
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index]).removeClass('layui-table-click');
+                    });
+                });
+                $('.icon-jiantou9').click(function () {
+                    $.post(merchant_common_ops.buildMerchantUrl('/user/track/index'),{group_id: 0},function (res){
+                        let index = res.data.findIndex((item)=>item.id === historyId);
+                        historyId = res.data[index+1].id;
+                        trackChat(historyId);
+                        trackDetail(historyId);
+                        trackHistory(historyId);
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index+1]).addClass('layui-table-click');
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index]).removeClass('layui-table-click');
                     });
                 });
             });

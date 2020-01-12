@@ -27,6 +27,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
     .layui-field-box {
         padding: 10px 0;
     }
+    .layui-textarea {
+        height: 90px;
+        min-height: 90px;
+    }
 </style>
 <div id="staff_index_index">
     <div class="staff_tab">

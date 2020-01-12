@@ -132,7 +132,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                         </span>
                     </div>
 
-                    <div class="faceDivBox" style="display:none;height: 150px; bottom: 155px;max-width: 100%;left: 13px;top: -157px;">
+                    <div class="faceDivBox" style="display:none;height: 170px; bottom: 155px;max-width: 100%;left: 13px;top: -175px;">
                         <div class="faceDiv">
                             <section class="emoji-box"></section>
                         </div>

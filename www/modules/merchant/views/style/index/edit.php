@@ -9,6 +9,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
     .layui-input-block {
         width: 210px;
     }
+    .layui-textarea {
+        height: 90px;
+        min-height: 90px;
+    }
 </style>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
