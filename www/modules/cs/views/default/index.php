@@ -178,7 +178,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                                 </span>
                             </div>
                         </div>
-                        <div class="content-one content-tab-two access-track" style="display: none;max-height: 270px;">
+                        <div class="content-one content-tab-two access-track" style="display: none;max-height: 220px;">
                             <div style="text-align: center;color: rgb(179, 181, 185) !important;">暂无</div>
                         </div>
                     </div>
