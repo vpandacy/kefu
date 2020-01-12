@@ -20,7 +20,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
             <div class="demoTable" style=" text-align: left;margin:10px 0px;">
                 <div class="layui-inline">
                     <select name="group_id">
-                        <option value="0">所有风格</option>
+                        <option value="0">默认风格</option>
                         <?php foreach($groups as $group):?>
                             <option value="<?=$group['id']?>" <?=$group['id'] == $search_conditions['group_id'] ? 'selected' : ''?> ><?=$group['title']?></option>
                         <?php endforeach;?>

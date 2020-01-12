@@ -51,7 +51,7 @@ class OfflineController extends BaseController
             foreach($lists as $key => $message) {
                 $message['group_chat'] = isset($groups[$message['group_chat_id']])
                     ? $groups[$message['group_chat_id']]['title']
-                    : '普通风格';
+                    : '默认风格';
 
                 $lists[$key] = $message;
             }

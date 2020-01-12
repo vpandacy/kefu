@@ -152,7 +152,7 @@ class TrackController extends BaseController
 
                 $history['style_title']= isset($style[$history['chat_stype_id']])
                     ? $style[$history['chat_stype_id']]['title']
-                    : '普通风格';
+                    : '默认风格';
 
                 $lists[$key] = $history;
             }

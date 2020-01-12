@@ -4,8 +4,23 @@
     },
     eventBind: function () {
         var that = this;
-        layui.use('table', function(){
-            var table = layui.table;
+        layui.use(['table','form'], function(){
+            var table = layui.table,
+                form = layui.form;
+
+            form.on('select(choice)', function (event) {
+                var value = event.value;
+
+                if(!(/^\d+$/.test(value))) {
+                    return $.msg('请选择正确的客服');
+                }
+
+                table.reload('logTable',{
+                    where: {
+                        staff_id: $('[name=staff_id]').val()
+                    }
+                });
+            });
 
             table.render(uc_common_ops.buildLayuiTableConfig({
                 elem: '#logTable'
@@ -29,6 +44,8 @@
                 ]]
                 ,id: 'logTable'
             }));
+
+
         });
     }
 };

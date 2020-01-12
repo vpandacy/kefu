@@ -22,19 +22,19 @@ var uc_staff_index_ops = {
                 ,cols: [[
                     { type:'checkbox', fixed: 'left'}
                     ,{field:'id',  width: 60, title: '序号'}
-                    ,{field:'email',width: 200, title: '邮箱'}
-                    ,{field:'name', width: 200,title: '姓名', templet: function (row) {
+                    ,{field:'email',title: '邮箱'}
+                    ,{field:'name', title: '姓名', templet: function (row) {
                         return row.name ? row.name : '暂无';
                     }}
-                    ,{field:'nickname', width: 200,title: '昵称', templet: function (row) {
+                    ,{field:'nickname', title: '昵称', templet: function (row) {
                         return row.nickname ? row.nickname : '暂无';
                     }}
-                    ,{field:'mobile', title: '手机号', width: 130, templet: function (row) {
+                    ,{field:'mobile', title: '手机号', templet: function (row) {
                         return row.mobile ? row.mobile : '暂无';
                     }} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    ,{field:'department', title: '所属部门',width:120}
-                    ,{field:'listen_nums', width: 80, title: '接听数'}
-                    ,{field:'status', width: 60, title: '状态', templet: function (row) {
+                    ,{field:'department', title: '所属部门',width:100}
+                    ,{field:'listen_nums', width: 100, title: '接听数'}
+                    ,{field:'status', width: 100, title: '状态', templet: function (row) {
                         var map = {
                             '0'  : '禁止登录',
                             '1'  : '正常'
@@ -42,7 +42,7 @@ var uc_staff_index_ops = {
 
                         return map[row.status];
                     }}
-                    ,{field:'created_time', title: '创建时间'}
+                    ,{field:'created_time', width: 170, title: '创建时间'}
                     ,{field: 'right', title:'操作',width: 130, toolbar: '#barDemo', fixed: 'right'}
                 ]]
                 ,id: 'staff'

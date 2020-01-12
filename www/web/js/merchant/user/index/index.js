@@ -14,8 +14,8 @@ var merchant_user_index_ops = {
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
                     {field:'id', width:80, title: '序号'}
-                    ,{field:'staff_name',  title: '操作员工'}
-                    ,{field:'name',  title: '姓名'}
+                    ,{field:'staff_name', width:100, title: '操作员工'}
+                    ,{field:'name', width:100, title: '姓名'}
                     ,{field:'mobile',  title: '手机号'}
                     ,{field:'email',  title: '邮箱'}
                     ,{field:'qq',  title: 'QQ号码'}
@@ -31,7 +31,7 @@ var merchant_user_index_ops = {
                         return sources_map[row.source];
                     }}
                     ,{field:'desc', title: '备注'}
-                    ,{field:'created_time', title: '添加时间'}
+                    ,{field:'created_time', width: 170, title: '添加时间'}
                     ,{fixed: 'right', title:'操作', toolbar: '#userBar'}
                 ]]
                 ,id: 'userTable'
