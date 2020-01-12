@@ -437,7 +437,7 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-history {
     flex-grow: 1;
     /*max-height: 573px;*/
-    max-height: 505px;
+    max-height: 450px;
     overflow-y: auto;
 }
 #chatExe .exe-content .exe-content-history .history-look {
