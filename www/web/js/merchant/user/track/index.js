@@ -64,7 +64,7 @@ var merchant_user_track_ops = {
                     ,{field:'member_name', title: '会员名'}
                     ,{field:'referer_url', title: '来源',templet:function (row) {
                         return row.referer_url == '' ? '暂无' : [
-                            '<a href="', row.referer_url, '" target="_blank">',row.referer_url,'</a>'
+                            '<a title="', row.referer_url, '" href="', row.referer_url, '" target="_blank">',row.referer_url,'</a>'
                         ].join('');
                     }}
                     ,{field:'land_url', title: '落地页', templet: function (row) {
