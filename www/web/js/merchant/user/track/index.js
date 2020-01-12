@@ -198,8 +198,8 @@ var merchant_user_track_ops = {
                         trackChat(historyId);
                         trackDetail(historyId);
                         trackHistory(historyId);
-                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index-1]).addClass('layui-table-click');
-                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index]).removeClass('layui-table-click');
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq(index-1).addClass('layui-table-click');
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq(index).removeClass('layui-table-click');
                     });
                 });
                 $('.icon-jiantou9').click(function () {
@@ -209,8 +209,8 @@ var merchant_user_track_ops = {
                         trackChat(historyId);
                         trackDetail(historyId);
                         trackHistory(historyId);
-                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index+1]).addClass('layui-table-click');
-                        $('div[lay-id="trackTable"]').find('tbody tr').eq([index]).removeClass('layui-table-click');
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq(index+1).addClass('layui-table-click');
+                        $('div[lay-id="trackTable"]').find('tbody tr').eq(index).removeClass('layui-table-click');
                     });
                 });
             });
