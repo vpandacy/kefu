@@ -18,13 +18,13 @@ var uc_department_index_ops = {
                 // ,height: 600
                 ,cols: [[
                     {type:'checkbox', fixed: 'left'}
-                    ,{field:'id', title: '序号'}
-                    ,{field:'name', title: '部门名称'}
-                    ,{field:'status',title: '状态',templet: function (row) {
+                    ,{field:'id',  title: '序号'}
+                    ,{field:'name',  title: '部门名称'}
+                    ,{field:'status',title: '状态', templet: function (row) {
                         return row.status == 1 ? '正常' : '禁用';
                     }}
-                    ,{field:'created_time',width: 200, title: '创建时间'}
-                    ,{title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
+                    ,{field:'created_time', title: '创建时间'}
+                    ,{title:'操作', toolbar: '#barDemo', fixed: 'right'}
                 ]]
                 ,id: 'departmentTable'
             }));

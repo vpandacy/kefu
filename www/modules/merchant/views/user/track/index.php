@@ -28,7 +28,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                 </div>
 
                 <div class="layui-inline">
-                    <input type="text" class="layui-input" id="time" name="time" value="<?=$search_conditions['time']?>" placeholder="请选择时间">
+                    <input type="text" class="layui-input" style="width: 280px" id="time" name="time" value="<?=$search_conditions['time']?>" placeholder="请选择时间">
                 </div>
 
                 <div class="layui-inline">

@@ -173,9 +173,9 @@ var merchant_user_track_ops = {
                         ,where: {history_id:historyId}
                         ,cellMinWidth: 90 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                         ,cols: [[
-                            {field:'created_time', width:150, title: '访问时间',fixed: 'left'}
+                            {field:'created_time', width:170, title: '访问时间',fixed: 'left'}
                             ,{field:'land_url', width:190, title: '访问地址', templet: function (row) {
-                                    return '<a href="' + row.land_url +'" target="_blank">' + row.land_url + '</a>';
+                                    return '<a title="' + row.land_url +'" href="' + row.land_url +'" target="_blank">' + row.land_url + '</a>';
                                 }}
                             ,{field:'chat_duration', title: '停留时长'}
                         ]]
