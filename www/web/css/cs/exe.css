@@ -600,7 +600,7 @@ select[name='cs'] {
     display:-webkit-flex;
     flex: 1;
     flex-direction: column;
-    height: 90%;
+    height: 80%;
     /*justify-content: space-around;*/
     font-size: 14px;
     padding: 0 10px;
