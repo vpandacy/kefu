@@ -358,7 +358,7 @@ select[name='cs'] {
 }
 
 #chatExe .exe-content {
-    width: 80%;
+    width: 65%;
     display: flex;
     display:-webkit-flex;
     flex-direction: column;
@@ -428,7 +428,7 @@ select[name='cs'] {
 }
 #chatExe .exe-content .exe-content-top .content-top-info .info span:nth-child(2) {
     color: rgb(0, 0, 0);
-    width: 300px;
+    width: 200px;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
@@ -437,6 +437,7 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-history {
     flex-grow: 1;
     /*max-height: 573px;*/
+    max-height: 505px;
     overflow-y: auto;
 }
 #chatExe .exe-content .exe-content-history .history-look {
@@ -473,7 +474,8 @@ select[name='cs'] {
     display:-webkit-flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 30%;
+    /*height: 30%;*/
+    height: 37%;
     border-top: 1px solid rgb(225, 229, 236);
 }
 
@@ -539,7 +541,7 @@ select[name='cs'] {
 }
 
 #chatExe .exe-info {
-    width: 30%;
+    width: 35%;
     /*flex: 1;*/
     /*min-width: 290px;*/
     background: rgb(247, 248, 250);
