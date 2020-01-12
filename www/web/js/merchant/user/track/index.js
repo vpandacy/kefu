@@ -122,8 +122,8 @@ var merchant_user_track_ops = {
                 function trackChat(historyId) {
                     $.post('/merchant/user/track/chat',{history_id:historyId},function (res) {
                         if(res.code === 200){
+                            $('.content_assgin').html("");
                             res.data.length === 0 ? $('.content_assgin').text('暂无记录'):res.data.forEach(function (item) {
-                                $('.content_assgin').html("");
                                 if(item.uuid === item.from_id){
                                     $('.content_assgin').append(
                                         " <div class='assgin_info'><div class='assgin_title'>"+item.nickname+"&nbsp;&nbsp;"+item.created_time+"</div>" +
@@ -195,6 +195,15 @@ var merchant_user_track_ops = {
                     $.post(merchant_common_ops.buildMerchantUrl('/user/track/index'),{group_id: 0},function (res){
                        let index = res.data.findIndex((item)=>item.id === historyId);
                        historyId = res.data[index-1].id;
+                        trackChat(historyId);
+                        trackDetail(historyId);
+                        trackHistory(historyId);
+                    });
+                });
+                $('.icon-jiantou9').click(function () {
+                    $.post(merchant_common_ops.buildMerchantUrl('/user/track/index'),{group_id: 0},function (res){
+                        let index = res.data.findIndex((item)=>item.id === historyId);
+                        historyId = res.data[index+1].id;
                         trackChat(historyId);
                         trackDetail(historyId);
                         trackHistory(historyId);
