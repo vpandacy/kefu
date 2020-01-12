@@ -189,7 +189,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
-                            <div class="words-content">
+                            <div class="words-content" style="height: 62%;">
                                 <?php foreach($words as $word):?>
                                     <div class="content-select">
                                         <i class="iconfont icon-wenjian"></i>

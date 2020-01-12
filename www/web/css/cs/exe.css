@@ -15,14 +15,19 @@ body {
     height: 100%;
     margin: 0;
 }
+@media (max-width: 1050px) {
+    #chatExe {
+        height: 102vh !important;
+    }
+}
 #chatExe {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: auto;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
-    -moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
-    -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    /*box-shadow: 0 0 20px 0 rgba(0,0,0,.15);*/
+    /*-moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);*/
+    /*-webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);*/
     /* border: 1px solid red; */
 }
 select[name='cs'] {
@@ -345,6 +350,7 @@ select[name='cs'] {
 }
 #chatExe .exe-header .exe-header-info-right i {
     margin: 0 10px 0 0;
+    /*padding: 0 30px;*/
 }
 
 #chatExe .exe-content-info {
@@ -430,7 +436,7 @@ select[name='cs'] {
 }
 #chatExe .exe-content .exe-content-history {
     flex-grow: 1;
-    max-height: 573px;
+    /*max-height: 573px;*/
     overflow-y: auto;
 }
 #chatExe .exe-content .exe-content-history .history-look {
@@ -554,13 +560,14 @@ select[name='cs'] {
     width: 90%;
     margin: 0 auto;
     overflow-y: auto;
-    max-height: 405px;
+    max-height: 248px;
+    /*max-height: 405px;*/
 }
 
 #chatExe .exe-info .two .tab-content .words-content{
     width: 100%;
     overflow-y: auto;
-    max-height: 378px;
+    /*max-height: 378px;*/
 }
 
 #chatExe .exe-info .two .content-select {
