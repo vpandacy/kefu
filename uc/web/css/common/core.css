@@ -20,6 +20,9 @@ merchant.css
 .layui-table-grid-down{display: none}
 .layui-table-tips-main{display:none}
 .layui-table-tips-c{display:none}
+.layui-table-page {
+    text-align: right;
+}
 /** 开关 */
 .layui-form-onswitch {
     border-color: rgba(1, 170, 237, 1);
