@@ -10,7 +10,12 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFUrl('/js/merchan
         'bar_menu'  =>  'settings',
         'current_menu'  =>  'common_words'
     ])?>
-
+    <style>
+        .layui-textarea {
+            width: 200px;
+            min-height: 90px;
+        }
+    </style>
     <div class="tab_staff_content">
         <div class="site-text">
             <form class="layui-form" method="post">

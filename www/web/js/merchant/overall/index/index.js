@@ -12,13 +12,13 @@ var merchant_overall_index_ops = {
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
                     {type:'checkbox', fixed: 'left'}
-                    ,{field:'id', title: '序号'}
+                    ,{field:'id', title: '序号',width:80}
                     ,{field:'words', title: '常用语'}
                     ,{field:'status', title: '状态', templet: function (row) {
                         return row.status == 1 ? '正常' : '禁用';
                     }}
                     ,{field:'created_time', title: '创建时间', sort: true}
-                    ,{ title:'操作', toolbar: '#barDemo', fixed: 'right'}
+                    ,{ title:'操作', toolbar: '#barDemo', fixed: 'right',width:170}
                 ]]
                 ,id: 'commonWordTable'
             }));

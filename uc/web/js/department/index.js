@@ -24,7 +24,7 @@ var uc_department_index_ops = {
                         return row.status == 1 ? '正常' : '禁用';
                     }}
                     ,{field:'created_time', title: '创建时间'}
-                    ,{title:'操作', toolbar: '#barDemo', fixed: 'right'}
+                    ,{title:'操作', toolbar: '#barDemo', width:150,fixed: 'right'}
                 ]]
                 ,id: 'departmentTable'
             }));

@@ -10,7 +10,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         width: 200px;
     }
     .layui-textarea {
-        height: 100px;
+        height: 90px;
+        min-height: 90px;
     }
 </style>
 <div id="staff_index_index">

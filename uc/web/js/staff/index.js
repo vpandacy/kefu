@@ -22,7 +22,7 @@ var uc_staff_index_ops = {
                 ,cols: [[
                     { type:'checkbox', fixed: 'left'}
                     ,{field:'id',  width: 60, title: '序号'}
-                    ,{field:'email',title: '邮箱'}
+                    ,{field:'email',width: 180,title: '邮箱'}
                     ,{field:'name', title: '姓名', templet: function (row) {
                         return row.name ? row.name : '暂无';
                     }}

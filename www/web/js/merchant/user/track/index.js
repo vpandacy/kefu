@@ -69,7 +69,7 @@ var merchant_user_track_ops = {
                     }}
                     ,{field:'land_url', title: '落地页', templet: function (row) {
                         return row.land_url == '' ? '暂无' : [
-                            '<a href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
+                            '<a title="', row.land_url, '" href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
                         ].join('');
                     }}
                     ,{field: 'source', title: '终端来源', templet:function (row) {
@@ -86,7 +86,7 @@ var merchant_user_track_ops = {
                             min = parseInt(row.chat_duration - sec) / 60;
                         return min + '分' + sec + '秒';
                     }}
-                    ,{field:'created_time', title: '来访时间'}
+                    ,{field:'created_time', width: 170, title: '来访时间'}
                     ,{title: '操作', toolbar: '#trackTool',fixed: 'right',width: 100}
                 ]]
                 ,id: 'trackTable'
