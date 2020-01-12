@@ -205,6 +205,7 @@
             elem.html('<input name="'+ name + '" value="'+ val +'" placeholder="请输入">');
             elem.find('input').focus();
         }else{
+            elem.attr('title',val);
             elem.html('<textarea name="'+name+'">'+val+'</textarea>');
             elem.find('textarea').focus();
         }

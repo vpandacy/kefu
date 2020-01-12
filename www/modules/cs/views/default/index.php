@@ -174,7 +174,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                             <div class="dflex
 ">
                                 <span>备注：</span>
-                                <span class="desc">
+                                <span class="desc" style="width: 150px;word-break: break-all;    overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
                                 </span>
                             </div>
                         </div>

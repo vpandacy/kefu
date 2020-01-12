@@ -9,6 +9,7 @@
 html {
     width: 100%;
     height: 100%;
+    overflow: hidden !important;
 }
 body {
     width: 100%;
@@ -213,6 +214,7 @@ select[name='cs'] {
     /*width: 22%;*/
     min-width: 270px;
     max-width: 270px;
+    height: 100%;
     background: rgb(255, 255, 255);
     border-right: 1px solid rgb(216, 221, 230);
     display: flex;
@@ -241,6 +243,7 @@ select[name='cs'] {
 }
 #chatExe textarea{
     resize: none;
+    height: 40px;
 }
 #chatExe .exe-keep .tab .tab-content-list {
     display: flex;
@@ -358,7 +361,8 @@ select[name='cs'] {
 }
 
 #chatExe .exe-content {
-    width: 65%;
+    width: 100%;
+    /*height: 100vh;*/
     display: flex;
     display:-webkit-flex;
     flex-direction: column;
@@ -434,10 +438,27 @@ select[name='cs'] {
     display: inline-block;
     overflow: hidden;
 }
+@media (min-height: 680px) {
+    #chatExe .exe-content .exe-content-history {
+        max-height: 500px !important;
+    }
+}
+@media (min-height: 800px) {
+    #chatExe .exe-content .exe-content-history {
+        max-height: 560px !important;
+    }
+}
+@media (min-height: 900px) {
+    #chatExe .exe-content .exe-content-history {
+        max-height: 800px !important;
+    }
+}
 #chatExe .exe-content .exe-content-history {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
+    height: 70%;
     /*max-height: 573px;*/
     max-height: 450px;
+    /*max-height: 655px;*/
     overflow-y: auto;
 }
 #chatExe .exe-content .exe-content-history .history-look {
@@ -475,7 +496,7 @@ select[name='cs'] {
     flex-direction: column;
     justify-content: space-between;
     /*height: 30%;*/
-    height: 37%;
+    height: 20%;
     border-top: 1px solid rgb(225, 229, 236);
 }
 
@@ -541,7 +562,7 @@ select[name='cs'] {
 }
 
 #chatExe .exe-info {
-    width: 35%;
+    width: 290px;
     /*flex: 1;*/
     /*min-width: 290px;*/
     background: rgb(247, 248, 250);
@@ -562,7 +583,7 @@ select[name='cs'] {
     width: 90%;
     margin: 0 auto;
     overflow-y: auto;
-    max-height: 248px;
+    max-height: 243px;
     /*max-height: 405px;*/
 }
 
