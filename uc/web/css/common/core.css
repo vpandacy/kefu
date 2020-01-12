@@ -17,6 +17,9 @@ merchant.css
 .layui-btn.layui-btn-primary:hover {
     border-color: rgba(1, 170, 237, 1);
 }
+.layui-table-grid-down{display: none}
+.layui-table-tips-main{display:none}
+.layui-table-tips-c{display:none}
 /** 开关 */
 .layui-form-onswitch {
     border-color: rgba(1, 170, 237, 1);
