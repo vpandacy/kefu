@@ -469,6 +469,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     width: 450px;
     box-shadow: 0 0 24px 0 rgba(15,66,76,0.25);
     overflow-y: auto;
+    z-index: 999;
 }
 .tab_staff_content .trackTable_toop .tab{
     display: flex;
