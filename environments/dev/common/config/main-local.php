@@ -7,6 +7,7 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8mb4',
+            'commandClass'  =>  'common\components\Command',
         ],
         'chat_uc_db' =>  [
             'class' => 'yii\db\Connection',
@@ -14,6 +15,7 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8mb4',
+            'commandClass'  =>  'common\components\Command',
         ],
         'chat_logs_db' =>  [
             'class' => 'yii\db\Connection',
@@ -21,6 +23,7 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8mb4',
+            'commandClass'  =>  'common\components\Command',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
