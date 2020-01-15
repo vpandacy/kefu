@@ -23,6 +23,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="recover">恢复</button>
         <button class="layui-btn layui-btn-sm" lay-event="import">导入</button>
+        <button class="layui-btn layui-btn-sm" lay-event="disableAll">全部禁用</button>
     </div>
 </script>
 

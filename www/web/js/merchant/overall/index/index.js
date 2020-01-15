@@ -38,6 +38,32 @@ var merchant_overall_index_ops = {
                     return false;
                 }
 
+                if(row.event == 'disableAll') {
+                    $.confirm('您确定要禁用所有的常用语',function (index) {
+                        $.close(index);
+
+                        index = $.loading(1, {shade: .5});
+                        $.ajax({
+                            type: 'POST',
+                            url: merchant_common_ops.buildMerchantUrl('/overall/index/disable-all'),
+                            data: {},
+                            dataType: 'json',
+                            success:function (res) {
+                                $.close(index);
+                                var callback = res.code != 200 ? null : function () {
+                                    table.reload('commonWordTable');
+                                };
+
+                                return $.msg(res.msg, res.code == 200, callback);
+                            },
+                            error: function () {
+                                $.close(index);
+                            }
+                        });
+                    });
+                    return false;
+                }
+
                 var select_row = table.checkStatus('commonWordTable');
                 if(!select_row.data.length) {
                     return $.msg('请选中需要恢复的常用语');
@@ -70,8 +96,8 @@ var merchant_overall_index_ops = {
                         error: function () {
                             $.close(index);
                         }
-                    })
-                })
+                    });
+                });
 
                 return false;
             });

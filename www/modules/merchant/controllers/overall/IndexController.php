@@ -134,7 +134,7 @@ class IndexController extends BaseController
             return $this->renderErrJSON( '该常用语已经被禁止使用了' );
         }
 
-        $words['status'] = 0;
+        $words['status'] = ConstantService::$default_status_false;
         if(!$words->save(0)) {
             return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
@@ -187,6 +187,20 @@ class IndexController extends BaseController
         }
 
         return $this->renderJSON([],'数据导入成功');
+    }
 
+    /**
+     * 禁用所有的常用语.
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionDisableAll()
+    {
+        $ret = CommonWord::updateAll(['status'=>ConstantService::$default_status_false],['merchant_id'=>$this->getMerchantId()]);
+
+        if($ret === false) {
+            return $this->renderErrJSON('数据禁用失败');
+        }
+
+        return $this->renderJSON('操作成功');
     }
 }
