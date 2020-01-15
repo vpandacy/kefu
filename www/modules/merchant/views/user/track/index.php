@@ -14,8 +14,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         -webkit-transform: rotate(180deg);
         transform: rotate(180deg);
         margin-top: -3px\9;
+
         /*margin-top: -9px\0/IE9;*/
     }
+    .screen_message input,.screen_message i{        pointer-events: none;}
     .screen_result {
         position: absolute;
         left: 0;
@@ -90,7 +92,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             <input type="text" class="layui-input layui-unselect" value="筛选"  readonly>
                             <i class="layui-edge"></i>
                         </div>
-                        <div class="screen_result">
+                        <div class="screen_result" id="screen_result">
                             <input type="checkbox" name="" title="访客有说话" lay-skin="primary" checked>
                             <input type="checkbox" name="" title="访客没说话" lay-skin="primary" checked><br>
 <!--                            <input type="checkbox" name="" title="对话线索" lay-skin="primary" checked><br>-->

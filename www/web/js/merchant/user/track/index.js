@@ -215,9 +215,20 @@ var merchant_user_track_ops = {
                 });
             });
             // 筛选
-            $('.screen_message').click(function () {
+            $('.screen_message').click(function (event) {
+                    if(event.target == this) {
+                        $('ul').slideUp(200);
+                    }
                $(this).children('.layui-edge').toggleClass('layui-edge-active');
                !($(this).children('.layui-edge').hasClass('layui-edge-active')) ? $(this).next().hide() : $(this).next().show();
+            });
+            $(document).click(function(e){
+                var t = $("#screen_result")[0],
+                    target = e.target;
+                if (t !== target && !$.contains(t, target)) {
+                    $('.screen_result').hide();
+                    $('.screen_message i').removeClass('layui-edge-active');
+                }
             });
         });
     },
