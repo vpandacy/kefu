@@ -9,6 +9,30 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
     .layui-table-body {
         overflow-x: hidden;
     }
+    .layui-edge-active{
+        margin-top: -9px !important;
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        margin-top: -3px\9;
+        /*margin-top: -9px\0/IE9;*/
+    }
+    .screen_result {
+        position: absolute;
+        left: 0;
+        top: 42px;
+        padding: 5px 0;
+        z-index: 899;
+        min-width: 105%;
+        border: 1px solid #d2d2d2;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.12);
+        box-sizing: border-box;
+        padding: 15px;
+        display: none;
+    }
 </style>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
@@ -47,20 +71,39 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <?php endforeach;?>
                     </select>
                 </div>
+<!---->
+<!--                <div class="layui-inline">-->
+<!--                    <input type="text" class="layui-input" id="qq" name="qq" value="--><?//=$search_conditions['qq']?><!--" placeholder="请输入QQ号码">-->
+<!--                </div>-->
+<!---->
+<!--                <div class="layui-inline">-->
+<!--                    <input type="text" class="layui-input" id="email" name="email" value="--><?//=$search_conditions['email']?><!--" placeholder="请输入邮箱">-->
+<!--                </div>-->
+<!---->
+<!--                <div class="layui-inline">-->
+<!--                    <input type="text" class="layui-input" id="wechat" name="wechat" value="--><?//=$search_conditions['wechat']?><!--" placeholder="请输入微信号码">-->
+<!--                </div>-->
 
                 <div class="layui-inline">
-                    <input type="text" class="layui-input" id="qq" name="qq" value="<?=$search_conditions['qq']?>" placeholder="请输入QQ号码">
+                    <div class="layui-unselect layui-form-select ">
+                        <div class="layui-select-title screen_message">
+                            <input type="text" class="layui-input layui-unselect" value="筛选"  readonly>
+                            <i class="layui-edge"></i>
+                        </div>
+                        <div class="screen_result">
+                            <input type="checkbox" name="" title="访客有说话" lay-skin="primary" checked>
+                            <input type="checkbox" name="" title="访客没说话" lay-skin="primary" checked><br>
+<!--                            <input type="checkbox" name="" title="对话线索" lay-skin="primary" checked><br>-->
+                            <input type="checkbox" name="" title="手机" lay-skin="primary" checked>
+                            <input type="checkbox" name="" title="QQ" lay-skin="primary" checked>
+                            <input type="checkbox" name="" title="邮箱" lay-skin="primary" checked>
+                            <input type="checkbox" name="" title="固话" lay-skin="primary" checked>
+                        </div>
+                    </div>
                 </div>
-
                 <div class="layui-inline">
-                    <input type="text" class="layui-input" id="email" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱">
-                </div>
-
-                <div class="layui-inline">
-                    <input type="text" class="layui-input" id="wechat" name="wechat" value="<?=$search_conditions['wechat']?>" placeholder="请输入微信号码">
-                </div>
-
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+                </div>
             </div>
         </form>
         <table class="layui-hide" id="trackTable" lay-filter="trackTable">

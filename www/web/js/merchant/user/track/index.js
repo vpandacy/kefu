@@ -214,9 +214,13 @@ var merchant_user_track_ops = {
                     });
                 });
             });
-
+            // 筛选
+            $('.screen_message').click(function () {
+               $(this).children('.layui-edge').toggleClass('layui-edge-active');
+               !($(this).children('.layui-edge').hasClass('layui-edge-active')) ? $(this).next().hide() : $(this).next().show();
+            });
         });
-    }
+    },
 };
 
 $(document).ready(function () {
