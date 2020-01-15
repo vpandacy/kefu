@@ -82,7 +82,6 @@ class StaticPluginHelper
 
     /**
      * 批量引入js资源.
-     * @param array $plugins
      */
     public static function daterangepicker()
     {
