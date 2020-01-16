@@ -26,10 +26,248 @@ body {
     width: 100%;
     height: 100vh;
     margin: auto;
+    position: relative;
     /*box-shadow: 0 0 20px 0 rgba(0,0,0,.15);*/
     /*-moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);*/
     /*-webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.15);*/
     /* border: 1px solid red; */
+}
+#chatExe  .edit_bg {
+    background: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 998;
+    display: none;
+}
+#chatExe  .edit_content {
+    width: 540px;
+    height: 565px;
+    background: white;
+    z-index: 999;
+    opacity: 1 ;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -320px 0 0 -260px;
+    display: none;
+}
+#chatExe  .edit_content .edit_tab {
+    display: flex;
+    background: rgb(47,56,75);
+    color: #b2bac1;
+    font-size: 14px;
+    height: 38px;
+    line-height: 38px;
+}
+#chatExe  .edit_content .edit_tab_content {
+    overflow-y: auto;
+    height: 520px;
+}
+#chatExe  .edit_content .edit_submit {
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    background: rgb(247,248,250);
+    width: 100%;
+    border-top: 1px solid #8DA2B5;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 10px;
+    overflow: hidden;
+}
+#chatExe  .edit_content .edit_submit .submit{
+    background: rgb(255,91,77);
+    color: white;
+    width: 80px;
+    font-size: 14px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+#chatExe  .edit_content .edit_submit .revoke{
+    background: white;
+    color: black;
+    width: 80px;
+    font-size: 14px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin: 0 10px 0 10px;
+    border: 1px solid #d0ccc4;
+}
+#chatExe  .edit_content .edit_tab_content .edit_content_list {
+    display: none;
+    margin: 0 auto;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one {
+    width: 95%;
+    margin-bottom: 60px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form {
+    display: flex;
+    font-size: 12px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form .form_title_info{
+    width: 30px;
+    display: flex;
+    align-items: center;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form .form_file_info{
+    width: 100%;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form .form_file_info textarea{
+    /*margin: 15px 0;*/
+    border:1px solid #b4b0b0;
+    border-radius: 3px;
+    height: 66px;
+    width: 100%;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form .form_file_info .edit_image_file{
+    width: 200px;
+     height: 200px;
+     border: 2px dashed #d4dce3;
+     text-align: center;
+     line-height: 200px;
+ }
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form .form_file_info .edit_image_file i{
+    font-size: 35px;
+    color: #d4dce3;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_welocme_form .form_file_info input[type='number'] {
+    width: 30px;
+    height: 22px;
+    border-radius: 3px;
+    margin: 0 3px;
+    border: 1px solid #e1e1e1;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .list_title_size{
+    font-size: 14px;
+    color: #5e6367;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .list_win{
+     font-size: 12px;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+ }
+#chatExe  .edit_content .edit_tab_content .content_list_one .list_win .win_edit_anJ {
+    width: 130px;
+    display: flex;
+    align-items: center;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .list_win .win_edit_anJ .win_button {
+    width: 32px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    border: 1px solid #cacbcc;
+    background: #deebf6;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .list_win .win_edit{
+    width: 32px;
+    height: 25px;
+    border: 1px solid #cacbcc;
+    text-align: center;
+    line-height: 25px;
+    margin-left: 10px;
+    border-radius: 3px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .title {
+     height: 28px;
+     border-bottom: 1px solid #8DA2B5;
+     font-size: 15px;
+     margin-bottom: 3px;
+     margin-top: 20px;
+     /*margin: 20px 0 20px 0;*/
+ }
+#chatExe  .edit_content .edit_tab_content .content_list_one .tip {
+    font-size: 12px;
+    color: #627484;
+    margin-bottom: 20px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .tip span {
+    color:#fe8854;
+    cursor: pointer;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form {
+     display: flex;
+     font-size: 12px;
+     align-items: center;
+     margin-bottom: 20px;
+ }
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_title_info {
+    width: 150px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_title_select {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_title_select input[type='checkbox']{
+    margin-right: 5px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_title_select select {
+    width: 135px;
+    height: 25px;
+    border-radius: 3px;
+    border: 1px solid #8DA2B5;
+    padding-left: 4px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_title_select img {
+   width: 100px;
+    height: 100px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_file_info {
+     display: flex;
+     align-items: center;
+     flex-wrap: wrap;
+ }
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_file_info .form_file_button{
+    background: rgb(59,153,252);
+    width: 90px;
+    color: white;
+    line-height: 27px;
+    border-radius: 3px;
+    text-align: center;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_file_info .button_file_info {
+    color: #929ea9;
+    margin-top: 3px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form  .form_file_info img{
+    width: 46px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form input{
+    border: 1px solid #8DA2B5;
+    height: 23px;
+    border-radius: 3px;
+    padding-left: 3px;
+}
+#chatExe  .edit_content .edit_tab_content .content_list_one .edit_tab_form textarea{
+    border: 1px solid #8DA2B5;
+    width: 167px;
+}
+#chatExe  .edit_content .edit_tab_content .edit_content_list:nth-child(1) {
+    display: block;
+    /*padding: 12px 0;*/
+}
+#chatExe  .edit_content .edit_tab .edit_guanbi {
+    position: absolute;
+    right: 10px;
+}
+#chatExe  .edit_content .edit_tab .edit_tabs {
+    margin: 0 8px;
+    cursor: pointer;
+}
+#chatExe  .edit_content .edit_tab .edit_tabs_active {
+    color: white;
+    border-bottom: 3px solid white;
 }
 select[name='cs'] {
     width: 100%;
@@ -83,11 +321,9 @@ select[name='cs'] {
 #chatExe .tab .tab-content {
     flex: 1;
 }
-
 #chatExe .tab .switch-action {
     border-bottom: 2px solid rgb(87, 173, 104) !important;
 }
-
 #chatExe .tab .tab-one {
     cursor: pointer;
     padding: 5px 0;
@@ -111,7 +347,6 @@ select[name='cs'] {
     -o-box-pack: center;
     box-pack: center;
 }
-
 #chatExe .tab .tab-two {
     flex: 1;
     /* display */
@@ -133,19 +368,16 @@ select[name='cs'] {
     -o-box-pack: center;
     box-pack: center;
 }
-
 #chatExe .dflex {
     display: flex;
     display:-webkit-flex;
 }
-
 #chatExe .flex1 {
     width: 100%;
     display: flex;
     display:-webkit-flex;
     flex-direction: column;
 }
-
 #chatExe .exe-menu {
     /*width: 5%;*/
     min-width: 50px;
@@ -170,33 +402,26 @@ select[name='cs'] {
     border-radius: 50%;
     margin-bottom: 10px;
 }
-
 #chatExe .exe-menu .menu-icon-top {
     margin: 15px 0px;
 }
-
 #chatExe .exe-menu .menu-icon-bottom {
     display: flex;
     flex-direction: column;
 }
-
 #chatExe .exe-menu .icon {
     color: rgb(132, 140, 156);
     margin: 15px 0px;
 }
-
 #chatExe .exe-menu .fsize32 {
     font-size: 25px;
 }
-
 #chatExe .exe-menu .fsize22 {
     font-size: 22px;
 }
-
 #chatExe .exe-menu .icon-action {
     color: rgb(225, 225, 225) !important;
 }
-
 #chatExe .exe-menu .menu-online {
     width: 10px;
     height: 10px;
@@ -227,7 +452,6 @@ select[name='cs'] {
     display: flex;
     flex-direction: column;
 }
-
 #chatExe .exe-keep .keep-census {
     background: rgb(247, 248, 250);
     height: 45px;
@@ -237,7 +461,6 @@ select[name='cs'] {
     align-items: center;
     font-size: 12px;
 }
-
 #chatExe .exe-keep .fsize25 {
     font-size: 25px;
 }
@@ -286,7 +509,6 @@ select[name='cs'] {
     color: white;
     cursor: pointer;
 }
-
 #chatExe .exe-keep .tab .tab-content-list .content-list-time {
     color: rgb(190, 190, 192);
     padding: 10px;
@@ -318,7 +540,6 @@ select[name='cs'] {
 #chatExe .exe-keep .tab .tab-content-list .list-flag-off-line:before {
     /*content: "离线";*/
 }
-
 #chatExe .exe-header {
     width: 100%;
     min-height: 40px;
@@ -330,20 +551,16 @@ select[name='cs'] {
     align-items: center;
     font-size: 13px;
 }
-
 #chatExe .exe-header .exe-header-info-left {
     margin-left: 10px;
 }
-
 #chatExe .exe-header .exe-header-info-left span:nth-child(1) {
     font-weight: 600;
     color: rgb(55, 85, 124);
 }
-
 #chatExe .exe-header .exe-header-info-left span:nth-child(2) {
     color: rgb(157, 165, 180);
 }
-
 #chatExe .exe-header .exe-header-info-right {
     margin-right: 10px;
     color: rgb(98, 119, 140);
@@ -355,11 +572,9 @@ select[name='cs'] {
     margin: 0 10px 0 0;
     /*padding: 0 30px;*/
 }
-
 #chatExe .exe-content-info {
     flex-grow: 1;
 }
-
 #chatExe .exe-content {
     width: 100%;
     /*height: 100vh;*/
@@ -385,7 +600,6 @@ select[name='cs'] {
     padding: 0 10px;
     overflow: hidden;
 }
-
 #chatExe .exe-content .exe-content-top .content-top-info {
     display: flex;
     display: -moz-flex;
@@ -400,7 +614,6 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-top .content-top-info .referer-url{
     flex: 1;
 }
-
 #chatExe .exe-content .exe-content-top .content-top-info .info {
     height: 26px;
     display: flex;
@@ -418,8 +631,7 @@ select[name='cs'] {
     cursor: pointer;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .land-url .landUrl-copy,
-#chatExe .exe-content .exe-content-top .content-top-info .referer-url .referer-url-copy
-{
+#chatExe .exe-content .exe-content-top .content-top-info .referer-url .referer-url-copy {
     background: black;
     padding: 0 5px;
     color: white;
@@ -489,7 +701,6 @@ select[name='cs'] {
     border-radius: 4px;
     margin: 10px auto;
 }
-
 #chatExe .exe-content .exe-content-sumbit {
     display: flex;
     display:-webkit-flex;
@@ -499,15 +710,12 @@ select[name='cs'] {
     height: 20%;
     border-top: 1px solid rgb(225, 229, 236);
 }
-
 #chatExe .exe-content .exe-content-sumbit div span i {
     margin: 0 5px;
 }
-
 #chatExe .exe-content .exe-content-sumbit div span label {
     margin: 0 10px 0 0;
 }
-
 #chatExe .exe-content .exe-content-sumbit div:nth-child(1) {
     justify-content: space-between;
     align-items: center;
@@ -517,11 +725,9 @@ select[name='cs'] {
     height: 28px;
     color: rgb(98, 119, 140);
 }
-
 #chatExe .exe-content .exe-content-sumbit .faceDiv{
     height: 100% !important;
 }
-
 #chatExe .exe-content .exe-content-sumbit .sumbit-input {
     flex: 1;
     border: none;
@@ -532,7 +738,6 @@ select[name='cs'] {
     overflow-y: auto;
     word-break: break-all;
 }
-
 #chatExe .exe-content .exe-content-sumbit .sumbit-bottom {
     display: flex;
     display:-webkit-flex;

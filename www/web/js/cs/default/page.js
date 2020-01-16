@@ -16,7 +16,21 @@
             // parent 父元素 next 下一个兄弟节点  children 子节点
             $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
         });
-
+        $(".edit_content .edit_tab .edit_tabs").click(function() {
+            // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
+            $(this).addClass("edit_tabs_active").siblings().removeClass("edit_tabs_active");
+            // parent 父元素 next 下一个兄弟节点  children 子节点
+            $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
+        });
+        // 设置
+        $('.edit_guanbi').click(function () {
+            $('.edit_bg').hide();
+            $('.edit_content').hide();
+        });
+        $('.icon-shezhi').click(function () {
+            $('.edit_bg').show();
+            $('.edit_content').show();
+        });
         // 关闭聊天框.
         $('.icon-guanbi').on('click', function () {
             $('#chatExe .flex1').css({'display': 'none'});
