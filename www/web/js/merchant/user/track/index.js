@@ -223,9 +223,10 @@ var merchant_user_track_ops = {
                !($(this).children('.layui-edge').hasClass('layui-edge-active')) ? $(this).next().hide() : $(this).next().show();
             });
             $(document).click(function(e){
-                var t = $("#screen_result")[0],
-                    target = e.target;
-                if (t !== target && !$.contains(t, target)) {
+                var t = $("#screen_result")[0];
+                   var t1 = $(".screen_message")[0];
+                var target = e.target;
+                if (t !== target && !$.contains(t, target) && t1 !== target && !$.contains(t1, target)) {
                     $('.screen_result').hide();
                     $('.screen_message i').removeClass('layui-edge-active');
                 }
