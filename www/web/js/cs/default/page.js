@@ -27,10 +27,10 @@
             $('.edit_bg').hide();
             $('.edit_content').hide();
         });
-        $('.icon-shezhi').click(function () {
-            $('.edit_bg').show();
-            $('.edit_content').show();
-        });
+        // $('.icon-shezhi').click(function () {
+        //     $('.edit_bg').show();
+        //     $('.edit_content').show();
+        // });
         // 关闭聊天框.
         $('.icon-guanbi').on('click', function () {
             $('#chatExe .flex1').css({'display': 'none'});
