@@ -421,6 +421,7 @@
     Chat.prototype.bindOnlineEvent = function () {
         
         $('.exe-off-online').on('click', function () {
+            console.log('進來了')
             var class_name = $(this).hasClass('icon-lixian')
                 ? 'icon-zaixian'
                 : 'icon-lixian';

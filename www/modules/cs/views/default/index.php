@@ -49,7 +49,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                     <i class="iconfont icon-xiaoxi icon icon-action fsize32"></i>
                 </div>
                 <div class="menu-icon-bottom">
-                    <i class="iconfont icon-shezhi icon icon-action fsize32 exe-off-online" title="设置"></i>
+                    <i class="iconfont icon-shezhi icon icon-action fsize32" title="设置"></i>
                     <i class="iconfont icon-zaixian icon icon-action fsize32 exe-off-online" title="在线"></i>
                     <i class="iconfont icon-tuichu icon icon-action fsize32" title="退出"></i>
                 </div>
@@ -217,7 +217,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
                 <div class="edit_tabs">快捷键</div>
                 <div class="edit_tabs">自动消息</div>
                 <div class="edit_tabs">设置</div>
-                <i class="iconfont icon-guanbi edit_guanbi"></i>
+                <i class="iconfont icon-htmal5icon21 edit_guanbi"></i>
             </div>
             <div class="edit_tab_content">
                 <div class="edit_content_list content_list_one">
