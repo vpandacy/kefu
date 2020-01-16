@@ -13,6 +13,13 @@
       "unicode_decimal": 58907
     },
     {
+      "icon_id": "400090",
+      "name": "关闭",
+      "font_class": "htmal5icon21",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
       "icon_id": "445409",
       "name": "按键分割线",
       "font_class": "anjianfengexian",

@@ -23,7 +23,7 @@
             $(this).parent().next().children().eq($(this).index()).show().siblings().hide();
         });
         // 设置
-        $('.edit_guanbi').click(function () {
+        $('.icon-htmal5icon21').click(function () {
             $('.edit_bg').hide();
             $('.edit_content').hide();
         });
@@ -34,7 +34,6 @@
         // 关闭聊天框.
         $('.icon-guanbi').on('click', function () {
             $('#chatExe .flex1').css({'display': 'none'});
-
             $('.content-message-active').removeClass('content-message-active');
         });
         
