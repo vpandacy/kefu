@@ -48,7 +48,12 @@ var merchant_user_track_ops = {
                     staff_id: $('#staff_id').val(),
                     qq: $('#qq').val(),
                     email: $('#email').val(),
-                    wechat: $('#wechat').val()
+                    wechat: $('#wechat').val(),
+                    has_customer_talk: $('[name=has_customer_talk]').is(':checked') ? 1 : 0,
+                    has_customer_no_talk: $('[name=has_customer_no_talk]').is(':checked') ? 1 : 0,
+                    has_email: $('[name=has_email]').is(':checked') ? 1 : 0,
+                    has_qq: $('[name=has_qq]').is(':checked') ? 1 : 0,
+                    has_phone: $('[name=has_phone]').is(':checked') ? 1 : 0,
                 }
                 ,defaultToolbar: ['filter','exports']
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增

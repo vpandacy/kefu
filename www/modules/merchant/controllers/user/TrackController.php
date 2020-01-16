@@ -22,10 +22,11 @@ class TrackController extends BaseController
             $mobile = $this->get('mobile','');
             $url = $this->get('url','');
             $staff_id = intval($this->get('staff_id',0));
-            $qq = $this->get('qq','');
-            $wechat = $this->get('wechat','');
-            $email = $this->get('email','');
-
+            $has_customer_talk = intval($this->get('has_customer_talk',0));
+            $has_customer_no_talk = intval($this->get('has_customer_no_talk',0));
+            $has_phone = intval($this->get('has_phone',0));
+            $has_qq = intval($this->get('has_qq',0));
+            $has_email = intval($this->get('has_email',0));
 
             $groups = GroupChat::findAll(['merchant_id'=>$this->getMerchantId()]);
             $staffs  = Staff::find()
@@ -42,91 +43,18 @@ class TrackController extends BaseController
                     'mobile'    =>  $mobile,
                     'url'       =>  $url,
                     'staff_id'  =>  $staff_id,
-                    'email'     =>  $email,
-                    'wechat'    =>  $wechat,
-                    'qq'        =>  $qq,
+                    'has_customer_talk' =>  $has_customer_talk,
+                    'has_customer_no_talk' =>  $has_customer_no_talk,
+                    'has_phone' =>  $has_phone,
+                    'has_qq' =>  $has_qq,
+                    'has_email' =>  $has_email,
                 ],
             ]);
         }
 
-        $group_id = intval($this->post('group_id',0));
-        $time = $this->post('time','');
-        $staff_id = intval($this->post('staff_id',0));
-        $mobile = trim($this->post('mobile',''));
-        $url = trim($this->post('url',''));
-        $qq = $this->post('qq',0);
-        $wechat = $this->post('wechat',0);
-        $email = $this->post('email',0);
-
-        $time = $time ? explode('~', $time) : [];
         $page = intval($this->post('page',1));
 
-        $member_ids = [];
-
-        $query = GuestHistoryLog::find()->where([
-            'merchant_id'=>$this->getMerchantId()
-        ]);
-
-        if($group_id) {
-            $query->andWhere(['chat_stype_id'=>$group_id]);
-        }
-
-        if($staff_id) {
-            $query->andWhere(['staff_id'=>$staff_id]);
-        }
-
-        if($mobile) {
-            $member = Member::find()
-                ->asArray()
-                ->where(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile])
-                ->all();
-
-            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
-            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
-        }
-
-        if($email) {
-            $member = Member::find()
-                ->asArray()
-                ->where(['merchant_id'=>$this->getMerchantId(),'email'=>$email])
-                ->all();
-
-            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
-            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
-        }
-
-        if($qq) {
-            $member = Member::find()
-                ->asArray()
-                ->where(['merchant_id'=>$this->getMerchantId(),'qq'=>$qq])
-                ->all();
-
-            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
-            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
-        }
-
-        if($wechat) {
-            $member = Member::find()
-                ->asArray()
-                ->where(['merchant_id'=>$this->getMerchantId(),'wechat'=>$wechat])
-                ->all();
-
-            $member_ids = !$member_ids ? array_column($member,'id') : [-1];
-            $member_ids = array_intersect($member_ids, !$member ? [-1] : array_column($member,'id'));
-        }
-
-        if($member_ids) {
-            $query->andWhere(['member_id'=>$member_ids]);
-        }
-
-        if($url) {
-            $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
-        }
-
-        if($time) {
-            $query->andWhere(['>','created_time', trim($time[0])]);
-            $query->andWhere(['<','created_time', trim($time[1])]);
-        }
+        $query = $this->buildQueryCondition();
 
         $count = $query->count();
 
@@ -160,6 +88,140 @@ class TrackController extends BaseController
 
         // 转义字符.
         return $this->renderPageJSON(DataHelper::encodeArray($lists), '获取成功', $count);
+    }
+
+    /**
+     * 生成数据的查询语句.
+     */
+    protected function buildQueryCondition() {
+        $group_id = intval($this->post('group_id',0));
+        $time = $this->post('time','');
+        $staff_id = intval($this->post('staff_id',0));
+        $mobile = trim($this->post('mobile',''));
+        $url = trim($this->post('url',''));
+        $has_customer_talk = intval($this->post('has_customer_talk',0));
+        $has_customer_no_talk = intval($this->post('has_customer_no_talk',0));
+        $has_phone = intval($this->post('has_phone',0));
+        $has_qq = intval($this->post('has_qq',0));
+        $has_email = intval($this->post('has_email',0));
+
+        $member_ids = [];
+        $chat_group_ids = [];
+
+        $time = $time ? explode('~', $time) : [];
+
+        $query = GuestHistoryLog::find()->where([
+            'merchant_id'=>$this->getMerchantId()
+        ]);
+
+        if($group_id) {
+            $query->andWhere(['chat_stype_id'=>$group_id]);
+        }
+
+        if($staff_id) {
+            $query->andWhere(['staff_id'=>$staff_id]);
+        }
+
+        if($mobile) {
+            $member = Member::find()
+                ->asArray()
+                ->where(['merchant_id'=>$this->getMerchantId(),'mobile'=>$mobile])
+                ->select(['id'])
+                ->column();
+
+            $member_ids = !$member_ids ? $member : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : $member);
+        }
+
+        // 这里是所有说话的.
+        if($has_customer_talk && !$has_customer_no_talk) {
+            $chat_logs = GuestChatLog::find()
+                ->where(['merchant_id'=>$this->getMerchantId()])
+                ->asArray()
+                ->select(['guest_log_id'])
+                ->column();
+
+            $chat_group_ids = $chat_logs;
+        }
+
+        // 这里是未说话的.
+        if(!$has_customer_talk && $has_customer_no_talk) {
+            $chat_logs = GuestChatLog::find()
+                ->where(['merchant_id'=>$this->getMerchantId()])
+                ->asArray()
+                ->select(['guest_log_id'])
+                ->column();
+
+            $all_group_ids = GuestHistoryLog::find()
+                ->where(['merchant_id'=>$this->getMerchantId()])
+                ->asArray()
+                ->select(['id'])
+                ->column();
+
+
+            $chat_group_ids = array_diff($all_group_ids, $chat_logs);
+        }
+
+        if($chat_group_ids) {
+            $query->andWhere(['id' => $chat_group_ids]);
+        }
+
+        // 是否存在QQ号码.
+        if($has_qq) {
+            $member = Member::find()
+                ->where([
+                    'merchant_id'   =>  $this->getMerchantId()
+                ])
+                ->andWhere(['!=','qq',new Expression("''")])
+                ->select(['id'])
+                ->column();
+
+            $member_ids = !$member_ids ? $member : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : $member);
+        }
+
+        // 是否存在手机号码
+        if($has_phone) {
+            $member = Member::find()
+                ->where([
+                    'merchant_id'   =>  $this->getMerchantId()
+                ])
+                ->andWhere(['!=','mobile',new Expression("''")])
+                ->select(['id'])
+                ->column();
+
+            $member_ids = !$member_ids ? $member : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : $member);
+        }
+
+        // 是否有邮箱.
+        if($has_email) {
+            $member = Member::find()
+                ->where([
+                    'merchant_id'   =>  $this->getMerchantId()
+                ])
+                ->andWhere(['!=','email',new Expression("''")])
+                ->select(['id'])
+                ->column();
+
+            $member_ids = !$member_ids ? $member : [-1];
+            $member_ids = array_intersect($member_ids, !$member ? [-1] : $member);
+        }
+        
+        if($member_ids) {
+            $query->andWhere(['member_id'=>$member_ids]);
+        }
+
+        if($url) {
+            $query->andWhere(['like','land_url',new Expression("'%$url%'")]);
+        }
+
+        if($time) {
+            $query->andWhere(['>','created_time', trim($time[0])]);
+            $query->andWhere(['<','created_time', trim($time[1])]);
+        }
+
+        return $query;
     }
 
     /**

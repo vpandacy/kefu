@@ -73,18 +73,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <?php endforeach;?>
                     </select>
                 </div>
-<!---->
-<!--                <div class="layui-inline">-->
-<!--                    <input type="text" class="layui-input" id="qq" name="qq" value="--><?//=$search_conditions['qq']?><!--" placeholder="请输入QQ号码">-->
-<!--                </div>-->
-<!---->
-<!--                <div class="layui-inline">-->
-<!--                    <input type="text" class="layui-input" id="email" name="email" value="--><?//=$search_conditions['email']?><!--" placeholder="请输入邮箱">-->
-<!--                </div>-->
-<!---->
-<!--                <div class="layui-inline">-->
-<!--                    <input type="text" class="layui-input" id="wechat" name="wechat" value="--><?//=$search_conditions['wechat']?><!--" placeholder="请输入微信号码">-->
-<!--                </div>-->
 
                 <div class="layui-inline">
                     <div class="layui-unselect layui-form-select ">
@@ -93,13 +81,11 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             <i class="layui-edge"></i>
                         </div>
                         <div class="screen_result" id="screen_result">
-                            <input type="checkbox" name="" title="访客有说话" lay-skin="primary" checked>
-                            <input type="checkbox" name="" title="访客没说话" lay-skin="primary" checked><br>
-<!--                            <input type="checkbox" name="" title="对话线索" lay-skin="primary" checked><br>-->
-                            <input type="checkbox" name="" title="手机" lay-skin="primary" checked>
-                            <input type="checkbox" name="" title="QQ" lay-skin="primary" checked>
-                            <input type="checkbox" name="" title="邮箱" lay-skin="primary" checked>
-                            <input type="checkbox" name="" title="固话" lay-skin="primary" checked>
+                            <input type="checkbox" name="has_customer_talk" value="1" title="访客有说话" lay-skin="primary" <?=$search_conditions['has_customer_talk'] ? 'checked' : ''?>>
+                            <input type="checkbox" name="has_customer_no_talk" value="1" title="访客没说话" lay-skin="primary" <?=$search_conditions['has_customer_no_talk'] ? 'checked' : ''?>><br>
+                            <input type="checkbox" name="has_phone" value="1" title="手机" lay-skin="primary" <?=$search_conditions['has_phone'] ? 'checked' : ''?>>
+                            <input type="checkbox" name="has_qq" value="1" title="QQ" lay-skin="primary" <?=$search_conditions['has_qq'] ? 'checked' : ''?>>
+                            <input type="checkbox" name="has_email" value="1" title="邮箱" lay-skin="primary" <?=$search_conditions['has_email'] ? 'checked' : ''?>>
                         </div>
                     </div>
                 </div>
