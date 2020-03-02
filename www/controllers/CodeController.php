@@ -96,7 +96,7 @@ class CodeController extends BaseController
                 "code"              => $code,
                 "msn"               => $msn,
                 "auto_disconnect"   => $config['auto_disconnect'] ?? 0,
-                "greetings"         => $config['greetings'] ?? '您好,欢迎使用好商汇客服系统',
+                "greetings"         => $config['greetings'] ?? '您好,欢迎使用商通客服系统',
                 "style"             => $style
             ]
         ];
@@ -137,7 +137,7 @@ class CodeController extends BaseController
                 "code"              => $code,
                 "msn"               => $msn,
                 "auto_disconnect"   => $setting['auto_disconnect'] ?? 0,
-                "greetings"         => $setting['greetings'] ?? '您好,欢迎使用好商汇客服系统',
+                "greetings"         => $setting['greetings'] ?? '您好,欢迎使用商通客服系统',
                 "style"             => $style
             ]
         ]);
@@ -180,7 +180,7 @@ class CodeController extends BaseController
                 "code"              => $code,
                 "msn"               => $msn,
                 "auto_disconnect"   => $setting['auto_disconnect'] ?? 0,
-                "greetings"         => $setting['greetings'] ?? '您好,欢迎使用好商汇客服系统',
+                "greetings"         => $setting['greetings'] ?? '您好,欢迎使用商通客服系统',
                 "style"             => $style
             ]
         ]);
