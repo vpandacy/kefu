@@ -33,14 +33,23 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
-        'list_001' => [//当做队列
+        'list_guest' => [//当做队列
             'class' => 'common\components\redis\RedisConnection',
             'host'     => 'r-wz9upztf8livi4vcn2.redis.rds.aliyuncs.com',
             'port'     => 6379,
             'database' => 0,
             'password' => 'xqYlAcF9CvqC1U4i',
-            'prefix' => 'kf_list_'
+            'prefix' => 'kf_guest_'
         ],
+        'list_cs' => [//当做队列
+            'class' => 'common\components\redis\RedisConnection',
+            'host'     => 'r-wz9upztf8livi4vcn2.redis.rds.aliyuncs.com',
+            'port'     => 6379,
+            'database' => 0,
+            'password' => 'xqYlAcF9CvqC1U4i',
+            'prefix' => 'kf_cs_'
+        ],
+
         'list_chat_log' => [
             'class' => 'common\components\redis\RedisConnection',
             'host'     => 'r-wz9upztf8livi4vcn2.redis.rds.aliyuncs.com',
@@ -56,7 +65,7 @@ return [
                 'host'     => 'r-wz9upztf8livi4vcn2.redis.rds.aliyuncs.com',
                 'port'     => 6379,
                 'password' => 'xqYlAcF9CvqC1U4i',
-                'prefix' => 'cache_kf',
+                'prefix' => 'kf_cache',
 
             ]
         ],
