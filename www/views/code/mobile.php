@@ -85,7 +85,7 @@ StaticPluginHelper::includeJsPlugins([
             </div>
         </div>
 
-        <div class="faceDivBox" style="display:none;height: 137px; bottom: 3rem;width: 88%;overflow: auto; position: absolute;background: white;">
+        <div class="faceDivBox" style="display:none;height: 137px; bottom: 4.5rem;width: 88%;overflow: auto; position: absolute;background: white;">
             <div class="faceDiv">
                 <section class="emoji-box"></section>
             </div>
