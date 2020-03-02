@@ -1,0 +1,241 @@
+html,body {margin: 0;padding: 0;width: 100%;  height: 100%;}
+body {
+    background:linear-gradient(0deg,rgba(124,105,240,1),rgba(220,156,232,1)) no-repeat 0 0;
+    background-size: cover;
+
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: center;
+    /* -webkit-justify-content: center; */
+    align-items: center;
+    -webkit-align-items: center;
+    height: 100vh;
+    /* margin: -20px 0 50px; */
+    margin: 0;
+}
+#index_login {
+    background: #fff;
+    /*border-radius: 10px;*/
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    border-radius: 0 5px 5px 0;
+}
+/*从下到上进入*/
+#index_login .fadeInUpLeft {
+    animation-name: fadeInUpLeft;
+    -webkit-animation: fadeInUpLeft;
+}
+#index_login .disnone {
+    display: none;
+}
+#index_login .dflex {
+    display: flex;
+}
+#index_login .cupointer {
+    cursor: pointer;
+}
+#index_login .textAlign {
+    text-align: center;
+}
+#index_login .login_content {
+    height: 100%;
+}
+#index_login .login_content .content_login{
+
+}
+#index_login .login_content  .login_left_back{
+    position: relative;
+    display: flex;
+    flex: 1;
+    background:rgba(240,245,255,1);
+}
+#index_login .login_content .login_left_back .login_left_img_one {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+#index_login .login_content .login_left_back .login_left_img_two {
+    position: absolute;
+    left: -35px;
+    bottom: -35px;
+}
+#index_login .login_content .login_left_back .login_left_img_three {
+    width: 85%;
+    margin: auto;
+}
+#index_login .login_content   .login_right_login {
+    position: relative;
+    flex: 1;
+}
+#index_login .login_content .login_right_login .login_content_sr {
+    /*border: 1px solid red;*/
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+#index_login .login_content .login_right_login .right-panel-active .sign-up-container {
+    display: block !important;
+}
+#index_login .login_content .login_right_login .right-panel-active .sign-in-container {
+    display: none !important;
+}
+#index_login .login_content .login_right_login .right-panel-password-active .sign-in-container {
+    display: none !important;
+}
+#index_login .login_content .login_right_login .right-panel-password-active .sign-down-container {
+    display: block !important;
+}
+#index_login .login_content .login_right_login .login_content_sr .sign-up-container {
+    display: none;
+}
+#index_login .login_content .login_right_login .login_content_sr .sign-in-container {
+    display: block;
+}
+#index_login .login_content .login_right_login .login_content_sr .sign-down-container{
+    display: none;
+}
+#index_login .login_content .login_right_login .login_content_sr .welcome_password_hand{
+    color:rgba(87,148,255,1);
+    font-size: 12px;
+}
+#index_login .login_content .login_right_login .login_content_sr .login_register_hand{
+    font-size:14px;
+    font-weight:400;
+    text-align: center;
+    color:rgba(141,158,173,1);
+}
+#index_login .login_content .login_right_login .login_content_sr .login_button{
+    height:40px;
+    background:rgba(87,148,255,1);
+    border-radius:40px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-weight:400;
+    margin: 20px 0 30px 0;
+}
+#index_login .login_content .login_right_login .login_content_sr .login_inp_name{
+    margin: 20px 0px 15px 0;
+}
+/**/
+#index_login .login_content .login_right_login .login_content_sr .po-relative {
+    position: relative;
+}
+#index_login .login_content .login_right_login .login_content_sr .graphic_code{
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* height: 95%; */
+    height: 35px;
+    width: 100px;
+}
+#index_login .login_content .login_right_login .login_content_sr .iphone_code{
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* height: 95%; */
+    height: 35px;
+    width: 100px;
+    background: rgba(87,148,255,1);
+    color: white;
+    text-align: center;
+    line-height: 35px;
+    font-size: 14px;
+    border: none;
+}
+/**/
+#index_login .login_content .login_right_login .login_content_sr .login_inp_password{
+    margin: 0px 0px 5px 0;
+}
+#index_login .login_content .login_right_login .login_content_sr input {
+    height:35px;
+    background: #eee;
+    border: none;
+    padding: 0 0 0 5px;
+    width: 98%;
+    outline: none;
+}
+#index_login .login_content .login_right_login  .login_content_sr  input::placeholder{
+    font-size: 12px;
+}
+#index_login .login_content .welcome_title{
+    color: #5794FF;
+    font-size: 35px;
+}
+#index_login .login_content .welcome_tip{
+    color: #c5c5c5;
+    font-size: 14px;
+}
+#index_login .login_content   .login_right_login .login_right_img_Four{
+    position: absolute;
+    right: 80px;
+    zoom: .5;
+}
+/** 遮掩层 **/
+#index_login .login_cover {
+    width: 100%;
+    height: 100%;
+    z-index: 998;
+    background: rgba(0,0,0,0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#index_login .login_cover_content {
+    width: 360px;
+    min-height: 340px;
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-51%) translateY(-66%);
+    -ms-transform: translateX(-51%) translateY(-66%);
+    -o-transform: translateX(-51%) translateY(-66%);
+    -webkit-transform: translateX(-51%) translateY(-66%);
+}
+#index_login .login_cover_content .login_cover_close {
+    width: 20px;
+    height: 20px;
+    margin: 10px 10px 0px 10px;
+    color: #CCC;
+}
+#index_login .login_cover_content .login_cover_title {
+    font: 18px/28px tahoma,arial,"Hiragino Sans GB","Microsoft Yahei",\5b8b\4f53;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    margin: -10px 0 10px 0px;
+}
+#index_login .login_cover_content .login_cover_button {
+    margin: 10px;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+}
+#index_login .login_cover_content .login_cover_button > div{
+    height: 30px;
+    width: 100px;
+    background-color: #1B9AF7;
+    border-color: #1B9AF7;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+#index_login .login_cover_content .login_cover_button >div:hover {
+    background-color: #0081e0;
+}

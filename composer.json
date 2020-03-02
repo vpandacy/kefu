@@ -19,7 +19,11 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "workerman/workerman": "^3.5",
-        "workerman/gateway-worker": "^3.0"
+        "workerman/gateway-worker": "^3.0",
+        "qiniu/php-sdk": "^7.2",
+        "phpoffice/phpspreadsheet": "^1.10",
+        "workerman/gatewayclient": "^3.0.13",
+        "ipip/db": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -39,7 +43,7 @@
     "repositories": {
         "packagist": {
             "type": "composer",
-            "url": "http://packagist.phpcomposer.com"
+            "url": "https://mirrors.aliyun.com/composer/"
         }
     }
 }

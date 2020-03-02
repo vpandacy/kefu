@@ -35,12 +35,34 @@ return [
             'console/runtime',
             'www/runtime',
             'www/web/assets',
+            'uc/runtime',
+            'uc/web/assets',
+            'admin/runtime',
+            'admin/web/assets',
         ],
         'setExecutable' => [
             'yii',
         ],
         'setCookieValidationKey' => [
-            'www/config/main-local.php',
+
+        ],
+    ],
+    'test' => [
+        'path' => 'test',
+        'setWritable' => [
+            'console/runtime',
+            'www/runtime',
+            'www/web/assets',
+            'uc/runtime',
+            'uc/web/assets',
+            'admin/runtime',
+            'admin/web/assets',
+        ],
+        'setExecutable' => [
+            'yii',
+        ],
+        'setCookieValidationKey' => [
+
         ],
     ],
     'Production' => [

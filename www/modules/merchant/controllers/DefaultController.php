@@ -2,6 +2,7 @@
 
 namespace www\modules\merchant\controllers;
 
+use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
 
 /**
@@ -15,6 +16,13 @@ class DefaultController extends BaseController
      */
     public function actionIndex()
     {
+        return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/user/index'));
         return $this->render('index');
+    }
+
+    public function actionForbidden()
+    {
+        $this->layout = false;
+        return $this->render('forbidden');
     }
 }

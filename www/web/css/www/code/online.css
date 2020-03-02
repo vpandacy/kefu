@@ -30,6 +30,9 @@ body {
 #online a {
     cursor: pointer;
 }
+#online .dis_none {
+    display: none;
+}
 #online .iconfont {
     cursor: pointer;
 }
@@ -77,10 +80,13 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    position: relative;
 }
 
 #online .online-info .info-message .message {
     flex-grow: 1;
+    overflow-y: auto;
+    height: 337px;
 }
 
 #online .online-info .info-message .message .tip-div {
@@ -103,7 +109,13 @@ body {
     margin-top: 15px;
     display: flex;
 }
-
+#online .online-info .online-my-message {
+    display: flex;
+    justify-content: flex-end;
+}
+#online .online-info .online-my-message .message-name-date{
+    text-align: right;
+}
 #online .online-info .content-message .message-img {
     width: 45px;
     margin-right: 10px;
@@ -116,6 +128,8 @@ body {
 
 #online .online-info .content-message .message-info {
     width: 70%;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 #online .online-info .content-message .message-info .message-name-date {
@@ -124,8 +138,7 @@ body {
 }
 
 #online .online-info .content-message .message-info .message-name-date .date {
-    padding-left: 15px;
-
+    padding: 0 5px;
 }
 
 #online .online-info .content-message .message-info .message-message {
@@ -134,11 +147,13 @@ body {
     padding: 10px;
     font-size: 13px;
     margin-top: 8px;
+    display: inline-block;
 }
 
 
 #online .online-info .info-message .submit {
     height: 30%;
+    position: relative;
     border-top: 1px solid #E9EEF2;
     display: flex;
     display: -webkit-flex;
@@ -146,6 +161,63 @@ body {
     -ms-flex-direction: column;
 }
 
+#online .online-info .info-message  #online-from {
+    background: white;
+    position: absolute;
+    top: 0;
+    max-width: 100%;
+    height: 100%;
+    padding: 0 20px;
+    bottom: 0;
+    font-size: 14px;
+    display: none;
+}
+#online .online-info .info-message  #online-from .from-list {
+    width: 100%;
+}
+#online .online-info .info-message  #online-from .from-list .from-button-message {
+    width: 102%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: rgb(0, 118, 220);
+    cursor: pointer;
+    color: white;
+    margin-top: 20px;
+}
+#online .online-info .info-message  #online-from .from-list input {
+    width: 100%;
+    height: 25px;
+    padding:0 5px;
+    border: 1px solid #bbb5b5;
+}
+#online .online-info .info-message  #online-from .from-list textarea {
+    width: 101%;
+    height: 50px;
+    resize:none;
+}
+#online .online-info .info-message  #online-from .from-list .from-title {
+    margin: 10px 0;
+}
+#online .online-info .info-message  #online-from .from-list .from-title >span:first-child{
+    color: red;
+    padding-right: 5px;
+}
+#online .online-info .info-message .submit .chat-close {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    /* line-height: 100%; */
+    text-align: center;
+    line-height: 130px;
+    display: none;
+}
+#online .online-info .info-message .submit .chat-close >span{
+    color: rgb(31, 140, 235);
+    cursor: pointer;
+}
 #online .online-info .info-message .submit .top {
     background: rgb(248, 250, 252);
     height: 40px;
@@ -163,6 +235,8 @@ body {
     flex-grow: 1;
     outline: none;
     padding: 10px;
+    height: 82px;
+    overflow-y: auto;
 }
 #online .online-info .info-message .submit .bottom{
     display: flex;
@@ -179,10 +253,13 @@ body {
     line-height: 30px;
     border-radius: 3px;
     margin: 0 10px 10px 0;
+    cursor: pointer;
 }
 
 #online .online-info .online-right {
-    width: 45%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
 }
 #online .online-info .online-right .right-tab {
     height: 40px;
@@ -190,14 +267,67 @@ body {
     display: flex;
     text-align: center;
     font-size: 14px;
+    cursor: pointer;
+}
+#online .online-info .online-right .right-tab-info{
+    flex: 1;
 }
 #online .online-info .online-right .right-tab .tab-one{
-    flex-grow: 1;
+    flex: 1;
     height: 40px;
 }
-#online .online-info .online-right .right-tab .tab-two{
-    flex-grow: 1;
+#online .online-info .online-right .right-tab .tab-one:last-child{
+    flex: 1;
     height: 40px;
     border-left: 1px solid #E9EEF2;
+}
+#online .online-info .online-right .right-tab .right-tab-active{
     border-bottom: 1px solid #E9EEF2;
+}
+#online .online-info .online-right .right-guanggao {
+    height: 30%;
+}
+#online .online-info .online-right .right-guanggao .online-advertisement {
+    width: 90%;
+    border-top: 1px solid #DDE5ED;
+    margin: 0 auto;
+}
+
+
+.overflow-message {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #FCFFDF;
+    border-bottom: 1px solid rgb(228, 234, 240);
+    padding: 10px;
+    font-size: 12px;
+}
+
+.overflow-message .operation{
+    display: flex;
+    font-size: 14px;
+}
+
+.operation div{
+    flex: 1;
+}
+
+.operation .leave-message{
+    text-align: right;
+}
+
+.operation .num {
+    color: #4D73E7;
+    font-weight: 600;
+}
+
+.operation .leave-message span {
+    border: 1px solid rgb(228, 234, 240);
+    display: inline-block;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+    color: #66748B;
+    border-radius: 4px;
 }

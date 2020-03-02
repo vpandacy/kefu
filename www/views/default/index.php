@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 <div><h1>测试聊天</h1></div>
-</body>
-
 <script>
     (function() {
-        //https://tb.53kf.com/code/code/10195739/5
-        var _hshcode = document.createElement("script");
-        _hshcode.src = "http://www.kefu.dev.hsh568.cn/code/index";
-        s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(_hshcode, s);
+        var _ht_kf_code = document.createElement("script"),
+            s = document.getElementsByTagName("script")[0];
+
+        _ht_kf_code.src = "http://www.kefu.dev.hsh568.cn/3tw4krmp/c";
+        s.parentNode.insertBefore(_ht_kf_code, s);
     })();
 </script>
-</html>

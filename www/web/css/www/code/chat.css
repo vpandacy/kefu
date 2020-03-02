@@ -1,0 +1,475 @@
+/*滚动条的宽度*/
+::-webkit-scrollbar {width:6px;height:6px;}
+/*外层轨道。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果*/
+::-webkit-scrollbar-track {width: 6px;background-color:#0d1b20;-webkit-border-radius: 2em;-moz-border-radius: 2em;border-radius:2em;}
+/*滚动条的设置*/
+::-webkit-scrollbar-thumb {background-color:#606d71;background-clip:padding-box;min-height:28px;-webkit-border-radius: 2em;-moz-border-radius: 2em;border-radius:2em;}
+/*滚动条移上去的背景*/
+::-webkit-scrollbar-thumb:hover {background-color:#606d71;}
+.img_zaixiankefu {
+    text-align: right;
+}
+.img_zaixiankefu img {
+    cursor: pointer;
+}
+#online_kf {
+    width: 360px;
+    height: 500px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 20px;
+}
+#online_kf button {
+    cursor: pointer;
+}
+#online_kf a {
+    cursor: pointer;
+}
+#online_kf .iconfont {
+    cursor: pointer;
+}
+#show-hide {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(15,66,76,0.25);
+}
+#online_kf .capture-dialog {
+    width: 320px;
+    height: 345px;
+    font-size: 14px;
+    position: absolute;
+    bottom: 80px;
+    left: 1px;
+}
+#online_kf .capture-dialog .icon-guanbi {
+    float: right;
+    margin: 10px;
+}
+#online_kf .capture-dialog .modal-header {
+    height: 38px;
+}
+#online_kf .capture-dialog .modal-header {
+    position: relative;
+    /*height: 70px;*/
+    background-color: #fff;
+    padding-top: 20px;
+}
+#online_kf .capture-dialog .modal-header .bootbox-close-button {
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    margin: 0;
+    line-height: 18px;
+    color: #c9d7d8;
+    opacity: 1;
+    cursor: pointer;
+    font-size: 18px;
+    background-image: url(../img/bgGroup.png);
+    background-position: -775px 1px;
+}
+#online_kf .capture-dialog .modal-header .modal-title {
+    padding: 8px 0 0 20px !important;
+    font-weight: 700 !important;
+    text-align: left !important;;
+    color: #3d4966 !important;;
+}
+#online_kf .capture-dialog .modal-header .modal-title {
+    line-height: 16px;
+    font-size: 16px;
+    margin: 0;
+    padding: 30px;
+    color: #565656;
+    text-align: center;
+    font-family: "microsoft yahei";
+}
+#online_kf .capture-dialog .modal-content {
+    position: relative;
+    border-radius: 1px;
+}
+#online_kf .capture-dialog .modal-body .h5 {
+    font-weight: 700 !important;
+}
+#online_kf .capture-dialog .modal-body {
+    height: 240px;
+    background: #f5f9fa;
+    margin-bottom: 25px;
+}
+#online_kf .capture-dialog .modal-body {
+    padding: 0;
+    text-align: center;
+}
+#online_kf .capture-dialog .capture-outer {
+    width: 360px;
+    height: 315px;
+    background-color: #fff;
+    padding: 10px 20px 27px;
+    box-sizing: border-box;
+    text-align: left;
+}
+#online_kf .capture-dialog .modal-body .captTips {
+    margin-bottom: 14px;
+}
+#online_kf .capture-dialog .capture-outer .captTips {
+    color: #bf862d;
+    background: #FFF9E3;
+    padding: 8px;
+}
+#online_kf .capture-dialog .capture-outer .h5 {
+    font-size: 14px;
+    color: #3d4966;
+    font-weight: 400;
+    margin: 0;
+    line-height: 20px;
+}
+#online_kf .capture-dialog .capture-outer ol {
+    padding: 0;
+    margin: 14px 0 0 15px;
+    list-style-position: outside;
+}
+#online_kf .capture-dialog .capture-outer ol, .capture-outer ol h6 {
+    color: #3d4966;
+    line-height: 20px;
+    font-size: 14px;
+}
+#online_kf .capture-dialog .capture-outer ol li:first-child {
+    margin-top: 0px;
+}
+#online_kf .capture-dialog .capture-outer ol, .capture-outer ol h6 {
+    color: #3d4966;
+    line-height: 20px;
+    font-size: 14px;
+}
+#online_kf .capture-dialog .capture-outer ol h6 {
+    margin: 0;
+    font-weight: 400;
+}
+#online_kf .capture-dialog .capture-outer ol .capture-text {
+    min-height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #8b98ad;
+    margin-top: 7px;
+}
+#online_kf .capture-dialog .capture-outer ol .capture-text a {
+    color: #4d9dfe;
+}
+.min-onclick {
+    cursor: pointer;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    background: rgb(31,140,235);
+    color: white;
+    font-size: 16px;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 0;
+}
+.min-onclick i {
+    font-size: 25px;
+}
+.min-onclick div:first-child {
+    width: 15%;
+    background: rgb(25,112,188) !important;
+}
+.min-onclick div:last-child {
+    width: 15%;
+}
+.dis_none {
+    display: none;
+}
+#pc-online {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(230, 233, 239);
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -ms-flex-direction: column;
+    border-radius: 4px;
+    position: relative;
+}
+
+#pc-online .online-header {
+    background: rgb(31, 140, 235);
+    min-height: 36px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+#pc-online .online-cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: black;
+    opacity: 0.7;
+}
+#pc-online .online-header .header-left {
+    align-items: center;
+    display: flex;
+}
+
+#pc-online .online-header .header-left .logo {
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+#pc-online .online-header .header-left span {
+    color: white;
+    font-size: 14px;
+}
+
+#pc-online .online-header .header-right {
+    display: flex;
+    display: -webkit-flex;
+}
+
+#pc-online .online-header .header-right i {
+    font-size: 24px;
+    color: white;
+    margin-left: 10px;
+}
+
+#pc-online .message {
+    overflow-y: auto;
+    background: rgb(245, 248, 255);
+    flex: 1;
+}
+
+#pc-online .message .content-tip {
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    flex-direction: column;
+    color: rgb(112, 130, 166);
+    font-size: 14px;
+}
+#pc-online .message .content-tip:nth-child(1) {
+    cursor: pointer;
+}
+#pc-online .message .tip-div {
+    width: 100%;
+    text-align: center;
+}
+
+#pc-online .message .tip-div .content-tip span:nth-child(2) {
+    margin: 5px 15px 15px 15px;
+}
+
+#pc-online .message .tip-div .content-tip span:nth-child(3) {
+    background: rgb(230, 233, 239);
+    padding: 0 10px;
+    line-height: 25px;
+}
+
+#pc-online .message .content-message {
+    padding-left: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    display: flex;
+}
+#pc-online .message .online-my-message {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+}
+
+#pc-online .message .content-message .message-img {
+    width: 45px;
+    /*margin-right: 10px;*/
+}
+
+#pc-online .message .content-message .logo {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+#pc-online .message .content-message .message-info {
+    width: 70%;
+    margin-right: 10px;
+}
+
+#pc-online .message .content-message .message-info .message-name-date {
+    color: rgb(112, 130, 166);
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+#pc-online .message .content-message .message-info .message-name-date .date {
+    padding: 0 15px;
+
+}
+#pc-online .message .content-message .message-info .message-name-date .message-name {
+    padding-right: 10px;
+}
+
+#pc-online .message .content-message .message-info .message-message {
+    background: rgb(230, 233, 239);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 13px;
+    /*margin-top: 8px;*/
+    display: inline-block;
+    max-width: 220px;
+    overflow: hidden;
+    word-break: break-all;
+}
+#pc-online .message .content-message .message-info .message-message-my {
+    margin-right: 10px;
+}
+
+#pc-online .online-submit {
+    border-top: 1px solid rgb(228, 234, 240);
+    height: 24%;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    position: relative;
+    background: white;
+}
+#pc-online .online-submit .chat-close{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: white;
+    font-size: 14px;
+    text-align: center;
+    line-height: 90px;
+}
+#pc-online .online-submit .chat-close >span {
+    color: rgb(31, 140, 235);
+    cursor: pointer;
+}
+#pc-online .online-submit .submit-top {
+    flex: 1;
+    padding: 3px;
+    border: none;
+    outline: none;
+    font-size: 12px;
+    overflow-y: auto;
+}
+
+#pc-online .online-submit .submit-bottom {
+    padding: 5px 10px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#pc-online .online-submit .submit-bottom .bottom-left i {
+    margin-right: 5px;
+    color: rgb(63, 90, 124);
+}
+
+#pc-online .online-submit .submit-button {
+    background: rgb(30, 137, 230);
+    color: white;
+    width: 65px;
+    height: 25px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 25px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#pc-online .online-author {
+    font-size: 12px;
+    text-align: center;
+    background: #f8f7f7;
+    color: #8DA2B5;
+    line-height: 20px;
+    display: inline-flex;
+    justify-content: space-around;
+}
+#online-from {
+    background: white;
+    position: absolute;
+    top: 37px;
+    max-width: 100%;
+    height: 100%;
+    padding: 5px 20px;
+    font-size: 14px;
+    display: none;
+}
+#online-from .from-list {
+    width: 100%;
+}
+#online-from .from-list .from-button-message {
+    width: 102%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: rgb(0, 118, 220);
+    cursor: pointer;
+    color: white;
+}
+#online-from .from-list input {
+    width: 100%;
+    height: 25px;
+    padding:0 5px;
+    border: 1px solid #bbb5b5;
+}
+#online-from .from-list textarea {
+    width: 100%;
+    height: 50px;
+    resize:none;
+}
+#online-from .from-list .from-title {
+    margin: 10px 0;
+}
+#online-from .from-list .from-title span:nth-child(1) {
+    color: red;
+    padding-right: 5px;
+}
+
+.overflow-message {
+    position: absolute;
+    top: 36px;
+    left: 0;
+    right: 0;
+    background-color: #FCFFDF;
+    border-bottom: 1px solid rgb(228, 234, 240);
+    padding: 10px;
+    font-size: 12px;
+}
+
+.overflow-message .operation{
+    display: flex;
+    font-size: 14px;
+}
+
+.operation div{
+    flex: 1;
+}
+
+.operation .leave-message{
+    text-align: right;
+}
+
+.operation .num {
+    color: #4D73E7;
+    font-weight: 600;
+}
+
+.operation .leave-message span{
+    border: 1px solid rgb(228,234,240);
+    display: inline-block;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+    color: #66748B;
+    border-radius: 4px;
+}

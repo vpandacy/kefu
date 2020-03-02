@@ -1,0 +1,326 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.iconfont  {cursor: pointer !important;}
+#wapOnline {
+    width: 100%;
+    height: 100%;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+}
+#wapOnline .wapOnline-zheyan {
+    background: black;
+    height: 100%;
+    opacity: 0.5;
+}
+#wapOnline  .icon-zaixianzixun{
+    color: rgb(58, 148, 254);
+    font-size: 40px;
+    position: absolute;
+    right: 7px;
+    top: 60%;
+}
+#wapOnline .dis_none {
+    display: none;
+}
+#wapOnline .waponline-max {
+    width: 100%;
+    height: 90%;
+    position: absolute;
+    bottom: 0;
+    background: white;
+}
+
+#wapOnline .top {
+    height: 3rem;
+    background: rgb(58, 148, 254);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#wapOnline .top .icon-zuojiantou {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+}
+
+#wapOnline .top .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: -2rem;
+    /*margin-top: 0.5rem;*/
+}
+
+#wapOnline .message {
+    flex-grow: 1;
+    background-color: #ffffff;
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    left: 0;
+    bottom: 3.5rem;
+    /*height: 100%;*/
+    overflow-y: auto;
+}
+
+#wapOnline .message .tip {
+    color: rgb(114, 117, 128);
+    text-align: center;
+    margin-top: 0.5rem;
+
+}
+
+#wapOnline .message .tip span {
+    background: rgb(238, 241, 243);
+    padding: 3px;
+    font-size: 0.8rem;
+}
+
+#wapOnline .message .date {
+    color: rgb(114, 117, 128);
+    text-align: center;
+    margin: 1rem 0;
+    padding: 5px;
+}
+
+#wapOnline .message .date span {
+    padding: 3px;
+    font-size: 0.5rem;
+}
+
+#wapOnline .bottom {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    min-height: 3rem;
+    border-top: 1px solid #E9EEF2;
+    border-bottom: 1px solid #E9EEF2;
+    color: rgb(142, 143, 147);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right:0;
+    width: 100%;
+    background-color: white;
+    justify-content: space-around;
+}
+#wapOnline .bottom .mobile-text-disflex {
+    display: flex;
+    align-items: center;
+}
+#wapOnline .bottom .icon {
+    display: flex;
+    display: -webkit-flex;
+}
+
+#wapOnline .bottom div:nth-child(1) i {
+    font-size: 1.5rem;
+}
+
+#wapOnline .bottom div:nth-child(1) i:nth-child(1) {
+    margin-left: 0.4rem;
+}
+
+#wapOnline .bottom div:nth-child(1) i:nth-child(2) {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+}
+
+#wapOnline .bottom div:nth-child(2) {
+    flex-grow: 1;
+}
+
+#wapOnline .bottom div:nth-child(3) {
+    width: 3rem;
+    margin-left: 1rem;
+}
+
+#wapOnline .bottom  #content {
+    min-height: 2rem;
+    line-height: 2rem;
+    width: 14.5rem;
+    border: none;
+    padding-left: 15px;
+    outline: none;
+}
+
+#wapOnline .bottom input:focus {
+    outline: none;
+}
+
+#wapOnline .message .content-message {
+    padding-left: 1rem;
+    margin-top: 1rem;
+    display: flex;
+}
+#wapOnline .message .online-my-message {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+}
+#wapOnline .message .content-message .message-img {
+    width: 1.5rem;
+    margin-right: 1rem;
+}
+
+#wapOnline .message .content-message .logo {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+#wapOnline .message .content-message .message-info {
+    width: 70%;
+    margin-right: 10px;
+}
+#wapOnline .message  .message-my {
+    justify-content: flex-end;
+    -webkit-justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+#wapOnline .message .content-message .message-info .message-name-date {
+    color: rgb(112, 130, 166);
+    font-size: 15px;
+}
+
+#wapOnline .message .content-message .message-info .message-name-date .date {
+    padding-left: 15px;
+
+}
+
+#wapOnline .message .content-message .message-info .message-message {
+    background: rgb(230, 233, 239);
+    border-radius: 5px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    display: inline-block;
+    max-width: 100px;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+
+.chat-close {
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    height: 3rem;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    background-color: white;
+    text-align: center;
+    line-height: 3rem;
+
+    display: block;
+    z-index: 999999999;
+    width: 100% !important;
+    position: absolute;
+    /* bottom: 0; */
+    top: 0;
+    height: 100%;
+    margin: 0 !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.online_new_message,.online_from_message {
+    color:rgb(31, 140, 235);
+    z-index: 999;
+}
+
+#online-from {
+    background: white;
+    position: absolute;
+    top: 3rem;
+    max-width: 100%;
+    height: 100%;
+    padding: 5px 20px;
+    font-size: 14px;
+    display: none;
+    bottom: 0;
+    z-index: 99;
+}
+#online-from .from-list {
+    width: 100%;
+}
+#online-from .from-list .from-button-message {
+    width: 102%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    background: rgb(0, 118, 220);
+    cursor: pointer;
+    color: white;
+}
+#online-from .from-list input {
+    width: 100%;
+    height: 25px;
+    padding:0 5px;
+    border: 1px solid #bbb5b5;
+}
+#online-from .from-list textarea {
+    width: 100%;
+    height: 50px;
+    resize:none;
+}
+#online-from .from-list .from-title {
+    margin: 10px 0;
+}
+#online-from .from-list .from-title span:first-child{
+    color: red;
+    padding-right: 5px;
+}
+.overflow-message {
+    position: absolute;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    background-color: #FCFFDF;
+    border-bottom: 1px solid rgb(228, 234, 240);
+    padding: 10px;
+    font-size: .6rem;
+}
+
+.overflow-message .operation{
+    display: flex;
+    font-size: .7rem;
+}
+
+.overflow-message p{
+    margin: 0;
+}
+
+.operation div{
+    flex: 1;
+}
+
+.operation .leave-message{
+    text-align: right;
+}
+
+.operation .num {
+    color: #4D73E7;
+    font-weight: 600;
+}
+
+.operation .leave-message span{
+    border: 1px solid rgb(228,234,240);
+    display: inline-block;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+    color: #66748B;
+    border-radius: 4px;
+}

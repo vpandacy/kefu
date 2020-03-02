@@ -14,7 +14,7 @@ class BaseWebController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public $page_size = 30;
+    public $page_size = 15;
 
     public function setTitle($title = "")
     {
@@ -57,14 +57,15 @@ class BaseWebController extends Controller
         return Yii::$app->request->get($key, $default);
     }
 
-    protected function setCookie($name, $value, $expire = 0, $domain = '')
+    protected function setCookie($name, $value, $expire = 0, $domain = '', $path = '/')
     {
         $cookies = Yii::$app->response->cookies;
         $cookies->add(new \yii\web\Cookie([
             'name'   => $name,
             'value'  => $value,
             'expire' => $expire ? (time() + $expire) : $expire,
-            'domain' => $domain
+            'domain' => $domain,
+            'path'   => $path,
         ]));
     }
 
@@ -85,14 +86,15 @@ class BaseWebController extends Controller
     }
 
 
-    protected function removeCookie($name, $domain = '')
+    protected function removeCookie($name, $domain = '', $path ='/')
     {
         $cookies = Yii::$app->response->cookies;
         $cookies->add(new \yii\web\Cookie([
             'name'   => $name,
             'value'  => "",
             'expire' => 1,
-            'domain' => $domain
+            'domain' => $domain,
+            'path'   => $path
         ]));
     }
 
@@ -101,9 +103,14 @@ class BaseWebController extends Controller
         return Yii::$app->request->isAjax;
     }
 
-    protected function isGetMethod()
+    protected function isGet()
     {
         return Yii::$app->request->isGet;
+    }
+
+    protected function isPost()
+    {
+        return Yii::$app->request->isPost;
     }
 }
 

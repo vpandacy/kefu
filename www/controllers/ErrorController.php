@@ -1,6 +1,7 @@
 <?php
 
 namespace www\controllers;
+use common\services\applog\AppLogService;
 use yii\web\Controller;
 
 class ErrorController extends Controller
@@ -16,7 +17,16 @@ class ErrorController extends Controller
         $referer = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
         $url = $host.$uri;
 
-        $err_msg = $msg . " [file: {$file}][line: {$line}][err code:$code.][url:{$url}][referer:{$referer}][post:".http_build_query($_POST)."]";
+        $query_params  = $_POST;
+        unset( $query_params['password']);
+
+        $err_msg = $msg . " [file: {$file}][line: {$line}][err code:$code.][url:{$url}][referer:{$referer}][post:".http_build_query($query_params)."]";
+        AppLogService::addErrLog( \Yii::$app->id ,$err_msg );
         return $err_msg;
+    }
+
+    public function actionError()
+    {
+        return $this->render('error');
     }
 }

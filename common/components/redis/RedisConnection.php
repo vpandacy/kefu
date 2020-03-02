@@ -102,6 +102,29 @@ class RedisConnection extends \yii\base\Component
     }
 
     /**
+     * 删除redis的键.redis大于4.0.0,可以使用unlink
+     * https://github.com/phpredis/phpredis/#class-redis
+     * @param $key
+     * @return mixed
+     */
+    public function delete($key)
+    {
+        if(method_exists($this->_redisconn_instance,'del')) {
+            return $this->_redisconn_instance->del($key);
+        }
+
+        if(method_exists($this->_redisconn_instance,'unlink')) {
+            return $this->_redisconn_instance->unlink($key);
+        }
+
+        if(method_exists($this->_redisconn_instance,'delete')) {
+            return $this->_redisconn_instance->delete($key);
+        }
+
+        return true;
+    }
+
+    /**
      *
      * @param string $name
      * @param array $params

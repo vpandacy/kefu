@@ -1,0 +1,9 @@
+#error_kefu {
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+#error_kefu img {
+    width: 900px;
+    height:900px;
+}

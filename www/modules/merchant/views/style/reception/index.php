@@ -1,80 +1,94 @@
 <?php
-use \common\services\GlobalUrlService;
-use \common\components\helper\StaticAssetsHelper;
-//StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"), www\assets\MerchantAsset::className())
+use common\services\GlobalUrlService;
+use common\components\helper\StaticAssetsHelper;
+use www\assets\MerchantAsset;
+use www\services\MerchantConstantService;
+
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/style/reception/index.js'), MerchantAsset::className());
 ?>
 <div id="staff_index_index">
     <div class="staff_tab">
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/index/index');?>">风格列表</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/computer/index');?>">PC端设置</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/mobile/index');?>">移动端设计</a></div>
-        <div class="tab_list " ><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/newsauto/index');?>">自动消息</a></div>
-        <div class="tab_list tab_active"><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/reception/index');?>">接待规则</a></div>
-        <div class="tab_list "><a href="<?=GlobalUrlService::buildWWWUrl('/merchant/style/video/index');?>">视频</a></div>
+        <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
+            'bar_menu'  =>  'style',
+            'current_menu'  =>  'reception'
+        ])?>
     </div>
     <div class="tab_staff_content">
-        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
-            <button class="layui-btn" data-type="reload">搜索</button>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+        <form action="" class="layui-form">
+            <div class="site-text">
+                <fieldset class="layui-elem-field">
+                    <legend>风格分组</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">风格</label>
+                            <div class="layui-inline">
+                                <select name="group_chat_id" lay-filter="choice">
+                                    <option value="0">默认风格</option>
+                                    <?php foreach($groups as $group):?>
+                                        <option value="<?=$group['id']?>"><?=$group['title']?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="layui-elem-field">
+                    <legend>分配设置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">分配方式</label>
+                            <div class="layui-input-block">
+                                <?php foreach(MerchantConstantService::$group_distribution_modes as $id=>$title):?>
+                                    <input type="radio" name="distribution_mode" value="<?=$id?>" title="<?=$title?>">
+                                <?php endforeach;?>
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">自动分配是由程序自动为游客分配一个客服</div>
+                        </div>
+
+                        <!-- 如果是风格分组优先,则默认以该风格下所有成员为准 -->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">接待策略</label>
+                            <div class="layui-input-block">
+                                <?php foreach(MerchantConstantService::$group_reception_strategies as $id=>$title):?>
+                                    <input type="radio" name="reception_strategy" value="<?=$id?>" title="<?=$title?>">
+                                <?php endforeach;?>
+                            </div>
+<!--                            <div class="layui-form-mid layui-word-aux">分配方式为手动分配时有效,优先展示管理员或者风格组成员</div>-->
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">接待优先</label>
+                            <div class="layui-input-block">
+                                <?php foreach(MerchantConstantService::$group_reception_rules as $id=>$title):?>
+                                    <input type="radio" name="reception_rule" value="<?=$id?>" title="<?=$title?>">
+                                <?php endforeach;?>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="layui-elem-field">
+                    <legend>分流设置</legend>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">分流类型</label>
+                            <div class="layui-input-block">
+                                <?php foreach(MerchantConstantService::$group_shunt_modes as $id=>$title):?>
+                                    <input type="radio" name="shunt_mode" value="<?=$id?>" title="<?=$title?>">
+                                <?php endforeach;?>
+                            </div>
+<!--                            <div class="layui-form-mid layui-word-aux">目前仅支持指定客服,如需设置请前往风格管理->分配客服</div>-->
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="info">立即保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
-        </div>
-        <table class="layui-hide" id="test"></table>
+        </form>
     </div>
 </div>
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">恢复</button>
-    </div>
-</script>
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
-<script src="<?=GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js");?>"></script>
-<script type="text/javascript">
-    layui.use('table', function(){
-        var table = layui.table;
-
-        table.render({
-            elem: '#test'
-            ,url:'<?=GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/dome.json");?>'
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,cols: [[
-                {type:'checkbox', fixed: 'left'},
-                {field:'id', width:80, title: '账号'}
-                ,{field:'username', width:80, title: '工号'}
-                ,{field:'sex', width:80, title: '姓名'}
-                ,{field:'city', width:80, title: '部门'}
-                ,{field:'sign', title: '岗位', minWidth: 100} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'experience', title: '身份'}
-                ,{field:'score', title: '入职时间', sort: true}
-                ,{field:'classify', title: '状态'}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150, fixed: 'right'}
-            ]]
-            ,id: 'testReload'
-            ,page: true
-
-        });
-        var $ = layui.$, active = {
-            reload: function(){
-                var demoReload = $('#demoReload');
-                //执行重载
-                table.reload('testReload', {
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                    ,where: {
-                        id: demoReload.val()
-                    }
-                }, 'data');
-            }
-        };
-        $('.demoTable .layui-btn').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-    });
-</script>

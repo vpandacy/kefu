@@ -1,59 +1,62 @@
 ;
-var common_ops = {
+var merchant_common_ops = {
     init:function(){
-        this.eventBind();
         this.setMenuIconHighLight();
-        this.getMsgCount();
-    },
-    eventBind:function(){
-        //文本框失去焦点时隐藏tip提示层
-        $('div').off('change','.input-1,.textarea-1,.textarea-1a').on('blur','.input-1,.textarea-1,.textarea-1a',function(){
-            $(this).hideTip();
-        });
-        $('div').off('change',".radio-1,.select-1,.checkbox-1").on('change',".radio-1,.select-1,.checkbox-1",function() {
-            $(this).hideTip();
-        });
-
     },
     setMenuIconHighLight:function(){
-        if( $(".box_left_nav .menu_list").size() < 1 ){
+        if( $(".menu-title .iconfont").length < 1 ){
             return;
         }
-        var pathname = window.location.pathname;
-        var nav_name = null;
 
-        if(  pathname.indexOf("/merchant/default") > -1 || pathname == "/merchant" || pathname == "/merchant/" ){
-            nav_name = "dashboard";
-        }
+        var pathname = window.location.pathname,
+            nav_name = null,
+            uris = {
+                'yonghuguanli'  : [
+                    '/merchant/user/index'
+                ],
+                'liaotian'      : [
+                    '/merchant/chat/index',
+                    '/merchant/chat/download',
+                    '/merchant/overall/offline',
+                    '/merchant/user/track'
+                ],
+                'quanjushezhi'  : [
+                    '/merchant/overall/index',
+                    '/merchant/overall/clueauto',
+                    '/merchant/overall/breakauto',
+                    '/merchant/overall/code'
+                ],
+                'heimingdan'    : [
+                    '/merchant/black/index'
+                ],
+                'fengge'        : [
+                    '/merchant/style/index',
+                    '/merchant/style/computer',
+                    '/merchant/style/mobile',
+                    '/merchant/style/newsauto',
+                    '/merchant/style/reception',
+                    '/merchant/style/video',
+                    '/merchant/style/setting'
+                ]
+            };
 
-        if(  pathname.indexOf("/merchant/staff") > -1  ){
-            nav_name = "staff";
-        }
-
-        if(  pathname.indexOf("/merchant/help") > -1  ){
-            nav_name = "help";
-        }
-
-        if(  pathname.indexOf("/stat") > -1  ){
-            nav_name = "stat";
-        }
-
-        if(  pathname.indexOf("/chat") > -1  ){
-            nav_name = "chat";
-        }
-
-        if(  pathname.indexOf("/setting") > -1  ){
-            nav_name = "setting";
+        for(var index in uris) {
+            for(var i = 0; i < uris[index].length; i++) {
+                if(pathname.indexOf(uris[index][i]) > -1) {
+                    nav_name = index;
+                }
+            }
         }
 
         if( nav_name == null ){
             return;
         }
 
-        $(".box_left_nav .menu_list li."+nav_name).addClass("current");
+        $('.menu-title .icon-'+nav_name).addClass('li_active');
     },
-    buildMerchantUrl:function( path ,params){
-        var url =  "/merchant" + path;
+    buildUCUrl:function (path, params) {
+        var url = $(".hidden_val_wrap input[name=domain_uc]").val() + path;
+
         var _paramUrl = '';
         if( params ){
             _paramUrl = Object.keys(params).map(function(k) {
@@ -61,16 +64,44 @@ var common_ops = {
             }).join('&');
             _paramUrl = "?"+_paramUrl;
         }
-        return url + _paramUrl
 
+        return url + _paramUrl
+    },
+    buildMerchantUrl:function(path, params){
+        var url = $(".hidden_val_wrap input[name=domain_app]").val() + path;
+        var _paramUrl = '';
+        if (params) {
+            _paramUrl = Object.keys(params).map(function (k) {
+                return [encodeURIComponent(k), encodeURIComponent(params[k])].join("=");
+            }).join('&');
+            _paramUrl = "?" + _paramUrl;
+        }
+        return url + _paramUrl;
+    },
+    // 静态资源信息.
+    buildStaticUrl:function( path ,params) {
+        var url = $(".hidden_val_wrap input[name=domain_static]").val() + path;
+        var _paramUrl = '';
+        if (params) {
+            _paramUrl = Object.keys(params).map(function (k) {
+                return [encodeURIComponent(k), encodeURIComponent(params[k])].join("=");
+            }).join('&');
+            _paramUrl = "?" + _paramUrl;
+        }
+        return url + _paramUrl;
     },
     buildPicStaticUrl:function(bucket,img_key,params){
-        bucket = bucket.replace(/zhyd_/g, "");
-        bucket = bucket?bucket:"pic3";
-        var url = "http://"+bucket+".s.360zhishu.cn/"+img_key;
+        bucket = bucket ? bucket: "pic3";
+        var config = $('[name=domain_cdn]').val();
 
-        var width = params.hasOwnProperty("w")?params['w']:0;
-        var height = params.hasOwnProperty("h")?params['h']:0;
+        if(config) {
+            config = JSON.parse(config);
+        }
+
+        var url = config[bucket].http + '/' + img_key;
+
+        var width = params && params.hasOwnProperty("w") ? params['w']:0;
+        var height = params && params.hasOwnProperty("h") ? params['h']:0;
         if( !width && !height ){
             return url;
         }
@@ -91,97 +122,105 @@ var common_ops = {
         url += "/interlace/1";
         return url;
     },
-
-    getMsgCount:function(){
-
-        return true;
-    },
-    popLayer:function(url,params){
-        var data = params.hasOwnProperty('data')?params['data']:{};
-        var target_handle = params.hasOwnProperty('target')?params['target']:$("#pop_layer_wrap");
-        var title = params.hasOwnProperty('title')?params['title']:'';
-        var request_method =  params.hasOwnProperty('method')?params['method']:'GET';
-        //是否阻止弹窗的默认关闭事件
-        var preventClose = params.hasOwnProperty('preventClose')?params['preventClose']:false;
-        $.ajax({
-            url:common_ops.buildClubUrl(url),
-            type:request_method,
-            data:data,
-            dataType:'json',
-            success:function(res){
-                if( res.code == 200 ){
-                    target_handle.html(  res.data.form_wrap );
-                    if(  target_handle.parents(".lay-body").size() > 0  ){
-                        $.lay.refresh();
-                        return;
-                    }
-                    if(  params.hasOwnProperty('lay-size') ){
-                        target_handle.attr("class", "hide " + params['lay-size']);
-                    }else{//默认是small
-                        //target_handle.addClass('lay-medium');
-                    }
-
-                    if(  params.hasOwnProperty('height') ){
-                        target_handle.addClass("height-"+params['height']);
-                    }else{//默认是small
-                        //target_handle.addClass('lay-medium');
-                    }
-                    $.lay.open({
-                        'content':target_handle,
-                        'title':title,
-                        'shadeClose':false,
-                        'preventClose':preventClose,
-                        'area': params.hasOwnProperty('area')?params['area']:[ 'auto','auto' ]
-                    });
-                }else{
-                    $.alert(res.msg);
-                }
+    // 这里生成统一的layui 数据表格的配置. 方便统一管理
+    buildLayuiTableConfig: function (params) {
+        return Object.assign({},{
+            limit: 15,  // 分页信息.
+            page: {     // 分页的模板.
+                layout: ['prev', 'page', 'next', 'first', 'last' ,'skip','count']
+            },
+            method: 'POST',
+            // 规定返回的信息.
+            response: {
+                statusCode: 200,
+                countName: 'count',
+                dataName: 'data',
+                statusName: 'code'
             }
-        })
+        }, params);
+    }
+};
+
+
+var common_ops_url = {
+    buildUrl:function( path, params ){
+        return merchant_common_ops.buildUCUrl( path, params );
+    },
+    buildCdnPicSUrl: function (bucket, img_key, params) {
+        return merchant_common_ops.buildPicStaticUrl(bucket, img_key, params);
     }
 };
 
 $(document).ready(function(){
-    common_ops.init();
-    window.onerror = function(message, url, lineNumber,columnNo,error) {
-        var data = {
-            'message':message,
-            'url':url,
-            'error':error.stack
-        };
-        $.ajax({
-            url:"/error/capture",
-            type:'post',
-            data:data,
-            success:function(){
-
-            }
-        });
-        return true;
-    };
+    merchant_common_ops.init();
 });
 
-// 对Date的扩展，将 Date 转化为指定格式的String
-// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
-// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
-// 例子：
-// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
-Date.prototype.Format = function(fmt)
-{ //author: meizz
-    var o = {
-        "M+" : this.getMonth()+1,                 //月份
-        "d+" : this.getDate(),                    //日
-        "h+" : this.getHours(),                   //小时
-        "m+" : this.getMinutes(),                 //分
-        "s+" : this.getSeconds(),                 //秒
-        "q+" : Math.floor((this.getMonth()+3)/3), //季度
-        "S"  : this.getMilliseconds()             //毫秒
-    };
-    if(/(y+)/.test(fmt))
-        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-    for(var k in o)
-        if(new RegExp("("+ k +")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-    return fmt;
+
+/**
+ * 菜单栏JS
+ */
+$('.menu-title a').each(function () {
+    var icon = $(this).children('.iconfont');
+    var dataUrl = $(this).attr('data-url');
+    var url = document.URL;
+    url.indexOf(dataUrl) > -1 ? icon.addClass('li_active') : icon.removeClass('li_active');
+});
+
+var resizeDiv = document.getElementById('left_menu');
+$('.menu_bottom').click(function () {
+    $('.menu-show-hide').each(function () {
+        $(this).toggle();
+    });
+});
+
+var lockSize = function () {
+    resizeDiv.offsetWidth > 90 ? $('.menu_max_logo').show() : '';
+    resizeDiv.offsetWidth > 90 ? $('.menu_min_logo').hide() : '';
+    resizeDiv.offsetWidth > 150 ? $('.menu-show').show().addClass('bounceInLeft animated'):'';
 };
+
+var closeSize = function () {
+    resizeDiv.offsetWidth < 180 ? $('.menu_min_logo').show() : '';
+    resizeDiv.offsetWidth < 180 ? $('.menu_max_logo').hide(): '';
+    resizeDiv.offsetWidth < 180 ? $('.menu-show').hide() : '';
+};
+
+function menuLock() {
+    EleResize.off(resizeDiv, closeSize);
+    $('.left_menu').width('190px');
+    $('#merchant .chant_all .right_merchant .right_content').css('margin-left','190px');
+    EleResize.on(resizeDiv,lockSize);
+}
+
+function menuClose() {
+    EleResize.off(resizeDiv, lockSize);
+    $('.left_menu').width('90px');
+    $('#merchant .chant_all .right_merchant .right_content').css('margin-left','90px');
+    EleResize.on(resizeDiv,closeSize);
+}
+
+$('.menu-title a').mouseover(function () {
+    $('.left_menu').width() > 95 ?   $(this).children('.menu-tooltip').hide() : $(this).children('.menu-tooltip').show();
+    $(this).children('.menu-tooltip').addClass('fadeIn animated');
+});
+
+$('.menu-title a').mouseout(function () {
+    $(this).children('.menu-tooltip').hide();
+});
+
+var $submenu = $('.submenu');
+var $mainmenu = $('.mainmenu');
+$submenu.hide();
+$submenu.first().delay(400).slideDown(700);
+$submenu.on('click','li', function() {
+    $submenu.siblings().find('li').removeClass('chosen');
+    $(this).addClass('chosen');
+});
+$mainmenu.on('click', 'li', function() {
+    $(this).next('.submenu').slideToggle().siblings('.submenu').slideUp();
+});
+$mainmenu.children('li:last-child').on('click', function() {
+    $mainmenu.fadeOut().delay(500).fadeIn();
+});
+
+$('.staff_tab').next().css('padding','20px');
