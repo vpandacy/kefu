@@ -38,7 +38,7 @@ return [
     ],
     'guest_1' => [
         "register" => [
-            'ip' => '192.168.22.21',
+            'ip' => '172.18.23.99',
             'port' => '8210',
             'name' => 'guest_register'
         ],
@@ -47,30 +47,30 @@ return [
             'port' => '8230',
             'start_port' => 8231 ,
             "name" => 'guest_gateway',
-            "register_host" => "0.0.0.0:8210",
+            "register_host" => "172.18.23.99:8210",
         ],
         'gateway_2' => [
             'ip' => 'www.kf.hsh568.cn',
             'port' => '8240',
             'start_port' => 8241 ,
             "name" => 'guest_gateway',
-            "register_host" => "0.0.0.0:8210",
+            "register_host" => "172.18.23.99:8210",
         ],
         'busi_worker_1' => [
             "name" => 'guest_busworker',
-            "register_host" => "0.0.0.0:8210",
+            "register_host" => "172.18.23.99:8210",
             "inner" => [
                 "host" => "0.0.0.0:8220",
                 "name" => "guest_transfer"
             ]
         ],
         'push' => [
-            'host' => '127.0.0.1:8220'
+            'host' => '172.18.23.99:8220'
         ]
     ],
     'cs_1' => [
         "register" => [
-            'ip' => 'www.kf.hsh568.cn',
+            'ip' => '172.18.23.99',
             'port' => '9210',
             'name' => 'cs_register'
         ],
@@ -79,25 +79,25 @@ return [
             'port' => '9230',
             'start_port' => 9231 ,
             "name" => 'cs_gateway',
-            "register_host" => "0.0.0.0:9210",
+            "register_host" => "172.18.23.99:9210",
         ],
         'gateway_2' => [
             'ip' => 'www.kf.hsh568.cn',
             'port' => '9240',
             'start_port' => 9241 ,
             "name" => 'cs_gateway',
-            "register_host" => "0.0.0.0:9210",
+            "register_host" => "172.18.23.99:9210",
         ],
         'busi_worker_1' => [
             "name" => 'cs_busworker',
-            "register_host" => "0.0.0.0:9210",
+            "register_host" => "172.18.23.99:9210",
             "inner" => [
                 "host" => "0.0.0.0:9220",
                 "name" => "cs_transfer"
             ]
         ],
         'push' => [
-            'host' => '127.0.0.1:9220'
+            'host' => '172.18.23.99:9220'
         ],
     ],
     // 聊天默认配置.
