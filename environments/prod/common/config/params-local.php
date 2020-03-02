@@ -11,8 +11,8 @@ return [
     'websocket' => 'ws://www.kf.hsh568.cn/ws/',
     'cdn' => [
         'hsh' => [
-            'https' => 'https://q6juwcwfr.bkt.clouddn.com',
-            'http' => 'http://q6juwcwfr.bkt.clouddn.com'
+            'https' => 'https://chat-resource.cdn.corp.hsh568.cn',
+            'http' => 'http://chat-resource.cdn.corp.hsh568.cn'
         ],
         'qiniu_config' => [
             'ak' => 'mZ-oBLEtEh4M2o2TWnFbVXn5P1KxuSPwqXAtZW_z',
