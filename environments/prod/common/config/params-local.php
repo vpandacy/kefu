@@ -15,8 +15,8 @@ return [
             'http' => 'http://chat-resource.cdn.corp.hsh568.cn'
         ],
         'qiniu_config' => [
-            'ak' => 'mZ-oBLEtEh4M2o2TWnFbVXn5P1KxuSPwqXAtZW_z',
-            'sk' => 'dsuPhLCGpBUfzsynpdGKaoKOUHdN2y5jJx4AXBjb',
+            'ak' => '7Z8CeNzQRSr7m-sOr0hFVhgaOv_qkG03icbRZ7U9',
+            'sk' => '_mO052qgj03HKWfojiDnPSN4zLukuElD37Q7x_MW',
             'bucket' => [
                 'hsh' => 'chat-resource'
             ]
