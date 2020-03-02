@@ -103,6 +103,14 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildWwwStaticUrl("/js
                             <input type="radio" name="sex" value="女" title="女" checked>
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">添加框</label>
+                        <div class="layui-input-block">
+                            <div class="input_style_addFile">
+                                <i class="iconfont icon-jiahao1"></i>
+                            </div>
+                        </div>
+                    </div>
                     <div class="layui-form-item layui-form-text">
                         <label class="layui-form-label">文本域</label>
                         <div class="layui-input-block">
