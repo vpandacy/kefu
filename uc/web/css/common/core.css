@@ -312,16 +312,15 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     position: absolute;
     width: 300px;
     background: #fff;
-    z-index: 9;
     right: 5px;
     top: 65px;
     border: 1px solid #e6e6e6;
     border-radius: 3px;
 
-    padding-top: 0px;
-    margin-top: 0px;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
+    padding-top: 0;
+    margin-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
     min-height: 10px;
     z-index: 999;
 
@@ -489,10 +488,10 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     /*top: 6px;*/
     /*right: 6px;*/
 }
- .tab_staff_content .trackTable_toop .tab .tabs_all {
-     display: flex;
-     align-items: center
- }
+.tab_staff_content .trackTable_toop .tab .tabs_all {
+    display: flex;
+    align-items: center
+}
 .tab_staff_content .trackTable_toop .tab .tabs_tools {
     display: flex;
     align-items: center

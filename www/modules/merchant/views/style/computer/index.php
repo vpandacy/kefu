@@ -132,7 +132,6 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildKFStaticUrl("/js/
                             <input type="radio" name="status" value="0" title="邀请框">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label">离线自动发起</label>
                         <div class="layui-input-block">
@@ -140,7 +139,6 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildKFStaticUrl("/js/
                             <input type="radio" name="status" value="0" title="邀请框">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <div class="layui-input-block">
                             <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
@@ -149,6 +147,5 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildKFStaticUrl("/js/
                 </form>
             </ul>
         </ul>
-    </div>
     </div>
 </div>
