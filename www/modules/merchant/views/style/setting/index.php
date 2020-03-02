@@ -12,6 +12,9 @@ StaticPluginHelper::umeditor();
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/style/setting/index.js'),MerchantAsset::className());
 ?>
 <style>
+    .layui-input-block-auto {
+        width: 100%!important;
+    }
     .layui-input-block {
         width: 215px;
     }
@@ -123,7 +126,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 
                         <div class="layui-form-item">
                             <label class="layui-form-label w115"  style="width: 120px">浮窗初始状态</label>
-                            <div class="layui-input-block">
+                            <div class="layui-input-block layui-input-block-auto">
                                 <input type="radio" name="windows_status" value="0" title="最小化">
                                 <input type="radio" name="windows_status" value="1" title="弹出窗口">
                             </div>
