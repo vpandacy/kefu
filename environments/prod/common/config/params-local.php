@@ -4,7 +4,7 @@ return [
         'www' => 'http://www.kf.hsh568.cn/',
         'merchant' => 'http://www.kf.hsh568.cn/merchant',
         'cs' => 'http://www.kf.hsh568.cn/cs',
-        'static' => 'http://static.dev.hsh568.cn',
+        'static' => 'http://cdn1.static.corp.hsh568.cn',
         'uc' => 'http://uc.kf.hsh568.cn',
         'admin' => 'http://admin.kf.hsh568.cn',
     ],
