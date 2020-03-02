@@ -148,7 +148,7 @@ body {
 }
 
 #wapOnline .bottom div:nth-child(2) {
-    flex-grow: 1;
+    /*flex-grow: 1;*/
 }
 
 #wapOnline .bottom div:nth-child(3) {
@@ -158,14 +158,17 @@ body {
 
 #wapOnline .bottom  #content {
     max-height: 2rem;
-    /*line-height: 2rem;*/
+    min-height: 2rem;
+    /* line-height: 2rem; */
     max-width: 14.5rem;
     min-width: 14.5rem;
     border: 1px solid #E6E6E6;
+    /* padding-left: 15px; */
     outline: none;
     border-radius: 3px;
     margin-right: 10px;
     padding-left: 5px;
+    overflow-y: auto;
 }
 #wapOnline .bottom  #content:empty:before {
     content: attr(placeholder);
