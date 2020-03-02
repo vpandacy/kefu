@@ -87,7 +87,7 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
                 <div class="online-author">
                     <a>服务状态:<span class="ws_flag"></span></a>
-                    <a>好商汇提供软件支持</a>
+                    <a>商通提供软件支持</a>
                 </div>
                 <div class="chat-close dis_none">当前对话已结束，您可以开始
                     <span class="online_new_message">新对话</span>
