@@ -3,7 +3,7 @@ return [
     'components' => [
         'chat_db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=chat_db',
+            'dsn' => 'mysql:host=pc-wz9z908280ydsvi58.rwlb.rds.aliyuncs.com;dbname=chat_db',
             'username' => 'chat_www',
             'password' => 'dGGIr1wU!86tVAZX',
             'charset' => 'utf8mb4',
@@ -11,7 +11,7 @@ return [
         ],
         'chat_uc_db' =>  [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=chat_uc_db',
+            'dsn' => 'mysql:host=pc-wz9z908280ydsvi58.rwlb.rds.aliyuncs.com;dbname=chat_uc_db',
             'username' => 'chat_www',
             'password' => 'dGGIr1wU!86tVAZX',
             'charset' => 'utf8mb4',
@@ -19,7 +19,7 @@ return [
         ],
         'chat_logs_db' =>  [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=chat_logs_db',
+            'dsn' => 'mysql:host=pc-wz9z908280ydsvi58.rwlb.rds.aliyuncs.com;dbname=chat_logs_db',
             'username' => 'chat_www',
             'password' => 'dGGIr1wU!86tVAZX',
             'charset' => 'utf8mb4',
