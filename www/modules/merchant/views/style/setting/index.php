@@ -125,7 +125,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                             <label class="layui-form-label w115"  style="width: 120px">浮窗初始状态</label>
                             <div class="layui-input-block">
                                 <input type="radio" name="windows_status" value="0" title="最小化">
-                                <input type="radio" name="windows_status" value="1" title="展示">
+                                <input type="radio" name="windows_status" value="1" title="弹出窗口">
                             </div>
                         </div>
 
@@ -169,7 +169,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 
                         <div class="layui-form-item">
                             <div class="layui-input-block pleft40">
-                                <button class="layui-btn" lay-submit="" lay-filter="info">立即保存</button>
+                                <button class="layui-btn" lay-submit="" lay-filter="info">保存</button>
                             </div>
                         </div>
                     </div>
