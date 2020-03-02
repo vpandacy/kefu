@@ -11,14 +11,14 @@ return [
     'websocket' => 'ws://www.kf.hsh568.cn/ws/',
     'cdn' => [
         'hsh' => [
-            'https' => 'https://cdn.pic.kefu.test.hsh568.cn',
-            'http' => 'http://cdn.pic.kefu.test.hsh568.cn'
+            'https' => 'https://q6juwcwfr.bkt.clouddn.com',
+            'http' => 'http://q6juwcwfr.bkt.clouddn.com'
         ],
         'qiniu_config' => [
             'ak' => 'mZ-oBLEtEh4M2o2TWnFbVXn5P1KxuSPwqXAtZW_z',
             'sk' => 'dsuPhLCGpBUfzsynpdGKaoKOUHdN2y5jJx4AXBjb',
             'bucket' => [
-                'hsh' => 'stkf'
+                'hsh' => 'chat-resource'
             ]
         ]
     ],
