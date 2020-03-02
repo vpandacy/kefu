@@ -1,63 +1,68 @@
 <?php
-use \common\services\GlobalUrlService;
+use common\components\helper\StaticAssetsHelper;
+use common\services\GlobalUrlService;
+use www\assets\CsAsset;
+
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildUcUrl('/js/common/core.js'),CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),CsAsset::className());
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl('/css/cs/user/login.css'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/user/login.js'),CsAsset::className());
+
 ?>
-<!DOCTYPE html>
-<html lang="zh-CN">
+<div id="index_login">
+    <div class="login_content dflex">
+        <div class="login_left_back">
+            <img class="login_left_img_one" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg2.png')?>">
+            <img class="login_left_img_two" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg1.png')?>">
+            <img class="login_left_img_three" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg3.png')?>">
+        </div>
+        <div class="login_right_login dflex">
+            <img  class="login_right_img_Four" src="<?=GlobalUrlService::buildUcUrl('/images/user/bg4.png')?>">
+            <div class="login_content_sr">
+                <!--登录-->
+                <div class="login_content_tab sign-in-container">
+                    <span class="web-font welcome_title">欢迎登录</span><br>
+                    <span class="web-font welcome_tip">请使用您本人的账号密码</span>
+                    <input class="login_inp_name" name="account" placeholder="请输入邮箱或手机号">
+                    <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
+                    <div class="login_button cupointer login">登录</div>
+                    <div class="textAlign cupointer">
+                        <span class="web-font login_register_hand" onclick="loginActive('login')">没有账号？去注册</span>
+                    </div>
+                </div>
 
-<head>
-    <meta charset="utf-8">
-    <title>登录</title>
-    <link href="<?=GlobalUrlService::buildWwwStaticUrl("/css/cs/login/login.css");?>" rel="stylesheet">
-</head>
-
-<body style="background: url('<?=GlobalUrlService::buildWwwStaticUrl("/images/cs/login/bg.jpg");?>') no-repeat 0 0; background-size: cover">
-<div class="dowebok" id="dowebok">
-    <div class="form-container sign-up-container">
-        <form action="#">
-            <h1>注册</h1>
-            <div class="social-container">
-<!--                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>-->
-<!--                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>-->
-<!--                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
-            </div>
-<!--            <span>或使用邮箱注册</span>-->
-            <input type="text" placeholder="姓名">
-            <input type="email" placeholder="电子邮箱">
-            <input type="password" placeholder="密码">
-            <button>注册</button>
-        </form>
-    </div>
-    <div class="form-container sign-in-container">
-        <form action="#">
-            <h1>登录</h1>
-            <div class="social-container">
-<!--                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>-->
-<!--                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>-->
-<!--                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>-->
-            </div>
-<!--            <span>或使用您的帐号</span>-->
-            <input type="email" placeholder="电子邮箱">
-            <input type="password" placeholder="密码">
-            <a href="#">忘记密码？</a>
-            <button>登录</button>
-        </form>
-    </div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h1>已有帐号？</h1>
-                <p>请使用您的帐号进行登录</p>
-                <button class="ghost" id="signIn">登录</button>
-            </div>
-            <div class="overlay-panel overlay-right">
-                <h1>没有帐号？</h1>
-                <p>立即注册加入我们，和我们一起开始旅程吧</p>
-                <button class="ghost" id="signUp">注册</button>
+                <!--注册-->
+                <form class="layui-form" action="">
+                    <div class="register_content_tab sign-up-container">
+                        <span class="web-font welcome_title">欢迎注册</span><br>
+                        <span class="web-font welcome_tip"></span>
+                        <input class="login_inp_name" type="text" name="merchant_name"  placeholder="请输入商户名">
+                        <input class="login_inp_name" style="margin-top: 0;" type="text" name="account" placeholder="请输入手机号">
+                        <div class="po-relative">
+                            <input class="login_inp_name " style="margin-top: 0;" type="text" name="img_captcha" placeholder="请输入验证码">
+                            <div class="graphic_code cupointer_img">
+                                <img  class="cupointer_img" onclick="this.src='<?=GlobalUrlService::buildKFCSUrl('/user/captcha')?>' + '?time='+ Math.random()" src="<?=GlobalUrlService::buildKFCSUrl('/user/captcha')?>">
+                            </div>
+                        </div>
+                        <div class="po-relative">
+                            <input class="login_inp_name" style="margin-top: 0;" type="text" name="captcha" placeholder="请输入手机验证码">
+                            <div onclick="merchant_user_login_ops.sendemail()" flag="0"  class="iphone_code cupointer">获取验证码</div>
+                        </div>
+                        <input class="login_inp_password" type="password" name="password"  placeholder="请输入密码">
+                        <span class="web-font welcome_password_hand cupointer"></span>
+                        <div class="login_button cupointer register" >注册</div>
+                        <div class="textAlign cupointer">
+                            <span class="web-font login_register_hand" onclick="loginActive('register')">已有账号？去登录</span>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="<?=GlobalUrlService::buildWwwStaticUrl("/js/cs/login/login.js");?>"></script>
-</body>
 
-</html>
+
+<div style="display: none;" class="hidden_val_wrap">
+    <input name="domain_app" value="<?=GlobalUrlService::buildKFCSUrl('');?>"/>
+    <input name="domain_uc" value="<?=GlobalUrlService::buildUCUrl('');?>"/>
+</div>

@@ -44,4 +44,14 @@ www/web/index-test.php
 www/web/robots.txt
 www/runtime
 
+uc/web/index.php
+uc/web/index-test.php
+uc/web/robots.txt
+uc/runtime
+
+admin/web/index.php
+admin/web/index-test.php
+admin/web/robots.txt
+admin/runtime
+
 

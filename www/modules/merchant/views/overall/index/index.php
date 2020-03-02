@@ -3,10 +3,10 @@ use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
 use www\assets\MerchantAsset;
 
-StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"),MerchantAsset::className());
+StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/index.css"),MerchantAsset::className());
 
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js"), MerchantAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/merchant/overall/index/index.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/overall/index/index.js'), MerchantAsset::className());
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
@@ -22,6 +22,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildWwwStaticUrl('/js/
     <div class="layui-btn-container" style="display: block">
         <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
         <button class="layui-btn layui-btn-sm" lay-event="recover">恢复</button>
+        <button class="layui-btn layui-btn-sm" lay-event="import">导入</button>
+        <button class="layui-btn layui-btn-sm" lay-event="disableAll">全部禁用</button>
     </div>
 </script>
 

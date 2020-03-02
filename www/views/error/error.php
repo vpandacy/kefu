@@ -7,11 +7,11 @@ use common\services\GlobalUrlService;
 <head>
     <meta charset="UTF-8">
     <title>error</title>
-    <link href="<?=GlobalUrlService::buildWwwStaticUrl('/css/www/error/error.css')?>" rel="stylesheet" />
+    <link href="<?=GlobalUrlService::buildKFStaticUrl('/css/www/error/error.css')?>" rel="stylesheet" />
 </head>
 <body>
 <div id="error_kefu">
-    <img src="<?=GlobalUrlService::buildWwwStaticUrl('/images/www/error/error.png')?>">
+    <img src="<?=GlobalUrlService::buildKFStaticUrl('/images/www/error/error.png')?>">
 </div>
 </body>
 </html>

@@ -1,11 +1,12 @@
 <?php
 namespace www\modules\merchant\controllers\overall;
 
+use common\components\helper\ValidateHelper;
 use common\models\merchant\CommonWord;
 use common\services\ConstantService;
-use common\services\GlobalUrlService;
+use common\services\ExcelService;
 use www\modules\merchant\controllers\common\BaseController;
-
+use Yii;
 
 class IndexController extends BaseController
 {
@@ -15,22 +16,17 @@ class IndexController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
-    }
+        if($this->isGet()) {
+            return $this->render('index');
+        }
 
-    /**
-     * 获取常用语言的数据.
-     */
-    public function actionList()
-    {
-        $page = intval($this->get('page',1));
+        $page = intval($this->post('page',1));
 
-        $query = CommonWord::find();
+        $query = CommonWord::find()->where(['merchant_id'=>$this->getMerchantId()]);
 
         $count = $query->count();
 
-        $data = $query->where(['merchant_id'=>$this->getMerchantId()])
-            ->limit($this->page_size)
+        $data = $query->limit($this->page_size)
             ->offset($this->page_size * ($page - 1))
             ->orderBy(['id'=>SORT_DESC])
             ->asArray()
@@ -54,7 +50,7 @@ class IndexController extends BaseController
 
         if($word_id && !$words) {
             // 返回回去.
-            return $this->redirect(GlobalUrlService::buildMerchantUrl('/overall/index/index'));
+            return $this->responseFail('您暂无权限操作此界面');
         }
 
         return $this->render('edit',[
@@ -73,11 +69,11 @@ class IndexController extends BaseController
         $request_r = ['id','words'];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
-            return $this->renderJSON([],'参数丢失', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '参数丢失~~' );
         }
 
-        if(!$data['words'] || mb_strlen($data['words']) > 255) {
-            return $this->renderJSON([],'请输入正确的姓名/商户名', ConstantService::$response_code_fail);
+        if(!ValidateHelper::validLength($data['words'],1,255)) {
+            return $this->renderErrJSON('请输入正确的姓名/商户名' );
         }
 
         $words = $data['id'] > 0
@@ -85,7 +81,7 @@ class IndexController extends BaseController
             : new CommonWord();
 
         if($data['id'] > 0 && !$words['id']) {
-            return $this->renderJSON([],'非法的员工', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '非法的员工~~' );
         }
 
         if(!$data['id']) {
@@ -96,10 +92,10 @@ class IndexController extends BaseController
         $words->setAttributes($data,0);
 
         if(!$words->save(0)) {
-            return $this->renderJSON([],'数据库保存失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
     }
 
 
@@ -111,14 +107,14 @@ class IndexController extends BaseController
         $ids = $this->post('ids');
 
         if(!count($ids)) {
-            return $this->renderJSON([],'请选择需要恢复的常用语', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '请选择需要恢复的常用语' );
         }
 
         if(!CommonWord::updateAll(['status'=>ConstantService::$default_status_true],['id'=>$ids,'merchant_id'=>$this->getMerchantId()])) {
-            return $this->renderJSON([],'恢复失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('恢复失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'恢复成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'恢复成功');
     }
 
 
@@ -129,20 +125,82 @@ class IndexController extends BaseController
     {
         $id = $this->post('id',0);
         if(!$id || !is_numeric($id)) {
-            return $this->renderJSON([],'请选择正确的常用语', ConstantService::$response_code_fail);
+            return $this->renderErrJSON('请选择正确的常用语' );
         }
 
         $words = CommonWord::findOne(['id'=>$id,'merchant_id'=>$this->getMerchantId()]);
 
         if($words['status'] != ConstantService::$default_status_true) {
-            return $this->renderJSON([],'该常用语已经被禁止使用了', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '该常用语已经被禁止使用了' );
         }
 
-        $words['status'] = 0;
+        $words['status'] = ConstantService::$default_status_false;
         if(!$words->save(0)) {
-            return $this->renderJSON([],'操作失败,请联系管理员', ConstantService::$response_code_fail);
+            return $this->renderErrJSON( '操作失败,请联系管理员' );
         }
 
-        return $this->renderJSON([],'操作成功', ConstantService::$response_code_success);
+        return $this->renderJSON([],'操作成功');
+    }
+
+    /**
+     * 获取文件.
+     * @return string
+     */
+    public function actionImport()
+    {
+        if($this->isGet()) {
+            return $this->render('import');
+        }
+
+        $data = ExcelService::import('file');
+
+        if(!$data) {
+            return $this->renderErrJSON( ExcelService::getLastErrorMsg() );
+        }
+
+        if(count($data) <= 1) {
+            return $this->renderErrJSON( '请填写对应的Excel内容' );
+        }
+
+        // 去除第一个.
+        array_shift($data);
+        $insert_data = [];
+
+        foreach($data as $row) {
+            if(!$row[0]) {
+                return $this->renderErrJSON( '导入格式错误,请填写完整的常用语' );
+            }
+
+            array_push($insert_data, [
+                'words' =>  $row[0],
+                'status'=>  $row[1],
+                'merchant_id'   =>  $this->getMerchantId(),
+            ]);
+        }
+
+        $ret = CommonWord::getDb()->createCommand()
+            ->batchInsert(CommonWord::tableName(),['words','status','merchant_id'], $insert_data)
+            ->execute();
+
+        if(!$ret) {
+            return $this->renderErrJSON( '数据导入失败,请联系管理员' );
+        }
+
+        return $this->renderJSON([],'数据导入成功');
+    }
+
+    /**
+     * 禁用所有的常用语.
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionDisableAll()
+    {
+        $ret = CommonWord::updateAll(['status'=>ConstantService::$default_status_false],['merchant_id'=>$this->getMerchantId()]);
+
+        if($ret === false) {
+            return $this->renderErrJSON('数据禁用失败');
+        }
+
+        return $this->renderJSON('操作成功');
     }
 }

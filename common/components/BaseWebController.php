@@ -14,7 +14,7 @@ class BaseWebController extends Controller
 {
     public $enableCsrfValidation = false;
 
-    public $page_size = 30;
+    public $page_size = 15;
 
     public function setTitle($title = "")
     {
@@ -103,9 +103,14 @@ class BaseWebController extends Controller
         return Yii::$app->request->isAjax;
     }
 
-    protected function isGetMethod()
+    protected function isGet()
     {
         return Yii::$app->request->isGet;
+    }
+
+    protected function isPost()
+    {
+        return Yii::$app->request->isPost;
     }
 }
 

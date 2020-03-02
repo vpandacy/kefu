@@ -1,188 +1,80 @@
 <?php
-
 namespace www\modules\merchant\controllers\common;
 
-use common\components\BaseWebController;
-use common\models\merchant\Merchant;
-use common\models\merchant\Staff;
+use common\components\StaffBaseController;
+use common\services\applog\AppLogService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
-use www\modules\merchant\service\MenuService;
-use www\modules\merchant\service\RoleService;
-use Yii;
-use yii\base\Action;
+use common\services\uc\MenuService;
+use common\services\uc\MerchantService;
 use yii\web\Response;
+use Yii;
 
-class BaseController extends BaseWebController {
-
-    public $merchant_info;
-    public $staff;
-
-    public $merchant_cookie_name = 'chat_merchant_cookie';
-
-    protected  $allowAllAction = [
-        'merchant/user/login',
-        'merchant/user/sign-in',
-        'merchant/user/register',
+class BaseController extends StaffBaseController
+{
+    private $allow_actions = [
+        'merchant/default/forbidden',
     ];
+    //这些URL不需要检验权限
+    public $ignore_url = [];
 
-    public function __construct($id, $module, $config = []){
+    public function __construct($id, $module, $config = [])  {
         parent::__construct($id, $module, $config = []);
-        $view = Yii::$app->view;
-        $view->params['id'] = $id;
         $this->layout = "main";
     }
 
-    /**
-     * 检查权限.
-     * @param Action $action
-     * @return bool
-     */
     public function beforeAction($action)
     {
-        if(in_array($action->getUniqueId(), $this->allowAllAction)) {
+        // 定义自己的应用ID.
+        $app_id = ConstantService::$merchant_app_id;
+        $this->setAppId( $app_id );
+        Yii::$app->view->params['app_id'] = $this->getAppId();
+
+        $is_login = $this->checkLoginStatus();
+        if( in_array($action->getUniqueId(), $this->allow_actions )) {
             return true;
         }
 
-        if(!$this->checkLoginStatus()) {
-            // 设置跳转.
-            $this->redirect(GlobalUrlService::buildMerchantUrl('/user/login',[
-                'redirect_uri'  =>  GlobalUrlService::buildWwwUrl('/' . $action->getUniqueId())
-            ]));
+        if (!$is_login) {
+            if (\Yii::$app->request->isAjax) {
+                $this->renderJSON([ "url" => GlobalUrlService::buildUcUrl("/user/login") ], "未登录,请返回用户中心", -302);
+            } else {
+                $this->redirect(GlobalUrlService::buildUCUrl("/user/login"));
+            }
             return false;
         }
 
-        $urls = RoleService::getRoleUrlsByStaffId($this->staff['id'], $this->staff['is_root']);
+        GlobalUrlService::setAppId($this->getAppId());
 
-        if(!$this->staff['is_root'] && !in_array($action->getUniqueId(), $urls)) {
-            exit('这里没有权限.');
+        //判断是否有访问该系统的权限，根据当前人登录的app_id判断
+        $own_appids = $this->current_user->getAppIds();
+        if( !in_array(  $this->app_id ,$own_appids ) ){
+            $this->redirect( GlobalUrlService::buildUCUrl("/default/application") );
             return false;
         }
 
-        $menus = MenuService::getAllMenu($urls, $this->staff['is_root']);
-
+        //获取商户信息
+        $this->merchant_info = MerchantService::checkValid( $this->current_user['merchant_id'] );
+        if( !$this->merchant_info ){
+            $this->redirect(GlobalUrlService::buildKFUrl("/default/forbidden", [ 'url' => MerchantService::getLastErrorMsg() ]));
+            return false;
+        }
+        if( !$this->checkPrivilege( $action->getUniqueId() ) ) {
+            if(\Yii::$app->request->isAjax){
+                $this->renderJSON([],"您无权访问此页面，请返回",-302);
+            }else{
+                $this->redirect( GlobalUrlService::buildKFMerchantUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
+            }
+            return false;
+        }
+        // 这里要获取商户系统的菜单.
+        Yii::$app->view->params['menus'] = MenuService::getAllMenu( $this->getAppId(), $this->privilege_urls);
+        // 商户信息.
         Yii::$app->view->params['merchant'] = $this->merchant_info;
-        Yii::$app->view->params['staff']    = $this->staff;
-        Yii::$app->view->params['menus']    = $menus;
+        // 员工信息.
+        Yii::$app->view->params['current_user'] = $this->current_user;
+
+        AppLogService::addAccessLog($this->current_user);
         return true;
-    }
-
-    /**
-     * 开始商户登录权限.
-     */
-    protected function checkLoginStatus()
-    {
-        $auth_cookie = $this->getCookie($this->merchant_cookie_name,'');
-        // 这里稍微注意下.
-        @list($staff_id, $verify_token) = explode('#', $auth_cookie);
-
-        // 一个都没有.那就验证失败.
-        if(!$staff_id || !$verify_token) {
-            return false;
-        }
-
-        $staff = Staff::findOne(['id'=>$staff_id, 'status'=>ConstantService::$default_status_true]);
-
-        if(!$staff || !$this->checkToken($verify_token, $staff)) {
-            return false;
-        }
-
-        // 保存信息.
-        $this->staff = $staff->toArray();
-
-        $merchant = Merchant::findOne(['id'=>$staff['merchant_id'],'status'=>ConstantService::$default_status_true]);
-        if(!$merchant) {
-            return false;
-        }
-
-        $this->merchant_info = $merchant->toArray();
-
-        return true;
-    }
-
-    /**
-     * 创建登录的状态.
-     * @param $staff
-     */
-    public function createLoginStatus($staff)
-    {
-        $token = $staff['id'] . '#' . $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
-        // 指定区域.
-        $this->setCookie($this->merchant_cookie_name, $token,0,'','/merchant');
-    }
-
-    /**
-     * 验证token.
-     * @param $token
-     * @param $staff
-     * @return bool
-     */
-    protected function checkToken($token, $staff)
-    {
-        return $token == $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
-    }
-
-    /**
-     * 生成登录令牌.
-     * @param $merchant_id
-     * @param $staff_salt
-     * @param $password
-     * @return string
-     */
-    protected function genToken($merchant_id, $staff_salt, $password)
-    {
-        return md5($staff_salt . md5($merchant_id . $password));
-    }
-
-    /**
-     * 生成密码.
-     * @param $merchant_id
-     * @param $password
-     * @param $salt
-     * @return string
-     */
-    protected function genPassword($merchant_id,$password,$salt)
-    {
-        return md5($merchant_id . '-' . $password  . '-' . $salt);
-    }
-
-    /**
-     * 获取商户ID.
-     * @return int
-     */
-    public function getMerchantId()
-    {
-        return $this->merchant_info ? $this->merchant_info['id'] : 0;
-    }
-
-    /**
-     * 获取员工ID.
-     * @return int
-     */
-    public function getStaffId()
-    {
-        return $this->staff ? $this->staff['id'] : 0;
-    }
-
-    /**
-     * 渲染分页的界面.
-     * @param array $data
-     * @param string $msg
-     * @param int $count
-     * @return \yii\console\Response|Response
-     */
-    public function renderPageJSON($data = [], $msg = '', $count = 0)
-    {
-        $response = Yii::$app->response;
-        $response->format = Response::FORMAT_JSON;
-        $response->data   = [
-            'msg'    => $msg,
-            'code'   => 0,
-            'data'   => $data,
-            'count'  => $count,
-            'req_id' => $this->geneReqId()
-        ];
-
-        return $response;
     }
 }

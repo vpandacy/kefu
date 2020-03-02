@@ -1,7 +1,10 @@
 <?php
 namespace console\controllers;
 
-class BaseController extends  \yii\console\Controller {
+use yii\console\Controller;
+
+class BaseController extends Controller
+{
     public function echoLog($msg){
         $this->stdout( date("Y-m-d H:i:s")." ".$msg."\r\n" );
         return true;
@@ -24,6 +27,4 @@ class BaseController extends  \yii\console\Controller {
         }
         return trim($cur);
     }
-
-
 } 

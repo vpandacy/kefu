@@ -1,7 +1,7 @@
 <?php
 use \common\services\GlobalUrlService;
 use \common\components\helper\StaticAssetsHelper;
-//StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/index.css"), www\assets\MerchantAsset::className())
+//StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/index.css"), www\assets\MerchantAsset::className())
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[
@@ -9,7 +9,7 @@ use \common\components\helper\StaticAssetsHelper;
         'current_menu'  =>  'mobile'
     ])?>
     <div class="tab_staff_content">
-        <div class="demoTable" style="    text-align: left;margin:10px 18px;">
+        <div class="demoTable" style="    text-align: left;margin:10px 0px;">
             <button class="layui-btn" data-type="reload">搜索</button>
             <div class="layui-inline">
                 <input class="layui-input" name="id" id="demoReload" autocomplete="off">
@@ -35,7 +35,7 @@ use \common\components\helper\StaticAssetsHelper;
 
         table.render({
             elem: '#test'
-            ,url:'<?=GlobalUrlService::buildWwwStaticUrl("/css/merchant/staff/index/dome.json");?>'
+            ,url:'<?=GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/dome.json");?>'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             ,cols: [[

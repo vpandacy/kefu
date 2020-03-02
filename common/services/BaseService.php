@@ -23,4 +23,9 @@ class BaseService {
     public static function getLastErrorCode(){
         return self::$_error_code?self::$_error_code:0;
     }
+
+    public static function consoleLog($msg){
+        print( date("Y-m-d H:i:s")." ".$msg."\r\n" );
+        return true;
+    }
 }
