@@ -133,7 +133,7 @@ var ws_config = new socket({
                 break;
             case 'assign_kf'||'change_kf'||'reply' || 'system':
                 $('.ws_flag').text('连接成功');
-                $('img[class="icon-_DYGYxinyemiandakai"]').attr('src','http://www.kf.hsh568.cn/logo/big_zaixiankefu.jpg');
+                $('img[class="icon-_DYGYxinyemiandakai"]').attr('src','http://cdn1.static.corp.hsh568.cn/logo/big_zaixiankefu.jpg');
                 break;
             case 'close_guest':
                 $('.chat-close').show();
