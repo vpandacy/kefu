@@ -65,13 +65,16 @@ StaticPluginHelper::includeJsPlugins([
                 <div type="text" contenteditable="true" id="content" name="message" placeholder="请输入...">
                 </div>
                 <div>
-                    <span class="submit-button">发送</span>
+                    <div class="submit-button">发送</div>
                 </div>
             </div>
             <div class="chat-close dis_none">
                 当前对话已结束，您可以开始 <span class="online_new_message">新对话</span> 或 <span class="online_from_message">留言</span>
             </div>
         </div>
+        <div class="online-author">
+            <a>服务状态:<span class="ws_flag"></span></a>
+            <a>商通提供软件支持</a></div>
         <div class="overflow-message dis_none">
             <p>当前客服接待能力已达上限，请耐心等候！</p>
             <div class="operation">
