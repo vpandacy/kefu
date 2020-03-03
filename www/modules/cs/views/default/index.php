@@ -7,17 +7,19 @@ use www\assets\CsAsset;
 StaticPluginHelper::setDepend(CsAsset::className());
 StaticPluginHelper::socketPlugin();
 
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),CsAsset::className());
-StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'), CsAsset::className());
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emojibg.css'),StaticPluginHelper::getDepend() );
+StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/tools.css'),StaticPluginHelper::getDepend());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/chat/emoji/emoji.js'), StaticPluginHelper::getDepend() );
+
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipboard/clipboard.js'), StaticPluginHelper::getDepend());
 
 // 注意  这里最后要整合在一起的.
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/contextmenu.js'), CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/page.js'), CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/socket.js'), CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/chat.js'), CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/index.js'), CsAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipboard/clipboard.js'), CsAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/contextmenu.js'), StaticPluginHelper::getDepend() );
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/page.js'), StaticPluginHelper::getDepend());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/socket.js'), StaticPluginHelper::getDepend());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/chat.js'), StaticPluginHelper::getDepend());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js/cs/default/index.js'), StaticPluginHelper::getDepend());
+
 ?>
 <script>
     WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>';
@@ -524,4 +526,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl('/clipbo
 
 <div class="hidden_wrapper">
     <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>
+    <audio controls autoplay="autoplay">
+        <source src="http://chat-resource.cdn.corp.hsh568.cn/audio/dingdong.mp3" type="audio/mpeg">
+        <embed  src="http://chat-resource.cdn.corp.hsh568.cn/audio/dingdong.mp3">
+    </audio>
 </div>

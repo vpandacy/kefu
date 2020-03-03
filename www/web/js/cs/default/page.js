@@ -1,3 +1,4 @@
+;
 // 这个是界面的主要动画效果. 这个要细分. 先将界面的给弄出来.至于其他的可以先不管.
 (function(window){
     var Page = function () {}
