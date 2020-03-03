@@ -158,7 +158,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
 }
 #merchant .chant_all .left_menu {
     /*width: 90px;*/
-    width: 190px;
+    width: 160px;
     background: #2b333d;
     z-index: 9999;
     height: 100%;
@@ -411,7 +411,7 @@ html,body,#merchant,#merchant .chant_all,#merchant .chant_all .right_merchant {
     /*-webkit-transition:margin-left 2s; !* Safari and Chrome *!*/
     /*-o-transition:margin-left 2s; !* Opera *!*/
 
-    margin-left: 190px;
+    margin-left: 160px;
 }
 #merchant .chant_all .right_merchant .right_top a{
     display: block;
