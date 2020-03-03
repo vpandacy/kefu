@@ -1,7 +1,7 @@
 ;
 
 var merchant_style_setting_index_ops = {
-    data:[],
+    data: [],
     table: null,
     umconfig: {
         initialFrameWidth: 640,
@@ -39,7 +39,7 @@ var merchant_style_setting_index_ops = {
     },
     eventBind: function () {
         var that = this;
-        layui.use(['form','table'], function () {
+        layui.use(['form', 'table'], function () {
             var form = layui.form;
 
             that.table = layui.table;
@@ -47,7 +47,7 @@ var merchant_style_setting_index_ops = {
             form.on('select(choice)', function (event) {
                 var value = event.value;
 
-                if(!(/^\d+$/.test(value))) {
+                if (!(/^\d+$/.test(value))) {
                     return $.msg('请选择正确的风格');
                 }
 
@@ -60,7 +60,7 @@ var merchant_style_setting_index_ops = {
                 data: that.data,
                 defaultToolbar: [],
                 cols: [[
-                    {field: 'time',title: '发起时间(秒)'},
+                    {field: 'time', title: '发起时间(秒)'},
                     {field: 'content', title: '发起语'},
                     {title: '操作', toolbar: '#toolbar'}
                 ]],
@@ -69,26 +69,26 @@ var merchant_style_setting_index_ops = {
             });
             // 添加
             that.table.on('toolbar(repeatTable)', function (event) {
-                if(event.event != 'add') {
+                if (event.event != 'add') {
                     return false;
                 }
                 var um = null;
                 $.open({
                     title: '添加发起语',
                     content: $('.publish-form').html(),
-                    btn: ['添加','取消'],
+                    btn: ['添加', '取消'],
                     yes: function (index) {
                         var data = {
                             time: parseInt($('.layui-layer-dialog [name=time]').val()),
                             content: um.getContent()
                         };
 
-                        if(!(/^\d+$/.test(data.time))) {
+                        if (!(/^\d+$/.test(data.time))) {
                             return $.msg('请填写正确的发起时间');
                         }
 
-                        if(data.content.length <= 0 || data.content.length > 255) {
-                            return $.msg('请输入正确的发起内容');
+                        if (data.content.length <= 0 || data.content.length > 255) {
+                            return $.msg('请输入符合要求的发起内容,字符长度不能大于250');
                         }
 
                         that.data.push(data);
@@ -100,10 +100,10 @@ var merchant_style_setting_index_ops = {
                         um.destroy();
                         $.close(index);
                     },
-                    cancel: function() {
+                    cancel: function () {
                         um.destroy();
                     },
-                    area:['800px','550px']
+                    area: ['800px', '550px']
                 });
 
                 $('.layui-layer-dialog .layui-textarea').attr('id', 'editor');
@@ -112,10 +112,10 @@ var merchant_style_setting_index_ops = {
 
             // 删除
             that.table.on('tool(repeatTable)', function (event) {
-                if(event.event == 'delete') {
+                if (event.event == 'delete') {
                     var index = event.tr[0].getAttribute('data-index')
 
-                    that.data = that.data.filter(function (row,cur) {
+                    that.data = that.data.filter(function (row, cur) {
                         return cur != index;
                     });
                     // 删除本身.
@@ -129,18 +129,18 @@ var merchant_style_setting_index_ops = {
                 $.open({
                     title: '添加发起语',
                     content: $('.publish-form').html(),
-                    btn: ['添加','取消'],
+                    btn: ['添加', '取消'],
                     yes: function (index) {
                         var data = {
                             time: parseInt($('.layui-layer-dialog [name=time]').val()),
                             content: um.getContent()
                         };
 
-                        if(!(/^\d+$/.test(data.time))) {
+                        if (!(/^\d+$/.test(data.time))) {
                             return $.msg('请填写正确的发起时间');
                         }
 
-                        if(data.content.length <= 0 || data.content.length > 255) {
+                        if (data.content.length <= 0 || data.content.length > 255) {
                             return $.msg('请输入正确的发起内容');
                         }
 
@@ -153,10 +153,10 @@ var merchant_style_setting_index_ops = {
                         $.close(index);
                         um.destroy();
                     },
-                    cancel: function() {
+                    cancel: function () {
                         um.destroy();
                     },
-                    area:['800px','550px']
+                    area: ['800px', '550px']
                 });
 
                 $('.layui-layer-dialog [name=time]').val(data.time);
@@ -182,7 +182,7 @@ var merchant_style_setting_index_ops = {
                     url: merchant_common_ops.buildMerchantUrl('/style/setting/save'),
                     data: data,
                     dataType: 'json',
-                    success:function (res) {
+                    success: function (res) {
                         $.close(index);
                         return $.msg(res.msg, res.code == 200);
                     },
@@ -207,7 +207,7 @@ var merchant_style_setting_index_ops = {
             data: {
                 group_chat_id: id
             },
-            success:function (res) {
+            success: function (res) {
                 $.close(index);
                 var data = res.data;
 
@@ -223,18 +223,18 @@ var merchant_style_setting_index_ops = {
                 $('[name=company_desc]').val(data ? data.company_desc : '');
                 $('[name=times]').val(data ? data.times : '');
 
-                if(data && data.company_logo) {
+                if (data && data.company_logo) {
                     $('#upload_container [name=company_logo]').val(data.company_logo);
                     $('.img-wrapper').html([
                         '<div class="layui-input-block">',
-                            '<img width="100" height="100" src="', merchant_common_ops.buildPicStaticUrl('hsh', data.company_logo) ,'" alt="">',
+                        '<img width="100" height="100" src="', merchant_common_ops.buildPicStaticUrl('hsh', data.company_logo), '" alt="">',
                         '</div>'
                     ].join(''));
-                }else{
+                } else {
                     $('.img-wrapper').html('')
                 }
 
-                if(res.data.repeat_setting) {
+                if (res.data.repeat_setting) {
                     that.data = JSON.parse(res.data.repeat_setting);
                     // 重新渲染.
                     that.reloadRepeatTable();
@@ -250,22 +250,22 @@ var merchant_style_setting_index_ops = {
     },
     // 选择按钮.
     choiceRadio: function (name, value) {
-        $('[name='+ name +']').each(function (index,ele) {
+        $('[name=' + name + ']').each(function (index, ele) {
             ele = $(ele);
-            if(ele.val() != value) {
+            if (ele.val() != value) {
                 ele.prop('checked', false);
-            }else{
-                ele.prop('checked',true);
+            } else {
+                ele.prop('checked', true);
             }
         });
     },
     // 七牛上传成功所调用的函数.
-    uploadSuccess:function (file_key, wrapper) {
+    uploadSuccess: function (file_key, wrapper) {
         var img_wrapper = $('#' + wrapper).parents('.layui-form-item').find('.img-wrapper');
         $('#' + wrapper + ' [name=company_logo]').val(file_key);
         img_wrapper.html([
             '<div class="layui-input-block">',
-                '<img width="100" height="100" src="', merchant_common_ops.buildPicStaticUrl('hsh', file_key) ,'" alt="">',
+            '<img width="100" height="100" src="', merchant_common_ops.buildPicStaticUrl('hsh', file_key), '" alt="">',
             '</div>'
         ].join(''));
     },
@@ -274,7 +274,7 @@ var merchant_style_setting_index_ops = {
         $.msg(errTip);
     },
     reloadRepeatTable: function () {
-        this.table.reload('repeatTable',{
+        this.table.reload('repeatTable', {
             data: this.data
         });
     }

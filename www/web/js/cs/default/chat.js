@@ -8,7 +8,6 @@
         this.page = new Page();
         // 右键菜单
         this.contextmenu = new Contextmenu('#menu', '.tab-content .online', this.page);
-
     };
 
     // 初始化Chat.

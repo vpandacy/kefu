@@ -16,7 +16,6 @@ class DefaultController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->redirect(GlobalUrlService::buildKFMerchantUrl('/user/index'));
         return $this->render('index');
     }
 

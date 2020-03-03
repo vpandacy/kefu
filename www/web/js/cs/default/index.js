@@ -1,8 +1,15 @@
 ;
-// var online_users = [], // 在线游客列表.
-//     offline_users = [],
-var chat = new Chat();
+
+var index_ops = {
+    init:function(){
+        this.eventBind();
+    },
+    eventBind:function(){
+        var chat = new Chat();
+        chat.init();
+    }
+};
 
 $(document).ready(function () {
-    chat.init();
+    index_ops.init();
 });
