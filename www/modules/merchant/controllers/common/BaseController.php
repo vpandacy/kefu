@@ -17,8 +17,7 @@ class BaseController extends StaffBaseController
     ];
     //这些URL不需要检验权限
     public $ignore_url = [
-        'merchant/default/index',
-        'uc/user/center'
+        'merchant/default/index'
     ];
 
     public function __construct($id, $module, $config = [])  {
@@ -69,6 +68,10 @@ class BaseController extends StaffBaseController
                 $this->redirect( GlobalUrlService::buildKFMerchantUrl("/default/forbidden",[ 'url' => $action->getUniqueId()]) );
             }
             return false;
+        }
+
+        if( !$this->privilege_urls ){
+            $this->getRolePrivilege();
         }
         // 这里要获取商户系统的菜单.
         Yii::$app->view->params['menus'] = MenuService::getAllMenu( $this->getAppId(), $this->privilege_urls);

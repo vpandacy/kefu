@@ -20,15 +20,6 @@ class DefaultController extends BaseController
     public function actionIndex()
     {
         $current_info = $this->current_user;
-
-        // 要获取常用语信息.
-        $words = CommonWord::find()->select(['id',"title",'words'])
-            ->where([
-                'merchant_id'   =>  $current_info['merchant_id'],
-                'status'  =>  ConstantService::$default_status_true,
-            ])
-            ->asArray()->all();
-
         $staff = Staff::findOne(['id'=>$this->current_user['id']]);
         $staff['is_online'] = 1;
 
@@ -43,7 +34,6 @@ class DefaultController extends BaseController
 
         return $this->render('index', [
             'staff' => $this->current_user,
-            'words' =>  $words,
             'online_users'  =>  $online_users,
             'offline_users' =>  $wait_users,
             'all_users' =>  GuestChatService::getAllUsersInfo($online_users, $wait_users),

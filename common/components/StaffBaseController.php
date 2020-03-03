@@ -159,6 +159,7 @@ class StaffBaseController extends BaseWebController
     //这个方法未来可以在业务中判断数据权限
     public function checkPrivilege($url, $ignore_admin = false)
     {
+
         //如果当前用户是管理员的话 就无须验证权限
         if (!$ignore_admin && $this->isRoot() ) {
             $this->getRolePrivilege();

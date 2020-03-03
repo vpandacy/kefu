@@ -98,17 +98,17 @@ class BaseWebController extends Controller
         ]));
     }
 
-    protected function isAjax()
+    public function isAjax()
     {
         return Yii::$app->request->isAjax;
     }
 
-    protected function isGet()
+    public function isGet()
     {
         return Yii::$app->request->isGet;
     }
 
-    protected function isPost()
+    public function isPost()
     {
         return Yii::$app->request->isPost;
     }

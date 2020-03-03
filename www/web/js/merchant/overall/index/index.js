@@ -37,7 +37,7 @@ var merchant_overall_index_ops = {
                 }
 
                 if (row.event == 'import') {
-                    location.href = merchant_common_ops.buildMerchantUrl('/overall/index/import');
+                    location.href = merchant_common_ops.buildMerchantUrl('/setting/word/import');
                     return false;
                 }
 

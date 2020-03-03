@@ -19,7 +19,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFUrl('/js/merchan
                     <div class="layui-card-header" style="text-align: center;">
                         常用语设置
                     </div>
-                    <for class="layui-card-body layui-row layui-col-space10">
+                    <div class="layui-card-body layui-row layui-col-space10">
                         <form class="layui-form" method="post" lay-filter="component-form-element">
                             <div class="layui-row layui-col-space10 layui-form-item">
                                 <div class="layui-col-md12">
@@ -43,10 +43,10 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFUrl('/js/merchan
                                 </div>
                             </div>
                         </form>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
-</div>
 </div>

@@ -2,11 +2,12 @@
 use common\services\GlobalUrlService;
 use common\components\helper\StaticAssetsHelper;
 use www\assets\MerchantAsset;
+use \common\components\helper\StaticPluginHelper;
+StaticPluginHelper::setDepend( MerchantAsset::className() );
+StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/index.css"),StaticPluginHelper::getDepend() );
 
-StaticAssetsHelper::includeAppCssStatic( GlobalUrlService::buildKFStaticUrl("/css/merchant/staff/index/index.css"),MerchantAsset::className());
-
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js"), MerchantAsset::className());
-StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/overall/index/index.js'), MerchantAsset::className());
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/layui/v2.5/layui.all.js"), StaticPluginHelper::getDepend() );
+StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/overall/index/index.js'), StaticPluginHelper::getDepend() );
 ?>
 <div id="staff_index_index">
     <?=$this->renderFile('@www/modules/merchant/views/common/bar_menu.php',[

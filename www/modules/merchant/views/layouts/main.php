@@ -13,7 +13,7 @@ MerchantAsset::register($this);
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="<?=GlobalUrlService::buildKFStaticUrl("/images/favicon.ico");?>" type="image/x-icon"/>
+    <link rel="icon" href="<?=GlobalUrlService::buildKFStaticUrl("/logo.png");?>" type="image/x-icon"/>
     <title><?=Yii::$app->params["company"]["title"];?> -- 商户后台</title>
     <?php $this->head() ?>
 </head>

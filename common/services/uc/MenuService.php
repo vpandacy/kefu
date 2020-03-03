@@ -45,7 +45,6 @@ class MenuService extends BaseService
             'left_menu' =>  self::getLeftMenu(),
             'bar_menu'  =>  self::getBarMenu()
         ];
-
         $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company', 'staff_log'];
         // 开始过滤菜单.
         foreach($all_menu['left_menu'] as $key=>$action) {
@@ -176,18 +175,6 @@ class MenuService extends BaseService
                     'title' =>  '风格管理',
                     'url'   =>  'merchant/style/index/index'
                 ],
-//                'computer'  =>  [
-//                    'title' =>  'PC设置',
-//                    'url'   =>  'merchant/style/computer/index'
-//                ],
-//                'mobile'    =>  [
-//                    'title' =>  '移动端设计',
-//                    'url'   =>  'merchant/style/mobile/index'
-//                ],
-//                'newsauto'  =>  [
-//                    'title' =>  '自动消息',
-//                    'url'   =>  'merchant/style/newsauto/index',
-//                ],
                 'setting'   =>  [
                     'title' =>  '风格设置',
                     'url'   =>  'merchant/style/setting/index'
@@ -196,10 +183,6 @@ class MenuService extends BaseService
                     'title' =>  '接待规则',
                     'url'   =>  'merchant/style/reception/index'
                 ],
-//                'video'     =>  [
-//                    'title' =>  '视频',
-//                    'url'   =>  'merchant/style/video/index'
-//                ],
             ],
             'user'  =>  [
                 'sub_user'  =>  [

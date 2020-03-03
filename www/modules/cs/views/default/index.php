@@ -187,17 +187,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 </div>
                 <div class="tab fGrow1 two">
                     <div class="tab-switch height10 height50" >
-                        <div class="tab-one tab_common_word"><a>常用语</a></div>
+                        <div class="tab-one tab_common_word">
+                            <a class="refresh_word" href="javascript:void(0);" style="color:black;">常用语</a>
+                        </div>
                     </div>
                     <div class="tab-content">
                         <div class="content-one">
                             <div class="words-content" style="height: 62%;">
-                                <?php foreach($words as $word):?>
-                                    <div class="content-select">
-                                        <i class="iconfont icon-wenjian"></i>
-                                        <span title="<?=$word['words']?>"><?=$word['title']?:mb_substr($word['words'],0,10);?></span>
-                                    </div>
-                                <?php endforeach;?>
                             </div>
                         </div>
                         <div class="content-one" style="display: none;">

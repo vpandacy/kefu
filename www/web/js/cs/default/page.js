@@ -38,7 +38,7 @@
             $('.content-message-active').removeClass('content-message-active');
         });
         
-        $('.content-select').on('click', function () {
+        $('.words-content').on('click','.content-select', function () {
             var text = $(this).find('span').attr("title");
             $('#content').text(text);
         });
