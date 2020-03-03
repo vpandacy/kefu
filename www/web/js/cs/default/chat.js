@@ -301,11 +301,6 @@
                 break;
             case "guest_connect":
                 this.assignKf(data);
-                try{
-                    this.audio.play();
-                }catch (e) {
-
-                }
                 break;
             case "chat":
                 this.chat(data);
@@ -405,6 +400,11 @@
         if(uuid != current_uuid) {
             // 有新消息了.
             user.new_message = 1;
+            try{
+                this.audio.play();
+            }catch (e) {
+
+            }
         }
 
         // 这里是判断消息长度
@@ -433,7 +433,6 @@
     Chat.prototype.bindOnlineEvent = function () {
         
         $('.exe-off-online').on('click', function () {
-            console.log('進來了')
             var class_name = $(this).hasClass('icon-lixian')
                 ? 'icon-zaixian'
                 : 'icon-lixian';
