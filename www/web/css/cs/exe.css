@@ -510,7 +510,7 @@ select[name='cs'] {
     cursor: pointer;
 }
 #chatExe .exe-keep .tab .tab-content-list .content-list-time {
-    color: rgb(190, 190, 192);
+    color: black;
     padding: 10px;
 }
 #chatExe .exe-keep .tab .tab-content-list .list-flag-online {
