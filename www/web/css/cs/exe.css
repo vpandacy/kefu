@@ -478,7 +478,8 @@ select[name='cs'] {
     align-items: center;
 }
 #chatExe .exe-keep .tab .tab-content-list .content-new-message:before {
-    content: "●";
+    /*content: "●";*/
+    content: "\u65b0";
     color: red;
     position: absolute;
     top: -8px;
