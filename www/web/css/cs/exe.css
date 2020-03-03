@@ -483,8 +483,8 @@ select[name='cs'] {
     content: '\65b0';
     color: red;
     position: absolute;
-    top: -10px;
-    left: -5px;
+    top: -12px;
+    left: 8px;
     font-weight: bolder;
     font-size: 14px;
 }
