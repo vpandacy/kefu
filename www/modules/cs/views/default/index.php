@@ -526,7 +526,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
 
 <div class="hidden_wrapper">
     <input type="hidden" name="params" value='<?=json_encode($js_params);?>'>
-    <audio controls autoplay="autoplay">
+    <audio controls id="tip_music">
         <source src="http://chat-resource.cdn.corp.hsh568.cn/audio/dingdong.mp3" type="audio/mpeg">
         <embed  src="http://chat-resource.cdn.corp.hsh568.cn/audio/dingdong.mp3">
     </audio>
