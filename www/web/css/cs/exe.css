@@ -483,7 +483,10 @@ select[name='cs'] {
     content: '\65b0';
     color: red;
     position: absolute;
-    top: -8px;
+    top: -10px;
+    left: -5px;
+    font-weight: bolder;
+    font-size: 14px;
 }
 #chatExe .exe-keep .tab .content-no-message {
     justify-content: center;
