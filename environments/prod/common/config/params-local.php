@@ -33,7 +33,7 @@ return [
         ],
         'validate_code' =>  [
             'name'      =>  'validate_code',
-            'domain'    =>  '.kefu.kf.hsh568.cn'
+            'domain'    =>  '.kf.hsh568.cn'
         ],
     ],
     'guest_1' => [
