@@ -586,8 +586,9 @@
             var audio = document.getElementById("tip_music");
             //监听事件
             audio.addEventListener("canplaythrough", function () {
-                audio.play();
+
             }, false);
+            audio.play();
         }catch (e) {
 
         }
