@@ -14,4 +14,11 @@ $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../config/main-local.php'
 );
 
+/*定义版本号变量*/
+if(file_exists("/data/www/release_version/version_chat")){
+    define("RELEASE_VERSION",trim( trim(file_get_contents("/data/www/release_version/version_chat")) ));
+}else{
+    define("RELEASE_VERSION",time());
+}
+
 (new yii\web\Application($config))->run();
