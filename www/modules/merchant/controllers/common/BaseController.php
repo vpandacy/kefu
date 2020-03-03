@@ -14,6 +14,7 @@ class BaseController extends StaffBaseController
 {
     private $allow_actions = [
         'merchant/default/forbidden',
+        'merchant/default/index',
     ];
     //这些URL不需要检验权限
     public $ignore_url = [];
