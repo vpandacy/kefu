@@ -87,12 +87,6 @@ class MenuService extends BaseService
     private static function getLeftMenu()
     {
         return [
-            // 聊天管理
-//            'chat'  =>  [
-//                'url'   =>  'merchant/chat/index/index',
-//                'title' =>  '聊天管理',
-//                'icon'  =>  'icon-liaotian'
-//            ],
             'member'    =>  [
                 'url'   =>  'merchant/user/index/index',
                 'title' =>  '会员管理',

@@ -28,6 +28,7 @@ class BaseController extends StaffBaseController {
         'default/application',
         'upload/qiniu-token',
         'user/logout',
+        'user/center'
     ];
 
     public function __construct($id, $module, $config = [])  {
