@@ -196,7 +196,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                                 <?php foreach($words as $word):?>
                                     <div class="content-select">
                                         <i class="iconfont icon-wenjian"></i>
-                                        <span><?=$word['words']?></span>
+                                        <span title="<?=$word['words']?>"><?=$word['title']?></span>
                                     </div>
                                 <?php endforeach;?>
                             </div>

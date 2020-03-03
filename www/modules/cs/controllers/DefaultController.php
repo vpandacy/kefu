@@ -22,14 +22,12 @@ class DefaultController extends BaseController
         $current_info = $this->current_user;
 
         // 要获取常用语信息.
-        $words = CommonWord::find()
+        $words = CommonWord::find()->select(['id',"title",'words'])
             ->where([
                 'merchant_id'   =>  $current_info['merchant_id'],
-                'status'        =>  ConstantService::$default_status_true,
+                'status'  =>  ConstantService::$default_status_true,
             ])
-            ->asArray()
-            ->select(['id','words'])
-            ->all();
+            ->asArray()->all();
 
         $staff = Staff::findOne(['id'=>$this->current_user['id']]);
         $staff['is_online'] = 1;

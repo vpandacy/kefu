@@ -39,7 +39,7 @@
         });
         
         $('.content-select').on('click', function () {
-            var text = $(this).find('span').text();
+            var text = $(this).find('span').attr("title");
             $('#content').text(text);
         });
         
