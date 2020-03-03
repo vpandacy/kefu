@@ -8,15 +8,14 @@
         this.page = new Page();
         // 右键菜单
         this.contextmenu = new Contextmenu('#menu', '.tab-content .online', this.page);
+        //音效动画句柄
+        this.audio = document.getElementById("tip_music");
     };
 
-    //音效动画
-
-    var audio = document.getElementById("tip_music");
     //监听事件
-    audio.addEventListener("canplaythrough", function () {
-        //alert('音频文件已经准备好，随时待命');
-    }, false);
+    // audio.addEventListener("canplaythrough", function () {
+    //     //alert('音频文件已经准备好，随时待命');
+    // }, false);
 
     // 初始化Chat.
     Chat.prototype.init = function() {
@@ -302,11 +301,6 @@
                 break;
             case "guest_connect":
                 this.assignKf(data);
-                try{
-                    audio.play();
-                }catch (e) {
-                    //以防万一出错了可以继续执行
-                }
                 break;
             case "chat":
                 this.chat(data);
