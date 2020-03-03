@@ -119,10 +119,11 @@ class MerchantService extends BaseService
             'password'      =>  $password,
             'listen_nums'   =>  \Yii::$app->params['default_chat_config']['listen_num']['min'], // 最小接听数.
             'status'        =>  ConstantService::$default_status_true,
-            'is_root'       =>  1,
+            'is_root'       =>  ConstantService::$default_status_true,
             'created_time'  =>  $now,
             'updated_time'  =>  $now,
             'salt'          =>  $salt,
+            "app_id" => ConstantService::$default_status_true,
         ],0);
 
         if(!$employee->save(0)) {
@@ -178,7 +179,7 @@ class MerchantService extends BaseService
         $merchant_setting->setAttributes([
             'merchant_id'   =>  $merchant['id'],
             'auto_disconnect'   =>  \Yii::$app->params['default_chat_config']['auto_disconnect'],
-            'greetings'  => '欢迎使用好商会客服系统',
+            'greetings'  => '欢迎使用商通客服系统',
         ]);
 
         if(!$merchant_setting->save(0)) {
