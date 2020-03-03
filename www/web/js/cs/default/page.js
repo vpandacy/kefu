@@ -119,26 +119,26 @@
                 return item.id == user.source;
             });
             var mediaName = [
-                {id: '0', name: '直接访问',icon:'http://static.kefu.test.hsh568.cn/logo/直接访问.png'},
-                {id: '100', name: '百度',icon:'http://static.kefu.test.hsh568.cn/logo/百度.png'},
-                {id: '110', name: '360',icon:'http://static.kefu.test.hsh568.cn/logo/360.png'},
-                {id: '120', name: '搜狗',icon:'http://static.kefu.test.hsh568.cn/logo/搜狗.png'},
-                {id: '130', name: '神马',icon:'http://static.kefu.test.hsh568.cn/logo/神马.png'},
-                {id: '140', name: '今日头条',icon:'http://static.kefu.test.hsh568.cn/logo/头条.png'},
-                {id: '150', name: 'OPPO',icon:'http://static.kefu.test.hsh568.cn/logo/oppo.png'},
-                {id: '160', name: 'VIVO',icon:'http://static.kefu.test.hsh568.cn/logo/vivo.png'},
-                {id: '170', name: '小米',icon:'http://static.kefu.test.hsh568.cn/logo/小米.png'},
-                {id: '180', name: 'WIFI',icon:'http://static.kefu.test.hsh568.cn/logo/WIFI.png'},
-                {id: '190', name: '趣头条',icon:'http://static.kefu.test.hsh568.cn/logo/趣头条.png'},
-                {id: '200', name: 'UC',icon:'http://static.kefu.test.hsh568.cn/logo/UC.png'},
-                {id: '210', name: '一点资讯',icon:'http://static.kefu.test.hsh568.cn/logo/一点资讯.png'},
-                {id: '220', name: '快手',icon:'http://static.kefu.test.hsh568.cn/logo/快手.png'},
-                {id: '230', name: '广点通',icon:'http://static.kefu.test.hsh568.cn/logo/广点通.png'},
-                {id: '240', name: '陌陌',icon:'http://static.kefu.test.hsh568.cn/logo/陌陌.png'},
-                {id: '250', name: 'WPS',icon:'http://static.kefu.test.hsh568.cn/logo/WPS.png'},
-                {id: '260', name: '趣看天下',icon:'http://static.kefu.test.hsh568.cn/logo/趣看天下.png'},
-                {id: '270', name: '知乎',icon:'http://static.kefu.test.hsh568.cn/logo/知乎.png'},
-                {id: '280', name: '爱奇艺',icon:'http://static.kefu.test.hsh568.cn/logo/爱奇艺.png'}
+                {id: '0', name: '直接访问',icon:'http://cdn1.static.corp.hsh568.cn/logo/直接访问.png'},
+                {id: '100', name: '百度',icon:'http://cdn1.static.corp.hsh568.cn/logo/百度.png'},
+                {id: '110', name: '360',icon:'http://cdn1.static.corp.hsh568.cn/logo/360.png'},
+                {id: '120', name: '搜狗',icon:'http://cdn1.static.corp.hsh568.cn/logo/搜狗.png'},
+                {id: '130', name: '神马',icon:'http://cdn1.static.corp.hsh568.cn/logo/神马.png'},
+                {id: '140', name: '今日头条',icon:'http://cdn1.static.corp.hsh568.cn/logo/头条.png'},
+                {id: '150', name: 'OPPO',icon:'http://cdn1.static.corp.hsh568.cn/logo/oppo.png'},
+                {id: '160', name: 'VIVO',icon:'http://cdn1.static.corp.hsh568.cn/logo/vivo.png'},
+                {id: '170', name: '小米',icon:'http://cdn1.static.corp.hsh568.cn/logo/小米.png'},
+                {id: '180', name: 'WIFI',icon:'http://cdn1.static.corp.hsh568.cn/logo/WIFI.png'},
+                {id: '190', name: '趣头条',icon:'http://cdn1.static.corp.hsh568.cn/logo/趣头条.png'},
+                {id: '200', name: 'UC',icon:'http://cdn1.static.corp.hsh568.cn/logo/UC.png'},
+                {id: '210', name: '一点资讯',icon:'http://cdn1.static.corp.hsh568.cn/logo/一点资讯.png'},
+                {id: '220', name: '快手',icon:'http://cdn1.static.corp.hsh568.cn/logo/快手.png'},
+                {id: '230', name: '广点通',icon:'http://cdn1.static.corp.hsh568.cn/logo/广点通.png'},
+                {id: '240', name: '陌陌',icon:'http://cdn1.static.corp.hsh568.cn/logo/陌陌.png'},
+                {id: '250', name: 'WPS',icon:'http://cdn1.static.corp.hsh568.cn/logo/WPS.png'},
+                {id: '260', name: '趣看天下',icon:'http://cdn1.static.corp.hsh568.cn/logo/趣看天下.png'},
+                {id: '270', name: '知乎',icon:'http://cdn1.static.corp.hsh568.cn/logo/知乎.png'},
+                {id: '280', name: '爱奇艺',icon:'http://cdn1.static.corp.hsh568.cn/logo/爱奇艺.png'}
             ];
             var mediaIcon = mediaName.find(function (item) {
                 return item.id == user.media;
@@ -181,26 +181,26 @@
             });
 
             var mediaName = [
-                {id: '0', name: '直接访问',icon:'http://static.kefu.test.hsh568.cn/logo/直接访问.png'},
-                {id: '100', name: '百度',icon:'http://static.kefu.test.hsh568.cn/logo/百度.png'},
-                {id: '110', name: '360',icon:'http://static.kefu.test.hsh568.cn/logo/360.png'},
-                {id: '120', name: '搜狗',icon:'http://static.kefu.test.hsh568.cn/logo/搜狗.png'},
-                {id: '130', name: '神马',icon:'http://static.kefu.test.hsh568.cn/logo/神马.png'},
-                {id: '140', name: '今日头条',icon:'http://static.kefu.test.hsh568.cn/logo/头条.png'},
-                {id: '150', name: 'OPPO',icon:'http://static.kefu.test.hsh568.cn/logo/oppo.png'},
-                {id: '160', name: 'VIVO',icon:'http://static.kefu.test.hsh568.cn/logo/vivo.png'},
-                {id: '170', name: '小米',icon:'http://static.kefu.test.hsh568.cn/logo/小米.png'},
-                {id: '180', name: 'WIFI',icon:'http://static.kefu.test.hsh568.cn/logo/WIFI.png'},
-                {id: '190', name: '趣头条',icon:'http://static.kefu.test.hsh568.cn/logo/趣头条.png'},
-                {id: '200', name: 'UC',icon:'http://static.kefu.test.hsh568.cn/logo/UC.png'},
-                {id: '210', name: '一点资讯',icon:'http://static.kefu.test.hsh568.cn/logo/一点资讯.png'},
-                {id: '220', name: '快手',icon:'http://static.kefu.test.hsh568.cn/logo/快手.png'},
-                {id: '230', name: '广点通',icon:'http://static.kefu.test.hsh568.cn/logo/广点通.png'},
-                {id: '240', name: '陌陌',icon:'http://static.kefu.test.hsh568.cn/logo/陌陌.png'},
-                {id: '250', name: 'WPS',icon:'http://static.kefu.test.hsh568.cn/logo/WPS.png'},
-                {id: '260', name: '趣看天下',icon:'http://static.kefu.test.hsh568.cn/logo/趣看天下.png'},
-                {id: '270', name: '知乎',icon:'http://static.kefu.test.hsh568.cn/logo/知乎.png'},
-                {id: '280', name: '爱奇艺',icon:'http://static.kefu.test.hsh568.cn/logo/爱奇艺.png'}
+                {id: '0', name: '直接访问',icon:'http://cdn1.static.corp.hsh568.cn/logo/直接访问.png'},
+                {id: '100', name: '百度',icon:'http://cdn1.static.corp.hsh568.cn/logo/百度.png'},
+                {id: '110', name: '360',icon:'http://cdn1.static.corp.hsh568.cn/logo/360.png'},
+                {id: '120', name: '搜狗',icon:'http://cdn1.static.corp.hsh568.cn/logo/搜狗.png'},
+                {id: '130', name: '神马',icon:'http://cdn1.static.corp.hsh568.cn/logo/神马.png'},
+                {id: '140', name: '今日头条',icon:'http://cdn1.static.corp.hsh568.cn/logo/头条.png'},
+                {id: '150', name: 'OPPO',icon:'http://cdn1.static.corp.hsh568.cn/logo/oppo.png'},
+                {id: '160', name: 'VIVO',icon:'http://cdn1.static.corp.hsh568.cn/logo/vivo.png'},
+                {id: '170', name: '小米',icon:'http://cdn1.static.corp.hsh568.cn/logo/小米.png'},
+                {id: '180', name: 'WIFI',icon:'http://cdn1.static.corp.hsh568.cn/logo/WIFI.png'},
+                {id: '190', name: '趣头条',icon:'http://cdn1.static.corp.hsh568.cn/logo/趣头条.png'},
+                {id: '200', name: 'UC',icon:'http://cdn1.static.corp.hsh568.cn/logo/UC.png'},
+                {id: '210', name: '一点资讯',icon:'http://cdn1.static.corp.hsh568.cn/logo/一点资讯.png'},
+                {id: '220', name: '快手',icon:'http://cdn1.static.corp.hsh568.cn/logo/快手.png'},
+                {id: '230', name: '广点通',icon:'http://cdn1.static.corp.hsh568.cn/logo/广点通.png'},
+                {id: '240', name: '陌陌',icon:'http://cdn1.static.corp.hsh568.cn/logo/陌陌.png'},
+                {id: '250', name: 'WPS',icon:'http://cdn1.static.corp.hsh568.cn/logo/WPS.png'},
+                {id: '260', name: '趣看天下',icon:'http://cdn1.static.corp.hsh568.cn/logo/趣看天下.png'},
+                {id: '270', name: '知乎',icon:'http://cdn1.static.corp.hsh568.cn/logo/知乎.png'},
+                {id: '280', name: '爱奇艺',icon:'http://cdn1.static.corp.hsh568.cn/logo/爱奇艺.png'}
             ];
             var mediaIcon = mediaName.find(function (item) {
                 return item.id == user.media;
