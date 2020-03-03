@@ -405,11 +405,6 @@
         if(uuid != current_uuid) {
             // 有新消息了.
             user.new_message = 1;
-            try{
-                this.audio.play();
-            }catch (e) {
-
-            }
         }
 
         // 这里是判断消息长度
@@ -434,6 +429,7 @@
         ChatStorage.setItem(uuid, user);
         // 重新将uuid给置顶.
         this.page.renderOnlineList(uuid);
+        this.audioAlert();
     };
     Chat.prototype.bindOnlineEvent = function () {
         
@@ -588,6 +584,15 @@
         return $.msg('您已经在其他地方登录了，如果继续操作请重新登录',false, function(){
             location.href = cs_common_ops.buildKFCSurl('/user/logout');
         });
+    };
+    //消息提示
+    Chat.prototype.audioAlert = function(){
+
+        try{
+            this.audio.play();
+        }catch (e) {
+
+        }
     };
 
     window.Chat = Chat;
