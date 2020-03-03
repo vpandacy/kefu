@@ -14,10 +14,12 @@ class StaticAssetsHelper
     public static function includeAppStatic($type, $path, $depend)
     {
         $release_version = self::getReleaseVersion();
-        if (stripos($path, "?") !== false) {
-            $path = $path . "&version={$release_version}";
-        } else {
-            $path = $path . "?version={$release_version}";
+        if( stripos($path, "ver") === false ){
+            if (stripos($path, "?") !== false) {
+                $path = $path . "&ver={$release_version}";
+            } else {
+                $path = $path . "?ver={$release_version}";
+            }
         }
 
         if ($type == "css") {

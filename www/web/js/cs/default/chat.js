@@ -301,6 +301,11 @@
                 break;
             case "guest_connect":
                 this.assignKf(data);
+                try{
+                    this.audio.play();
+                }catch (e) {
+
+                }
                 break;
             case "chat":
                 this.chat(data);
