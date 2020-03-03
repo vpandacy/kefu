@@ -3,6 +3,7 @@ namespace www\modules\merchant\controllers\overall;
 
 use common\components\helper\ValidateHelper;
 use common\models\merchant\CommonWord;
+use common\services\CommonConstant;
 use common\services\ConstantService;
 use common\services\ExcelService;
 use www\modules\merchant\controllers\common\BaseController;
@@ -22,7 +23,8 @@ class IndexController extends BaseController
 
         $page = intval($this->post('page',1));
 
-        $query = CommonWord::find()->where(['merchant_id'=>$this->getMerchantId()]);
+        $query = CommonWord::find()->select([ "id","title","words","status","created_time" ])
+            ->where(['merchant_id'=>$this->getMerchantId()]);
 
         $count = $query->count();
 
@@ -43,7 +45,6 @@ class IndexController extends BaseController
     public function actionEdit()
     {
         $word_id = intval($this->get('word_id',0));
-
         $words = $word_id
             ? CommonWord::findOne(['id'=>$word_id, 'merchant_id'=>$this->getMerchantId(),'status'=>ConstantService::$default_status_true])
             : new CommonWord();
@@ -52,7 +53,6 @@ class IndexController extends BaseController
             // 返回回去.
             return $this->responseFail('您暂无权限操作此界面');
         }
-
         return $this->render('edit',[
             'words' =>  $words,
         ]);
@@ -66,36 +66,39 @@ class IndexController extends BaseController
     {
         $data = $this->post(null);
 
-        $request_r = ['id','words'];
+        $request_r = ['id','words',"title"];
 
         if(count(array_intersect(array_keys($data), $request_r)) != count($request_r)) {
-            return $this->renderErrJSON( '参数丢失~~' );
+            return $this->renderErrJSON( CommonConstant::$default_sys_err );
         }
 
-        if(!ValidateHelper::validLength($data['words'],1,255)) {
-            return $this->renderErrJSON('请输入正确的姓名/商户名' );
+        if( !ValidateHelper::validLength( $data['title'],1,40) ) {
+            return $this->renderErrJSON('请输入符合要求的标题，字符长度不能超过40~~' );
         }
 
-        $words = $data['id'] > 0
-            ? CommonWord::findOne(['id'=>$data['id'],'merchant_id'=>$this->getMerchantId(),'status'=>ConstantService::$default_status_true])
-            : new CommonWord();
-
-        if($data['id'] > 0 && !$words['id']) {
-            return $this->renderErrJSON( '非法的员工~~' );
+        if( !ValidateHelper::validLength( $data['words'],1,255) ) {
+            return $this->renderErrJSON('请输入符合要求的内容~~' );
         }
 
-        if(!$data['id']) {
-            $data['merchant_id'] = $this->getMerchantId();
-            $data['status'] = ConstantService::$default_status_true;
+        $info = CommonWord::findOne([
+            'id'=>$data['id'],
+            'merchant_id'=>$this->getMerchantId(),
+            'status'=>ConstantService::$default_status_true ] );
+
+        if( $info ){
+            $words = $info;
+        }else{
+            $words = new CommonWord();
+            $words->merchant_id = $this->getMerchantId();
+            $words->status = ConstantService::$default_status_true;
+        }
+        $words->title = $data['title'];
+        $words->words = $data['words'];
+        if( !$words->save(0) ) {
+            return $this->renderErrJSON( '设置常用语成功~~' );
         }
 
-        $words->setAttributes($data,0);
-
-        if(!$words->save(0)) {
-            return $this->renderErrJSON( '数据库保存失败,请联系管理员' );
-        }
-
-        return $this->renderJSON([],'操作成功');
+        return $this->renderJSON([],'设置常用语成功~~');
     }
 
 

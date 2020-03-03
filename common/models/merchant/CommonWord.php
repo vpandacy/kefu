@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id 主键
  * @property int $merchant_id 商户ID
+ * @property string $title 常用语标题
  * @property string $words 常用语
  * @property int $status 0已删除,1正常
  * @property string $created_time 创建时间
@@ -40,6 +41,7 @@ class CommonWord extends \yii\db\ActiveRecord
         return [
             [['merchant_id', 'status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
+            [['title'], 'string', 'max' => 50],
             [['words'], 'string', 'max' => 255],
         ];
     }
@@ -52,6 +54,7 @@ class CommonWord extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'merchant_id' => 'Merchant ID',
+            'title' => 'Title',
             'words' => 'Words',
             'status' => 'Status',
             'created_time' => 'Created Time',

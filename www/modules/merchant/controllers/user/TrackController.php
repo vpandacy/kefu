@@ -53,11 +53,8 @@ class TrackController extends BaseController
         }
 
         $page = intval($this->post('page',1));
-
         $query = $this->buildQueryCondition();
-
         $count = $query->count();
-
         $lists = $query->limit($this->page_size)
             ->offset(($page - 1) * $this->page_size)
             ->asArray()

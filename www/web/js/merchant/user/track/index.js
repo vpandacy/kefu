@@ -58,7 +58,7 @@ var merchant_user_track_ops = {
                 ,defaultToolbar: ['filter','exports']
                 ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                 ,cols: [[
-                    {field:'id', width:80, title: '序号'}
+                    {field:'id', width:60, title: '序号'}
                     ,{field:'uuid',  title: '访客名称', templet:function (row) {
                         return row.uuid.substr(row.uuid.length - 12);
                     }}
@@ -77,7 +77,7 @@ var merchant_user_track_ops = {
                             '<a title="', row.land_url, '" href="', row.land_url, '" target="_blank">',row.land_url,'</a>'
                         ].join('');
                     }}
-                    ,{field: 'source', title: '终端来源', templet:function (row) {
+                    ,{field: 'source', width : 70,title: '终端', templet:function (row) {
                         var sources_map = {
                             0: '暂无',
                             1: 'PC',
@@ -86,10 +86,10 @@ var merchant_user_track_ops = {
                         };
                         return sources_map[row.source];
                     }}
-                    ,{field:'chat_duration', title: '聊天时长', templet:function (row) {
+                    ,{field:'chat_duration',width : 70, title: '时长', templet:function (row) {
                         var sec = row.chat_duration % 60,
                             min = parseInt(row.chat_duration - sec) / 60;
-                        return min + '分' + sec + '秒';
+                        return min + "'" + sec + "''";
                     }}
                     ,{field:'created_time', width: 170, title: '来访时间'}
                     ,{title: '操作', toolbar: '#trackTool',fixed: 'right',width: 100}
