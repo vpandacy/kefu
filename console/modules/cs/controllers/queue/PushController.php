@@ -15,6 +15,7 @@ use console\controllers\QueueBaseController;
  * Class PushController
  * Author: Guo Wei
  * php yii cs/queue/push/start
+ * 本Job主要作用：游客的消息推送到客服端
  */
 class PushController extends QueueBaseController
 {

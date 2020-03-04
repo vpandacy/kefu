@@ -584,12 +584,10 @@
             //音效动画句柄
             var audio = document.getElementById("tip_music");
             //监听事件
-            audio.addEventListener("canplaythrough", function () {
-
-            }, false);
+            audio.addEventListener("canplaythrough", function () {}, false);
             audio.play();
         }catch (e) {
-
+            console.log( e );
         }
     };
 

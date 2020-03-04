@@ -18,7 +18,7 @@ class AppAsset extends AssetBundle
         $this->css = [];
 
         $this->js = [
-//            GlobalUrlService::buildStaticUrl("/socket/socket.io.js"),
+            GlobalUrlService::buildWWWStaticUrl("/js/common/common.js"),
         ];
 
         parent::registerAssetFiles($view);

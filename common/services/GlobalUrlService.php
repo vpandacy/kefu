@@ -126,6 +126,10 @@ class GlobalUrlService extends BaseService {
         return $domain.$path;
     }
 
+    public static function buildWWWStaticUrl($uri, $params = []){
+	    return self::buildKFUrl( $uri, $params );
+    }
+
     /**
      * 生成带有msn的url
      */

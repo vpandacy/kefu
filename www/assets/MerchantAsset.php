@@ -31,6 +31,7 @@ class MerchantAsset extends AssetBundle
             GlobalUrlService::buildStaticUrl('/layui/v2.5/layui.all.js'),
             GlobalUrlService::buildStaticUrl('/Ie/html5Shiv.min.js'),
             GlobalUrlService::buildStaticUrl('/Ie/respond.js'),
+            GlobalUrlService::buildWWWStaticUrl("/js/common/common.js"),
             // Uc的js.
             GlobalUrlService::buildUcStaticUrl('/js/common/core.js'),
             // 这里是自己的js.

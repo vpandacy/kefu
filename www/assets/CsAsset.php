@@ -24,7 +24,7 @@ class CsAsset extends AssetBundle
             GlobalUrlService::buildStaticUrl('/plugins/jquery/jquery-3.2.1.min.js'),
             GlobalUrlService::buildStaticUrl('/plugins/layer/layer.js'),
             GlobalUrlService::buildUcUrl('/js/common/core.js'),
-
+            GlobalUrlService::buildWWWStaticUrl("/js/common/common.js"),
             GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
             GlobalUrlService::buildKFStaticUrl("/js/cs/common.js"),
         ];

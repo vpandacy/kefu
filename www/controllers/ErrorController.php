@@ -1,10 +1,9 @@
 <?php
 
 namespace www\controllers;
+use common\components\BaseWebController;
 use common\services\applog\AppLogService;
-use yii\web\Controller;
-
-class ErrorController extends Controller
+class ErrorController extends BaseWebController
 {
     public function actionHandler(){
         $error = \Yii::$app->errorHandler->exception;
@@ -25,8 +24,14 @@ class ErrorController extends Controller
         return $err_msg;
     }
 
-    public function actionError()
-    {
-        return $this->render('error');
+    public function actionCapture(){
+        $referer = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
+        $sc = $this->post("sc","app");
+        $url = $this->post("url","");
+        $message = $this->post("message","");
+        $error = $this->post("error","");
+        $err_msg = "JS ERROR：[url:{$referer}],[js_file:{$url}],[error:{$message}],[error_info:{$error}]";
+        AppLogService::addErrLog("js-{$sc}",$err_msg);
+        return $this->renderJSON();
     }
 }
