@@ -45,12 +45,11 @@ class ChatGroupService extends BaseService
             return true;
         }
 
-        var_dump( "--------{$group_name} join start----------" );
         array_push($group, $uuid);
-        var_dump( $group );
-        var_dump( "--------{$group_name} join end----------" );
+
         // 将组加入到缓存中.
-        return CacheService::set($cache_key, @serialize( $group ), 86400 * 30);
+        $ret = CacheService::set($cache_key, @serialize( $group ), 86400 * 30);
+        return $ret;
     }
 
     /**
@@ -61,8 +60,6 @@ class ChatGroupService extends BaseService
      */
     public static function leaveGroup($group_name, $uuid)
     {
-        var_dump( "--------{$group_name} leave start----------" );
-        var_dump( $uuid );
         $cache_key = self::$group_prefix . $group_name;
         $group_data = self::getGroupAllUsers( $group_name );
         $group = $group_data ? $group_data : [];
@@ -73,7 +70,6 @@ class ChatGroupService extends BaseService
         if( $uuid_key ){
             unset($group[ $uuid_key ]);
         }
-        var_dump( "--------{$group_name} leave end----------" );
         return CacheService::set($cache_key, @serialize($group), 86400 * 30);
     }
 

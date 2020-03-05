@@ -115,12 +115,11 @@
             }
 
             user.new_message = 0;
-            user.unread_count = 0;
-            //删除对应的未读class
-            $(this).removeClass('content-new-message');
-            $(this).removeClass('content-message-unread');
+
             $(this).find('.content-new-message').removeClass('content-new-message');
+            $(this).find('.corner-marker').removeClass('corner-marker');
             $(this).addClass('content-message-active').siblings().removeClass('content-message-active');
+
             ChatStorage.setItem(uuid, user);
 
             // 要开始渲染聊天窗口了.
@@ -398,11 +397,12 @@
             messages = user && user.messages ? user.messages : [],
             time_str = this.page.getCurrentTimeStr();
 
-        if(uuid != current_uuid) {
+        //角标记录
+        if( !user.hasOwnProperty("new_message") ) {
             // 有新消息了.
             user.new_message = 0;
         }
-
+        user.new_message = user.new_message + 1;
         // 这里是判断消息长度
         if(messages.length >= 20) {
             messages.shift();
@@ -416,7 +416,7 @@
         });
 
         user.messages = messages;
-        user.new_message = user.new_message + 1;
+
 
         if(uuid == current_uuid) {
             $('.exe-content-history .exe-content-history-content').append(this.page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));

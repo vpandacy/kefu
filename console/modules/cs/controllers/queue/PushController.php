@@ -58,9 +58,14 @@ class PushController extends QueueBaseController
      */
     protected function handleGuestClose($params)
     {
-        // 离开组和等待组信息.
-        ChatGroupService::leaveGroup($params['t_id'], $params['f_id']);
-        ChatGroupService::leaveWaitGroup($params['t_id'], $params['f_id']);
+        /*
+         * 离开组和等待组信息
+         * 这是一个坑，因为异步队列会有延迟，如果同一个人一直刷新关闭 就会导致
+         * 加入队列，删除队列，加入队列，删除队列 这是理想状态
+         * 可能是 加入队列 加入队列 删除队列
+         * */
+        //ChatGroupService::leaveGroup($params['t_id'], $params['f_id']);
+        //ChatGroupService::leaveWaitGroup($params['t_id'], $params['f_id']);
         // 查询对应组的情况.
         $wait_queue = ChatGroupService::getWaitGroupAllUsers($params['t_id']);
         if(count($wait_queue) <= 0) {

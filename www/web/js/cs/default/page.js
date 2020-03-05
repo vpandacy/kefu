@@ -145,8 +145,11 @@
             var mediaIcon = mediaName.find(function (item) {
                 return item.id == user.media;
             });
-            return  [
-                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'" data-name="',user.nickname,'">',
+
+            var tmp_header = [
+                '<div class="tab-content-list ', class_name, '" data-uuid="',uuid,'" data-name="',user.nickname,'">'
+            ];
+            var tmp_content = [
                 '   <div class="', user && user.new_message <= 0 ? '' : 'content-new-message','">',
                 '       <i class="iconfont ', sourceIcon.icon ,'"></i>',
                 '       <span>',user.nickname,'</span>',
@@ -154,10 +157,16 @@
                 '   <div>',
                 '       <span class="content-list-time">',user.allocationTime,'</span>',
                 '   <img alt="',mediaIcon.name,'" title="',mediaIcon.name,'"  src="',mediaIcon.icon,'"> ',
-                    user.is_online == 1 ? '<span class="list-flag-online">在线</span>' : '<span class="list-flag-off-line">离线</span>',
-                '   </div>',
-                '</div>'
-            ].join("");
+                user.is_online == 1 ? '<span class="list-flag-online">在线</span>' : '<span class="list-flag-off-line">离线</span>',
+                '   </div>'
+            ];
+
+            if( user.new_message > 0 ){
+                tmp_content.push( '<div class="corner-marker">' + user.new_message + '</div>' );
+            }
+
+            var tmp_footer = [ "</div>" ];
+            return tmp_header.join("") + tmp_content.join("") + tmp_footer.join("") ;
         });
 
         $('.tab-content .online').html(html.join(''));

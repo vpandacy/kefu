@@ -119,7 +119,6 @@ class GuestBusiHanlderService extends BaseService
 
         $uuid = isset($cache_params['uuid']) ? $cache_params['uuid'] : '';
         $old_client_ids = Gateway::getClientIdByUid($uuid);
-
         // 不需要处理. 如果存在.就证明有其他的客户端在使用.
         if($old_client_ids) {
             return false;
@@ -140,6 +139,7 @@ class GuestBusiHanlderService extends BaseService
         QueueListService::push2CS( QueueConstant::$queue_cs_chat, json_decode($close_data,true) );
         // 关闭内容.
         ChatEventService::clearGuestBindCache($uuid);
+
         // 解绑.同时还要处理其他动作.移除在线状态和离线状态.
         if(in_array($uuid, ChatGroupService::getGroupAllUsers($close_params['t_id']))) {
             ChatGroupService::leaveGroup($close_params['t_id'], $uuid);
@@ -176,15 +176,16 @@ class GuestBusiHanlderService extends BaseService
                     ]));
                 }
 
-                if( !ChatGroupService::checkUserInGroup($message['data']['t_id'],$message['data']['f_id'])) {
-                    ChatGroupService::joinGroup($message['data']['t_id'],$message['data']['f_id']);
+
+                if( ChatGroupService::checkUserInGroup($message['data']['t_id'],$message['data']['f_id']) ){
+                    return QueueListService::push2CS(QueueConstant::$queue_cs_chat, $message);
                 }
 
-                return QueueListService::push2CS(QueueConstant::$queue_cs_chat, $message);
                 //这里需要加监控，说明redis那边设置进去有问题
-//                Gateway::sendToClient($client_id,ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
-//                    'content'   =>  '请稍等，客服正在到来中-2...',
-//                ]));
+                Gateway::sendToClient($client_id,ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
+                    'content'   =>  '请稍等，客服正在到来中-2...',
+                ]));
+
                 break;
             case ConstantService::$chat_cmd_pong:
                 break;
@@ -232,8 +233,8 @@ class GuestBusiHanlderService extends BaseService
             ];
 
             // 绑定两份. 可能会通过f_id查找对应的信息.
-            $tmp_ret1 = ChatEventService::setGuestBindCache($f_id, $cache_params);
-            $tmp_ret2 = ChatEventService::setGuestBindCache($client_id, $cache_params);
+            ChatEventService::setGuestBindCache($f_id, $cache_params);
+            ChatEventService::setGuestBindCache($client_id, $cache_params);
         }
 
         $ws_data = ChatEventService::buildMsg(ConstantService::$chat_cmd_hello, [
@@ -311,6 +312,7 @@ class GuestBusiHanlderService extends BaseService
 
         $cache_params['kf_id'] = $kf_info['id'];
         $cache_params['kf_sn'] = $kf_info['sn'];
+
         // 将client_id加入到这个组中.
         ChatGroupService::joinGroup($kf_info['sn'], $f_id);
 

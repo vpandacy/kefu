@@ -135,7 +135,7 @@ class ChatEventService extends BaseService
     }
 
 
-    public static function buildMsg( $cmd ,$data ){
+    public static function buildMsg( $cmd ,$data = [] ){
         $params = [
             "cmd" => $cmd,
             "data" => $data

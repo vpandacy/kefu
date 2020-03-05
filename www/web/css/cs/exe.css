@@ -477,16 +477,17 @@ select[name='cs'] {
     font-size: 12px;
     height: 50px;
     align-items: center;
+    position: relative;
 }
 #chatExe .exe-keep .tab .tab-content-list .content-new-message:before {
     /*content: "●";*/
-    content: '\65b0';
-    color: red;
-    position: absolute;
-    top: -12px;
-    left: 8px;
-    font-weight: bolder;
-    font-size: 14px;
+    /*content: '\65b0';*/
+    /*color: red;*/
+    /*position: absolute;*/
+    /*top: -12px;*/
+    /*left: 8px;*/
+    /*font-weight: bolder;*/
+    /*font-size: 14px;*/
 }
 #chatExe .exe-keep .tab .content-no-message {
     justify-content: center;
@@ -504,6 +505,19 @@ select[name='cs'] {
 #chatExe .exe-keep .tab .tab-content-list div{
     pointer-events:none;
     position: relative;
+}
+
+#chatExe .exe-keep .tab .tab-content-list .corner-marker {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    position: absolute;
+    top: 9px;
+    left: 8px;
 }
 #chatExe .exe-keep .tab .tab-content-list div img{
     width: 15px;
