@@ -108,11 +108,7 @@
             }
 
             if(uuid == current_uuid ) {
-                class_name = class_name + 'content-message-active';
-            }
-
-            if( user.unread_count > 0 ){
-                class_name = class_name + 'content-message-unread';
+                class_name = class_name + ' content-message-active ';
             }
 
             // 这里有图标展示. 这里要注意一下.
@@ -372,6 +368,8 @@
                 elem.find('.exe-header-info-left span:last-child').text(history.province + ' ('+ history.client_ip +')');
                 elem.find('.land-url .land-url-url').text(history.land_title ? history.land_title : history.land_url);
                 elem.find('.land-url .land-url-url').attr('title', history.land_url);
+                elem.find('.land-url .land-url-url').attr('href', history.land_url);
+
                 elem.find('.source span:last-child').text(history.keyword ? history.keyword : '暂无');
                 elem.find('.source span:last-child').attr('title',history.keyword);
                 elem.find('.referer-url span:nth-child(2)').text(history.referer_url ? history.referer_url : '暂无');

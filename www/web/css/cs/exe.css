@@ -493,7 +493,7 @@ select[name='cs'] {
     -webkit-justify-content: center;
     color: rgb(179, 181, 185);
 }
-#chatExe .exe-keep .tab .content-message-active,#chatExe .exe-keep .tab .content-message-unread{
+#chatExe .exe-keep .tab .content-message-active{
     background: #FFE4E1;
     color: black;
     cursor: pointer;

@@ -400,8 +400,7 @@
 
         if(uuid != current_uuid) {
             // 有新消息了.
-            user.new_message = 1;
-            user.unread_count = 0;
+            user.new_message = 0;
         }
 
         // 这里是判断消息长度
@@ -417,7 +416,7 @@
         });
 
         user.messages = messages;
-        user.unread_count = user.unread_count + 1;
+        user.new_message = user.new_message + 1;
 
         if(uuid == current_uuid) {
             $('.exe-content-history .exe-content-history-content').append(this.page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
