@@ -39,14 +39,18 @@ class ChatGroupService extends BaseService
     public static function joinGroup($group_name, $uuid)
     {
         $cache_key = self::$group_prefix . $group_name;
-
-        $group_data = CacheService::get($cache_key);
-
-        $group = $group_data ? @json_decode($group_data, true) : [];
-
+        $group_data = self::getGroupAllUsers( $group_name );
+        $group = $group_data ? $group_data : [];
+        if( self::checkUserInGroup($group_name, $uuid) ){
+            return true;
+        }
+        
+        var_dump( "--------{$group_name} join start----------" );
         array_push($group, $uuid);
+        var_dump( $group );
+        var_dump( "--------{$group_name} join end----------" );
         // 将组加入到缓存中.
-        return CacheService::set($cache_key, json_encode($group), 86400 * 30);
+        return CacheService::set($cache_key, @serialize( $group ), 86400 * 30);
     }
 
     /**
@@ -57,23 +61,20 @@ class ChatGroupService extends BaseService
      */
     public static function leaveGroup($group_name, $uuid)
     {
+        var_dump( "--------{$group_name} leave start----------" );
+        var_dump( $uuid );
         $cache_key = self::$group_prefix . $group_name;
-
-        $group_data = CacheService::get($cache_key);
-
-        $group = @json_decode($group_data, true);
-
+        $group_data = self::getGroupAllUsers( $group_name );
+        $group = $group_data ? $group_data : [];
         if(!$group) {
             return true;
         }
-
-        foreach($group as $key => $user_client_id) {
-            if($user_client_id == $uuid) {
-                unset($group[$key]);
-            }
+        $uuid_key = array_search($uuid,$group);
+        if( $uuid_key ){
+            unset($group[ $uuid_key ]);
         }
-
-        return CacheService::set($cache_key, json_encode($group), 86400 * 30);
+        var_dump( "--------{$group_name} leave end----------" );
+        return CacheService::set($cache_key, @serialize($group), 86400 * 30);
     }
 
     /**
@@ -83,12 +84,8 @@ class ChatGroupService extends BaseService
      */
     public static function countUserInGroup($group_name)
     {
-        $cache_key = self::$group_prefix . $group_name;
-
-        $group_data = CacheService::get($cache_key);
-
-        $group = @json_decode($group_data, true);
-
+        $group_data = self::getGroupAllUsers( $group_name );
+        $group = $group_data ? $group_data : [];
         return $group ? count($group) : 0;
     }
 
@@ -100,21 +97,15 @@ class ChatGroupService extends BaseService
      */
     public static function notifyGroupUserByGroupName($group_name, $msg)
     {
-        $cache_key = self::$group_prefix . $group_name;
-
-        $group_data = CacheService::get($cache_key);
-
-        $group = @json_decode($group_data, true);
-
+        $group_data = self::getGroupAllUsers( $group_name );
+        $group = $group_data ? $group_data : [];
         if(!$group) {
             return false;
         }
-
         foreach($group as $guest_uuid) {
             $client_ids = Gateway::getClientIdByUid($guest_uuid);
             $client_ids && Gateway::sendToClient($client_ids[0], $msg);
         }
-
         return true;
     }
 
@@ -126,12 +117,9 @@ class ChatGroupService extends BaseService
     public static function getGroupAllUsers($group_name)
     {
         $cache_key = self::$group_prefix . $group_name;
-
         $group_data = CacheService::get($cache_key);
-
-        $group = @json_decode($group_data, true);
-
-        return !$group ? [] : $group;
+        $group_data = @unserialize($group_data);
+        return is_array($group_data ) ?$group_data:[];
     }
 
     /**

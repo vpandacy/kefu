@@ -115,7 +115,10 @@
             }
 
             user.new_message = 0;
+            user.unread_count = 0;
+            //删除对应的未读class
             $(this).removeClass('content-new-message');
+            $(this).removeClass('content-message-unread');
             $(this).find('.content-new-message').removeClass('content-new-message');
             $(this).addClass('content-message-active').siblings().removeClass('content-message-active');
             ChatStorage.setItem(uuid, user);
@@ -398,6 +401,7 @@
         if(uuid != current_uuid) {
             // 有新消息了.
             user.new_message = 1;
+            user.unread_count = 0;
         }
 
         // 这里是判断消息长度
@@ -413,6 +417,7 @@
         });
 
         user.messages = messages;
+        user.unread_count = user.unread_count + 1;
 
         if(uuid == current_uuid) {
             $('.exe-content-history .exe-content-history-content').append(this.page.renderCustomerMsg(user.nickname, user.avatar, data.data.content, time_str));
@@ -582,9 +587,11 @@
     Chat.prototype.audioAlert = function(){
         try{
             //音效动画句柄
-            var audio = document.getElementById("tip_music");
+            var audio =$("#tip_music")[0];
             //监听事件
-            audio.addEventListener("canplaythrough", function () {}, false);
+            audio.addEventListener("canplay", function () {
+
+            }, false);
             audio.play();
         }catch (e) {
             console.log( e );

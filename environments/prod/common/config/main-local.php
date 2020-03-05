@@ -65,7 +65,7 @@ return [
                 'host'     => 'r-wz9upztf8livi4vcn2.redis.rds.aliyuncs.com',
                 'port'     => 6379,
                 'password' => 'xqYlAcF9CvqC1U4i',
-                'prefix' => 'kf_cache',
+                'prefix' => 'kf_cache_',
 
             ]
         ],

@@ -106,8 +106,13 @@
             if(!user) {
                 return '';
             }
-            if(uuid == current_uuid) {
+
+            if(uuid == current_uuid ) {
                 class_name = class_name + 'content-message-active';
+            }
+
+            if( user.unread_count > 0 ){
+                class_name = class_name + 'content-message-unread';
             }
 
             // 这里有图标展示. 这里要注意一下.

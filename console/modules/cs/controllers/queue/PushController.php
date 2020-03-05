@@ -47,6 +47,7 @@ class PushController extends QueueBaseController
                 break;
         }
         $ret = $this->socket->send( json_encode( $data ) );
+        $this->echoLog( var_dump( $data ) );
         return $this->echoLog( "ok:".$ret );
     }
 

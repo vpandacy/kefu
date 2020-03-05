@@ -493,8 +493,8 @@ select[name='cs'] {
     -webkit-justify-content: center;
     color: rgb(179, 181, 185);
 }
-#chatExe .exe-keep .tab .content-message-active{
-    background: #F08080;
+#chatExe .exe-keep .tab .content-message-active,#chatExe .exe-keep .tab .content-message-unread{
+    background: #FFE4E1;
     color: black;
     cursor: pointer;
     align-items: center;
@@ -510,7 +510,7 @@ select[name='cs'] {
     vertical-align: bottom;
 }
 #chatExe .exe-keep .tab .tab-content-list:hover {
-    background: #F08080;
+    background: #FFE4E1;
     color: black;
     cursor: pointer;
 }
