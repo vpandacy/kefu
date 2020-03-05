@@ -107,7 +107,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                 <div class="exe-content-top">
                     <div class="content-top-info">
                     <!-- <div class="info keyword"><span>关键词：</span><span>-</span></div>-->
-                        <div class="info land-url"><span>落地页：</span><span class="land-url-url">-</span>
+                        <div class="info land-url"><span>落地页：</span>
+                            <a target="_blank" class="land-url-url">-</a>
                             <span data-clipboard-text="" class="landUrl-copy dis_none">复制</span></div>
                         <div class="info canal-url"><span>渠道：</span><span>-</span></div>
                     </div>
