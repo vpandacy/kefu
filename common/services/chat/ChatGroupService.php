@@ -44,7 +44,7 @@ class ChatGroupService extends BaseService
         if( self::checkUserInGroup($group_name, $uuid) ){
             return true;
         }
-        
+
         var_dump( "--------{$group_name} join start----------" );
         array_push($group, $uuid);
         var_dump( $group );
