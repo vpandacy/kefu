@@ -381,12 +381,14 @@ class GuestBusiHanlderService extends BaseService
                 $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
                 // 关闭信息，客户端收到消息之后应该主动关闭连接，走close方法，所以下面的可以不用了
                 $tmp_client && Gateway::closeClient( $tmp_client[0] );
+                //如果找不到，为了保持数据一致性，把关联绑定删除掉
+                if( !$tmp_client ){
+                     //退出组信息.
+                    ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
+                     //清除缓存...
+                    ChatEventService::clearGuestBindCache($message['data']['t_id']);
+                }
 
-                // 退出组信息.
-                //ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
-                // 清除缓存...
-                //ChatEventService::clearGuestBindCache($message['data']['t_id']);
-                //$tmp_client && ChatEventService::clearCSBindCache($tmp_client[0]);
                 break;
             // 给组内进行广播.
             case ConstantService::$chat_cmd_kf_logout:
