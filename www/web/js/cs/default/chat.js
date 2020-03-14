@@ -117,7 +117,7 @@
             user.new_message = 0;
 
             $(this).find('.content-new-message').removeClass('content-new-message');
-            $(this).find('.corner-marker').removeClass('corner-marker');
+            $(this).find('.corner-marker').hide();
             $(this).addClass('content-message-active').siblings().removeClass('content-message-active');
 
             ChatStorage.setItem(uuid, user);
