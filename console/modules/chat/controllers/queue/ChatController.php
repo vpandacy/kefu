@@ -82,7 +82,7 @@ class ChatController extends QueueBaseController
                 ];
                 GuestChatService::closeGuest($params);
                 break;
-            case ConstantService::$chat_cmd_chat:
+            case ConstantService::$chat_cmd_chat://游客发消息
                 $params = [
                     'cs_sn' =>  $params_data['t_id'],
                     'uuid'  =>  $params_data['f_id'],
@@ -91,7 +91,7 @@ class ChatController extends QueueBaseController
                 ];
                 GuestChatService::addChatLog($params);
                 break;
-            case ConstantService::$chat_cmd_reply:
+            case ConstantService::$chat_cmd_reply://客服回复
                 $params = [
                     'cs_sn' =>  $params_data['f_id'],
                     'uuid'  =>  $params_data['t_id'],

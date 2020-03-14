@@ -461,7 +461,7 @@
                 return;
             }
             // 退出.
-            location.href = cs_common_ops.buildKFCSurl('/user/logout');
+            location.href =cs_common_ops.buildUCUrl('/user/logout',{ "from":"cs" } );
         });
     };
 
@@ -579,7 +579,7 @@
      */
     Chat.prototype.logout = function() {
         return $.msg('您已经在其他地方登录了，如果继续操作请重新登录',false, function(){
-            location.href = cs_common_ops.buildKFCSurl('/user/logout');
+            location.href = cs_common_ops.buildUCUrl('/user/logout');
         });
     };
     //消息提示

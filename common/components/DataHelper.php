@@ -42,4 +42,9 @@ class DataHelper {
 
         return $data;
     }
+
+
+    public static function getGuestNumber( $uuid ){
+        return mb_substr($uuid,-12);
+    }
 }

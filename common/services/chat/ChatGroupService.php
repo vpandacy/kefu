@@ -67,7 +67,7 @@ class ChatGroupService extends BaseService
             return true;
         }
         $uuid_key = array_search($uuid,$group);
-        if( $uuid_key ){
+        if( isset( $group[ $uuid_key ] ) ){
             unset($group[ $uuid_key ]);
         }
         return CacheService::set($cache_key, @serialize($group), 86400 * 30);

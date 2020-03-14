@@ -112,6 +112,21 @@ class BaseWebController extends Controller
     {
         return Yii::$app->request->isPost;
     }
+
+    /**
+     * 渲染弹层所需要的视图.
+     * @param $view_path
+     * @param array $params
+     * @return \yii\console\Response|Response
+     */
+    protected function renderPopView($view_path, $params = [])
+    {
+        $view =  $this->renderPartial($view_path, $params);
+
+        return $this->renderJSON([
+            'content'   =>  $view
+        ]);
+    }
 }
 
 class BaseWebException extends HttpException

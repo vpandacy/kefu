@@ -14,11 +14,11 @@ var merchant_common_ops = {
                 'yonghuguanli'  : [
                     '/merchant/user/index'
                 ],
-                'liaotian'      : [
+                'liaotian': [
                     '/merchant/chat/index',
                     '/merchant/chat/download',
-                    '/merchant/overall/offline',
-                    '/merchant/user/track'
+                    '/merchant/message/leave/index',
+                    '/merchant/message/message/index'
                 ],
                 'quanjushezhi'  : [
                     '/merchant/overall/index',

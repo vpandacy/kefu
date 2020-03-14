@@ -56,7 +56,12 @@
                     tips: [3, '#e5004f']
                 });
             },
-            popLayer:function( url,data,modal_params){
+            popLayer:function( url,data,params){
+                var base_config = {
+                    type: 1,
+                    area: '500px', //宽高
+                };
+                var config = $.extend({},base_config,params);
                 $.ajax({
                     url: url,
                     data: data,
@@ -67,8 +72,8 @@
                             $.alert(res.msg);
                             return;
                         }
-                        $("#pop_layer").html( res.data.content );
-                        $('#pop_layer').modal( modal_params );
+                        config['content'] = res.data.content;
+                        layer.open(config);
                     }
                 });
             },

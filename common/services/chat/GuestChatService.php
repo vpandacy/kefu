@@ -1,4 +1,5 @@
 <?php
+
 namespace common\services\chat;
 
 use common\models\merchant\GuestHistoryLog;
@@ -6,6 +7,7 @@ use common\models\merchant\GuestChatLog;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
 use common\services\BaseService;
+use common\services\CommonConstant;
 use common\services\CommonService;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
@@ -19,11 +21,11 @@ class GuestChatService extends BaseService
      */
     public static function addGuest($params = [])
     {
-        $params = array_merge($params,GuestService::getProvinceByClientIP($params['client_ip']));
+        $params = array_merge($params, GuestService::getProvinceByClientIP($params['client_ip']));
 
         $params['source'] = CommonService::getSourceByUa($params['client_ua']);
 
-        if($params['referer_url']) {
+        if ($params['referer_url']) {
             // 来源媒体.
             $params['referer_media'] = GuestService::getRefererSidByUrl($params['referer_url']);
             // 保存关键词.
@@ -32,7 +34,7 @@ class GuestChatService extends BaseService
 
         $member = Member::findOne(['uuid' => $params['uuid']]);
 
-        if($member) {
+        if ($member) {
             $params['member_id'] = $member['id'];
         }
 
@@ -46,10 +48,11 @@ class GuestChatService extends BaseService
      * @param array $params
      * @return bool
      */
-    public static function closeGuest( $params = [] ){
+    public static function closeGuest($params = [])
+    {
         $query = GuestHistoryLog::find();
-        if(isset($params['client_id'])) {
-            $query->andWhere([ "client_id" => $params['client_id']]);
+        if (isset($params['client_id'])) {
+            $query->andWhere(["client_id" => $params['client_id']]);
         }
 
         $query->andWhere([
@@ -59,20 +62,20 @@ class GuestChatService extends BaseService
             "closed_time" => ConstantService::$default_datetime
         ]);
 
-        $guest_log = $query->orderBy([ "id" => SORT_DESC ])->limit(1)->one();
+        $guest_log = $query->orderBy(["id" => SORT_DESC])->limit(1)->one();
 
-        if( $guest_log ){
-            $member = Member::findOne(['uuid'=>$params['uuid'], 'merchant_id' => $params['merchant_id']]);
+        if ($guest_log) {
+            $member = Member::findOne(['uuid' => $params['uuid'], 'merchant_id' => $params['merchant_id']]);
             $guest_log->closed_time = $params['closed_time'];
             $guest_log->member_id = $member ? $member['id'] : 0;
             $guest_log->cs_id = $params['cs_id'];
-            $guest_log->chat_duration = strtotime( $guest_log->closed_time ) - strtotime( $guest_log->created_time );
+            $guest_log->chat_duration = strtotime($guest_log->closed_time) - strtotime($guest_log->created_time);
             $guest_log->status = $params['status'];
             $guest_log->save(0);
 
-            if($member) {
+            if ($member) {
                 // 这里要批量去更新这次的会话.
-                GuestChatLog::updateAll(['member_id'=>$member['id']],['guest_log_id'=>$guest_log['id']]);
+                GuestChatLog::updateAll(['member_id' => $member['id']], ['guest_log_id' => $guest_log['id']]);
             }
         }
         return true;
@@ -87,17 +90,17 @@ class GuestChatService extends BaseService
     {
         $guest_log = GuestHistoryLog::find()
             ->where(["status" => ConstantService::$default_status_neg_1])
-            ->andWhere([ "merchant_id" => $params['merchant_id'],"uuid" => $params['uuid'] ])
-            ->orderBy([ "id" => SORT_DESC ])
+            ->andWhere(["merchant_id" => $params['merchant_id'], "uuid" => $params['uuid']])
+            ->orderBy(["id" => SORT_DESC])
             ->limit(1)
             ->one();
 
-        if(!$guest_log) {
+        if (!$guest_log) {
             return false;
         }
 
         $guest_log->setAttributes([
-            'cs_id' =>  $params['cs_id'], // 更换为新对的客服.
+            'cs_id' => $params['cs_id'], // 更换为新对的客服.
         ]);
 
         return $guest_log->save();
@@ -110,25 +113,49 @@ class GuestChatService extends BaseService
      */
     public static function addChatLog($params = [])
     {
-        $staff = Staff::findOne(['sn'=>$params['cs_sn']]);
+        $staff = Staff::findOne(['sn' => $params['cs_sn']]);
 
         $guest_log = GuestHistoryLog::find()
             ->where(["status" => ConstantService::$default_status_neg_1])
-            ->andWhere([ "merchant_id" => $staff['merchant_id'],"uuid" => $params['uuid'] ])
-            ->orderBy([ "id" => SORT_DESC ])
+            ->andWhere(["merchant_id" => $staff['merchant_id'], "uuid" => $params['uuid']])
+            ->orderBy(["id" => SORT_DESC])
             ->limit(1)
             ->one();
 
         unset($params['cs_sn']);
-        $params['merchant_id']  = $staff['merchant_id'];
-        $params['cs_name']      = $staff['nickname'];
-        $params['cs_id']        = $staff['id'];
+        $params['merchant_id'] = $staff['merchant_id'];
+        $params['cs_name'] = $staff['nickname'];
+        $params['cs_id'] = $staff['id'];
         $params['guest_log_id'] = $guest_log['id'];
-        $params['member_id']    = $guest_log['member_id'];
+        $params['member_id'] = $guest_log['member_id'];
 
         $model = new GuestChatLog();
         $model->setAttributes($params);
-        return $model->save(0);
+        if( !$model->save(0) ){
+            return false;
+        }
+        //对GuestHistoryLog 有几个字段进行更新 ,has_talked ,has_mobile,has_email
+        $force_update = false;
+        if( !$guest_log['has_talked'] && $params['from_id'] == $params['uuid']){
+            $guest_log->setAttribute("has_talked",ConstantService::$default_status_true);
+            $force_update = true;
+        }
+
+        if( !$guest_log['has_mobile']  && preg_match("/\d{11}/",$params['content']) ){
+            $guest_log->setAttribute("has_mobile",ConstantService::$default_status_true);
+            $force_update = true;
+        }
+
+        if( !$guest_log['has_email']  && preg_match("/([a-z0-9\-_\.]+@[a-z0-9]+\.[a-z0-9\-_\.]+)+/i",$params['content']) ){
+            $guest_log->setAttribute("has_email",ConstantService::$default_status_true);
+            $force_update = true;
+        }
+
+        if( $force_update ){
+            $guest_log->save( 0 );
+        }
+
+        return true;
     }
 
     /**
@@ -140,9 +167,9 @@ class GuestChatService extends BaseService
     {
         $guest_log = GuestHistoryLog::find()
             ->where([
-                'uuid'  =>  $uuid
+                'uuid' => $uuid
             ])
-            ->orderBy(['id'=>SORT_DESC])
+            ->orderBy(['id' => SORT_DESC])
             ->one();
 
         return $guest_log;
@@ -158,14 +185,14 @@ class GuestChatService extends BaseService
     {
         $all_users = [];
 
-        if($online_users) {
-            foreach($online_users as $uuid) {
+        if ($online_users) {
+            foreach ($online_users as $uuid) {
                 $all_users[] = self::genGuestInfo($uuid);
             }
         }
 
-        if($wait_users) {
-            foreach($wait_users as $uuid) {
+        if ($wait_users) {
+            foreach ($wait_users as $uuid) {
                 $all_users[] = self::genGuestInfo($uuid);
             }
         }
@@ -184,13 +211,13 @@ class GuestChatService extends BaseService
 
         return [
             // 随机生成一个昵称.
-            'nickname'  =>  substr($uuid, strlen($uuid) - 12),
-            'uuid'      =>  $uuid,
-            'avatar'    =>  GlobalUrlService::buildPicStaticUrl('hsh',ConstantService::$default_avatar),
-            'allocation_time'   =>  date('H:i:s'),
-            'is_online' =>  ConstantService::$default_status_true,
-            'source'    => isset($cache_params['source']) ? $cache_params['source'] : 2,
-            'media'     => isset($cache_params['media']) ? $cache_params['media'] : 0,
+            'nickname' => substr($uuid, strlen($uuid) - 12),
+            'uuid' => $uuid,
+            'avatar' => GlobalUrlService::buildPicStaticUrl('hsh', ConstantService::$default_avatar),
+            'allocation_time' => date('H:i:s'),
+            'is_online' => ConstantService::$default_status_true,
+            'source' => isset($cache_params['source']) ? $cache_params['source'] : 2,
+            'media' => isset($cache_params['media']) ? $cache_params['media'] : 0,
         ];
     }
 }

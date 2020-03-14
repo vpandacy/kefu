@@ -127,6 +127,8 @@ class GlobalUrlService extends BaseService {
     }
 
     public static function buildWWWStaticUrl($uri, $params = []){
+        $release_version = StaticAssetsHelper::getReleaseVersion();
+        $params = $params + [ "ver" => $release_version ];
 	    return self::buildKFUrl( $uri, $params );
     }
 

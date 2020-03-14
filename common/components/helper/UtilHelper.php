@@ -2,7 +2,7 @@
 
 namespace common\components\helper;
 
-use  yii\helpers\Html;
+use common\components\DataHelper;
 
 class UtilHelper
 {
@@ -11,7 +11,7 @@ class UtilHelper
      */
     public static function encode($dispaly_text)
     {
-        return Html::encode($dispaly_text);
+        return DataHelper::encode($dispaly_text);
     }
 
 
@@ -36,16 +36,16 @@ class UtilHelper
             'page_size' => intval($params['page_size'])
         ];
         $total = (int)$params['total_count'];
-        $pageSize = (int)$params['page_size'];
+        $page_size = (int)$params['page_size'];
         $page = (int)$params['page'];
         $display = (int)$params['display'];
-        $totalPage = (int)ceil($total / $pageSize);
-        $totalPage = $totalPage ? $totalPage : 1;
+        $total_page = (int)ceil($total / $page_size);
+        $total_page = $total_page ? $total_page : 1;
 
         if ($page <= 1) {
             $ret['previous'] = false;
         }
-        if ($page >= $totalPage) {
+        if ($page >= $total_page) {
             $ret['next'] = false;
         }
         $semi = (int)ceil($display / 2);
@@ -54,13 +54,13 @@ class UtilHelper
         } else {
             $ret['from'] = 1;
         }
-        if ($page + $semi <= $totalPage) {
+        if ($page + $semi <= $total_page) {
             $ret['end'] = $page + $semi;
         } else {
-            $ret['end'] = $totalPage;
+            $ret['end'] = $total_page;
         }
         $ret['total_count'] = $total;
-        $ret['total_page'] = $totalPage;
+        $ret['total_page'] = $total_page;
         $ret['current'] = $page;
         return $ret;
     }
@@ -262,6 +262,4 @@ class UtilHelper
             return false;
         }
     }
-
-
 }

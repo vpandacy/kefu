@@ -137,7 +137,8 @@ var ws_config = new socket({
                 break;
             case 'close_guest':
                 $('.chat-close').show();
-                $('.ws_flag').text('连接关闭')
+                $('.ws_flag').text('连接关闭');
+                ws_config.close();
                 break;
             default:
                 $('.ws_flag').text('连接成功')

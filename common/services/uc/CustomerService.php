@@ -15,11 +15,9 @@ class CustomerService extends BaseService
     public static function updateOnlineStatus($sn, $status = 0)
     {
         $staff = Staff::findOne(['sn'=>$sn]);
-
         if(!$staff) {
             return true;
         }
-
         $staff['is_online'] = $status;
         return $staff->save() === false;
     }

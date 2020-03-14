@@ -15,14 +15,17 @@ use Yii;
  * @property int $cs_id 接待客服id
  * @property string $referer_url 来源url
  * @property int $referer_media 来源媒体
+ * @property string $keyword 搜索关键词
  * @property string $land_url 落地页url
  * @property string $land_title 落地页标题
  * @property string $client_ip 游客ip
  * @property string $client_ua 游客浏览器信息
- * @property string $keyword 搜索关键词
  * @property int $province_id 游客来源省id
  * @property int $city_id 游客来源城市id
  * @property int $chat_stype_id 对话风格id
+ * @property int $has_talked 访客是否说话 1： 有 0：没有
+ * @property int $has_mobile 是否有手机号码号码 1 有 0 无
+ * @property int $has_email 是否有邮箱 1：有 0：无
  * @property string $closed_time 关闭对话时间
  * @property int $chat_duration 聊天时长，单位秒
  * @property int $status 聊天状态 ：-1 聊天中 1：聊天正常结束 0：聊天异常结束
@@ -54,14 +57,14 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['merchant_id', 'member_id', 'cs_id', 'referer_media', 'province_id', 'city_id', 'chat_stype_id', 'chat_duration', 'status', 'source'], 'integer'],
+            [['merchant_id', 'member_id', 'cs_id', 'referer_media', 'province_id', 'city_id', 'chat_stype_id', 'has_talked', 'has_mobile', 'has_email', 'chat_duration', 'status', 'source'], 'integer'],
             [['closed_time'], 'required'],
             [['closed_time', 'updated_time', 'created_time'], 'safe'],
             [['uuid', 'client_id'], 'string', 'max' => 64],
             [['referer_url', 'land_url', 'land_title'], 'string', 'max' => 1000],
+            [['keyword'], 'string', 'max' => 255],
             [['client_ip'], 'string', 'max' => 20],
             [['client_ua'], 'string', 'max' => 300],
-            [['referer_media', 'keyword'], 'string', 'max' => 255],
         ];
     }
 
@@ -79,7 +82,7 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
             'cs_id' => 'Cs ID',
             'referer_url' => 'Referer Url',
             'referer_media' => 'Referer Media',
-            'keyword'   =>  'Keyword',
+            'keyword' => 'Keyword',
             'land_url' => 'Land Url',
             'land_title' => 'Land Title',
             'client_ip' => 'Client Ip',
@@ -87,6 +90,9 @@ class GuestHistoryLog extends \yii\db\ActiveRecord
             'province_id' => 'Province ID',
             'city_id' => 'City ID',
             'chat_stype_id' => 'Chat Stype ID',
+            'has_talked' => 'Has Talked',
+            'has_mobile' => 'Has Mobile',
+            'has_email' => 'Has Email',
             'closed_time' => 'Closed Time',
             'chat_duration' => 'Chat Duration',
             'status' => 'Status',

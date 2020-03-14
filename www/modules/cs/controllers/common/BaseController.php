@@ -43,10 +43,11 @@ class BaseController extends StaffBaseController
         }
 
         if (!$is_login) {
+            $kf_url = GlobalUrlService::buildUcUrl("/user/login",[ "from" => ConstantService::$CS_APP ] );
             if (\Yii::$app->request->isAjax) {
-                $this->renderJSON([ 'url' => GlobalUrlService::buildKFCSUrl("/user/login") ], "未登录,请返回用户中心", -302);
+                $this->renderJSON([ 'url' => $kf_url ], "未登录,请返回用户中心", -302);
             } else {
-                $this->redirect(GlobalUrlService::buildKFCSUrl("/user/login"));
+                $this->redirect( $kf_url );
             }
             return false;
         }
