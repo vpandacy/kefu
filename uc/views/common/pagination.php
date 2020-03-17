@@ -26,7 +26,7 @@ use \common\services\GlobalUrlService;
     -->
 
 
-    <a href="<?=$pages['next']?GlobalUrlService::buildKFUrl($url, array_merge($sc,[ 'p' => $pages['current'] + 1 ])):GlobalUrlService::buildNullUrl();?>" class="layui-laypage-next <?php if(!$pages['next']):?> layui-disabled <?php endif;?>">上一页</a>
+    <a href="<?=$pages['next']?GlobalUrlService::buildKFUrl($url, array_merge($sc,[ 'p' => $pages['current'] + 1 ])):GlobalUrlService::buildNullUrl();?>" class="layui-laypage-next <?php if(!$pages['next']):?> layui-disabled <?php endif;?>">下一页</a>
 
 
     <!--
