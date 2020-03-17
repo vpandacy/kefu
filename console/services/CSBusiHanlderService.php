@@ -123,13 +123,11 @@ class CSBusiHanlderService extends BaseService
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运
                 QueueListService::push2Guest( QueueConstant::$queue_guest_chat,$message);
                 break;
-            case ConstantService::$chat_cmd_kf_in://设置绑定关系，使用 Gateway::bindUid(string $client_id, mixed $uid);
+            case ConstantService::$chat_cmd_kf_in:
+                //客服登录成功了
                 if ($f_id) {
                     // 关闭之前的信息.
                     $client_ids = Gateway::getClientIdByUid($f_id);
-                    echo "-----------------------\n";
-                    var_dump($client_ids);
-                    echo "-----------------------\n";
                     if($client_ids) {
                         foreach($client_ids as $old_client) {
                             Gateway::sendToClient($old_client, json_encode([
@@ -141,19 +139,16 @@ class CSBusiHanlderService extends BaseService
                     }
                     //建立绑定关系，后面就可以根据f_id找到这个人了
                     Gateway::bindUid($client_id, $f_id);
-                    ChatEventService::setCSBindCache($client_id, [
-                        'f_id'    =>  $f_id,
-                    ]);
+                    ChatEventService::setCSBindCache($client_id, [ 'f_id' => $f_id ]);
                 }
+
                 Gateway::sendToClient($client_id, ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
                     'content'   =>  '登录成功',
                 ]));
                 break;
             case ConstantService::$chat_cmd_pong:
-                //EventsDispatch::addChatHistory( $client_id,$message );
                 break;
             case ConstantService::$chat_cmd_ping:
-                //EventsDispatch::addChatHistory( $client_id,$message );
                 break;
         }
     }

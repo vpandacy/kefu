@@ -50,7 +50,6 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                     <i class="iconfont icon-xiaoxi icon icon-action fsize32"></i>
                 </div>
                 <div class="menu-icon-bottom">
-<!--                    <i class="iconfont icon-shezhi icon icon-action fsize32" title="设置"></i>-->
                     <i class="iconfont icon-zaixian icon icon-action fsize32 exe-off-online" title="在线"></i>
                     <i class="iconfont icon-tuichu icon icon-action fsize32" title="退出"></i>
                 </div>

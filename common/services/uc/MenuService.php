@@ -13,12 +13,12 @@ class MenuService extends BaseService
      * @param $uris
      * @return array
      */
-    public static function getAllMenu($app_id, $uris = [])
+    public static function getAllMenu($app_id )
     {
         // 后续增加.
         switch ($app_id) {
             case ConstantService::$merchant_app_id:
-                $menus = self::getMerchantUrl($uris);
+                $menus = self::getMerchantUrl();
                 break;
 
             case ConstantService::$admin_app_id:
@@ -39,20 +39,17 @@ class MenuService extends BaseService
      * @param array $urls
      * @return array
      */
-    public static function getMerchantUrl($urls)
+    public static function getMerchantUrl()
     {
         $all_menu = [
             'left_menu' =>  self::getLeftMenu(),
             'bar_menu'  =>  self::getBarMenu()
         ];
-        $uc_actions = ['user', 'sub_user', 'department', 'role', 'action', 'company', 'staff_log'];
-        // 开始过滤菜单.
-        foreach($all_menu['left_menu'] as $key=>$action) {
-            if(!in_array($action['url'], $urls)) {
-                unset($all_menu['left_menu'][$key]);
-                continue;
-            }
+        $uc_actions = [
+            'user', 'sub_user', 'department', 'role', 'action', 'company', 'staff_log'
+        ];
 
+        foreach($all_menu['left_menu'] as $key=>$action) {
             if(in_array($key, $uc_actions)) {
                 $action['url'] = 'uc/' . $action['url'];
             }
@@ -62,11 +59,6 @@ class MenuService extends BaseService
 
         foreach($all_menu['bar_menu'] as $key=>$sub_menus) {
             foreach($sub_menus as $k => $bar_menu) {
-                if(!in_array($bar_menu['url'], $urls)) {
-                    unset($sub_menus[$k]);
-                    continue;
-                }
-
                 if(in_array($k, $uc_actions)) {
                     $bar_menu['url'] = 'uc/' . $bar_menu['url'];
                 }
@@ -99,7 +91,7 @@ class MenuService extends BaseService
             ],
             'message'   =>  [
                 'title' =>  '留言管理',
-                'url'   =>  'merchant/user/track/index',
+                'url'   =>  'merchant/message/message/index',
                 'icon'  =>  'icon-liaotian',
             ],
             // 风格管理
@@ -136,25 +128,11 @@ class MenuService extends BaseService
                     'url'   =>  'merchant/user/index/index',
                 ],
             ],
-            'chat'  =>  [
-                'chat'  =>  [
-                    'title' =>  '聊天管理',
-                    'url'   =>  'merchant/chat/index/index'
-                ],
-                'download'  =>  [
-                    'title' =>  '下载记录',
-                    'url'   =>  'merchant/chat/download/index',
-                ],
-            ],
             'settings'  =>  [
                 'common_words'  =>  [
                     'title' =>  '常用语管理',
                     'url'   =>  'merchant/overall/index/index'
                 ],
-//                'clueauto'  =>  [
-//                    'title' =>  '线索自动采集',
-//                    'url'   =>  'merchant/overall/clueauto/index',
-//                ],
                 'company'   =>  [
                     'title' =>  '企业设置',
                     'url'   =>  'company/index'
@@ -209,11 +187,11 @@ class MenuService extends BaseService
             'message'   =>  [
                 'track' =>  [
                     'title' =>  '聊天记录',
-                    'url'   =>  'merchant/user/track/index',
+                    'url'   =>  'merchant/message/message/index',
                 ],
                 'leave' =>  [
                     'title' =>  '留言板管理',
-                    'url'   =>  'merchant/overall/offline/index'
+                    'url'   =>  'merchant/message/leave/index'
                 ]
             ],
         ];

@@ -5,7 +5,22 @@ class ConstantService extends BaseService
 {
     public static $default_date = "1970-01-01";
     public static $default_datetime = "1970-01-01 00:00:00";
+    public static $default_sys_err = "系统繁忙，请稍后再试~~";
 
+    public static $common_status_mapping = [
+        1 => "正常",
+        0 => "已删除"
+    ];
+
+    public static $common_status_mapping2 = [
+        1 => "可用",
+        0 => "禁用"
+    ];
+
+    public static $common_status_map3 = [
+        1 => "已处理",
+        0 => "未处理"
+    ];
 
     //　接口请求失败.
     public static $response_code_fail = -1;
@@ -20,6 +35,7 @@ class ConstantService extends BaseService
     public static $default_status_false = 0;
 
     public static $default_status_neg_1 = -1;
+    public static $default_status_neg_99 = -99;
     /**
      * 应用关系对应.
      * @var array
@@ -38,6 +54,7 @@ class ConstantService extends BaseService
     public static $merchant_app_id = 1;
     public static $admin_app_id = 2;
 
+    public static $CS_APP = "cs";
     /**
      * 默认头像.
      * @var string
@@ -94,7 +111,7 @@ class ConstantService extends BaseService
     // 终端
     public static $guest_source = [
         1   =>  'PC',
-        2   =>  '手机H5',
+        2   =>  'H5',
         3   =>  '微信'
     ];
 

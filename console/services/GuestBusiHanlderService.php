@@ -171,9 +171,11 @@ class GuestBusiHanlderService extends BaseService
             case ConstantService::$chat_cmd_chat: // 游客聊天动作.
                 //将消息转发给另一个WS服务组，放入redis，然后通过Job搬运.如果在聊天的队列中.就允许发送.
                 if(!isset($message['data']['t_id'])) {
-                    return Gateway::sendToClient($client_id,ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
+                    Gateway::sendToClient($client_id,ChatEventService::buildMsg(
+                        ConstantService::$chat_cmd_system,[
                         'content'   =>  '请稍等，客服正在到来中-1...',
                     ]));
+                    return true;
                 }
 
 
@@ -377,13 +379,16 @@ class GuestBusiHanlderService extends BaseService
             case ConstantService::$chat_cmd_close_guest:
                 // 发送给对应的人
                 $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
-                // 关闭信息.
+                // 关闭信息，客户端收到消息之后应该主动关闭连接，走close方法，所以下面的可以不用了
                 $tmp_client && Gateway::closeClient( $tmp_client[0] );
-                // 退出组信息.
-                ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
-                // 清除缓存...
-                ChatEventService::clearGuestBindCache($message['data']['t_id']);
-                $tmp_client && ChatEventService::clearCSBindCache($tmp_client[0]);
+                //如果找不到，为了保持数据一致性，把关联绑定删除掉
+                if( !$tmp_client ){
+                     //退出组信息.
+                    ChatGroupService::leaveGroup($message['data']['f_id'], $message['data']['t_id']);
+                     //清除缓存...
+                    ChatEventService::clearGuestBindCache($message['data']['t_id']);
+                }
+
                 break;
             // 给组内进行广播.
             case ConstantService::$chat_cmd_kf_logout:

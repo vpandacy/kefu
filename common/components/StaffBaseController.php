@@ -84,8 +84,9 @@ class StaffBaseController extends BaseWebController
     {
         $token = $this->genToken($staff['merchant_id'], $staff['salt'], $staff['password']);
         $cookie = Yii::$app->params['cookies']['staff'];
+        $expired_time = strtotime(date("Y-m-d 23:59:59")) - time() + 3600;
         // 指定区域.
-        $this->setCookie($cookie['name'], $staff['id'] . '#' . $token,0, $cookie['domain']);
+        $this->setCookie($cookie['name'], $staff['id'] . '#' . $token,$expired_time, $cookie['domain']);
         return $token;
     }
 

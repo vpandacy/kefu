@@ -66,7 +66,6 @@ return [
                 'port'     => 6379,
                 'password' => 'xqYlAcF9CvqC1U4i',
                 'prefix' => 'kf_cache_',
-
             ]
         ],
     ],

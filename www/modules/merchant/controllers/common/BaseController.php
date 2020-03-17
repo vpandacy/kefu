@@ -70,11 +70,9 @@ class BaseController extends StaffBaseController
             return false;
         }
 
-        if( !$this->privilege_urls ){
-            $this->getRolePrivilege();
-        }
+
         // 这里要获取商户系统的菜单.
-        Yii::$app->view->params['menus'] = MenuService::getAllMenu( $this->getAppId(), $this->privilege_urls);
+        Yii::$app->view->params['menus'] = $this->getMenu();
         // 商户信息.
         Yii::$app->view->params['merchant'] = $this->merchant_info;
         // 员工信息.
@@ -82,5 +80,26 @@ class BaseController extends StaffBaseController
 
         AppLogService::addAccessLog($this->current_user);
         return true;
+    }
+
+    private function getMenu(){
+        $menu = MenuService::getMerchantUrl();
+        foreach( $menu['left_menu'] as $key => $action) {
+            if( !$this->checkPrivilege( $action['url']) ){
+                unset($menu['left_menu'][$key]);
+                continue;
+            }
+        }
+
+        foreach( $menu['bar_menu'] as $key => $sub_menus) {
+            foreach($sub_menus as $k => $bar_menu) {
+                if (!$this->checkPrivilege($bar_menu['url'])) {
+                    unset($menu['bar_menu'][$key]);
+                    continue;
+                }
+            }
+        }
+
+        return $menu;
     }
 }
