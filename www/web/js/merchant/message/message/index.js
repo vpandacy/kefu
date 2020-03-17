@@ -11,7 +11,7 @@ var message_index_ops = {
         var that = this;
         var table = layui.table;
         //转换静态表格
-        table.init('message_list');
+        table.init('message_list',{ limit: 30 });
         //页面层
         $(".layui-table-body .info").click(function () {
             that.tr_uuid = $(this).data("uuid");

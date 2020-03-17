@@ -7,7 +7,7 @@ var leave_message_ops = {
     eventBind: function () {
         var table = layui.table;
         //转换静态表格
-        table.init('leave_message');
+        table.init('leave_message',{ limit: 30 });
 
         $(".leave_message_list .ops").click( function(){
             var id = $(this).data("id");

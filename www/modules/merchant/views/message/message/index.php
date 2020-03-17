@@ -89,7 +89,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
             </div>
         </form>
-        <table class="layui-hide" lay-filter="message_list">
+        <table class="layui-hide"  lay-filter="message_list">
             <thead>
             <tr>
                 <th lay-data="{ field:'f1',width:120}">访客名称</th>
