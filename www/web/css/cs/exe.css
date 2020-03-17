@@ -649,6 +649,10 @@ select[name='cs'] {
 #chatExe .exe-content .exe-content-top .content-top-info .land-url .land-url-url {
     cursor: pointer;
     color: black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 190px;
+    overflow: hidden;
 }
 #chatExe .exe-content .exe-content-top .content-top-info .land-url .landUrl-copy,
 #chatExe .exe-content .exe-content-top .content-top-info .referer-url .referer-url-copy {
