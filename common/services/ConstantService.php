@@ -111,7 +111,7 @@ class ConstantService extends BaseService
     // 终端
     public static $guest_source = [
         1   =>  'PC',
-        2   =>  '手机H5',
+        2   =>  'H5',
         3   =>  '微信'
     ];
 
