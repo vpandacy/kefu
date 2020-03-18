@@ -339,6 +339,7 @@
 
     // 处理消息回复.
     socket.prototype.handleMessage = function(data) {
+        var that = this;
         switch (data.cmd) {
             case "ping":
                 this.socketSend({ "cmd":"pong" });
@@ -354,7 +355,10 @@
                 this.socketSend( this.buildMsg('guest_in',params ));
                 break;
             case "hello":
-                this.socketSend( this.buildMsg('guest_connect',{} ));
+                //延迟5秒
+                setTimeout(function(){
+                    that.socketSend( that.buildMsg('guest_connect',{} ));
+                }, 5000);
                 break;
             case "assign_kf":
                 config.cs = {
