@@ -120,7 +120,7 @@ var ws_config = new socket({
     handle: function (data) {
         switch (data.cmd) {
             case 'ws_connect'||'hello':
-                $('.ws_flag').text('正在连接客服...')
+                $('.ws_flag').text('正在连接客服...');
                 break;
             case 'reply':
                 // force: 新消息是否强制弹窗, 0强制,1不强制
@@ -133,6 +133,7 @@ var ws_config = new socket({
                 break;
             case 'assign_kf'||'change_kf'||'reply' || 'system':
                 $('.ws_flag').text('连接成功');
+                $('#online_kf .content_cover_index').hide();
                 $('img[class="icon-_DYGYxinyemiandakai"]').attr('src','http://cdn1.static.corp.hsh568.cn/logo/big_zaixiankefu.jpg');
                 break;
             case 'close_guest':

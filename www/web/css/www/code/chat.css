@@ -12,6 +12,14 @@
 .img_zaixiankefu img {
     cursor: pointer;
 }
+#online_kf .content_cover_index {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 999;
+    opacity: 0.3;
+}
 #online_kf {
     width: 360px;
     height: 500px;

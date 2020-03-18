@@ -75,6 +75,7 @@ StaticPluginHelper::includeJsPlugins([
                 </div>
             </div>
             <div class="online-submit">
+                <div class="content_cover_index"></div>
                 <div class="submit-top" id="content" contenteditable="true"></div>
                 <div class="submit-bottom">
                     <div class="bottom-left">
