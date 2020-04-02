@@ -1,6 +1,6 @@
 <?php
 
-use \common\components\DataHelper;
+use \common\components\helper\DataHelper;
 use \common\components\helper\DateHelper;
 use \common\services\ConstantService;
 

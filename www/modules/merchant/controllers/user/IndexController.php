@@ -1,7 +1,7 @@
 <?php
 namespace www\modules\merchant\controllers\user;
 
-use common\components\DataHelper;
+use common\components\helper\DataHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\models\merchant\GroupChat;

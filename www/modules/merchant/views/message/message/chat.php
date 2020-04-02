@@ -1,5 +1,5 @@
 <?php
-use \common\components\DataHelper;
+use \common\components\helper\DataHelper;
 ?>
 <?php if ($list): ?>
     <div class="content_assgin">

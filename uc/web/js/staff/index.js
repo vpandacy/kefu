@@ -4,6 +4,10 @@ var uc_staff_index_ops = {
         this.eventBind();
     },
     eventBind: function () {
+        var table = layui.table;
+        //转换静态表格
+        table.init('staff_list',{ limit: 30 });
+
         layui.use('table', function(){
             var table = layui.table;
             // 表格渲染.

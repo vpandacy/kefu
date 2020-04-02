@@ -2,7 +2,7 @@
 
 namespace www\modules\merchant\controllers\message;
 
-use common\components\DataHelper;
+use common\components\helper\DataHelper;
 use common\components\helper\DateHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\UtilHelper;

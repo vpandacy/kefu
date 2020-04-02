@@ -2,7 +2,7 @@
 
 namespace common\components\helper;
 
-use common\components\DataHelper;
+use common\components\helper\DataHelper;
 
 class UtilHelper
 {

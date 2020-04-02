@@ -2,11 +2,11 @@
 use common\components\helper\StaticAssetsHelper;
 use common\services\GlobalUrlService;
 use uc\assets\UcAsset;
-/**
- * @var \yii\web\View $this
- */
+use \common\components\helper\StaticPluginHelper;
+use \common\services\ConstantService;
 
-StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/staff/index.js"),UcAsset::className() )
+StaticPluginHelper::setDepend(UcAsset::className());
+StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/staff/index.js"),StaticPluginHelper::getDepend() )
 ?>
 <style>
     .layui-table-tool-temp {
@@ -17,66 +17,84 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
         justify-content: space-between;
     }
 </style>
-<div id="staff_index_index">
+
+<div id="staff_index_wrap">
     <?=$this->renderFile('@uc/views/common/bar_menu.php',[
         'bar_menu'  =>  'user',
         'current_menu'  =>  'sub_user'
     ])?>
-    <div class="tab_staff_content">
-        <table class="layui-hide" lay-filter="staff" id="staff" style="position: relative">
-        </table>
-    </div>
-</div>
-<script type="text/html" id="staffBar">
-    <div class="layui-btn-container">
-        <div>
-            <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
-            <button class="layui-btn layui-btn-sm" lay-event="recover">恢复</button>
-        </div>
-        <div>
-            <i class="fa fa-glass" aria-hidden="true" title="筛选"></i>
-        </div>
-    </div>
-</script>
 
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a>
-</script>
-
-
-<div class="search-wrapper" style="display: none">
-    <div class="layui-form-item">
-        <label class="layui-form-label">手机号</label>
-        <div class="layui-input-block">
-            <input style="width: 100%;" type="text" name="mobile" value="<?=$search_conditions['mobile']?>" placeholder="请输入手机号" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
-        <div class="layui-input-block">
-            <input style="width: 100%;" type="text" name="email" value="<?=$search_conditions['email']?>" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-form-item">
-            <label class="layui-form-label">所属部门</label>
-            <div class="layui-input-block">
-                <select name="department_id">
-                    <option value="0">请选择部门</option>
-                    <?php foreach($departments as $department):?>
-                        <option value="<?=$department['id']?>" <?=$department['id'] == $search_conditions['department_id'] ? 'selected' : ''?>><?=$department['name']?></option>
-                    <?php endforeach;?>
+    <div class="staff_list">
+        <form action="" class="layui-form wrap_search">
+            <div class="layui-inline">
+                <select name="group_id">
+                    <option value="<?= ConstantService::$default_status_false; ?>">请选择部门</option>
+                    <?php foreach ($department_list as $_item): ?>
+                        <option value="<?= $_item['id'] ?>"
+                            <?php if ($_item['id'] == $sc['department_id']): ?> selected <?php endif ?> ><?= $_item['name'] ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
-        </div>
-    </div>
 
-    <div class="layui-form-item">
-        <div class="layui-input-inline">
-            <button class="layui-btn" lay-submit lay-filter="searchForm">立即提交</button>
-        </div>
+
+            <div class="layui-inline" style="width: 16%;">
+                <input type="text" class="layui-input" name="kw" value="<?= $sc['kw'] ?>" placeholder="请输入姓名/手机/邮箱">
+            </div>
+
+            <div class="layui-inline">
+                <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+            </div>
+            <div class="layui-inline pull-right">
+                <button class="layui-btn">+员工</button>
+            </div>
+        </form>
+        <table class="layui-hide"  lay-filter="staff_list">
+            <thead>
+            <tr>
+                <th lay-data="{ field:'f1'}">姓名</th>
+                <th lay-data="{ field:'f2'}">昵称</th>
+                <th lay-data="{ field:'f3',width:180}">邮箱</th>
+                <th lay-data="{ field:'f4',width:150}">手机号</th>
+                <th lay-data="{ field:'f5'}">所属部门</th>
+                <th lay-data="{ field:'f6',width:120}">接听数</th>
+                <th lay-data="{ field:'f7',width:80}">状态</th>
+                <th lay-data="{ field:'f8',width:120}">创建时间</th>
+                <th lay-data="{ field:'f9',width:100}">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if ($list): ?>
+                <?php foreach ($list as $_item): ?>
+                    <tr>
+                        <td><?= $_item['name']; ?></td>
+                        <td><?= $_item['nickname']; ?></td>
+                        <td><?= $_item['email']; ?></td>
+                        <td><?= $_item['mobile']; ?></td>
+                        <td><?= $_item['depart_info']['name']??''; ?></td>
+                        <td><?= $_item['listen_nums']; ?></td>
+                        <td>
+                            <span class="layui-btn layui-btn-radius layui-btn-danger">
+                                <?= ConstantService::$common_status_mapping2[$_item['status']]??''; ?>
+                            </span>
+
+                        </td>
+                        <td><?= $_item['created_time']; ?></td>
+                        <td>
+                            <a class="info btn-link" href="<?= GlobalUrlService::buildNullUrl(); ?>">
+                                查看详情
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </tbody>
+        </table>
+        <?php
+        echo \Yii::$app->view->renderFile("@uc/views/common/pagination.php", [
+            'pages' => isset($pages) ? $pages : null,
+            'url' => '/merchant/message/message/index',
+            'sc' => $sc,
+        ]);
+        ?>
     </div>
 </div>

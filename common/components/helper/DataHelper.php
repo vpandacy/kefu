@@ -1,5 +1,5 @@
 <?php
-namespace common\components;
+namespace common\components\helper;
 
 class DataHelper {
     /**

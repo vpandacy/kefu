@@ -1,7 +1,7 @@
 <?php
 namespace www\modules\merchant\controllers\message;
 
-use common\components\DataHelper;
+use common\components\helper\DataHelper;
 use common\components\helper\DateHelper;
 use common\components\helper\UtilHelper;
 use common\models\merchant\GroupChat;
@@ -16,7 +16,6 @@ class MessageController extends BaseController
 
     public function actionIndex()
     {
-        $this->page_size = 30;
         $p = $this->get("p", 1);
         $p = ($p > 0) ? $p : 1;
         $offset = ($p - 1) * $this->page_size;

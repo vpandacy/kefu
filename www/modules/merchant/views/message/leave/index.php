@@ -5,7 +5,7 @@ use common\components\helper\StaticAssetsHelper;
 use www\assets\MerchantAsset;
 use \common\components\helper\StaticPluginHelper;
 use \common\services\ConstantService;
-use \common\components\DataHelper;
+use \common\components\helper\DataHelper;
 
 StaticPluginHelper::setDepend(MerchantAsset::className());
 StaticPluginHelper::daterangepicker();
