@@ -3,11 +3,13 @@ namespace www\modules\merchant\controllers\user;
 
 use common\components\helper\DataHelper;
 use common\components\helper\ModelHelper;
+use common\components\helper\UtilHelper;
 use common\components\helper\ValidateHelper;
 use common\models\merchant\GroupChat;
 use common\models\merchant\Member;
 use common\models\uc\Staff;
 use common\services\AreaService;
+use common\services\ConstantService;
 use common\services\GlobalUrlService;
 use www\modules\merchant\controllers\common\BaseController;
 
@@ -15,43 +17,62 @@ class IndexController extends BaseController
 {
     public function actionIndex()
     {
-        if($this->isGet()) {
-            return $this->render('index');
-        }
-
-        $page = intval($this->post('page',1));
+        $p = $this->get("p", 1);
+        $p = ($p > 0) ? $p : 1;
+        $offset = ($p - 1) * $this->page_size;
+        $kw = trim( $this->get("kw","") );
 
         $query = Member::find()->where([
             'merchant_id'=>$this->getMerchantId()
         ]);
-
-        $count = $query->count();
-
-        $lists = $query->limit($this->page_size)
-            ->offset(($page - 1) * $this->page_size)
-            ->asArray()
-            ->orderBy(['id'=>SORT_DESC])
-            ->all();
-
-        if($lists) {
-            $staffs = ModelHelper::getDicByRelateID($lists, Staff::className(), 'cs_id', 'id',['name']);
-            $style = ModelHelper::getDicByRelateID($lists, GroupChat::className(), 'chat_style_id','id',['title']);
-
-            foreach($lists as $key=>$member) {
-                $member['staff_name'] = isset($staffs[$member['cs_id']])
-                    ? $staffs[$member['cs_id']]['name']
-                    : '暂无人员';
-
-                $member['style_title']= isset($style[$member['chat_style_id']])
-                    ? $style[$member['chat_style_id']]['title']
-                    : '普通风格';
-
-                $lists[$key] = $member;
-            }
+        if( $kw ){
+            $where_mobile = [ 'LIKE','mobile','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+            $where_name = [ 'LIKE','name','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+            $query = $query->andWhere( [ "OR",$where_mobile,$where_name ] );
         }
 
-        // 转义字符.
-        return $this->renderPageJSON(DataHelper::encodeArray($lists), '获取成功', $count);
+        $pages = UtilHelper::ipagination([
+            'total_count' => $query->count(),
+            'page_size' => $this->page_size,
+            'page' => $p,
+            'display' => 10
+        ]);
+
+        $list = $query->orderBy([ 'id' => SORT_DESC ])
+            ->offset($offset)
+            ->limit($this->page_size)
+            ->asArray()->all();
+
+        $data = [];
+        if( $list ) {
+            $staff_map = ModelHelper::getDicByRelateID($list, Staff::class, 'cs_id', 'id',[ 'name' ]);
+            $style_map = ModelHelper::getDicByRelateID($list, GroupChat::class, 'chat_style_id','id',[ 'title' ]);
+
+            foreach( $list as  $_member) {
+                $tmp_staff_info = $staff_map[ $_member['cs_id'] ]??[];
+                $tmp_style_info = $style_map[ $_member['chat_style_id'] ]??[];
+                $tmp_data = [
+                    "id" => $_member['id'],
+                    "name" => $_member['name'],
+                    "mobile" => $_member['mobile'],
+                    "email" => $_member['email'],
+                    "qq" => $_member['qq'],
+                    "wechat" => $_member['wechat'],
+                    "reg_ip" => $_member['reg_ip'],
+                    "source" => $_member['source'],
+                    "source_desc" => ConstantService::$guest_source[ $_member['source'] ]??'',
+                    "created_time" => $_member['created_time'],
+                    "staff_name" => $tmp_staff_info['name']??'',
+                    "style" => $tmp_style_info['title']??'默认风格',
+                ];
+                $data[] = $tmp_data;
+            }
+        }
+        return $this->render("index",[
+            "list" => $data,
+            "sc" => [ "kw" => $kw ],
+            "pages" => $pages
+        ]);
     }
 
     /**

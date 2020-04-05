@@ -45,7 +45,7 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
             </div>
             <div class="layui-inline pull-right">
-                <button class="layui-btn">+员工</button>
+                <a class="layui-btn" href="<?= GlobalUrlService::buildUcUrl("/staff/edit"); ?>" >+员工</a>
             </div>
         </form>
         <table class="layui-hide"  lay-filter="staff_list">
@@ -54,11 +54,11 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
                 <th lay-data="{ field:'f1'}">姓名</th>
                 <th lay-data="{ field:'f2'}">昵称</th>
                 <th lay-data="{ field:'f3',width:180}">邮箱</th>
-                <th lay-data="{ field:'f4',width:150}">手机号</th>
-                <th lay-data="{ field:'f5'}">所属部门</th>
-                <th lay-data="{ field:'f6',width:120}">接听数</th>
+                <th lay-data="{ field:'f4',width:130}">手机号</th>
+                <th lay-data="{ field:'f5',width:120}">所属部门</th>
+                <th lay-data="{ field:'f6',width:80}">接听数</th>
                 <th lay-data="{ field:'f7',width:80}">状态</th>
-                <th lay-data="{ field:'f8',width:120}">创建时间</th>
+                <th lay-data="{ field:'f8',width:180}">创建时间</th>
                 <th lay-data="{ field:'f9',width:100}">操作</th>
             </tr>
             </thead>
@@ -73,16 +73,22 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
                         <td><?= $_item['depart_info']['name']??''; ?></td>
                         <td><?= $_item['listen_nums']; ?></td>
                         <td>
-                            <span class="layui-btn layui-btn-radius layui-btn-danger">
-                                <?= ConstantService::$common_status_mapping2[$_item['status']]??''; ?>
-                            </span>
-
+                            <?= $_item['status_desc']; ?>
                         </td>
                         <td><?= $_item['created_time']; ?></td>
                         <td>
-                            <a class="info btn-link" href="<?= GlobalUrlService::buildNullUrl(); ?>">
-                                查看详情
+                            <a class="info btn-link" href="<?= GlobalUrlService::buildUcUrl("/staff/edit",[ "staff_id" => $_item['id'] ]); ?>">
+                                编辑
                             </a>
+                            <?php if( $_item['status'] ):?>
+                                <a class="info btn-link ops pull-right" data-id="<?=$_item['id'];?>" data-act="disable" href="<?= GlobalUrlService::buildNullUrl(); ?>">
+                                    禁用
+                                </a>
+                            <?php else:?>
+                                <a class="info btn-link ops pull-right" data-id="<?=$_item['id'];?>" data-act="recover" href="<?= GlobalUrlService::buildNullUrl(); ?>">
+                                    恢复
+                                </a>
+                            <?php endif;?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -92,7 +98,7 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
         <?php
         echo \Yii::$app->view->renderFile("@uc/views/common/pagination.php", [
             'pages' => isset($pages) ? $pages : null,
-            'url' => '/merchant/message/message/index',
+            'url' => '/uc/staff/index',
             'sc' => $sc,
         ]);
         ?>

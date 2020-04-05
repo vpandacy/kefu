@@ -20,118 +20,73 @@ class StaffController extends BaseController
 {
     public function actionIndex()
     {
-        if ($this->isGet()) {
-            $kw = trim($this->get('kw', ''));
-            $department_id = intval(trim($this->get('department_id', 0)));
+        $kw = trim($this->get('kw', ''));
+        $department_id = intval(trim($this->get('department_id', 0)));
 
-            $p = $this->get("p", 1);
-            $p = ($p > 0) ? $p : 1;
-            $offset = ($p - 1) * $this->page_size;
-            $query = Staff::find()->andWhere(['merchant_id' => $this->getMerchantId()]);
-
-            if( $department_id ){
-                $query = $query->andWhere([ "department_id" => $department_id ]);
-            }
-
-            if( $kw ){
-                $where_name = [ 'LIKE','name','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
-                $where_mobile = [ 'LIKE','mobile','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
-                $where_email = [ 'LIKE','email','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
-                $query = $query->andWhere( [ "OR",$where_name,$where_mobile ,$where_email ] );
-            }
-
-            $pages = UtilHelper::ipagination([
-                'total_count' => $query->count(),
-                'page_size' => $this->page_size,
-                'page' => $p,
-                'display' => 10
-            ]);
-
-            $list = $query->orderBy([ 'id' => SORT_DESC ])
-                ->offset($offset)
-                ->limit($this->page_size)
-                ->asArray()->all();
-
-            $data = [];
-            $department_map = Department::find()->select(['id', 'name'])
-                ->where([
-                    'status' => ConstantService::$default_status_true,
-                    'merchant_id' => $this->getMerchantId(),
-                    'app_id' => $this->getAppId(),
-                ])->indexBy("id")->asArray()->all();
-            if( $list ){
-                foreach ($list as $_item ){
-                    $tmp_depart_info = $department_map[ $_item['department_id'] ]??[];
-                    $tmp_data = [
-                        "id" => $_item['id'],
-                        "name" => DataHelper::encode( $_item['name'] ),
-                        "nickname" => DataHelper::encode( $_item['nickname'] ),
-                        "email" => DataHelper::encode( $_item['email'] ),
-                        "mobile" => DataHelper::encode( $_item['mobile'] ),
-                        "listen_nums" => DataHelper::encode( $_item['listen_nums'] ),
-                        "depart_info" => $tmp_depart_info,
-                        "status" => DataHelper::encode( $_item['status'] ),
-                        "created_time" => DataHelper::encode( $_item['created_time'] ),
-                    ];
-                    $data[] = $tmp_data;
-                }
-            }
-
-
-            return $this->render('index', [
-                "list" => $data,
-                "pages" => $pages,
-                'department_list' => $department_map,
-                'sc' => [
-                    'kw' => $kw,
-                    'department_id' => $department_id,
-                ]
-            ]);
-        }
-
-        $page = intval($this->post('page', 1));
-
+        $p = $this->get("p", 1);
+        $p = ($p > 0) ? $p : 1;
+        $offset = ($p - 1) * $this->page_size;
         $query = Staff::find()->andWhere(['merchant_id' => $this->getMerchantId()]);
-        // 构建条件
-        $mobile = trim($this->post('mobile', ''));
-        $email = trim($this->post('email', ''));
-        $department_id = $this->post('department_id', 0);
 
-        if ($mobile) {
-            $query->andWhere(['mobile' => $mobile]);
+        if( $department_id ){
+            $query = $query->andWhere([ "department_id" => $department_id ]);
         }
 
-        if ($email) {
-            $query->andWhere(['email' => $email]);
+        if( $kw ){
+            $where_name = [ 'LIKE','name','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+            $where_mobile = [ 'LIKE','mobile','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+            $where_email = [ 'LIKE','email','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+            $query = $query->andWhere( [ "OR",$where_name,$where_mobile ,$where_email ] );
         }
 
-        if ($department_id) {
-            $query->andWhere(['department_id' => $department_id]);
-        }
+        $pages = UtilHelper::ipagination([
+            'total_count' => $query->count(),
+            'page_size' => $this->page_size,
+            'page' => $p,
+            'display' => 10
+        ]);
 
-//        $query->andWhere(['like', 'app_ids', '%,'.$this->getAppId() . ',%', false]);
+        $list = $query->orderBy([ 'id' => SORT_DESC ])
+            ->offset($offset)
+            ->limit($this->page_size)
+            ->asArray()->all();
 
-        $count = $query->count();
-
-        $employees = $query->limit($this->page_size)
-            ->offset(($page - 1) * $this->page_size)
-            ->asArray()
-            ->orderBy(['id' => SORT_DESC])
-            ->all();
-
-        if ($employees) {
-            $departments = ModelHelper::getDicByRelateID($employees, Department::className(), 'department_id', 'id',
-                ['name']);
-            foreach ($employees as $key => $employee) {
-                $employee['department'] = isset($departments[$employee['department_id']])
-                    ? $departments[$employee['department_id']]['name']
-                    : '暂无部门';
-
-                $employees[$key] = $employee;
+        $data = [];
+        $department_map = Department::find()->select(['id', 'name'])
+            ->where([
+                'status' => ConstantService::$default_status_true,
+                'merchant_id' => $this->getMerchantId(),
+                'app_id' => $this->getAppId(),
+            ])->indexBy("id")->asArray()->all();
+        if( $list ){
+            foreach ($list as $_item ){
+                $tmp_depart_info = $department_map[ $_item['department_id'] ]??[];
+                $tmp_data = [
+                    "id" => $_item['id'],
+                    "name" => DataHelper::encode( $_item['name'] ),
+                    "nickname" => DataHelper::encode( $_item['nickname'] ),
+                    "email" => DataHelper::encode( $_item['email'] ),
+                    "mobile" => DataHelper::encode( $_item['mobile'] ),
+                    "listen_nums" => DataHelper::encode( $_item['listen_nums'] ),
+                    "depart_info" => $tmp_depart_info,
+                    "status" => DataHelper::encode( $_item['status'] ),
+                    "status_desc" =>  ConstantService::$common_status_mapping2[$_item['status']],
+                    "created_time" => DataHelper::encode( $_item['created_time'] ),
+                ];
+                $data[] = $tmp_data;
             }
         }
 
-        return $this->renderPageJSON($employees, '获取成功', $count);
+
+        return $this->render('index', [
+            "list" => $data,
+            "pages" => $pages,
+            'department_list' => $department_map,
+            'sc' => [
+                'kw' => $kw,
+                'department_id' => $department_id,
+            ]
+        ]);
     }
 
     /**
@@ -367,64 +322,32 @@ class StaffController extends BaseController
         return $this->renderJSON([], '操作成功');
     }
 
-    /**
-     * 恢复.
-     */
-    public function actionRecover()
-    {
-        $ids = $this->post('ids');
 
-        if (!count($ids)) {
-            return $this->renderErrJSON('请选择需要恢复的帐号');
+    public function actionOps(){
+        if(!$this->isAjax()){
+            return $this->renderErrJSON( ConstantService::$default_sys_err );
         }
 
-        if (!Staff::updateAll(['status' => ConstantService::$default_status_true], [
-            'and',
-            ['id' => $ids, 'merchant_id' => $this->getMerchantId()],
-            ['like', 'app_ids', '%,' . $this->getAppId() . ',%', false]
-        ])) {
-            return $this->renderErrJSON('恢复失败,请联系管理员');
+        $id = $this->post("id",0);
+        $act = $this->post("act","");
+        if( !$id || !$act ){
+            return $this->renderErrJSON( ConstantService::$default_sys_err );
         }
 
-        return $this->renderJSON([], '恢复成功');
-    }
-
-    /**
-     * 禁用.
-     */
-    public function actionDisable()
-    {
-        $id = $this->post('id', 0);
-        if (!$id || !is_numeric($id)) {
-            return $this->renderErrJSON('请选择正确的帐号');
+        $staff_info = Staff::find()->where(["id" => $id,"merchant_id" => $this->getMerchantId() ])->one();
+        if( !$staff_info ){
+            return $this->renderErrJSON( ConstantService::$default_sys_err);
         }
-
-        if ($id == $this->getStaffId()) {
-            return $this->renderErrJSON('您暂不能禁用自己');
+        switch($act) {
+            case "disable":
+                $staff_info->status = ConstantService::$default_status_false;
+                $staff_info->save( 0 );
+                break;
+            case "recover":
+                $staff_info->status = ConstantService::$default_status_true;
+                $staff_info->save( 0 );
+                break;
         }
-
-        $staff = Staff::find()
-            ->where([
-                'id' => $id,
-                'merchant_id' => $this->getMerchantId(),
-                'status' => ConstantService::$default_status_true
-            ])
-            ->andWhere(['like', 'app_ids', '%,' . $this->getAppId() . ',%', false])
-            ->one();
-
-        if ($staff['is_root']) {
-            return $this->renderErrJSON('您不能禁用超级管理员帐号');
-        }
-
-        if ($staff['status'] != ConstantService::$default_status_true) {
-            return $this->renderErrJSON('该帐号不需要删除');
-        }
-
-        $staff['status'] = 0;
-        if (!$staff->save(0)) {
-            return $this->renderErrJSON('操作失败,请联系管理员');
-        }
-
-        return $this->renderJSON([], '操作成功');
+        return $this->renderJSON([],"设置账号状态成功~~");
     }
 }
