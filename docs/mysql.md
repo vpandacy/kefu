@@ -15,3 +15,18 @@ ALTER TABLE `guest_history_log` ADD `has_mobile` TINYINT(3)  NOT NULL  DEFAULT '
 ALTER TABLE `guest_history_log` ADD `has_email` TINYINT(3)  NOT NULL  DEFAULT '0'  COMMENT '是否有邮箱 1：有 0：无'  AFTER `has_mobile`;
 
 ```
+
+#### 20200405 郭威
+```
+CREATE TABLE `app_guest_log` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `cookie` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'cookie',
+  `uuid` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'uuid',
+  `referer` varchar(500) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'referer',
+  `ip` varchar(60) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'ip',
+  `ua` varchar(400) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'ua',
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '插入时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_created_time` (`created_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='游客访问日志';
+```

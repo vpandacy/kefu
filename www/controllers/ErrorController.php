@@ -34,4 +34,9 @@ class ErrorController extends BaseWebController
         AppLogService::addErrLog("js-{$sc}",$err_msg);
         return $this->renderJSON();
     }
+
+    public function actionLog(){
+        AppLogService::addGuestLog();
+        return "log_status=1;";
+    }
 }

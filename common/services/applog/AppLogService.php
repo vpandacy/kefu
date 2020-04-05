@@ -6,6 +6,7 @@ use common\components\helper\UtilHelper;
 use common\components\ip\IPDBQuery;
 use common\models\logs\AppAccessLog;
 use common\models\logs\AppErrLogs;
+use common\models\logs\AppGuestLog;
 use common\models\logs\CsLoginLogs;
 use Yii;
 
@@ -119,5 +120,22 @@ class AppLogService
         $logs->setAttributes($data);
 
         return $logs->save();
+    }
+
+    public static function addGuestLog(){
+        $referer = Yii::$app->request->getReferrer();
+        $ua = Yii::$app->request->getUserAgent();
+        $cookies = Yii::$app->request->cookies;
+        $cookies_config = Yii::$app->params['cookies']['guest'];
+        $cookie_str = var_export($_COOKIE,true);
+        $max_length = 600;
+        $guest_log = new AppGuestLog();
+        $guest_log->cookie = ( mb_strlen($cookie_str,"utf-8") > $max_length )?(mb_substr($cookie_str,0,$max_length)):$cookie_str ;
+        $guest_log->uuid = $cookies->getValue( $cookies_config['name'],"" );
+        $guest_log->referer = $referer?$referer:'';
+        $guest_log->ua = $ua?$ua:'';
+        $guest_log->ip = UtilHelper::getClientIP();
+        $guest_log->save(0);
+        return true;
     }
 }
