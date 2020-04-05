@@ -355,7 +355,7 @@
                 this.socketSend( this.buildMsg('guest_in',params ));
                 break;
             case "hello":
-                //延迟5秒，有的客户刚进来就分配客户 然后又跑了。让客服端很疑惑（一闪就没有了）
+                //延迟1.5秒，有的客户刚进来就分配客户 然后又跑了。让客服端很疑惑（一闪就没有了）
                 setTimeout(function(){
                     that.socketSend( that.buildMsg('guest_connect',{} ));
                 }, 1500);
