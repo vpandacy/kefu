@@ -58,6 +58,5 @@ use \common\services\GlobalUrlService;
     </div>
 </div>
 <script type="text/javascript" src="<?=GlobalUrlService::buildWWWStaticUrl("/js/merchant/message/message/info.js");?>"></script>
-</script>
 
 

@@ -121,8 +121,8 @@ class MessageController extends BaseController
 
     public function actionInfo(){
         $uuid = trim( $this->get("uuid","") );
-        $date_from = $this->get("date_from", DateHelper::getFormatDateTime("Y-m-d" ));
-        $date_to = $this->get("date_to", DateHelper::getFormatDateTime("Y-m-d"));
+        $date_from = $this->get("date_from", DateHelper::getFormatDateTime("Y-m-d 00:00" ));
+        $date_to = $this->get("date_to", DateHelper::getFormatDateTime("Y-m-d H:i"));
         if( !$uuid ){
             return $this->renderErrJSON( "获取详情失败~~" );
         }
@@ -131,7 +131,7 @@ class MessageController extends BaseController
             ->where([ "merchant_id"=> $this->getMerchantId() ])
             ->andWhere([ "uuid" => $uuid ]);
 
-        $query = $query->andWhere([ "between", "created_time",$date_from." 00:00:00",$date_to." 23:59:59" ]);
+        $query = $query->andWhere([ "between", "created_time",$date_from.":00",$date_to.":59" ]);
 
         $list = $query->orderBy([ 'id' => SORT_DESC ])->asArray()->all();
         $data = [];
