@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\components\ip\IPDBQuery;
 use common\services\chat\ChatEventService;
 use common\services\QueueListService;
 use common\services\redis\CacheService;
@@ -18,12 +19,8 @@ class TestController extends BaseController
      * php yii test/index
      */
     public function actionIndex(){
-        while ( true ){
-            $str = CacheService::get( "group_qkztwtm1" );
-            $this->echoLog( $str."\r\n" );
-            usleep(500000);
-        }
-
+        $ret = IPDBQuery::find( "49.234.54.54" );
+        var_dump( $ret );
     }
 
     /**

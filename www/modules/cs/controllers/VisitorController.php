@@ -231,6 +231,25 @@ class VisitorController extends BaseController
             : '暂无';
 
         $history['province'] = IPDBQuery::find($history['client_ip']);
+        //对province进行加省和市
+        if( $history['province'] ){
+            if( isset( $history['province'][1] ) && isset( $history['province'][2] ) &&
+                $history['province'][1] == $history['province'][2] ){
+                unset( $history['province'][1] );
+            }
+
+            if( isset( $history['province'][1] ) && $history['province'][1]){
+                $history['province'][1] .= "省";
+            }
+
+            if( isset( $history['province'][2] ) && $history['province'][2]){
+                $history['province'][2] .= "市";
+            }else{
+                unset( $history['province'][2] ) ;
+            }
+        }
+        $history['province'] = implode("",$history['province']);
+
         return $this->renderJSON([
             'member'    =>  $member,
             'history'   =>  $history
