@@ -3,7 +3,7 @@
 use \common\components\helper\DataHelper;
 use \common\components\helper\DateHelper;
 use \common\services\ConstantService;
-use \common\components\ip\IPDBQuery;
+use \common\components\helper\IPHelper;
 
 ?>
 <div class="content_information">
@@ -21,7 +21,7 @@ use \common\components\ip\IPDBQuery;
     </div>
     <div>
         <span class="information_title">地区：</span>
-        <span><?= implode(" ",IPDBQuery::find( $info['client_ip'] ) );?></span></div>
+        <span><?= implode(" ",IPHelper::getIpInfo( $info['client_ip'] ) );?></span></div>
     <div>
         <span class="information_title">访客IP：</span>
         <span><?= $info['client_ip']; ?></span>
