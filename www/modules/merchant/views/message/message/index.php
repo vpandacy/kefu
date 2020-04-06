@@ -95,18 +95,19 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
             </div>
         </form>
         <table  class="layui-table layui-table-body" >
+
             <thead>
             <tr>
-                <th lay-data="{ field:'f1',width:120}">访客名称</th>
-                <th lay-data="{ field:'f2',width:120}">IP</th>
-                <th lay-data="{ field:'f3',width:80}">客服</th>
-                <th lay-data="{ field:'f4',width:100}">风格</th>
-                <th lay-data="{ field:'f5'}">来源&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客通过各种渠道进入网站，主要包括外部链接、搜索引擎、直接访问"></i></th>
-                <th lay-data="{ field:'f6'}">落地页&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客的进入网站"></i></th>
-                <th lay-data="{ field:'f7',width:60}">终端</th>
-                <th lay-data="{ field:'f8',width:70}">时长</th>
-                <th lay-data="{ field:'f9',width:160}">来访时间</th>
-                <th lay-data="{ field:'f10',width:100}">操作</th>
+                <th width="120">访客名称</th>
+                <th width="120">IP</th>
+                <th width="80">客服</th>
+                <th width="100">风格</th>
+                <th width="200">来源&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客通过各种渠道进入网站，主要包括外部链接、搜索引擎、直接访问"></i></th>
+                <th width="200">落地页&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客的进入网站"></i></th>
+                <th width="60">终端</th>
+                <th width="70">时长</th>
+                <th width="160">来访时间</th>
+                <th width="100">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -119,7 +120,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <td><?= $_item['client_ip']; ?></td>
                         <td><?= $_item['staff_info']['name'] ?? '暂无'; ?></td>
                         <td><?= $_item['style_info']['title'] ?? '暂无'; ?></td>
-                        <td>
+                        <td style="height:auto;overflow:hidden;text-overflow:inherit;white-space:normal;">
                             <a class="btn-link" target="_blank" href="<?= $_item['referer_url']; ?>">
                                 <?= $_item['referer_url']; ?>
                             </a>
