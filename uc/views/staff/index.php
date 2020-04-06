@@ -43,6 +43,9 @@ StaticAssetsHelper::includeAppJsStatic( GlobalUrlService::buildUcStaticUrl("/js/
 
             <div class="layui-inline">
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+                <a class="btn-link" style="padding-left: 12px;" href="<?= GlobalUrlService::buildUcUrl("/staff/index"); ?>">
+                    重置搜索
+                </a>
             </div>
             <div class="layui-inline pull-right">
                 <a class="layui-btn" href="<?= GlobalUrlService::buildUcUrl("/staff/edit"); ?>" >+员工</a>

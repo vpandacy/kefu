@@ -119,4 +119,11 @@ class StaticPluginHelper
             self::getDepend()
         );
     }
+
+    public static function jqueryUIWidget(){
+        StaticAssetsHelper::includeAppCssStatic(GlobalUrlService::buildStaticUrl("/plugins/jquery_ui_components/jquery-ui.min.css"),
+            self::getDepend());
+        StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildStaticUrl("/plugins/jquery_ui_components/jquery-ui.min.js"),
+            self::getDepend());
+    }
 }

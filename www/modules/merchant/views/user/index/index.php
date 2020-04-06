@@ -19,6 +19,9 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 
             <div class="layui-inline">
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+                <a class="btn-link" style="padding-left: 12px;" href="<?= GlobalUrlService::buildKFMerchantUrl("/user/index/index"); ?>">
+                    重置搜索
+                </a>
             </div>
         </form>
         <table class="layui-hide"  lay-filter="staff_list">

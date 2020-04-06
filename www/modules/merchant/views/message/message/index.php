@@ -8,6 +8,7 @@ use \common\services\ConstantService;
 
 StaticPluginHelper::setDepend(MerchantAsset::className());
 StaticPluginHelper::daterangepicker();
+StaticPluginHelper::jqueryUIWidget();
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/message/message/index.js'),
     StaticPluginHelper::getDepend())
 ?>
@@ -33,6 +34,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         padding: 15px;
         display: none;
     }
+
 </style>
 <div id="message_log">
     <?= $this->renderFile('@www/modules/merchant/views/common/bar_menu.php', [
@@ -87,17 +89,20 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
 
             <div class="layui-inline">
                 <button class="layui-btn" data-type="reload" type="submit">搜索</button>
+                <a class="btn-link" style="padding-left: 12px;" href="<?= GlobalUrlService::buildKFMerchantUrl("/message/message/index"); ?>">
+                    重置搜索
+                </a>
             </div>
         </form>
-        <table class="layui-hide"  lay-filter="message_list">
+        <table  class="layui-table layui-table-body" >
             <thead>
             <tr>
                 <th lay-data="{ field:'f1',width:120}">访客名称</th>
                 <th lay-data="{ field:'f2',width:120}">IP</th>
                 <th lay-data="{ field:'f3',width:80}">客服</th>
                 <th lay-data="{ field:'f4',width:100}">风格</th>
-                <th lay-data="{ field:'f5'}">来源</th>
-                <th lay-data="{ field:'f6'}">落地页</th>
+                <th lay-data="{ field:'f5'}">来源&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客通过各种渠道进入网站，主要包括外部链接、搜索引擎、直接访问"></i></th>
+                <th lay-data="{ field:'f6'}">落地页&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客的进入网站"></i></th>
                 <th lay-data="{ field:'f7',width:60}">终端</th>
                 <th lay-data="{ field:'f8',width:70}">时长</th>
                 <th lay-data="{ field:'f9',width:160}">来访时间</th>

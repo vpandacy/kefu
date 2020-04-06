@@ -10,8 +10,9 @@ var message_index_ops = {
     eventBind: function () {
         var that = this;
         var table = layui.table;
+        $(".tooltip").tooltip();
         //转换静态表格
-        table.init('message_list',{ limit: 30 });
+        //table.init('message_list',{ limit: 30 });
         //页面层
         $(".layui-table-body .info").click(function () {
             that.tr_uuid = $(this).data("uuid");
@@ -50,7 +51,7 @@ var message_index_ops = {
         //date range picker
         $(".wrap_search input[name=date_range_picker]").dateRangePicker({
             autoClose: false,
-            format: 'YYYY-MM-DD',
+            format: 'YYYY-MM-DD HH:mm',
             separator: ' 至 ',
             language: 'cn',
             startOfWeek: 'monday',// or monday
@@ -67,7 +68,7 @@ var message_index_ops = {
             startDate: false,
             endDate: false,
             time: {
-                enabled: false
+                enabled: true
             },
             minDays: 0,
             maxDays: 0,
