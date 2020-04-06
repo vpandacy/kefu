@@ -7,7 +7,7 @@ var message_info_ops = {
     eventBind:function(){
         var that = this;
 
-        $("#pop_layer .chat_log").click( function(){
+        $("#pop_layer").off("click",".chat_log").on("click",".chat_log", function(){
             $("#pop_layer .chat_log").addClass("layui-btn-primary").removeClass("active");
             $(this).removeClass("layui-btn-primary").addClass("active");
             that.tab_index = 0;

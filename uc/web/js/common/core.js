@@ -72,8 +72,13 @@
                             $.alert(res.msg);
                             return;
                         }
-                        config['content'] = res.data.content;
-                        layer.open(config);
+                        if( $("#pop_layer").length < 1  ){
+                            config['content'] = res.data.content;
+                            layer.open(config);
+                        }else{
+                            $("#pop_layer").html( res.data.content );
+                        }
+
                     }
                 });
             },
