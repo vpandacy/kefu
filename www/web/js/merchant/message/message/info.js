@@ -20,11 +20,11 @@ var message_info_ops = {
         $("#pop_layer .pop_right").css( "min-height",$("#pop_layer").height() + "px" );
 
 
-        $("body").unbind("click").on("click","#pop_layer .prev",function(){
+        $("body").off("click","#pop_layer .prev").on("click","#pop_layer .prev",function(){
             that.preAndNext( -1 );
         });
 
-        $("body").unbind("click").on("click","#pop_layer .next",function(){
+        $("body").off("click","#pop_layer .next").on("click","#pop_layer .next",function(){
             that.preAndNext( 1 );
         });
 
