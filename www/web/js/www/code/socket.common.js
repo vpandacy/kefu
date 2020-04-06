@@ -242,7 +242,8 @@
 
     // 页面发送消息．
     socket.prototype.send = function() {
-        var msg = $(this.input).html();
+        var  msg = $(this.input).html();
+        msg = $.trim( msg.replace(/^(&nbsp;)+|(&nbsp;)+$/g, "") );
         if(msg.length <= 0) {
             return false;
         }
