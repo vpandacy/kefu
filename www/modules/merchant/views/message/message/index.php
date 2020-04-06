@@ -35,6 +35,13 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
         display: none;
     }
 
+    .layui-table td {
+        max-width: 1px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
 </style>
 <div id="message_log">
     <?= $this->renderFile('@www/modules/merchant/views/common/bar_menu.php', [
@@ -120,7 +127,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <td><?= $_item['client_ip']; ?></td>
                         <td><?= $_item['staff_info']['name'] ?? '暂无'; ?></td>
                         <td><?= $_item['style_info']['title'] ?? '暂无'; ?></td>
-                        <td style="height:auto;overflow:hidden;text-overflow:inherit;white-space:normal;">
+                        <td>
                             <a class="btn-link" target="_blank" href="<?= $_item['referer_url']; ?>">
                                 <?= $_item['referer_url']; ?>
                             </a>
