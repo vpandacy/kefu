@@ -21,6 +21,8 @@ StaticPluginHelper::includeJsPlugins([
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     GlobalUrlService::buildKFStaticUrl('/js/www/code/mobile.js'),
     GlobalUrlService::buildKFStaticUrl('/js/component/storage.js'),
+    //监控请求JS
+    GlobalUrlService::buildKFUrl('/error/log'),
 ]);
 ?>
 <script>

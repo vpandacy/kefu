@@ -27,7 +27,9 @@ StaticPluginHelper::includeJsPlugins([
     // 公共的socket聊天JS
     GlobalUrlService::buildKFStaticUrl('/js/www/code/socket.common.js'),
     // 自己的js.
-    GlobalUrlService::buildKFStaticUrl('/js/www/code/online.js')
+    GlobalUrlService::buildKFStaticUrl('/js/www/code/online.js'),
+    //监控请求JS
+    GlobalUrlService::buildKFUrl('/error/log'),
 ]);
 ?>
 <script> WEB_SOCKET_SWF_LOCATION = '<?=GlobalUrlService::buildStaticUrl('/socket/WebSocketMain.swf')?>'; </script>
