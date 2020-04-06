@@ -70,10 +70,7 @@ class UtilHelper
      */
     public static function getClientIP()
     {
-        if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
-            return $_SERVER["HTTP_X_FORWARDED_FOR"];
-        }
-        return isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : '';
+        return IPHelper::getClientIP();
     }
 
 

@@ -23,7 +23,8 @@
         "qiniu/php-sdk": "^7.2",
         "phpoffice/phpspreadsheet": "^1.10",
         "workerman/gatewayclient": "^3.0.13",
-        "ipip/db": "^1.0"
+        "ipip/db": "^1.0",
+        "itbdw/ip-database": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

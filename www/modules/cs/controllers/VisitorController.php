@@ -2,6 +2,7 @@
 namespace www\modules\cs\controllers;
 
 use common\components\helper\DateHelper;
+use common\components\helper\IPHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\ValidateHelper;
 use common\components\ip\IPDBQuery;
@@ -230,24 +231,7 @@ class VisitorController extends BaseController
             ? ConstantService::$guest_source[$history['source']]
             : '暂无';
 
-        $history['province'] = IPDBQuery::find($history['client_ip']);
-        //对province进行加省和市
-        if( $history['province'] ){
-            if( isset( $history['province'][1] ) && isset( $history['province'][2] ) &&
-                $history['province'][1] == $history['province'][2] ){
-                unset( $history['province'][1] );
-            }
-
-            if( isset( $history['province'][1] ) && $history['province'][1]){
-                $history['province'][1] .= "省";
-            }
-
-            if( isset( $history['province'][2] ) && $history['province'][2]){
-                $history['province'][2] .= "市";
-            }else{
-                unset( $history['province'][2] ) ;
-            }
-        }
+        $history['province'] = IPHelper::getIpInfo($history['client_ip']);
         $history['province'] = implode("",$history['province']);
 
         return $this->renderJSON([
