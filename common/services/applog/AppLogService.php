@@ -8,6 +8,7 @@ use common\models\logs\AppAccessLog;
 use common\models\logs\AppErrLogs;
 use common\models\logs\AppGuestLog;
 use common\models\logs\CsLoginLogs;
+use function GuzzleHttp\Psr7\parse_query;
 use Yii;
 
 class AppLogService
@@ -123,16 +124,16 @@ class AppLogService
     }
 
     public static function addGuestLog(){
-        $get_params = \Yii::$app->request->get();
         $referer = Yii::$app->request->getReferrer();
         $ua = Yii::$app->request->getUserAgent();
         $cookies = Yii::$app->request->cookies;
         $cookies_config = Yii::$app->params['cookies']['guest'];
         $cookie_str = var_export($_COOKIE,true);
         $max_length = 600;
-
         $uuid = $cookies->getValue( $cookies_config['name'],"" );
-        if( !$uuid ){
+        if( !$uuid && $referer ){
+            $get_params_str = parse_url($referer,PHP_URL_QUERY);
+            parse_str( $get_params_str ,$get_params );
             $uuid = $get_params['uuid']??"";
         }
         $guest_log = new AppGuestLog();

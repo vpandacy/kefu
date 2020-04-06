@@ -19,8 +19,9 @@ class TestController extends BaseController
      * php yii test/index
      */
     public function actionIndex(){
-        $ret = IPDBQuery::find( "49.234.54.54" );
-        var_dump( $ret );
+        $ret = parse_url("http://www.kf.hsh568.cn/falkspyx/code/mobile?uuid=f5239d86782711eab878a1500f318594&code=in4gbuwm",PHP_URL_QUERY);
+        parse_str( $ret,$arr );
+        var_dump( $arr );
     }
 
     /**
