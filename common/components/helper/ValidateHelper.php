@@ -17,7 +17,10 @@ class ValidateHelper extends  \common\services\BaseService {
     }
 
     public static function validUrl( $url ){
-        return filter_var( $url,FILTER_VALIDATE_URL);
+        //return filter_var( $url,FILTER_VALIDATE_URL);
+        $pattern = "/^(?=^.{3,255}$)(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*([\?&]\w+=\w*)*$/";
+
+        return preg_match($pattern,$url);
     }
 
     public static function validLength( $param,$min,$max ){
@@ -31,6 +34,10 @@ class ValidateHelper extends  \common\services\BaseService {
 
     public static function validRange($num, $min, $max) {
         return $num >= $min && $num <= $max;
+    }
+
+    public static function validIp( $ip ){
+        return preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/",$ip);
     }
 
     /**

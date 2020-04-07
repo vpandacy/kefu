@@ -90,8 +90,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                 </div>
             </div>
 
-            <div class="layui-inline">
-                <input type="text" class="layui-input" name="kw" value="<?= $sc['kw'] ?>" placeholder="请输入搜索关键词">
+            <div class="layui-inline" style="width: 16%;">
+                <input type="text" class="layui-input" name="kw" value="<?= $sc['kw'] ?>" placeholder="请输入搜索关键词、ip、网址">
             </div>
 
             <div class="layui-inline">
@@ -113,6 +113,7 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                 <th width="200">落地页&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客的进入网站"></i></th>
                 <th width="60">终端</th>
                 <th width="70">时长</th>
+                <th width="120">IP</th>
                 <th width="160">来访时间</th>
                 <th width="100">操作</th>
             </tr>
@@ -128,17 +129,18 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <td><?= $_item['staff_info']['name'] ?? '暂无'; ?></td>
                         <td><?= $_item['style_info']['title'] ?? '暂无'; ?></td>
                         <td class="long">
-                            <a class="btn-link" target="_blank" href="<?= $_item['referer_url']; ?>">
+                            <a class="btn-link tooltip" target="_blank" title="<?= $_item['referer_url']; ?>" href="<?= $_item['referer_url']; ?>">
                                 <?= $_item['referer_url']; ?>
                             </a>
                         </td>
                         <td class="long">
-                            <a class="btn-link" target="_blank" href="<?= $_item['land_url']; ?>">
+                            <a class="btn-link tooltip" target="_blank" title="<?= $_item['referer_url']; ?>" href="<?= $_item['land_url']; ?>">
                                 <?= $_item['land_url']; ?>
                             </a>
                         </td>
                         <td><?= $_item['source_desc']; ?></td>
                         <td><?= $_item['duration_desc']; ?></td>
+                        <td><?= $_item['client_ip']; ?></td>
                         <td><?= $_item['created_time']; ?></td>
                         <td>
                             <a class="info btn-link" data-uuid="<?= $_item['uuid']; ?>"

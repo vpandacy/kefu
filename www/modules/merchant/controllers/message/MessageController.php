@@ -4,6 +4,7 @@ namespace www\modules\merchant\controllers\message;
 use common\components\helper\DataHelper;
 use common\components\helper\DateHelper;
 use common\components\helper\UtilHelper;
+use common\components\helper\ValidateHelper;
 use common\models\merchant\GroupChat;
 use common\models\merchant\GuestChatLog;
 use common\models\merchant\GuestHistoryLog;
@@ -52,8 +53,15 @@ class MessageController extends BaseController
         }
 
         if( $kw ){
-            $where_kw = [ 'LIKE','keyword','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
-            $query = $query->andWhere( $where_kw );
+            if( ValidateHelper::validUrl( $kw ) ){
+                $where_land_url = [ 'LIKE','land_url','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+                $query = $query->andWhere( $where_land_url );
+            }elseif ( ValidateHelper::validIp( $kw ) ){
+                $query = $query->andWhere( [ "client_ip" => $kw ] );
+            }else{
+                $where_kw = [ 'LIKE','keyword','%'.strtr($kw,['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']).'%', false ];
+                $query = $query->andWhere( $where_kw );
+            }
         }
 
         $pages = UtilHelper::ipagination([
