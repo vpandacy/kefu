@@ -129,12 +129,14 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <td><?= $_item['staff_info']['name'] ?? '暂无'; ?></td>
                         <td><?= $_item['style_info']['title'] ?? '暂无'; ?></td>
                         <td class="long">
+                            <?php if( $_item['referer_url'] ):?>
                             <a class="btn-link tooltip" target="_blank" title="<?= $_item['referer_url']; ?>" href="<?= $_item['referer_url']; ?>">
                                 <?= $_item['referer_url']; ?>
                             </a>
+                            <?php endif;?>
                         </td>
                         <td class="long">
-                            <a class="btn-link tooltip" target="_blank" title="<?= $_item['referer_url']; ?>" href="<?= $_item['land_url']; ?>">
+                            <a class="btn-link tooltip" target="_blank" title="<?= $_item['land_url']; ?>" href="<?= $_item['land_url']; ?>">
                                 <?= $_item['land_url']; ?>
                             </a>
                         </td>
