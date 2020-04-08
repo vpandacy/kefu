@@ -37,12 +37,12 @@
             $('#chatExe .flex1').css({'display': 'none'});
             $('.content-message-active').removeClass('content-message-active');
         });
-        
+
         $('.words-content').on('click','.content-select', function () {
             var text = $(this).find('span').attr("title");
             $('#content').text(text);
         });
-        
+
         // 渲染在线列表.
         this.renderOnlineList();
         // 渲染等待区.
@@ -352,9 +352,11 @@
                     history= res.data.history;
                 $('.land-url').mousemove(function () {
                     $('.landUrl-copy').show();
+                    $('.landTitleUrl-copy').show();
                 });
                 $('.land-url').mouseout(function () {
                     $('.landUrl-copy').hide();
+                    $('.landTitleUrl-copy').hide();
                 });
                 $('.referer-url').mousemove(function () {
                     $('.referer-url-copy').show();
@@ -362,8 +364,10 @@
                 $('.referer-url').mouseout(function () {
                     $('.referer-url-copy').hide();
                 });
-                $('.landUrl-copy').attr('data-clipboard-text', history.land_url)
+                $('.landTitleUrl-copy').attr('data-clipboard-text', history.land_title);
+                $('.landUrl-copy').attr('data-clipboard-text', history.land_url);
                 $('.referer-url-copy').attr('data-clipboard-text', history.referer_url ? history.referer_url : '');
+                new ClipboardJS('.landTitleUrl-copy');
                 new ClipboardJS('.landUrl-copy');
                 new ClipboardJS('.referer-url-copy');
                 // 批量渲染.
