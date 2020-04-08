@@ -84,7 +84,12 @@ class UserController extends BaseController
 
         // 开始创建登录的信息.
         $this->createLoginStatus($staff_info);
-        $next_url = ( $from == ConstantService::$CS_APP )?$kf_cs_url:$app_url;
+        $next_url = $app_url;
+        if( $from == ConstantService::$CS_APP ){
+            $next_url = $kf_cs_url;
+            //如果是客服还要把状态设置为 在线
+        }
+
         $data = [
             "url" => $next_url
         ];

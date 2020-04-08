@@ -187,13 +187,21 @@ class GuestChatService extends BaseService
 
         if ($online_users) {
             foreach ($online_users as $uuid) {
-                $all_users[] = self::genGuestInfo($uuid);
+                $tmp_ret = self::genGuestInfo($uuid);
+                if( !$tmp_ret ){
+                    continue;
+                }
+                $all_users[] = $tmp_ret;
             }
         }
 
         if ($wait_users) {
             foreach ($wait_users as $uuid) {
-                $all_users[] = self::genGuestInfo($uuid);
+                $tmp_ret = self::genGuestInfo($uuid);
+                if( !$tmp_ret ){
+                    continue;
+                }
+                $all_users[] = $tmp_ret;
             }
         }
 
@@ -208,7 +216,9 @@ class GuestChatService extends BaseService
     public static function genGuestInfo($uuid)
     {
         $cache_params = ChatEventService::getGuestBindCache($uuid);
-
+        if( !$cache_params ){
+            return [];
+        }
         return [
             // 随机生成一个昵称.
             'nickname' => substr($uuid, strlen($uuid) - 12),

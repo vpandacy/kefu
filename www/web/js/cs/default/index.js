@@ -14,7 +14,7 @@ var index_ops = {
             that.getWord();
         } );
 
-        $(".exe-header-info-kfname").click(function(){
+        $(".page_refresh").click(function(){
             window.location.href = window.location.href;
         });
 
