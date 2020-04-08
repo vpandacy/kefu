@@ -110,7 +110,8 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFCSStaticUrl('/js
                         <div class="info land-url"><span>落地页：</span>
                             <a target="_blank" class="land-url-url">-</a>
                             <span data-clipboard-text="" class="landTitleUrl-copy dis_none">复制标题</span>
-                            <span data-clipboard-text="" class="landUrl-copy dis_none">复制网址</span></div>
+                            <span data-clipboard-text="" class="landUrl-copy dis_none">复制网址</span>
+                        </div>
                         <div class="info canal-url"><span>渠道：</span><span>-</span></div>
                     </div>
                     <div class="content-top-info">
