@@ -214,4 +214,33 @@ class ChatGroupService extends BaseService
         $group_name = self::$wait_group_prefix . $group_name;
         return self::getGroupAllUsers($group_name);
     }
+
+    /**
+     * 客户退出的时候对数据进行一次清洗，可能会有僵死用户了
+     * 用户退出了或者某种原因导致 客服的缓存中还有这个人
+     **/
+    public static function kfLogout( $group_name ){
+        // 要获取当前在线的用户数量和等待数量.
+        $online_users = self::getGroupAllUsers( $group_name );
+        if ($online_users) {
+            foreach ($online_users as  $uuid) {
+                $tmp_ret =  ChatEventService::getGuestBindCache($uuid);
+                if( !$tmp_ret ){
+                    self::leaveGroup($group_name,$uuid );
+                }
+            }
+        }
+
+        // 这里是游客等待区.
+        $wait_users = ChatGroupService::getWaitGroupAllUsers( $group_name );
+        if ($wait_users) {
+            foreach ($wait_users as $uuid) {
+                $tmp_ret =  ChatEventService::getGuestBindCache($uuid);
+                if( !$tmp_ret ){
+                    self::leaveWaitGroup($group_name,$uuid );
+                }
+            }
+        }
+        return true;
+    }
 }

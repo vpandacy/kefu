@@ -8,8 +8,10 @@ use common\models\uc\Merchant;
 use common\models\uc\Staff;
 use common\services\CaptchaService;
 use common\services\CommonService;
+use common\services\constant\QueueConstant;
 use common\services\ConstantService;
 use common\services\GlobalUrlService;
+use common\services\QueueListService;
 use common\services\uc\MerchantService;
 use uc\controllers\common\BaseController;
 use uc\services\UCUrlService;
@@ -223,6 +225,16 @@ class UserController extends BaseController
         $from = $this->get("from","");
         $kf_cs_url = GlobalUrlService::buildKFCSUrl("/");
         $url = ( $from == ConstantService::$CS_APP )?$kf_cs_url:GlobalUrlService::buildKFMerchantUrl('/');
+
+
+        //用户退出的时候做一个清理工作，就是将缓存中没有的去掉
+        $message = [
+            "cmd" => ConstantService::$chat_cmd_kf_logout,
+            "data" => [
+                "f_id" => $this->current_user['sn']
+            ]
+        ];
+        QueueListService::push2CS(QueueConstant::$queue_cs_chat, $message);
 
         if ($this->isAjax()) {
             return $this->renderJSON(['redirect' => $url], '退出成功');

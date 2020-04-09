@@ -4,6 +4,7 @@ use common\models\uc\Staff;
 use common\services\applog\AppLogService;
 use common\services\BaseService;
 use common\services\chat\ChatEventService;
+use common\services\chat\ChatGroupService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
 use common\services\QueueListService;
@@ -145,6 +146,13 @@ class CSBusiHanlderService extends BaseService
                 Gateway::sendToClient($client_id, ChatEventService::buildMsg(ConstantService::$chat_cmd_system,[
                     'content'   =>  '登录成功',
                 ]));
+                break;
+            case ConstantService::$chat_cmd_kf_logout:
+                /**
+                 * 客户退出的时候对数据进行一次清洗，可能会有僵死用户了
+                 * 用户退出了或者某种原因导致 客服的缓存中还有这个人
+                 **/
+                ChatGroupService::kfLogout( $f_id );
                 break;
             case ConstantService::$chat_cmd_pong:
                 break;
