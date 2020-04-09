@@ -21,7 +21,7 @@ class MessageController extends BaseController
         $p = ($p > 0) ? $p : 1;
         $offset = ($p - 1) * $this->page_size;
         $date_from = $this->get("date_from", DateHelper::getFormatDateTime("Y-m-d 00:00" ));
-        $date_to = $this->get("date_to", DateHelper::getFormatDateTime("Y-m-d H:i"));
+        $date_to = $this->get("date_to", DateHelper::getFormatDateTime("Y-m-d 23:59"));
         $staff_id = intval($this->get('staff_id',ConstantService::$default_status_false));
         $group_id = intval( $this->get('group_id',ConstantService::$default_status_neg_99 ) );
         $has_mobile = intval( $this->get("has_mobile",ConstantService::$default_status_false));
