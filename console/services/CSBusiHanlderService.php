@@ -147,13 +147,6 @@ class CSBusiHanlderService extends BaseService
                     'content'   =>  '登录成功',
                 ]));
                 break;
-            case ConstantService::$chat_cmd_kf_logout:
-                /**
-                 * 客户退出的时候对数据进行一次清洗，可能会有僵死用户了
-                 * 用户退出了或者某种原因导致 客服的缓存中还有这个人
-                 **/
-                ChatGroupService::kfLogout( $f_id );
-                break;
             case ConstantService::$chat_cmd_pong:
                 break;
             case ConstantService::$chat_cmd_ping:
@@ -184,15 +177,24 @@ class CSBusiHanlderService extends BaseService
                     Staff::updateAll(['is_online' => 0],['sn' => $message['data']['sn']]);
                 }
                 break;
+            case ConstantService::$chat_cmd_kf_logout:
+                /**
+                 * 客户退出的时候对数据进行一次清洗，可能会有僵死用户了
+                 * 用户退出了或者某种原因导致 客服的缓存中还有这个人
+                 **/
+                ChatGroupService::kfLogout( $message['data']['f_id'] );
+                break;
             default:
                 if( isset( $message['data']['t_id']) ) {
                     //发送给对应的人
                     $tmp_client = Gateway::getClientIdByUid( $message['data']['t_id'] );
                     $tmp_client && Gateway::sendToClient( $tmp_client[0], $data );
                 }
-                $connection->send( "success" );
+
+                break;
         }
 
+        $connection->send( "success" );
         return true;
     }
 }
