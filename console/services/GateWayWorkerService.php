@@ -41,12 +41,17 @@ class GateWayWorkerService extends BaseService
         $gateway->startPort = $params['start_port'];
         // 服务注册地址
         $gateway->registerAddress = $params['register_host'];
-        //心跳间隔
+        /**
+         * 心跳：http://workerman.net/gatewaydoc/gateway-worker-development/heartbeat.html
+         * pingInterval ： 间隔 秒
+         * pingNotResponseLimit
+         * pingData
+         */
         $gateway->pingInterval = 15;
         //客户端连续$pingNotResponseLimit次$pingInterval时间内不回应心跳则断开链接
         $gateway->pingNotResponseLimit = 2;
         //心跳数据
-        $gateway->pingData = '{"cmd":"ping"}';
+        $gateway->pingData = '';//代表服务端不发送任何心跳数据,但是客户端如果 pingInterval*pingNotResponseLimit=30 秒内连接上没有任何请求则断开连接
         // http://doc3.workerman.net/640187  透过nginx/apache代理如何获取客户端真实ip ?
         $gateway->onConnect = function($connection) {
             $connection->onWebSocketConnect = function($connection , $http_header)  {

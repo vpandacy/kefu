@@ -129,13 +129,24 @@
             that.handleMessage( data );
         });
 
-        // ws关闭事件.
-        this.ws.addEventListener('close', function () {
+        // ws关闭事件.，关闭可客户端也要处理
+        this.ws.addEventListener('close', function ( event ) {
+            console.log( event );
+            $('#online_kf .content_cover_index').hide();
+            $('.chat-close').show();
         });
 
         // 这里是websocket发生错误的.信息.
-        this.ws.addEventListener('error', function () {
+        this.ws.addEventListener('error', function ( event ) {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+            var msg = "error host:" + config['ws'] ;
+            var data = {
+                'sc': "js-ws" ,
+                'message': msg,
+                'url': window.location.href,
+                'error': msg
+            };
+            errorHandle( data );
         });
     };
 
@@ -343,7 +354,7 @@
         var that = this;
         switch (data.cmd) {
             case "ping":
-                this.socketSend({ "cmd":"pong" });
+                //this.socketSend({ "cmd":"pong" });
                 break;
             case "ws_connect":
                 var params = {
