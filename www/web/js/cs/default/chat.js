@@ -465,7 +465,7 @@
             var callback_1 = {
                 "ok":function(){
                     if(online_users.length != 0){
-                        $.confirm('有游客对话未处理完，是否强制对退出？',callback_2);
+                        $.confirm('有游客对话未处理完，是否强制退出？',callback_2);
                         return;
                     }
                     // 退出.
