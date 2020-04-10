@@ -31,7 +31,7 @@ class UserController extends BaseController
         $kf_cs_url = GlobalUrlService::buildKFCSUrl("/");
         $app_url = UCUrlService::buildUCUrl("/default/application", $this->app_id);
         if ($this->isGet()) {
-            $from = $this->get("from","");
+            $from = $this->getFrom();
             if ( $this->checkLoginStatus() ) {
                 $next_url = ( $from == ConstantService::$CS_APP )?$kf_cs_url:$app_url;
                 return $this->redirect( $next_url );
@@ -44,7 +44,7 @@ class UserController extends BaseController
         $account = $this->post('account', '');
         $password = $this->post('password', '');
         $type = strpos($account, '@') > 0 ? 2 : 1;
-        $from = trim( $this->post("from","") );
+        $from = $this->getFrom();
         if ($type == 2 && !ValidateHelper::validEmail($account)) {
             return $this->renderErrJSON('请输入正确的邮箱~~');
         }
@@ -222,7 +222,7 @@ class UserController extends BaseController
 
         $this->removeCookie($cookie['name'], $cookie['domain']);
 
-        $from = $this->get("from","");
+        $from = $this->getFrom();
         $kf_cs_url = GlobalUrlService::buildKFCSUrl("/");
         $url = ( $from == ConstantService::$CS_APP )?$kf_cs_url:GlobalUrlService::buildKFMerchantUrl('/');
 

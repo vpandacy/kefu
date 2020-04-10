@@ -456,17 +456,23 @@
     // 退出.
     Chat.prototype.signOut = function () {
         $('.icon-tuichu').click(function () {
-            var callback = {
+            var callback_2 = {
+                "ok":function(){
+                    // 退出.
+                    location.href =cs_common_ops.buildUCUrl('/user/logout',{ "from":"cs" } );
+                }
+            };
+            var callback_1 = {
                 "ok":function(){
                     if(online_users.length != 0){
-                        $.msg('请先将游客对话处理完成!');
+                        $.confirm('有游客对话未处理完，是否强制对退出？',callback_2);
                         return;
                     }
                     // 退出.
                     location.href =cs_common_ops.buildUCUrl('/user/logout',{ "from":"cs" } );
                 }
             };
-            $.confirm( "确定要退出？",callback );
+            $.confirm( "确定要退出？",callback_1 );
         });
     };
 

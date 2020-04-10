@@ -233,4 +233,17 @@ class StaffBaseController extends BaseWebController
 
         return $response;
     }
+
+    public function getFrom(){
+        if( $this->isFromElectron() ){
+            return ConstantService::$CS_APP;
+        }
+        return trim( $this->get("from",$this->post("from","") ) );
+    }
+
+    private function isFromElectron(){
+        $ua = Yii::$app->request->getUserAgent();
+        $idx = stripos( $ua ,"Electron");
+        return ( $idx === false )? false:true;
+    }
 }
