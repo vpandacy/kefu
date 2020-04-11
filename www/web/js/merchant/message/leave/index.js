@@ -5,10 +5,11 @@ var leave_message_ops = {
         this.dateComponent();
     },
     eventBind: function () {
-        var table = layui.table;
-        //转换静态表格
-        table.init('leave_message',{ limit: 30 });
-
+        $(".tooltip").tooltip({
+            theme: 'light',
+            textColor: '#757575',
+            shadowColor: '#000',
+        });
         $(".leave_message_list .ops").click( function(){
             var id = $(this).data("id");
             var callback = {

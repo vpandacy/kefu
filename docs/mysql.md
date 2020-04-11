@@ -18,6 +18,7 @@ ALTER TABLE `guest_history_log` ADD `has_email` TINYINT(3)  NOT NULL  DEFAULT '0
 
 #### 20200405 郭威
 ```
+use chat_logs;
 CREATE TABLE `app_guest_log` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `cookie` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'cookie',
@@ -29,4 +30,12 @@ CREATE TABLE `app_guest_log` (
   PRIMARY KEY (`id`),
   KEY `idx_created_time` (`created_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='游客访问日志';
+```
+
+#### 20200411 郭威
+```
+use chat_db;
+ALTER TABLE `leave_message` ADD `client_ip` VARCHAR(25)  NOT NULL  DEFAULT ''  COMMENT '客户端ip'  AFTER `message`;
+ALTER TABLE `leave_message` ADD `land_url` VARCHAR(500)  NOT NULL  DEFAULT ''  COMMENT '落地页'  AFTER `client_ip`;
+
 ```

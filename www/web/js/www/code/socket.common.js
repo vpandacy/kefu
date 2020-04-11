@@ -129,14 +129,26 @@
             that.handleMessage( data );
         });
 
-        // ws关闭事件.
-        this.ws.addEventListener('close', function () {
+        // ws关闭事件.，关闭可客户端也要处理
+        this.ws.addEventListener('close', function ( event ) {
+            $('#online_kf .content_cover_index').hide();
+            $('.chat-close').show();
+            that.stopHeartBeat();
         });
 
         // 这里是websocket发生错误的.信息.
-        this.ws.addEventListener('error', function () {
+        this.ws.addEventListener('error', function ( event ) {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+            var msg = "error host:" + config['ws'] ;
+            var data = {
+                'sc': "js-ws-guest" ,
+                'message': msg,
+                'url': window.location.href,
+                'error': msg
+            };
+            errorHandle( data );
         });
+
     };
 
     // 关闭ws链接.
@@ -229,6 +241,20 @@
             }
         }, 1000);
     };
+
+    //定时发送心跳包
+    socket.prototype.startHeartBeat = function(){
+        var that = this;
+        that.heartbeat_interval = setInterval( function(){
+            that.handleMessage({ "cmd" : "ping" } );
+        },10000 );
+    };
+
+    socket.prototype.stopHeartBeat = function(){
+        var that = this;
+        clearInterval( that.heartbeat_interval );
+    };
+
 
     // 自动渲染关闭图形界面.
     socket.prototype.renderCloseChat = function() {
@@ -354,6 +380,7 @@
                     code: this.getRequest('code', '')
                 };
                 this.socketSend( this.buildMsg('guest_in',params ));
+                that.startHeartBeat();
                 break;
             case "hello":
                 //延迟1.5秒，有的客户刚进来就分配客户 然后又跑了。让客服端很疑惑（一闪就没有了）
@@ -376,6 +403,11 @@
                 //显示一些系统文字提醒，例如已分配哪个客服
                 $(this.output).append(this.renderSystemMessage('客服:' + config.cs.t_name + ',为您服务...'));
                 this.renderNickName(config.cs.t_name, config.cs.avatar);
+                break;
+            case 'no_kf':
+                this.close();
+                this.renderCloseChat();
+                $(this.output).append(this.renderSystemMessage(data.data.content));
                 break;
             case "change_kf":
                 config.cs = {

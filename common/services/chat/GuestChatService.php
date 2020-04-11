@@ -2,6 +2,7 @@
 
 namespace common\services\chat;
 
+use common\components\helper\DateHelper;
 use common\models\merchant\GuestHistoryLog;
 use common\models\merchant\GuestChatLog;
 use common\models\merchant\Member;
@@ -62,6 +63,9 @@ class GuestChatService extends BaseService
             "closed_time" => ConstantService::$default_datetime
         ]);
 
+        //缩小时间范围
+        $query = $query->andWhere([ ">=","created_time",DateHelper::getFormatDateTime( "Y-m-d 00:00:00",strtotime("-1 days") ) ]);
+
         $guest_log = $query->orderBy(["id" => SORT_DESC])->limit(1)->one();
 
         if ($guest_log) {
@@ -88,12 +92,12 @@ class GuestChatService extends BaseService
      */
     public static function updateGuest($params = [])
     {
-        $guest_log = GuestHistoryLog::find()
+        $query = GuestHistoryLog::find()
             ->where(["status" => ConstantService::$default_status_neg_1])
-            ->andWhere(["merchant_id" => $params['merchant_id'], "uuid" => $params['uuid']])
-            ->orderBy(["id" => SORT_DESC])
-            ->limit(1)
-            ->one();
+            ->andWhere(["merchant_id" => $params['merchant_id'], "uuid" => $params['uuid']]);
+
+        $query = $query->andWhere([ ">=","created_time",DateHelper::getFormatDateTime( "Y-m-d 00:00:00",strtotime("-1 days") ) ]);
+        $guest_log = $query->orderBy(["id" => SORT_DESC])->limit(1)->one();
 
         if (!$guest_log) {
             return false;
@@ -103,7 +107,7 @@ class GuestChatService extends BaseService
             'cs_id' => $params['cs_id'], // 更换为新对的客服.
         ]);
 
-        return $guest_log->save();
+        return $guest_log->save( 0 );
     }
 
     /**

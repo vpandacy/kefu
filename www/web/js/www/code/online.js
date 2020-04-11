@@ -1,7 +1,7 @@
 ;
 var online_logic = {
     // 菜單TAB切換
-    logic:function (){
+    logic:function ( land_params ){
         $(".online-right .right-tab .tab-one").click(function() {
             // addClass 新增样式 siblings 返回带有switch-action 的元素 并移除switch-action
             $(this).addClass("right-tab-active").siblings().removeClass("right-tab-active");
@@ -47,7 +47,7 @@ var online_logic = {
             var config = JSON.parse($('[name="params"]').val());
             param['msn'] = config.msn;
             param['code'] = config.code;
-
+            param['href'] = land_params.hasOwnProperty('href')? land_params['href']:'';
             $.ajax({
                 url:'/code/leave',
                 type:'post',
@@ -92,7 +92,7 @@ var ws_config = new socket({
             case 'ws_connect'||'hello':
                 $('.ws_flag').text('正在连接客服...')
                 break;
-            case 'assign_kf'||'change_kf'||'reply' || 'system':
+            case 'assign_kf'||'change_kf'||'reply' || 'system' || 'no_kf':
                 $('.ws_flag').text('连接成功');
                 break;
             case 'close_guest':

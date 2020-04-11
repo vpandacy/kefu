@@ -69,6 +69,8 @@ class ConstantService extends BaseService
     public static $chat_cmd_guest_close = 'guest_close';
     // 客服分配成功.
     public static $chat_cmd_assign_kf = "assign_kf";
+    //没有客服
+    public static $chat_cmd_no_kf = "no_kf";
     // 已经分配给客服，但是客服的接待区已经满了.
     public static $chat_cmd_assign_kf_wait = "assign_kf_wait";
     // 客服更换.

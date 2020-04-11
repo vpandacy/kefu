@@ -3,6 +3,7 @@ namespace console\modules\chat\controllers\queue;
 
 
 use common\components\helper\DateHelper;
+use common\services\applog\AppLogService;
 use common\services\chat\GuestChatService;
 use common\services\constant\QueueConstant;
 use common\services\ConstantService;
@@ -55,6 +56,18 @@ class ChatController extends QueueBaseController
                     $params['chat_stype_id'] = $style['group_chat_id'];
                 }
                 GuestChatService::addGuest( $params );
+                break;
+            case ConstantService::$chat_cmd_assign_kf://　分配了客服
+                $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
+                $params = [
+                    "merchant_id" => $merchant_info['id'],
+                    "uuid" => $params_data['uuid'],
+                    "cs_id" => $params_data['cs_id']
+                ];
+                GuestChatService::updateGuest( $params );
+                break;
+            case ConstantService::$chat_cmd_no_kf://没有客服，记录下日志，方便后续分析问题
+                AppLogService::addErrLog("app-ws",var_export( $params_data ,true));
                 break;
             case ConstantService::$chat_cmd_guest_close://　游客关闭了ws
                 if(!isset($params_data['msn'])) {

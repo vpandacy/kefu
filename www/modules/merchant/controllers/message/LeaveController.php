@@ -4,6 +4,7 @@ namespace www\modules\merchant\controllers\message;
 
 use common\components\helper\DataHelper;
 use common\components\helper\DateHelper;
+use common\components\helper\IPHelper;
 use common\components\helper\ModelHelper;
 use common\components\helper\UtilHelper;
 use common\models\merchant\GroupChat;
@@ -78,6 +79,7 @@ class LeaveController extends BaseController
                 $tmp_style_info = $style_map[$_item['group_chat_id']] ?? [];
                 $tmp_data = $_item;
                 $tmp_data['style_info'] = $tmp_style_info;
+                $tmp_data['ip_desc'] = $_item['client_ip']? implode("",IPHelper::getIpInfo( $_item['client_ip'] ) ):"";
                 $data[] = $tmp_data;
             }
         }
@@ -89,6 +91,7 @@ class LeaveController extends BaseController
             "kw" => $kw,
             "group_id" => $group_id,
         ];
+
         return $this->render("index", [
             "list" => $data,
             "style_map" => $style_map,

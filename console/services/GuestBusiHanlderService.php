@@ -263,15 +263,40 @@ class GuestBusiHanlderService extends BaseService
 
         if( !$kf_info ){
             $params = [
-                'content'   => ChatEventService::getLastErrorMsg(),
-                'code'      => ConstantService::$response_code_fail
+                'content'   => ChatEventService::getLastErrorMsg()
             ];
-            $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_system,$params );
+
+            //分配失败也记录条日志，方便后续分析
+            $log_params = [
+                "cmd" => ConstantService::$chat_cmd_no_kf,
+                "data" => [
+                    "msn" => $data['msn'],
+                    "uuid" => $f_id,
+                    "content" => $params['content']
+                ]
+            ];
+            QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, $log_params );
+
+            $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_no_kf,$params );
             Gateway::sendToClient( $client_id, $data );
             return;
         }
 
-        // 这里是分配成功.
+        /**
+         * 分配成功之后
+         * 还需要更改数据库 guest_history_log 的对应客服
+         */
+        $log_params = [
+            "cmd" => ConstantService::$chat_cmd_assign_kf,
+            "data" => [
+                "msn" => $data['msn'],
+                "uuid" => $f_id,
+                "cs_id" => $kf_info['id']
+            ]
+        ];
+
+        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, $log_params );
+
         if($kf_info['act'] == 'success') {
             self::assignCustomerServiceSuccess($f_id, $client_id, $kf_info);
         }else{

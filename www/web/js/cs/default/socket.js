@@ -24,14 +24,25 @@
 
         // 关闭websocket发送的信息.
         this.ws.addEventListener('close', function () {
-            //关闭
-            console.dir(arguments);
+            this.stopHeartBeat();
+            $.msg( "服务连接已断掉，请刷新~~" )
         });
 
         // 这里是websocket发生错误的.信息.
         this.ws.addEventListener('error', function () {
             //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+            //错误要把信息发回到监控中心，并且是不是要重连几次，不行就关闭了
+            var msg = "error host:" + config['ws'] ;
+            var data = {
+                'sc': "js-ws-cs" ,
+                'message': msg,
+                'url': window.location.href,
+                'error': msg
+            };
+            errorHandle( data );
         });
+
+
     };
 
     // 发送消息.
@@ -42,6 +53,19 @@
     // 关闭链接.
     Socket.prototype.close = function() {
         this.ws.close();
+    };
+
+    //定时发送心跳包
+    Socket.prototype.startHeartBeat = function( chat ){
+        var that = this;
+        that.heartbeat_interval = setInterval( function(){
+                chat.handleMessage({ "cmd" : "ping" } );
+            },10000 );
+    };
+
+    Socket.prototype.stopHeartBeat = function(){
+        var that = this;
+        clearInterval( that.heartbeat_interval );
     };
 
     /**
