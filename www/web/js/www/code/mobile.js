@@ -1,7 +1,7 @@
 ;
 var params = {};
 var mobile_logic = {
-    logic: function () {
+    logic: function ( land_params ) {
         $('.icon-zaixianzixun').click(function () {
             $('.wapOnline-zheyan').removeClass('dis_none');
             $('.waponline-max').removeClass('dis_none');
@@ -59,7 +59,7 @@ var mobile_logic = {
             var config = JSON.parse($('[name="params"]').val());
             param['msn'] = config.msn;
             param['code'] = config.code;
-
+            param['href'] = land_params.hasOwnProperty('href')? land_params['href']:'';
             $.ajax({
                 url:'/code/leave',
                 type:'post',
@@ -150,6 +150,6 @@ window.addEventListener('message',function (event) {
         return false;
     }
 
-    mobile_logic.logic();
+    mobile_logic.logic( params );
     ws_config.init(params);
 });

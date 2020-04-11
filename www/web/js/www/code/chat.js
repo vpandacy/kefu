@@ -1,7 +1,7 @@
 ;
 var params = {};
 var chat_logic = {
-    logic: function() {
+    logic: function( land_params ) {
         /**
          * 控制右下角聊天切换状态
          */
@@ -79,7 +79,7 @@ var chat_logic = {
             var config = JSON.parse($('[name="params"]').val());
             param['msn'] = config.msn;
             param['code'] = config.code;
-
+            param['href'] = land_params.hasOwnProperty('href')? land_params['href']:'';
             $.ajax({
                 url:'/code/leave',
                 type:'post',
@@ -162,7 +162,6 @@ window.addEventListener('message',function (event) {
     if(global_start) {
         return false;
     }
-
-    chat_logic.logic();
+    chat_logic.logic( params );
     ws_config.init(params);
 });

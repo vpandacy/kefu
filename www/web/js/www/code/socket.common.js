@@ -131,9 +131,9 @@
 
         // ws关闭事件.，关闭可客户端也要处理
         this.ws.addEventListener('close', function ( event ) {
-            console.log( event );
             $('#online_kf .content_cover_index').hide();
             $('.chat-close').show();
+            that.stopHeartBeat();
         });
 
         // 这里是websocket发生错误的.信息.
@@ -148,6 +148,7 @@
             };
             errorHandle( data );
         });
+
     };
 
     // 关闭ws链接.
@@ -240,6 +241,20 @@
             }
         }, 1000);
     };
+
+    //定时发送心跳包
+    socket.prototype.startHeartBeat = function(){
+        var that = this;
+        that.heartbeat_interval = setInterval( function(){
+            that.handleMessage({ "cmd" : "ping" } );
+        },10000 );
+    };
+
+    socket.prototype.stopHeartBeat = function(){
+        var that = this;
+        clearInterval( that.heartbeat_interval );
+    };
+
 
     // 自动渲染关闭图形界面.
     socket.prototype.renderCloseChat = function() {
@@ -354,7 +369,7 @@
         var that = this;
         switch (data.cmd) {
             case "ping":
-                //this.socketSend({ "cmd":"pong" });
+                this.socketSend({ "cmd":"pong" });
                 break;
             case "ws_connect":
                 var params = {
@@ -365,6 +380,7 @@
                     code: this.getRequest('code', '')
                 };
                 this.socketSend( this.buildMsg('guest_in',params ));
+                that.startHeartBeat();
                 break;
             case "hello":
                 //延迟1.5秒，有的客户刚进来就分配客户 然后又跑了。让客服端很疑惑（一闪就没有了）

@@ -1,6 +1,7 @@
 <?php
 namespace www\controllers;
 
+use common\components\helper\UtilHelper;
 use common\components\helper\ValidateHelper;
 use common\models\merchant\GroupChat;
 use common\models\merchant\LeaveMessage;
@@ -240,16 +241,18 @@ class CodeController extends BaseController
 
         // 开始入库.
         $leave_message = new LeaveMessage();
-
-        $leave_message->setAttributes([
-            'visitor_id'    =>  $uuid,  // 这里先暂定.
-            'merchant_id'   =>  $merchant['id'],
+        $params = [
+            'visitor_id'  =>  $uuid,  // 这里先暂定.
+            'merchant_id'  =>  $merchant['id'],
             'group_chat_id' =>  $group_chat_id,
-            'mobile'        =>  $mobile,
-            'wechat'        =>  $wechat,
-            'name'          =>  $name,
-            'message'       =>  $message
-        ],0);
+            'mobile'  =>  $mobile,
+            'wechat' =>  $wechat,
+            'name' =>  $name,
+            'message' =>  $message,
+            "client_ip" => UtilHelper::getClientIP(),
+            "land_url" => $this->post('href','')
+        ];
+        $leave_message->setAttributes( $params ,0);
 
         if(!$leave_message->save(0)) {
             return $this->renderErrJSON('数据保存失败，请联系客服');
