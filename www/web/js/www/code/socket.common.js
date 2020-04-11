@@ -237,7 +237,7 @@
         }
 
         // 这里是默认的信息.
-        return $('.chat-close').show();
+        return $('.chat-close').show();$('#online_kf .content_cover_index').hide();
     };
 
     // 页面发送消息．

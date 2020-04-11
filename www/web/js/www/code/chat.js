@@ -89,6 +89,7 @@ var chat_logic = {
                     if(res.code == 200) {
                         $('#online-from').hide();
                         $('.chat-close').show();
+                        $('#online_kf .content_cover_index').hide();
                         $('#online-from textarea[name="message"]').val("");
                     }
                     res.code != 200 ?  $.message({message:res.msg, type:'error'}) : $.message('提交成功');
