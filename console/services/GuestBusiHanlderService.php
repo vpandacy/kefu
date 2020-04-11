@@ -271,7 +271,21 @@ class GuestBusiHanlderService extends BaseService
             return;
         }
 
-        // 这里是分配成功.
+        /**
+         * 分配成功之后
+         * 还需要更改数据库 guest_history_log 的对应客服
+         */
+        $log_params = [
+            "cmd" => ConstantService::$chat_cmd_assign_kf,
+            "data" => [
+                "msn" => $data['msn'],
+                "uuid" => $f_id,
+                "cs_id" => $kf_info['id']
+            ]
+        ];
+        
+        QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, $log_params );
+
         if($kf_info['act'] == 'success') {
             self::assignCustomerServiceSuccess($f_id, $client_id, $kf_info);
         }else{
