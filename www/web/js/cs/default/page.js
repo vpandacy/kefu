@@ -243,12 +243,21 @@
 
     // 渲染游客的消息记录.
     Page.prototype.renderCustomerMsg = function (nickname, avatar, msg, time_str) {
+
         //选择这里用JS渲染下，判断是否包含手机号码
         var re = /1\d{10}/;
         if( re.test( msg ) ){
             msg = '<span style="font-size: 18px;color: blue;font-weight: bold;">'
                 + msg +'</span>';
-        }
+        };
+        try {
+            if( typeof (require) != "undefined" ) { //是函数 其中 FunName 为函数名称
+                var ipcRenderer =  require('electron').ipcRenderer;
+                ipcRenderer.send('new_message', true);
+            }
+        } catch(e) {
+
+        };
         return [
             '<div class="content-message">',
             '   <div class="message-img">',
