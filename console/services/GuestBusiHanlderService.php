@@ -276,7 +276,7 @@ class GuestBusiHanlderService extends BaseService
                 ]
             ];
             QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, $log_params );
-            
+
             $data = ChatEventService::buildMsg( ConstantService::$chat_cmd_no_kf,$params );
             Gateway::sendToClient( $client_id, $data );
             return;

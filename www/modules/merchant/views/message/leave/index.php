@@ -8,11 +8,20 @@ use \common\services\ConstantService;
 use \common\components\helper\DataHelper;
 
 StaticPluginHelper::setDepend(MerchantAsset::className());
+StaticPluginHelper::jqueryUIWidget();
 StaticPluginHelper::daterangepicker();
 StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/merchant/message/leave/index.js'),
     StaticPluginHelper::getDepend())
 ?>
+<style>
+    .layui-table td.long {
+        max-width: 1px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
 
+</style>
 <div id="leave_message_wrap">
     <?= $this->renderFile('@www/modules/merchant/views/common/bar_menu.php', [
         'bar_menu' => 'message',
@@ -44,17 +53,19 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
             </div>
         </form>
 
-        <table class="layui-hide" lay-filter="leave_message">
+        <table class="layui-table">
             <thead>
             <tr>
-                <th lay-data="{ field:'f1',width:120}">风格</th>
-                <th lay-data="{ field:'f2',width:80}">姓名</th>
-                <th lay-data="{ field:'f3',width:120}">手机号</th>
-                <th lay-data="{ field:'f4',width:120}">微信号</th>
-                <th lay-data="{ field:'f5'}">留言信息</th>
-                <th lay-data="{ field:'f6',width:80}">状态</th>
-                <th lay-data="{ field:'f7',width:160}">留言时间</th>
-                <th lay-data="{ field:'f8',width:100}">操作</th>
+                <th>风格</th>
+                <th width="80">姓名</th>
+                <th width="90">手机号</th>
+                <th width="80">微信号</th>
+                <th>留言信息</th>
+                <th width="100">地址</th>
+                <th width="120">落地页&nbsp;&nbsp;<i class="fa fa-question-circle fa-lg tooltip"  title="访客的进入网站"></i></th>
+                <th width="50">状态</th>
+                <th width="120">留言时间</th>
+                <th width="80">操作</th>
             </tr>
 
             </thead>
@@ -67,6 +78,18 @@ StaticAssetsHelper::includeAppJsStatic(GlobalUrlService::buildKFStaticUrl('/js/m
                         <td><?=DataHelper::encode( $_item['mobile'] );?></td>
                         <td><?=DataHelper::encode( $_item['wechat'] );?></td>
                         <td><?=DataHelper::encode( $_item['message'] );?></td>
+                        <td>
+                            <?=DataHelper::encode( $_item['client_ip'] );?><br/>
+                            <?=DataHelper::encode( $_item['ip_desc'] );?>
+                        </td>
+                        <td class="long">
+
+                            <?php if( $_item['land_url'] ):?>
+                                <a class="btn-link tooltip" target="_blank" title="<?= $_item['land_url']; ?>" href="<?= $_item['land_url']; ?>">
+                                    <?= DataHelper::encode( $_item['land_url'] ); ?>
+                                </a>
+                            <?php endif;?>
+                        </td>
                         <td><?=ConstantService::$common_status_map3[$_item['status'] ] ??"";?></td>
                         <td><?=DataHelper::encode( $_item['created_time'] );?></td>
                         <td>
