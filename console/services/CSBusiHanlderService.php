@@ -69,7 +69,7 @@ class CSBusiHanlderService extends BaseService
                 $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
             }
             $message = $message + $_SERVER;
-            self::consoleLog( var_export( $message,true ) );
+            self::consoleLog( "cs:". var_export( $message,true ) );
             // 处理消息事件.
             self::handleMessage($client_id,$message);
         }catch (\Exception $e){
@@ -107,7 +107,7 @@ class CSBusiHanlderService extends BaseService
 //
 //         // 下线客服.
 //        CustomerService::offlineByCSSN($cache_params['f_id']);
-        ChatEventService::clearCSBindCache($client_id);
+        return ChatEventService::clearCSBindCache($client_id);
     }
 
     /**

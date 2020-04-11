@@ -98,7 +98,7 @@ class GuestBusiHanlderService extends BaseService
                 $_SERVER['REMOTE_ADDR'] = $_SESSION['REMOTE_IP'];
             }
             $message = $message + $_SERVER;
-            Worker::log( var_export( $message,true ) );
+            self::consoleLog( "guest:".var_export( $message,true ) );
             self::handleMessage($client_id, $message);
         }catch (\Exception $e){
             ChatEventService::handlerError( $e->getTraceAsString() );
@@ -126,15 +126,15 @@ class GuestBusiHanlderService extends BaseService
 
         // 加上转发消息.
         $close_params = [
-            'client_id'     => $client_id,
-            'closed_time'   => DateHelper::getFormatDateTime(),
-            't_id'          => isset($cache_params['kf_sn']) ? $cache_params['kf_sn'] : '',
-            'f_id'          => $uuid
+            'client_id'   => $client_id,
+            'closed_time' => DateHelper::getFormatDateTime(),
+            't_id'  => isset($cache_params['kf_sn']) ? $cache_params['kf_sn'] : '',
+            'f_id'  => $uuid
         ];
 
         $close_params = array_merge( $close_params, $cache_params );
         $close_data = ChatEventService::buildMsg( ConstantService::$chat_cmd_guest_close, $close_params );
-        Worker::log( $close_data );
+        self::consoleLog( "guest:". $close_data );
         QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, json_decode($close_data, true) );
         QueueListService::push2CS( QueueConstant::$queue_cs_chat, json_decode($close_data,true) );
         // 关闭内容.
@@ -225,12 +225,11 @@ class GuestBusiHanlderService extends BaseService
             Gateway::bindUid($client_id, $f_id);
             $cache_params = [
                 "uuid"  => $f_id,
+                "client_id" => $client_id,
                 "msn"   => $data['msn'] ?? '',
                 'source'=> CommonService::getSourceByUa($message['data']['ua']),    // 终端.
                 'title' => $data['title'] ?? '',
-                'media' =>  isset($message['data']['rf'])                           // 渠道.
-                    ? GuestService::getRefererSidByUrl($data['rf'])
-                    : 0,
+                'media' => isset($message['data']['rf']) ?GuestService::getRefererSidByUrl($data['rf']) : 0,                     // 渠道.
                 'code'  => $data['code'] ?? '',
             ];
 

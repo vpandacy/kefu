@@ -80,21 +80,21 @@ class ChatController extends QueueBaseController
                     "status" => ConstantService::$default_status_true,
                     "merchant_id" => $merchant_info['id'],
                     "uuid" => $params_data['uuid'],
-                    "cs_id" =>  isset($params_data['kf_id']) ? $params_data['kf_id'] : 0,
+                    "cs_id" =>  $params_data['kf_id']??0,
                 ];
                 GuestChatService::closeGuest( $params );
                 break;
-            case ConstantService::$chat_cmd_close_guest:// 客服主动关闭了．或者将游客信息给拉入黑名单中了.
-                $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
-                $params = [
-                    'closed_time'   =>  isset($params_data['closed_time']) ? $params_data['closed_time'] : DateHelper::getFormatDateTime(),
-                    'status'        =>  ConstantService::$default_status_true,
-                    'merchant_id'   =>  $merchant_info['id'],
-                    'cs_id'         =>  $params_data['kf_id'],
-                    'uuid'          =>  isset($params_data['uuid']) ? $params_data['uuid'] : '',
-                ];
-                GuestChatService::closeGuest($params);
-                break;
+//            case ConstantService::$chat_cmd_close_guest:// 客服主动关闭了．或者将游客信息给拉入黑名单中了.这个基本执行不到
+//                $merchant_info = MerchantService::getInfoBySn( $params_data['msn'] );
+//                $params = [
+//                    'closed_time'   =>  $params_data['closed_time'] ?? DateHelper::getFormatDateTime(),
+//                    'status'  =>  ConstantService::$default_status_true,
+//                    'merchant_id'   =>  $merchant_info['id'],
+//                    'cs_id' =>  $params_data['kf_id'],
+//                    'uuid'  =>  $params_data['uuid']??'',
+//                ];
+//                GuestChatService::closeGuest($params);
+//                break;
             case ConstantService::$chat_cmd_chat://游客发消息
                 $params = [
                     'cs_sn' =>  $params_data['t_id'],

@@ -88,22 +88,19 @@ class VisitorController extends BaseController
             ],
         ]);
 
-        // 主动关闭.
-        QueueListService::push2ChatDB(QueueConstant::$queue_chat_log, [
-            'cmd'   =>  ConstantService::$chat_cmd_close_guest,
-            'data'  =>  [
-                'f_id'  =>  $this->current_user['sn'],
-                't_id'  =>  $uuid,
-                'msn'   =>  $this->merchant_info['sn'],
-                'cs_id' =>  $this->getStaffId(),
-                'closed_time'    =>  DateHelper::getFormatDateTime(),
-            ],
-        ]);
+        // 主动关闭. 不需要，游客关闭就会推送消息给对应的chat
+//        QueueListService::push2ChatDB(QueueConstant::$queue_chat_log, [
+//            'cmd'   =>  ConstantService::$chat_cmd_close_guest,
+//            'data'  =>  [
+//                'f_id'  =>  $this->current_user['sn'],
+//                't_id'  =>  $uuid,
+//                'msn'   =>  $this->merchant_info['sn'],
+//                'cs_id' =>  $this->getStaffId(),
+//                'closed_time'    =>  DateHelper::getFormatDateTime(),
+//            ],
+//        ]);
 
         // 主动关闭事件.
-        if(!$guest->save()) {
-            return $this->renderErrJSON('数据保存失败，请联系管理员');
-        }
 
         return $this->renderJSON('操作成功');
     }

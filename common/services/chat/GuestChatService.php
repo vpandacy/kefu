@@ -44,10 +44,11 @@ class GuestChatService extends BaseService
         return $model->save(0);
     }
 
-    /**
-     * 关闭游客时的保存.
-     * @param array $params
-     * @return bool
+    /*
+     * 需要给每一次对话分配一个唯一id，然后更新日志就更方便了，
+     * 不然会出现一种情况，就是一个用户一直刷新，每次更新计算关闭日志的时候是找的最后一条，这个不精确
+     * 频繁刷新就会出现更新最后一条的情况（也许应该更新前面几条）
+     * 关闭游客时的保存. 这里直接用client_id 来解决这个问题
      */
     public static function closeGuest($params = [])
     {
@@ -67,31 +68,35 @@ class GuestChatService extends BaseService
         $query = $query->andWhere([ ">=","created_time",DateHelper::getFormatDateTime( "Y-m-d 00:00:00",strtotime("-1 days") ) ]);
 
         $guest_log = $query->orderBy(["id" => SORT_DESC])->limit(1)->one();
-
-        if ($guest_log) {
-            $member = Member::findOne(['uuid' => $params['uuid'], 'merchant_id' => $params['merchant_id']]);
-            $guest_log->closed_time = $params['closed_time'];
-            $guest_log->member_id = $member ? $member['id'] : 0;
-            $guest_log->cs_id = $params['cs_id'];
-            $guest_log->chat_duration = strtotime($guest_log->closed_time) - strtotime($guest_log->created_time);
-            $guest_log->status = $params['status'];
-            $guest_log->save(0);
-
-            if ($member) {
-                // 这里要批量去更新这次的会话.
-                GuestChatLog::updateAll(['member_id' => $member['id']], ['guest_log_id' => $guest_log['id']]);
-            }
+        if( !$guest_log ){
+            return false;
         }
-        return true;
+        $member = Member::findOne(['uuid' => $params['uuid'], 'merchant_id' => $params['merchant_id']]);
+        $guest_log->closed_time = $params['closed_time'];
+        $guest_log->member_id = $member ? $member['id'] : 0;
+        if( !$guest_log['cs_id'] ){
+            $guest_log->cs_id = $params['cs_id'];
+        }
+        $guest_log->chat_duration = strtotime($guest_log->closed_time) - strtotime($guest_log->created_time);
+        $guest_log->status = $params['status'];
+        return $guest_log->save(0);
+
+//            if ($member) {
+//                // 这里要批量去更新这次的会话.不更新了会出现性能问题
+//                GuestChatLog::updateAll(['member_id' => $member['id']], ['guest_log_id' => $guest_log['id']]);
+//            }
     }
 
-    /**
-     * 更新信息.
-     * @param array $params
-     * @return bool
+    /*
+     * 需要给每一次对话分配一个唯一id，然后更新日志就更方便了，
+     * 不然会出现一种情况，就是一个用户一直刷新，每次更新计算关闭日志的时候是找的最后一条，这个不精确
+     * 频繁刷新就会出现更新最后一条的情况（也许应该更新前面几条）
+     * 更新客服信息
      */
     public static function updateGuest($params = [])
     {
+
+
         $query = GuestHistoryLog::find()
             ->where(["status" => ConstantService::$default_status_neg_1])
             ->andWhere(["merchant_id" => $params['merchant_id'], "uuid" => $params['uuid']]);
