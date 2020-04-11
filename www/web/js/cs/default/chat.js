@@ -287,7 +287,7 @@
                 break;
             case "ws_connect":
                 this.socket.socketSend(this.socket.buildMsg('kf_in', {}));
-                this.socket.startHeartBeat();
+                this.socket.startHeartBeat( this );
                 break;
             case "guest_close":
                 // 先获取用户的信息

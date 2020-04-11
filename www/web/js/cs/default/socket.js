@@ -24,9 +24,8 @@
 
         // 关闭websocket发送的信息.
         this.ws.addEventListener('close', function () {
-            //关闭
-            console.dir(arguments);
             this.stopHeartBeat();
+            $.msg( "服务连接已断掉，请刷新~~" )
         });
 
         // 这里是websocket发生错误的.信息.
@@ -48,7 +47,7 @@
     };
 
     //定时发送心跳包
-    Socket.prototype.startHeartBeat = function(){
+    Socket.prototype.startHeartBeat = function( chat ){
         var that = this;
         that.heartbeat_interval = setInterval( function(){
                 chat.handleMessage({ "cmd" : "ping" } );

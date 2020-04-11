@@ -283,7 +283,7 @@ class GuestBusiHanlderService extends BaseService
                 "cs_id" => $kf_info['id']
             ]
         ];
-        
+
         QueueListService::push2ChatDB( QueueConstant::$queue_chat_log, $log_params );
 
         if($kf_info['act'] == 'success') {
