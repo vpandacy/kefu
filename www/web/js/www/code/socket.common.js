@@ -404,6 +404,11 @@
                 $(this.output).append(this.renderSystemMessage('客服:' + config.cs.t_name + ',为您服务...'));
                 this.renderNickName(config.cs.t_name, config.cs.avatar);
                 break;
+            case 'no_kf':
+                this.close();
+                this.renderCloseChat();
+                $(this.output).append(this.renderSystemMessage(data.data.content));
+                break;
             case "change_kf":
                 config.cs = {
                     t_id: data.data.sn,

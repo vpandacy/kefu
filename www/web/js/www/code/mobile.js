@@ -113,7 +113,7 @@ var ws_config = new socket({
                     ws_config.scrollToBottom();
                 }
                 break;
-            case 'assign_kf'||'change_kf'||'reply' || 'system':
+            case 'assign_kf'||'change_kf'||'reply' || 'system' || 'no_kf':
                 $('.ws_flag').text('连接成功');
                 break;
             case 'close_guest':

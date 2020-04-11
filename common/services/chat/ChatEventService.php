@@ -72,7 +72,7 @@ class ChatEventService extends BaseService
         $staffs = $query->asArray()->all();
 
         if( !$staffs ){
-            return self::_err("当前客服不在线，请于下方开始留言~~");
+            return self::_err("当前客服不在线，您可以留言给我们~~");
         }
 
         return self::assignCustomerService($uuid, $staffs);
